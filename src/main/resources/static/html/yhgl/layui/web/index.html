@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>信息管理系统</title>
+    <link rel="stylesheet" href="design/css/layui.css">
+    <script src="design/layui.js"></script>
+    <script src="../../../../js/jquery-1.12.4.js"></script>
+    <script src="../../../../glng/GLOBAL.js"></script>
+    <link rel="icon" href="../../../../img/bitbug_favicon.ico" type="image/x-icon">
+</head>
+<body class="layui-layout-body" style="padding: 10px">
+<a class="layui-btn layui-btn-primary"  onclick="window.location.href='index.html';">刷新</a>
+<span style="color:red">编辑部门数据后请退出当前用户并重新登陆再操作其它数据</span>
+<!-- <a class="layui-btn layui-btn-primary"  onclick="add();">新增一行</a>
+<a class="layui-btn layui-btn-primary"  onclick="print();">打印缓存对象</a> -->
+<div>
+    <table class="layui-hidden" id="treeTable" lay-filter="treeTable"></table>
+</div>
+<script>
+    var editObj=null,ptable=null,treeGrid=null,tableId='treeTable',layer=null;
+    layui.config({
+        base: 'design/extend/'
+    }).extend({
+        treeGrid:'treeGrid'
+    }).use(['jquery','treeGrid','layer'], function(){
+        if(window.localStorage.DEPTS_ALL){
+            var deptsObjAll = JSON.parse(window.localStorage.DEPTS_ALL);
+            var deptsArr = [];
+            for(var key in deptsObjAll){
+                deptsArr.push(deptsObjAll[key]);
+            }
+        }
+
+        var $=layui.jquery;
+        treeGrid = layui.treeGrid;//很重要
+        layer=layui.layer;
+        ptable=treeGrid.render({
+            id:tableId
+            ,elem: '#'+tableId
+            ,idField:'id'
+            // ,url:'./data2.json'
+            ,url: HOST+'/xtgn-qyfj/query'
+            ,data: deptsArr
+            ,cellMinWidth: 100
+            ,treeId:'id'//树形id字段名称
+            ,treeUpId:'parentid'//树形父id字段名称
+            ,treeShowName:'qymdd'//以树形式显示的字段
+            ,cols: [[
+                {width:100,title: '操作', align:'center'/*toolbar: '#barDemo'*/
+                    ,templet: function(d){
+                    var html='';
+                    var addBtn='<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="add">添加</a>';
+                    var delBtn='<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>';
+                    return addBtn+delBtn;
+                }
+                }
+                ,{field:'qymdd', edit:'text',width:300, title: '部门名'}
+                // ,{field:'id',width:100, title: '数据编号'}
+                // ,{field:'pId', title: '添加日期'}
+            ]]
+            ,page:false
+        });
+
+        treeGrid.on('tool('+tableId+')',function (obj) {
+            if(obj.event === 'del'){//删除行
+                del(obj);
+            }else if(obj.event==="add"){//添加行
+                add(obj.data);
+            }
+        });
+    });
+
+    function del(obj) {
+        layer.confirm("你确定删除数据吗？如果存在下级节点则一并删除，此操作不能撤销！", {icon: 3, title:'提示'},
+            function(index){//确定回调
+                var data = obj.data;
+                var id = data.id;
+                // obj.del();
+                layer.close(index);
+                $.post(HOST+'/xtgn-qyfj/removeByIds',{params: id+''},function(result){
+                    window.location.reload();
+                })
+                // window.location.reload();
+            },function (index) {//取消回调
+               layer.close(index);
+            }
+        );
+    }
+
+
+    var i=1000;
+    //添加
+    function add(pObj) {
+        var parentid = pObj.id;
+        var parentids = pObj.parentids+parentid+',';
+        var qymdd = '请点击修改部门名称';
+        var data = {
+            parentid:parentid,
+            parentids:parentids,
+            qymdd:qymdd
+        }
+        $.post(HOST+'/xtgn-qyfj/save',data,function(result){
+            window.location.reload();
+        })
+    }
+
+    function print() {
+        console.log(treeGrid.cache[tableId]);
+        var loadIndex=layer.msg("对象已打印，按F12，在控制台查看！", {
+            time:3000
+            ,offset: 'auto'//顶部
+            ,shade: 0
+        });
+    }
+</script>
+</body>
+</html>

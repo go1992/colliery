@@ -1,0 +1,931 @@
+ <!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="renderer"
+		  content="webkit">
+	<title>信息管理系统</title>
+	<script type="text/javascript"
+			src="js/jquery-1.12.4.js"></script>
+	<script type="text/javascript"
+			src="./glng/GLOBAL.js"></script>
+	<link rel="stylesheet"
+		  href="fonts/iconfont.css" />
+	<link rel="stylesheet"
+		  href="css/bootstrap.min.css" />
+	<link rel="stylesheet"
+		  href="css/bootstrap-table.min.css" />
+	<link rel="stylesheet"
+		  href="css/all.css" />
+	<link rel="stylesheet"
+		  href="css/font-awesome.min.css" />
+	<link rel="icon"
+		  href="img/bitbug_favicon.ico"
+		  type="image/x-icon">
+	<link rel="stylesheet"
+		  href="css/style.css">
+</head>
+
+<body>
+	<script>
+		$.ajax({
+			type: "post",
+			url: HOST + '/aqfx-csxg/query',
+			data: {},
+			async: false,
+			success: function (json) {
+				if (!!json && json == 'c8e3a961-3408-4e8d-bcbb-09a5639e0e05') {
+					if (window.location.href.indexOf('/yhgl/layui/web/') == -1) {
+					} else {
+						window.location.href = '../../../../bigdatalogin.html';
+						return false;
+					}
+					window.location.href = './bigdatalogin.html';
+				}
+			}
+		});
+		window.TIMDER_DOIT = function () {
+			$.post(HOST + '/aqfx-csxg/query', {}, function (json) {
+				if (!!json && json == 'c8e3a961-3408-4e8d-bcbb-09a5639e0e05') {
+					if (window.location.href.indexOf('/yhgl/layui/web/') == -1) {
+					} else {
+						window.location.href = '../../../../bigdatalogin.html';
+						return false;
+					}
+					window.location.href = './bigdatalogin.html';
+				}
+			});
+			window.TIMER_DID = true;
+		}
+		if (window.TIMER_DID == true) { }
+		else {
+			window.setInterval(TIMDER_DOIT, 1000);
+		}
+	</script>
+	<header>
+		<div class="company_title">
+		
+			<span>信息管理系统</span>
+			<p class="dqzh">
+				<span id="showUserName">当前账户:李梅</span>
+				<a href="bigdatalogin.html">
+					<span class="tc">退出</span>
+				</a>
+			</p>
+		</div>
+		<!--<h3 class="top_title">煤矿安全综合管控平台</h3>-->
+	</header>
+	<div class="content">
+		<div class="l_menu">
+			<ul class="menu_ul">
+				<li class="eq_li" id="quanxian">
+					
+					<a id="eq_info" class="eq_info active">
+						<span class="iconfont icon-caidan"></span> 系统设置
+						<span class="pull-right">
+							<em class="iconfont icon-arrow-right-copy"></em>
+						</span>
+					</a>
+					<ul class="ul_hidden">
+						<li>
+							<a href="#">
+								<span class="iconfont icon-caidan"></span>用户管理</a>
+							<ul class="ul_hidden" style="padding-left:40px">
+
+								<li>
+									<a href="#" id="dcxt_swdzzkpc_insert" onclick="LoadHtml(this,'html/yhgl/yhgl/dcxt_swdzzkpc_insert.html')">
+										<span class="iconfont icon-jiantouarrow484" ></span>用户管理录入</a>
+								</li>
+								<li>
+									<a href="#" id="dcxt_swdzzkpc_select" onclick="LoadHtml(this,'html/yhgl/yhgl/dcxt_swdzzkpc_select.html')">
+										<span class="iconfont icon-jiantouarrow484"></span>用户管理维护</a>
+								</li>
+								
+							</ul>
+						</li>
+						<li id="deptsPageShow" >
+							<a href="#"><span span class="iconfont icon-jiantouarrow484"></span>部门管理</a>
+						</li>
+					</ul>
+				</li>
+				<li class="eq_li">
+					<a class="eq_info">
+
+						<span class="iconfont icon-caidan"></span>地测防治水管理
+						<span class="pull-right"><em class="iconfont icon-arrow-right-copy"></em></span></a>
+
+					<ul class="ul_hidden"
+						style="display:none;padding-left:40px">
+						<li class="cjsb">
+							<a href="#"
+							   id="dcxt_kjdz"
+							   onclick="LoadHtml(this,'html/dcxt/dcxt_kjdz.html')"
+							   class="">
+								<span class="iconfont icon-jiantouarrow484 icon1"></span>矿井地质</a>
+						</li>
+						<li>
+							<a href="#"
+							   id="dcxt_kjcl"
+							   onclick="LoadHtml(this,'html/dcxt/dcxt_kjcl.html')">
+								<span class="iconfont icon-jiantouarrow484 icon1"></span>矿井测量</a>
+						</li>
+						<li>
+							<a href="#"
+							   id="dcxt_swdz"
+							   onclick="LoadHtml(this,'html/dcxt/dcxt_swdz.html')">
+								<span class="iconfont icon-jiantouarrow484 icon1"></span>水文地质</a>
+						</li>
+						<li>
+							<a href="#"
+							   id="dcxt_clgl"
+							   onclick="LoadHtml(this,'html/dcxt/dcxt_clgl.html')">
+								<span class="iconfont icon-jiantouarrow484 icon1"></span>储量管理</a>
+						</li>
+
+
+						<li>
+							<a href="#"
+							   id="dcxt_swdzzkpc_insert"
+							   onclick="LoadHtml(this,'html/dcxt/dcxt_swdzzkpc_insert.html')">
+								<span class="iconfont icon-jiantouarrow484"></span>钻孔排查录入</a>
+						</li>
+						<li>
+							<a href="#"
+							   id="dcxt_swdzzkpc_select"
+							   onclick="LoadHtml(this,'html/dcxt/dcxt_swdzzkpc_select.html')">
+								<span class="iconfont icon-jiantouarrow484"></span>排查信息维护</a>
+						</li>
+						<li>
+							<a href="#"
+							   id="dcxt_jbcs_kqss"
+							   onclick="LoadHtml(this,'html/dcxt/dcxt_jbcssz_kqwzsz.html')">
+								<span class="iconfont icon-jiantouarrow484"></span>矿区位置</a>
+						</li>
+					</ul>
+				</li>
+				<li class="eq_li">
+					<a class="eq_info">
+						<span class="iconfont icon-anquan"></span> 安全风险管控
+						<span class="pull-right"><em class="iconfont icon-arrow-right-copy"></em></span>
+					</a>
+					<ul class="ul_hidden">
+						<li>
+							<a href="#"><span class="iconfont icon-caidan"></span>年度风险辨识</a>
+							<ul class="ul_ulhidden">
+								<li>
+									<a href="#"
+									   id="aqxt_ndfxbs_insert"
+									   onclick="LoadHtml(this,'html/aqxt/aqxt_ndfxbs_insert.html')"><span
+											  class="iconfont icon-jiantouarrow484"></span>年度辨识风险录入</a>
+								</li>
+								<li>
+									<a href="#"
+									   id="aqxt_ndfxbs_select"
+									   onclick="LoadHtml(this,'html/aqxt/aqxt_ndfxbs_select.html')"><span
+											  class="iconfont icon-jiantouarrow484"></span>年度风险库维护</a>
+								</li>
+								<li>
+									<a href="#"
+									   id="aqxt_ndfxbs_ndfxbb"
+									   onclick="LoadHtml(this,'html/aqxt/aqxt_ndfxbs_ndfxbb.html')"><span
+											  class="iconfont icon-jiantouarrow484"></span>年度风险报表</a>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<a href="#"><span class="iconfont icon-caidan"></span>专项风险辨识</a>
+							<ul class="ul_ulhidden">
+								<li>
+									<a href="#"
+									   id="aqxt_zxfxbs_insert"
+									   onclick="LoadHtml(this,'html/aqxt/aqxt_zxfxbs_insert.html')"><span
+											  class="iconfont icon-jiantouarrow484"></span>专项辨识录入</a>
+								</li>
+								<li>
+									<a href="#"
+									   id="aqxt_zxfxbs_select"
+									   onclick="LoadHtml(this,'html/aqxt/aqxt_zxfxbs_select.html')"><span
+											  class="iconfont icon-jiantouarrow484"></span>专项辨识维护</a>
+								</li>
+								<li>
+									<a href="#"
+									   id="aqxt_zxfxbs_zxbsfxbb"
+									   onclick="LoadHtml(this,'html/aqxt/aqxt_zxfxbs_zxbsfxbb.html')"><span
+											  class="iconfont icon-jiantouarrow484"></span>专项辨识风险报表</a>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<a href="#"><span class="iconfont icon-caidan"></span>管控效果及分析</a>
+							<ul class="ul_ulhidden">
+								<li>
+									<a href="#"
+									   id="aqxt_gkxgjfx_ydzdgk"
+									   onclick="LoadHtml(this,'html/aqxt/aqxt_gkxgjfx_ydzdgk.html')"><span
+											  class="iconfont icon-jiantouarrow484"></span>月度重点管控效果分析</a>
+								</li>
+								<li>
+									<a href="#"
+									   id="aqxt_gkxgjfx_xdzdgk"
+									   onclick="LoadHtml(this,'html/aqxt/aqxt_gkxgjfx_xdzdgk.html')"><span
+											  class="iconfont icon-jiantouarrow484"></span>旬度重点管控效果分析</a>
+								</li>
+							</ul>
+						</li>
+
+						<li>
+							<a href="#"><span class="iconfont icon-caidan"></span>领导跟踪检查</a>
+							<ul class="ul_ulhidden">
+								<li>
+									<a href="#"
+									   id="aqxt_ldgzjc_insert"
+									   onclick="LoadHtml(this,'html/aqxt/aqxt_ldgzjc_insert.html')"><span
+											  class="iconfont icon-jiantouarrow484"></span>增加跟踪检查记录</a>
+								</li>
+								<li>
+									<a href="#"
+									   id="aqxt_ldgzjc_cxxggzjl"
+									   onclick="LoadHtml(this,'html/aqxt/aqxt_ldgzjc_cxxggzjl.html')"><span
+											  class="iconfont icon-jiantouarrow484"></span>查询修改跟踪记录</a>
+								</li>
+								<li>
+									<a href="#"
+									   id="aqxt_ldgzjc_jltjjbb"
+									   onclick="LoadHtml(this,'html/aqxt/aqxt_ldgzjc_jltjjbb.html')"><span
+											  class="iconfont icon-jiantouarrow484"></span>记录统计及报表</a>
+								</li>
+								<li>
+									<a href="#"
+									   id="aqxt_ldgzjc_LEDnrbb"
+									   onclick="LoadHtml(this,'html/aqxt/aqxt_ldgzjc_LEDnrbb.html')"><span
+											  class="iconfont icon-jiantouarrow484"></span>LED内容报表</a>
+								</li>
+							</ul>
+						</li>
+
+
+					</ul>
+				</li>
+				<li class="eq_li">
+					<a class="eq_info">
+						<span class="iconfont icon-tiaoduji"></span> 调度信息管理
+						<span class="pull-right">
+							<em class="iconfont icon-arrow-right-copy"></em>
+						</span>
+					</a>
+					<ul class="ul_hidden">
+					
+								<li>
+									<a href="#"
+									   id="ddxt_aqscddbb_insert"
+									   onclick="LoadHtml(this,'html/ddxxgl/ddxt_aqscddbb_insert.html')">
+										<span class="iconfont icon-jiantouarrow484"></span>录入安全生产信息</a>
+								</li>
+								<li>
+									<a href="#"
+									   id="dcxt_aqscddbb_select"
+									   onclick="LoadHtml(this,'html/ddxxgl/ddxt_aqscddbb_select.html')">
+										<span class="iconfont icon-jiantouarrow484"></span>安全生产信息维护</a>
+								</li>
+								<li>
+									<a href="#"
+									   id="dcxt_aqscddbb_bldsh"
+									   onclick="LoadHtml(this,'html/ddxxgl/ddxt_aqscddbb_selectsh.html')">
+										<span class="iconfont icon-jiantouarrow484"></span>生产情况领导审核</a>
+								</li>
+								<li>
+									<a href="#"
+									   id="ddxt_scaqsggz_select"
+									   onclick="LoadHtml(this,'html/ddxxgl/aqsgzz.html')">
+										<span class="iconfont icon-jiantouarrow484"></span>安全生产事故跟踪</a>
+								</li>
+			</ul>
+			</li>
+			<li class="eq_li">
+				<a class="eq_info">
+					<span class="iconfont icon-yinhuandianwei"></span> 隐患治理
+					<span class="pull-right"><em class="iconfont icon-arrow-right-copy"></em></span>
+				</a>
+				<ul class="ul_hidden">
+					<li class="cjsb">
+					</li>
+					<li>
+						<a href="#"
+						   id="dcxt_kjcl">
+							<span class="iconfont icon-caidan"></span>隐患录入</a>
+						<ul class="ul_ulhidden"
+							style="">
+							<li>
+								<a href="#"
+								   id="dcxt_swdzzkpc_insert"
+								   onclick="LoadHtml(this,'html/yhpcgl/dcxt_swdzzkpc_insert.html')">
+									<span class="iconfont icon-jiantouarrow484"></span>隐患信息录入</a>
+							</li>
+							<li>
+								<a href="#"
+								   id="dcxt_swdzzkpc_select"
+								   onclick="LoadHtml(this,'html/yhpcgl/dcxt_swdzzkpc_select.html')">
+									<span class="iconfont icon-jiantouarrow484"></span>隐患信息维护</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="#"><span class="iconfont icon-caidan"></span>隐患分发</a>
+						<ul class="ul_ulhidden">
+							<li>
+								<a href="#"
+								   id="yhxt_yhff_xyhshff"
+								   onclick="LoadHtml(this,'html/yhxt/yhxt_yhff_xyhshff.html')"><span
+										  class="iconfont icon-jiantouarrow484"></span>新隐患审核分发</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="#"><span class="iconfont icon-caidan"></span>隐患确认及处理</a>
+						<ul class="ul_ulhidden">
+							<li>
+								<a href="#"
+								   id="yhxt_yhqrjcl_yhqd"
+								   onclick="LoadHtml(this,'html/yhxt/yhxt_yhqrjcl_yhqd.html')"><span
+										  class="iconfont icon-jiantouarrow484"></span>隐患签单</a>
+							</li>
+							<li>
+								<a href="#"
+								   id="yhxt_yhqrjcl_yhcljgtj"
+								   onclick="LoadHtml(this,'html/yhxt/yhxt_yhqrjcl_yhcljgtj.html')"><span
+										  class="iconfont icon-jiantouarrow484"></span>隐患处理结果提交</a>
+							</li>
+							<li>
+								<a href="#"
+								   id="yhxt_yhqrjcl_yhtz"
+								   onclick="LoadHtml(this,'html/yhxt/yhxt_yhqrjcl_yhtz.html')"><span
+										  class="iconfont icon-jiantouarrow484"></span>本责任部门_隐患台帐</a>
+							</li>
+						</ul>
+
+
+				</ul>
+			</li>
+			</ul>
+
+		</div>
+		<div class="eq_table">
+			<div class="dh">
+				<ul>
+					<li id="btn_home">
+						<span class="iconfont icon-zhuye"></span>
+					</li>
+					<li>
+						<a href="./index.html">首页</a>
+					</li>
+					<li class="active1">矿井地质</li>
+				</ul>
+			</div>
+			<div class="eq_form">
+
+
+			</div>
+
+		</div>
+
+
+
+	</div>
+
+
+	<!--jq-form表单插件-->
+	<script type="text/javascript"
+			src="js/jquery.form.js"></script>
+	<!--js-xlsx插件-->
+	<script type="text/javascript"
+			src="js/Excel_dc/xlsx.core.min.js"></script>
+	<script type="text/javascript"
+			src="js/popper.min.js"></script>
+	<script type="text/javascript"
+			src="js/bootstrap.min.js"></script>
+	<script type="text/javascript"
+			src="js/layer/layer.js"></script>
+
+	<script>
+
+		$(function () {
+			$("li>a").click(function () {
+				//把点击的选项卡向下的图标
+
+				if ($(".menu_ul>li>a,.ul_hidden>li>a,.ul_ulhidden>li>a").hasClass("active")) {
+					$(".menu_ul>li>a,.ul_hidden>li>a,.ul_ulhidden>li>a").removeClass("active");
+				}
+				$(this).addClass("active");
+
+				$(this).next("ul").slideToggle();
+				$(this).parent("li").siblings().has("ul").children("ul").slideUp();
+				$(this).parent("li").siblings().find("em").removeClass("icon-jiantou-copy-copy");
+			})
+		})
+
+
+		//首页
+		$.ajax({
+			type: "get",
+			url: "html/icon_item.html",
+			async: false,
+			success: function (data) {
+				$('.eq_form').html(data);
+				$(".dh>ul>li>a").text("首页");
+			}
+		});
+		$("#btn_home").click(function () {
+			$.ajax({
+				type: "get",
+				url: "html/icon_item.html",
+				async: true,
+				success: function (data) {
+					$('.eq_form').html(data);
+					$(".dh>ul>li>a").text("首页");
+				}
+			});
+		})
+		$("#index_html").click(function () {
+			$.ajax({
+				type: "get",
+				url: "html/icon_item.html",
+				async: true,
+				success: function (data) {
+					$('.eq_form').html(data);
+					$(".dh>ul>li>a").text("首页");
+				}
+			});
+		})
+		//点击a标签加载页面
+		function LoadHtml(obj, url) {
+		    var luru = $(obj).attr("id");
+		    var i = luru.lastIndexOf("_");
+		    var lu = luru.substr(i);
+		    console.log(lu)
+		    if (lu=="_insert") {
+		        console.log("进入")
+                $.ajax({
+                    url: host + "/quanxian/ifqx",
+                    type: "POST",
+                    dataType: "json",
+                    success: function (res) {
+                        console.log("res		" + res.session.ssqymc);
+                        if (res.session.ssqymc != 1) {
+                            alert(res.quanxian);
+                        } else {
+                            var zd_name = $(obj).text();
+                            var cj_name = $(obj).parent("li").parent("ul").siblings("a").text();
+                            $.ajax({
+                                type: "get",
+                                url: url,
+                                async: true,
+                                success: function (data) {
+                                    $('.eq_form').html(data);
+                                    $(".dh>ul>li>a").text(cj_name);
+
+                                    $(".dh>ul>li:eq(2)").text(zd_name);
+                                }
+                            });
+                        }
+                    }
+                })
+            }else {
+                var zd_name = $(obj).text();
+                var cj_name = $(obj).parent("li").parent("ul").siblings("a").text();
+                $.ajax({
+                    type: "get",
+                    url: url,
+                    async: true,
+                    success: function (data) {
+                        $('.eq_form').html(data);
+                        $(".dh>ul>li>a").text(cj_name);
+
+                        $(".dh>ul>li:eq(2)").text(zd_name);
+                    }
+                });
+			}
+		}
+	</script>
+
+
+	<script type="text/javascript"
+			src="./glng/indexBs.js"></script>
+	<script type="text/javascript"
+			src="js/echarts.min.js"></script>
+	<script type="text/javascript">
+		$(function () {
+			//指定图标的配置和数据
+			$.post(HOST + '/sbgl-sblb/myCount', {}, function (result) {
+				var scaleData = [];
+
+				scaleData = result.result;
+
+				var rich = {
+					white: {
+						color: '#ddd',
+						align: 'center',
+						padding: [3, 0]
+					}
+				};
+				var placeHolderStyle = {
+					normal: {
+						label: {
+							show: false
+						},
+						labelLine: {
+							show: false
+						},
+						color: 'rgba(0, 0, 0, 0)',
+						borderColor: 'rgba(0, 0, 0, 0)',
+						borderWidth: 0
+					}
+				};
+				var data = [];
+				var countNum = 0;
+				var color = ['#00ffff', '#00cfff', '#006ced', '#ffe000', '#ffa800', '#ff5b00', '#ff3000', '#ffe4c4', '#ff0000']
+				for (var i = 0; i < scaleData.length; i++) {
+					countNum = countNum + scaleData[i].shuliang;
+					data.push({
+						value: scaleData[i].shuliang,
+						name: scaleData[i].sbzt,
+						itemStyle: {
+							normal: {
+								borderWidth: 4,
+								shadowBlur: 200,
+								borderColor: color[i],
+								shadowColor: color[i]
+							}
+						}
+					}, {
+							value: 2,
+							name: '',
+							itemStyle: placeHolderStyle
+						});
+				}
+
+				var seriesObj = [{
+					// name: '',
+					type: 'pie',
+					clockWise: false,
+					radius: [70, 140],
+					hoverAnimation: false,
+					itemStyle: {
+						normal: {
+							label: {
+								show: true,
+								position: 'outside',
+								color: '#ddd',
+								formatter: function (params) {
+									var percent = 0;
+									var total = 0;
+									for (var i = 0; i < scaleData.length; i++) {
+										total += scaleData[i].shuliang;
+									}
+									percent = ((params.value / total) * 100).toFixed(0);
+									if (params.name !== '') {
+										return params.name + '\n{white|' + '占比' + percent + '%}';
+									} else {
+										return '';
+									}
+								},
+								rich: rich
+							},
+							labelLine: {
+								length: 10,
+								length2: 10,
+								show: true,
+								color: '#00ffff'
+							}
+						}
+					},
+					data: data
+				}];
+				var option = {
+					graphic: [{
+						type: 'text',
+						left: 'center',
+						top: '45%',
+						style: {
+							text: countNum,
+							fill: '#08A0E2',
+							fontSize: 25
+						}
+					}, {
+						type: 'text',
+						left: 'center',
+						top: '52%',
+						style: {
+							text: '设备总数',
+							fill: '#fff',
+							font: 'normal 24px "Microsoft YaHei", sans-serif'
+						}
+					}],
+					"title": {
+						"text": "设备使用分析",
+						"left": "center",
+						"y": "0",
+						"textStyle": {
+							"color": "#fff"
+						}
+					},
+					tooltip: {
+						show: true
+					},
+					legend: {
+						show: true,
+						// "icon": "circle",
+						"x": "left",
+						"y": "10%",
+						"textStyle": {
+							"color": "#fff"
+						},
+					},
+					toolbox: {
+						show: false
+					},
+					series: seriesObj
+				}
+				//初始化echarts实例
+				var myChart = echarts.init(document.getElementById('chartmain0'));
+
+				//使用制定的配置项和数据显示图表
+				myChart.setOption(option);
+			});
+		});
+	</script>
+	<script type="text/javascript">
+		$(function () {
+			var last_year_month = function () {
+				var d = new Date();
+				var result = [];
+				for (var i = 0; i < 12; i++) {
+					d.setMonth(d.getMonth() - 1);
+					var m = d.getMonth() + 1;
+					m = m < 10 ? "0" + m : m;
+					//在这里可以自定义输出的日期格式
+					//result.push(d.getFullYear() + "-" + m);
+					result.unshift(d.getFullYear() + "-" + m);
+				}
+				return result;
+			}
+			//月份
+			var monthArr = last_year_month();
+
+			//计划产量
+			$.post(HOST + '/scgl-scjh/query', {
+				isPage: 'no'
+			}, function (resultPlanned) {
+				var plannedTempObj = {};
+				for (var i = 0; i < resultPlanned.length; i++) {
+					var eachi = resultPlanned[i];
+					if (eachi && eachi.jhkssj) plannedTempObj[eachi.jhkssj.substring(0, 7)] = eachi.jhzcl;
+				}
+				//计划产量数组
+				var plannedArr = [];
+				for (var i = 0; i < monthArr.length; i++) {
+					var eachi = monthArr[i];
+					plannedArr.push(plannedTempObj[eachi] ? plannedTempObj[eachi] : 0 + "");
+				}
+				// console.log(resultPlanned,plannedTempObj,plannedArr);
+
+				//实际产量
+				$.post(HOST + '/scgl-sjcl/countBy', {}, function (resultActual) {
+					resultActual = resultActual.result;
+					var actualTempObj = {};
+					for (var i = 0; i < resultActual.length; i++) {
+						var eachi = resultActual[i];
+						if (eachi && eachi.pcrqstr) actualTempObj[eachi.pcrqstr] = eachi.shuliang + "";
+					}
+
+					//实际产量数组
+					var actualArr = [];
+					for (var i = 0; i < monthArr.length; i++) {
+						var eachi = monthArr[i];
+						actualArr.push(actualTempObj[eachi] ? actualTempObj[eachi] : 0 + "");
+					}
+
+					//计划产量比实际产量
+					var compRateArr = [];
+					for (var i = 0; i < monthArr.length; i++) {
+						var plannedNum = plannedArr[i];
+						var actualNum = actualArr[i];
+						var rate = (plannedNum > 0 && actualNum > 0) ? (actualNum / plannedNum) : 0;
+						rate = rate * 100;
+						compRateArr.push(rate.toFixed(2));
+					}
+					//统计图
+					var option = {
+						"title": {
+							"text": "计划/实际产量",
+							"left": "center",
+							"y": "10",
+							"textStyle": {
+								"color": "#fff"
+							}
+						},
+						"color": "#384757",
+						"tooltip": {
+							"trigger": "axis",
+							"axisPointer": {
+								"type": "cross",
+								"crossStyle": {
+									"color": "#384757"
+								}
+							}
+						},
+						"legend": {
+							"data": [{
+								"name": "计划产量",
+								"icon": "circle",
+								"textStyle": {
+									"color": "#7d838b"
+								}
+							},
+							{
+								"name": "实际产量",
+								"icon": "circle",
+								"textStyle": {
+									"color": "#7d838b"
+								}
+							},
+							{
+								"name": "完成率",
+								"icon": "circle",
+								"textStyle": {
+									"color": "#7d838b"
+								}
+							}
+							],
+							"top": "10%",
+							"textStyle": {
+								"color": "#fff"
+							}
+						},
+						"xAxis": [{
+							"type": "category",
+							"data": monthArr,
+							"axisPointer": {
+								"type": "shadow"
+							},
+							"axisLabel": {
+								"show": true,
+								"textStyle": {
+									"color": "#7d838b"
+								}
+							}
+						}],
+						"yAxis": [{
+							"type": "value",
+							"name": "计划产量/实际产量",
+							"nameTextStyle": {
+								"color": "#7d838b"
+							},
+							// "min": 0,
+							// "max": 150,
+							// "interval": 10,
+							"axisLabel": {
+								"show": true,
+								"textStyle": {
+									"color": "#7d838b"
+								}
+							},
+							"axisLine": {
+								"show": true
+							},
+							"splitLine": {
+								"lineStyle": {
+									"color": "#7d838b"
+								}
+							}
+						},
+						{
+							"type": "value",
+							"name": "完成率",
+							"show": true,
+							"axisLabel": {
+								"show": true,
+								"textStyle": {
+									"color": "#7d838b"
+								}
+							}
+						}
+						],
+						"grid": {
+							"top": "20%"
+						},
+						"series": [{
+							"name": "计划产量",
+							"type": "bar",
+							"data": plannedArr,
+							"barWidth": "auto",
+							"itemStyle": {
+								"normal": {
+									"color": {
+										"type": "linear",
+										"x": 0,
+										"y": 0,
+										"x2": 0,
+										"y2": 1,
+										"colorStops": [{
+											"offset": 0,
+											"color": "rgba(255,37,117,0.7)"
+										},
+										{
+											"offset": 0.5,
+											"color": "rgba(0,133,245,0.7)"
+										},
+										{
+											"offset": 1,
+											"color": "rgba(0,133,245,0.3)"
+										}
+										],
+										"globalCoord": false
+									}
+								}
+							}
+						},
+						{
+							"name": "实际产量",
+							"type": "bar",
+							"data": actualArr,
+							"barWidth": "auto",
+							"itemStyle": {
+								"normal": {
+									"color": {
+										"type": "linear",
+										"x": 0,
+										"y": 0,
+										"x2": 0,
+										"y2": 1,
+										"colorStops": [{
+											"offset": 0,
+											"color": "rgba(100,255,100,0.7)"
+										},
+										{
+											"offset": 0.5,
+											"color": "rgba(0,255,252,0.7)"
+										},
+										{
+											"offset": 1,
+											"color": "rgba(0,255,252,0.3)"
+										}
+										],
+										"globalCoord": false
+									}
+								}
+							},
+							"barGap": "0"
+						},
+						{
+							"name": "完成率",
+							"type": "line",
+							"yAxisIndex": 1,
+							"data": compRateArr,
+							"itemStyle": {
+								"normal": {
+									"color": "#ffaa00"
+								}
+							},
+							"smooth": true
+						}
+						]
+					}
+					var myChart = echarts.init(document.getElementById('chartmain1'));
+
+					//使用制定的配置项和数据显示图表
+					myChart.setOption(option);
+
+				});
+
+			});
+		});
+	</script>
+	<script>
+		var host = HOST;
+        $('#deptsPageShow').click(function () {
+            $.ajax({
+                url: host + "/quanxian/ifqx",
+                type: "POST",
+                dataType: "json",
+                success: function (res) {
+                    console.log("res		" + res.session.ssqymc);
+                    if (res.session.ssqymc != 1) {
+                        alert(res.quanxian);
+                    } else {
+                        layer.open({
+                            type: 2,
+                            title: '编辑',
+                            maxmin: true,
+                            shadeClose: true, //点击遮罩关闭层
+                            area: ['1000px', '600px'],
+                            content: 'html/yhgl/layui/web/index.html'
+                        });
+                    }
+                }
+            })
+        })
+	</script>
+</body>
+
+</html>

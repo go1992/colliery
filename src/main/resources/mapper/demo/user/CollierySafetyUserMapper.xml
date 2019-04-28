@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.user.CollierySafetyUserMapper">
+    <resultMap id="BaseResultMap" type="com.example.demo.entity.user.CollierySafetyUserEntity">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="user_author" property="userAuthor" jdbcType="VARCHAR"/>
+        <result column="user_pwd" property="userPwd" jdbcType="VARCHAR"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="create_user" property="createUser" jdbcType="VARCHAR"/>
+        <result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP"/>
+        <result column="modify_user" property="modifyUser" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+      id, user_author, user_pwd, user_name, create_date, create_user, modify_date, modify_user
+    </sql>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+      delete
+        from colliery_user
+      where
+        id = #{id,jdbcType=INTEGER}
+    </delete>
+    
+    <insert id="insert" parameterType="com.example.demo.entity.user.CollierySafetyUserEntity">
+    insert into colliery_user (id, user_author, user_pwd,
+      user_name, create_date, create_user,
+      modify_date, modify_user)
+    values (#{id,jdbcType=INTEGER}, #{userAuthor,jdbcType=VARCHAR}, #{userPwd,jdbcType=VARCHAR},
+      #{userName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{createUser,jdbcType=VARCHAR},
+      #{modifyDate,jdbcType=TIMESTAMP}, #{modifyUser,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" parameterType="com.example.demo.entity.user.CollierySafetyUserEntity">
+        insert into colliery_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userAuthor != null">
+                user_author,
+            </if>
+            <if test="userPwd != null">
+                user_pwd,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="createUser != null">
+                create_user,
+            </if>
+            <if test="modifyDate != null">
+                modify_date,
+            </if>
+            <if test="modifyUser != null">
+                modify_user,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="userAuthor != null">
+                #{userAuthor,jdbcType=VARCHAR},
+            </if>
+            <if test="userPwd != null">
+                #{userPwd,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createUser != null">
+                #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyDate != null">
+                #{modifyDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyUser != null">
+                #{modifyUser,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.entity.user.CollierySafetyUserEntity">
+        update colliery_user
+        <set>
+            <if test="userAuthor != null">
+                user_author = #{userAuthor,jdbcType=VARCHAR},
+            </if>
+            <if test="userPwd != null">
+                user_pwd = #{userPwd,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createUser != null">
+                create_user = #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyDate != null">
+                modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyUser != null">
+                modify_user = #{modifyUser,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.example.demo.entity.user.CollierySafetyUserEntity">
+    update colliery_user
+    set user_author = #{userAuthor,jdbcType=VARCHAR},
+      user_pwd = #{userPwd,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+      modify_user = #{modifyUser,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+    <select id="selectByUserCode" resultMap="BaseResultMap" parameterType="String">
+        select
+        <include refid="Base_Column_List"/>
+        from colliery_user
+        where user_name = #{userCode}
+    </select>
+</mapper>

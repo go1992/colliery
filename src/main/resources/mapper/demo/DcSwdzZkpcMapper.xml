@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.DcSwdzZkpcMapper">
+    <resultMap id="zkpc" type="com.example.demo.entity.DcSwdzZkpc" autoMapping="true">
+        <id property="id" column="id"/>
+        <association property="zkwzid" javaType="com.example.demo.entity.DcJbcsKqwz" autoMapping="true" columnPrefix="t_">
+            <id property="id" column="id"/>
+        </association>
+    </resultMap>
+    <select id="getAll" resultMap="zkpc">
+      select t1.ssmk,t1.pcrq,t1.kkrq,t2.xjwz t_xjwz,t2.id t_id,t1.zkbh,t1.swqk,t1.knzk,t1.kkqk,t1.sjks,t1.shijks,t1.jlr,t1.shhr,t1.ywxq
+      from dc_swdz_zkpc t1 left join dc_jbcs_kqwz t2 on t1.zkwz = t2.id
+    </select>
+</mapper>

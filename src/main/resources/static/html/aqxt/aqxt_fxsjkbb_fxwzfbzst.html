@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="js/layer/mobile/need/layer.css" />
+		<style>
+			#Table1,
+			#Table2 {
+				width: 96%;
+				margin: auto;
+				margin-top: 20px;
+				/*padding: 10px 0px 0px 50px;*/
+				/*text-align: center;*/
+				border: 1px solid #30a5ff;
+				font-size: 14px;
+				color: #30a5ff;
+			}
+			
+			#Table2 {
+				text-align: center;
+			}
+			
+			#Table1 tr td:nth-child(odd) {
+				text-align: right;
+			}
+			
+			#Table1 input {
+				padding: 2px;
+				margin: 4px;
+			}
+			
+			.btn_tj {
+				border: 0px;
+				border-radius: 3px;
+				color: white;
+				width: 120px;
+				height: 30px;
+				font-size: 14px;
+				background-color: #30a5ff;
+				margin: 0 50px;
+			}
+			
+			.btn_tj:hover,
+			.btn_bj:hover {
+				cursor: pointer;
+				background-color: #428bca;
+			}
+			
+			.btn_tr {
+				position: relative;
+				display: -ms-inline-flexbox;
+				display: inline-flex;
+				vertical-align: middle;
+			}
+			
+			.btn_bj,
+			.btn_del {
+				border: 0px;
+				border-radius: 3px;
+				color: white;
+				width: 120px;
+				height: 30px;
+				font-size: 14px;
+				background-color: #30a5ff;
+				margin: 0 20px;
+			}
+			
+			.btn_del {
+				background-color: #dc3545;
+			}
+			
+			.btn_del:hover {
+				cursor: pointer;
+				background-color: #c82333;
+			}
+		</style>
+	</head>
+
+	<body>
+		<form method="post" action="#" id="Form1" enctype="multipart/form-data">
+			<table id="Table1" border="1" cellspacing="0" cellpadding="5px">
+			<tr>
+					<td>责任单位：</td>
+					<td>
+						<input id="sel_zkwz" style="margin: 4px;">
+							
+					<td>风险分类：</td>
+					<td>
+						<input id="sel_zkwz" style="margin: 4px;">
+							
+					</td>
+					<td>风险等级：</td>
+					<td>
+						<input id="sel_zkwz" style="margin: 4px;">
+							
+					</td>
+					<td>辨识日期：</td>
+					<td>起始日期：<input type="date" id="starttime" /><br>结束日期：<input type="date" id="endtime" /><br></td>
+					<td><button type="button" class="btn_tj" id="btn_sel"><i class="iconfont icon-chaxun"></i>生成分布图</button></td>
+					
+				</tr>
+				
+					
+
+				
+			</table>
+			<div class="btn_tr" id="toolbar">
+				<!--<div>
+					<button type="button" class="btn_bj" id="btn_bj"><i class="iconfont icon-export"></i>导出Excel</button>
+				</div>-->
+			</div>
+			<table id="Table2" border="1" cellspacing="0" cellpadding="5px">
+				<!--<thead>
+					<tr>
+						<th><input id="check" onchange="dianji()" type="checkbox"></th>
+						<th>类型</th>
+						<th>风险点</th>
+						<th>责任单位</th>
+						<th>风险等级</th>
+						<th>风险分类</th>
+						<th>风险描述</th>
+						<th>整改措施</th>
+						<th>跟踪说明</th>
+						<th>跟踪人员</th>
+						<th>跟踪时间</th>
+						<th>罚款</th>
+						<th>效果</th>
+					</tr>
+				</thead>
+				<tbody>
+
+				</tbody>-->
+			</table>
+		</form>
+		<script type="text/javascript" src="js/jquery-1.12.4.js"></script>
+		<!--<script type="text/javascript" src="js/popper.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>-->
+		<script type="text/javascript" src="js/core.min.js"></script>
+		<!--bootstrap-table插件-->
+		<script type="text/javascript" src="js/bootstrap-table.min.js"></script>
+		<!--table导出插件-->
+		<script type="text/javascript" src="js/bootstrap-table-export.min.js"></script>
+		<script type="text/javascript" src="js/tableExport.min.js"></script>
+		<!--bootstrap-table插件汉化-->
+		<script type="text/javascript" src="js/bootstrap-table-zh-CN.min.js"></script>
+
+		<script>
+			//			//把钻孔位置下拉框复制给文本框
+			//			$(document).ready(function() {
+			//				$("#sel_zkwz").change(function() {
+			//					$("#input_zkwz").val($("#sel_zkwz").val());
+			//				});
+			//			});
+			//			//清空表单
+			//			$("#btn_qk").click(function() {
+			//				$("#Form1")[0].reset();
+			//			})
+			//			$(function() {
+			//
+			//				//1.初始化Table
+			//				var oTable = new TableInit();
+			//				oTable.Init();
+			//
+			//				//2.初始化Button的点击事件
+			//				var oButtonInit = new ButtonInit();
+			//				oButtonInit.Init();
+			//
+			//			});
+			//			var TableInit = function() {
+			//				var oTableInit = new Object();
+			//				//初始化Table
+			//				oTableInit.Init = function() {
+			//					$('#Table2').bootstrapTable({
+			//						method: 'get',
+			//						toolbar: '#toolbar', //工具按钮用哪个容器
+			//						contentType: 'application/x-www-form-urlencoded',
+			//						url: 'http://222.179.63.202:20002/ktrq/GetHisbsfz.php',
+			//						dataType: 'json',
+			//						undefinedText: '-', //当数据为 undefined 时显示的字符
+			//						striped: true, //是否显示行间隔色
+			//						iconsPrefix: 'fa', //定义字体库 (‘Glyphicon’ or ‘fa’ for FontAwesome),
+			//						icons: {
+			//							paginationSwitchDown: 'fa-caret-square-down',
+			//							paginationSwitchUp: 'fa-caret-square-up',
+			//							refresh: 'fa-sync',
+			//							toggleOff: 'fa-toggle-off',
+			//							toggleOn: 'fa-toggle-on',
+			//							columns: 'fa-th-list',
+			//							detailOpen: 'fa-plus',
+			//							detailClose: 'fa-minus',
+			//							fullscreen: 'fa-arrows-alt',
+			//
+			//						},
+			//						cache: false, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+			//						queryParams: oTableInit.queryParams, //传递参数（*）
+			//						pagination: true, //是否显示分页（*）
+			//						paginationLoop: false, //设置为 true 启用分页条无限循环的功能
+			//						pageSize: 10, //如果设置了分页，页面数据条数
+			//						pageNumber: 1, //如果设置了分页，首页页码
+			//						pageList: [10, 25, 50, 100], //如果设置了分页，设置可供选择的页面数据条数。设置为All 则显示所有记录。
+			//						inputItemName: 'name',
+			//						smartDisplay: true, //设置为 true可以在分页和卡片视图快速切换
+			//						sidePagination: 'client', //设置在哪里进行分页，可选值为 ‘client’ 或者 ‘server’。设置 ‘server’时，必须设置 服务器数据地址（url）或者重写ajax方法
+			//						search: true, //是否启用搜索框
+			//						searchAlign: 'right', //指定 搜索框 水平方向的位置。’left’ or ‘right’
+			//						searchOnEnterKey: false, //设置为 true时，按回车触发搜索方法，否则自动触发搜索方法
+			//						strictSearch: true, //设置为 true启用 全匹配搜索，否则为模糊搜索
+			//						showHeader: true, //是否显示列头
+			//						showFooter: false, //是否显示列脚
+			//						showColumns: true, //是否显示 内容列下拉框
+			//						showRefresh: true, //是否显示 刷新按钮
+			//						showToggle: true, //是否显示 切换试图（table/card）按钮
+			//						showPaginationSwitch: true, //是否显示 数据条数选择框
+			//						buttonsAlign: 'right', //指定 按钮 水平方向的位置。’left’ or ‘right’
+			//						toolbarAlign: 'left', //指定 toolbar 水平方向的位置。’left’ or ‘right’
+			//						paginationVAlign: 'bottom', //指定 分页条 在垂直方向的位置。’top’ or ‘bottom’ or ‘bonth’
+			//						paginationHAlign: 'right', //指定 分页条 在水平方向的位置。’left’ or ‘right’
+			//						paginationDetailHAlign: 'left', //指定 分页详细信息 在水平方向的位置。’left’ or ‘right’
+			//						detailView: false, //设置为 true 可以显示详细页面模式。
+			//						paginationPreText: '上一页', //指定分页条中上一页按钮的图标或文字
+			//						paginationNextText: '下一页', //指定分页条中下一页按钮的图标或文字
+			//						clickToinput: true, //设置true 将在点击行时，自动选择rediobox 和 checkbox
+			//						singleinput: false, //设置True 将禁止多选
+			//						checkboxHeader: true, //设置false 将在列头隐藏check-all checkbox .]
+			//						maintaininputed: true, //设置为 true 在点击分页按钮或搜索按钮时，将记住checkbox的选择项
+			//						iconSize: 'btnxs', //定义图标大小：undefined=> btnxs=> btn-xssm=> btn-smlg=>btn-lg
+			//						uniqueId: "ID", //每一行的唯一标识，一般为主键列
+			//						showExport: true, //是否显示导出
+			//						exportDataType: "basic", //basic', 'all', 'inputed'.
+			//						exportOptions:{  
+			//                              ignoreColumn: [0,0],  //忽略某一列的索引  
+			//                              fileName: '导出数据',  //文件名称设置  
+			//                              worksheetName: 'sheet1',  //表格工作区名称  
+			//                              tableName: '导出数据',
+			//                          },
+			//						columns: [{
+			//								checkbox: true
+			//							},
+			//							{
+			//								field: "ylA",
+			//								title: "生产日期",
+			//								sortable: "true"
+			//							},
+			//							{
+			//								field: "wdA",
+			//								title: "班次",
+			//								sortable: "true"
+			//							},
+			//							{
+			//								field: "wdA",
+			//								title: "生产单位",
+			//								sortable: "true"
+			//							},
+			//							{
+			//								field: "wdA",
+			//								title: "施工地点",
+			//								sortable: "true"
+			//							},
+			//							{
+			//								field: "wdA",
+			//								title: "出勤",
+			//								sortable: "true"
+			//							},
+			//							{
+			//								field: "wdA",
+			//								title: "本班次人数",
+			//								sortable: "true"
+			//							},
+			//							{
+			//								field: "wdA",
+			//								title: "产量",
+			//								sortable: "true"
+			//							},
+			//							{
+			//								field: "wdA",
+			//								title: "进尺",
+			//								sortable: "true"
+			//							},
+			//							{
+			//								field: "wdA",
+			//								title: "其他事项",
+			//								sortable: "true"
+			//							},
+			//							{
+			//								field: "wdA",
+			//								title: "安全问题描述",
+			//								sortable: "true"
+			//							},
+			//							{
+			//								field: "wdA",
+			//								title: "值班领导",
+			//								sortable: "true"
+			//							},
+			//							{
+			//								field: "wdA",
+			//								title: "调度员",
+			//								sortable: "true"
+			//							},
+			//							{
+			//								field: "wdA",
+			//								title: "监控员",
+			//								sortable: "true"
+			//							},
+			//							{
+			//								field: "wdA",
+			//								title: "录入人",
+			//								sortable: "true"
+			//							},
+			//							{
+			//								field: "wdA",
+			//								title: "是否审核",
+			//								sortable: "true"
+			//							},
+			//							{
+			//								field: "wdA",
+			//								title: "是否事故",
+			//								sortable: "true"
+			//							}
+			//						],
+			//						onLoadSuccess: function() {},
+			//						onLoadError: function() {
+			//							return "加载失败了";
+			//						},
+			//						onDblClickRow: function(row, $element) {
+			//							var id = row.ID;
+			//							//							EditViewById(id, 'view');
+			//							alert(id);
+			//							layer.open({
+			//								type: 2,
+			//								title: '编辑',
+			//								maxmin: true,
+			//								shadeClose: true, //点击遮罩关闭层
+			//								area: ['1000px', '600px'],
+			//								content: 'html/dcxt/dcxt_swdzzkpc_insert.html'
+			//							});
+			//						},
+			//					});
+			//				}
+			//				//得到查询的参数
+			//				oTableInit.queryParams = function(params) {
+			//					var temp = { //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+			//						limit: params.limit, //页面大小
+			//						offset: params.offset, //页码
+			//						time: $("#starttime").val(),
+			//					};
+			//					return temp;
+			//				};
+			//				return oTableInit;
+			//				//修改导出图标
+			//				$(".icon-share").attr("class", "fa-arrows-alt");
+			//
+			//			}
+			//			var ButtonInit = function() {
+			//				var oInit = new Object();
+			//				var postdata = {};
+			//
+			//				oInit.Init = function() {
+			//					//初始化页面上面的按钮事件
+			//				};
+			//				return oInit;
+			//			};
+			//			//查询数据
+			//			$("#btn_sel").click(function() {
+			//				var starttime = $("#starttime").val();
+			//				$.ajax({
+			//					type: "get",
+			//					url: "http://222.179.63.202:20002/ktrq/GetHisbsfz.php",
+			//					data: {
+			//						time: starttime
+			//					},
+			//					dataType: "json",
+			//					success: function(json) {
+			//						$("#Table2").bootstrapTable('load', json); //主要是要这种写法
+			//					}
+			//				});
+			//			});
+			//			//实现删除数据的方法
+			//			$("#btn_del").click(function() {
+			//				var ids = ""; //得到用户选择的数据的ID
+			//				var rows = $('#Table2').bootstrapTable('getinputions');
+			//				for(var i = 0; i < rows.length; i++) {
+			//					ids += rows[i].ID + ',';
+			//				}
+			//				ids = ids.substring(0, ids.length - 1);
+			//
+			//				alert(ids);
+			//			})
+			//			//实现编辑数据的方法
+			//			$("#btn_bj").click(function() {
+			//				var rows = $('#Table2').bootstrapTable('getinputions');
+			//				if(rows.length > 0) {
+			//					ID = rows[0].ID;
+			//				}
+			//				alert(ID);
+			//				$.ajax({
+			//					type: "get",
+			//					url: "html/dcxt/dcxt_swdzzkpc_insert.html",
+			//					async: true,
+			//					success: function(data) {
+			//						alert("1");
+			//						$('.eq_form').html(data);
+			//						$(".dh>ul>li>a").text(cj_name);
+			//						$(".dh>ul>li:eq(2)").text(zd_name);
+			//					}
+			//				});
+			//			});
+		</script>
+	</body>
+
+</html>

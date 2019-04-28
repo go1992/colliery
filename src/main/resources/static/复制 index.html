@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<link rel="stylesheet" href="fonts/iconfont.css" />
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" href="css/bootstrap-table.min.css" />
+		<link rel="stylesheet" href="css/all.css" />
+		<link rel="stylesheet" href="css/font-awesome.min.css" />
+		<style>
+			* {
+				margin: 0px;
+				padding: 0px;
+				font-size: 13px;
+			}
+			
+			body {
+				-moz-user-select: none;
+				/*火狐*/
+				-webkit-user-select: none;
+				/*webkit浏览器*/
+				-ms-user-select: none;
+				/*IE10*/
+				-khtml-user-select: none;
+				/*早期浏览器*/
+				user-select: none;
+			}
+			
+			header {
+				width: 100%;
+				height: 76px;
+				/*background: #2dc3e8;*/
+				background: #222;
+				position: fixed;
+				top: 0;
+				z-index: 999;
+			}
+			
+			.logo {
+				margin-left: 10%;
+				margin-top: 5px;
+				font-size: 20px;
+			}
+			
+			.logo>a>img {
+				vertical-align: text-bottom
+			}
+			
+			.top_title {
+				color: #337ab7;
+				margin-left: 20px;
+				font-size: 24px;
+				font-weight: bold;
+			}
+			/*左侧导航*/
+			
+			.content {
+				width: 100%;
+				height: auto;
+				background-color: #e9ecf2;
+			}
+			
+			.l_menu {
+				width: 20%;
+				overflow-y: scroll;
+				float: left;
+				position: fixed;
+				left: 0;
+				top: 76px;
+				bottom: 0;
+				overflow-x: hidden;
+				background-color: #263238;
+			}
+			
+			ul li {
+				list-style: none;
+			}
+			
+			.menu_ul>li>a:hover,
+			.ul_hidden>li>a:hover,
+			.ul_ulhidden>li>a:hover {
+				background-color: #2b373d;
+				color: #c5cbcf;
+				cursor: pointer;
+			}
+			
+			.ul_ulhidden>li>a>span {
+				margin-left: 40px;
+				margin-right: 10px;
+			}
+			
+			a {
+				text-decoration: none;
+			}
+			
+			a:hover {
+				text-decoration: none;
+			}
+			
+			a:focus {
+				text-decoration: none;
+			}
+			
+			.menu_ul {
+				width: 100%;
+				height: auto;
+				margin: auto;
+				/*background: #fff;*/
+				/*color: #30a5ff;*/
+			}
+			
+			.menu_ul>li>a {
+				display: block;
+				width: 100%;
+				padding: 10px;
+				color: #8a979e;
+			}
+			
+			.ul_hidden {
+				display: none;
+			}
+			
+			.ul_hidden a {
+				border: none;
+				display: block;
+				width: 100%;
+				height: 40px;
+				color: #8a979e;
+			}
+			
+			.ul_ulhidden {
+				display: none;
+			}
+			
+			.eq_li {
+				color: #30a5ff;
+			}
+			
+			.eq_li>ul>li {
+				background-color: #263238;
+				color: #8a979e;
+				line-height: 40px;
+			}
+			
+			.eq_li>ul>li>a>span {
+				margin-right: 10px;
+				margin-left: 30px;
+			}
+			
+			.eq_info>span {
+				margin-left: 10px;
+				margin-right: 10px;
+			}
+			
+			.eq_table {
+				width: 80%;
+				height: auto;
+				float: left;
+				margin-left: 20%;
+				margin-top: 76px;
+			}
+			
+			.pull-right {
+				float: right;
+				margin-right: 16px !important;
+			}
+			
+			.dh {
+				width: 100%;
+				height: 40px;
+				line-height: 40px;
+				margin: auto;
+				color: #30a5ff;
+				border-bottom: 1px solid gainsboro;
+				background-color: #e9ecf2;
+				box-shadow: 4px 4px 4px #888888;
+			}
+			
+			.dh>ul {
+				margin-left: 20px;
+			}
+			
+			.dh>ul>li {
+				float: left;
+			}
+			
+			.dh>ul>li+li:before {
+				padding: 0 5px;
+				color: #ccc;
+				content: "/\00a0";
+			}
+			
+			.active1 {
+				color: #777;
+			}
+			
+			.dh li>a:hover {
+				text-decoration: underline;
+				color: #30a5ff;
+			}
+			
+			.active {
+				background-color: #2b373d !important;
+				color: #c5cbcf !important;
+			}
+		</style>
+		<link rel="stylesheet" href="http://47.92.204.220:8085/hn/js/layer/theme/default/layer.css?v=3.1.1" id="layuicss-layer">
+	</head>
+
+	<body>
+		<header>
+			<div class="logo">
+				<a>
+					<img src="img/logo.png" height="66px" />
+					<span class="top_title">贵州省XX煤矿综合信息管理平台</span>
+				</a>
+			</div>
+			<!--<h3 class="top_title">贵州省XX煤矿综合信息管理平台</h3>-->
+		</header>
+		<div class="content">
+				<div class="l_menu">
+					<ul class="menu_ul">
+						<li class="eq_li">
+							<a id="index_html" class="eq_info active">
+								<span class="iconfont icon-dizhizaihai"></span> 首页
+								<!--<span class="pull-right"><em class="iconfont icon-arrow-right-copy"></em></span>-->
+							</a>
+						</li>
+						<li class="eq_li">
+							<a id="eq_info" class="eq_info">
+								<span class="iconfont icon-dizhizaihai"></span> 地测信息管理
+								<span class="pull-right"><em class="iconfont icon-arrow-right-copy"></em></span>
+							</a>
+							<ul class="ul_hidden">
+								<li class="cjsb">
+									<a href="#" id="dcxt_kjdz" onclick="LoadHtml(this,'html/dcxt/dcxt_kjdz.html')"><span class="iconfont icon-caidan"></span>矿井地质</a>
+								</li>
+								<li>
+									<a href="#" id="dcxt_kjcl" onclick="LoadHtml(this,'html/dcxt/dcxt_kjcl.html')"><span class="iconfont icon-caidan"></span>矿井测量</a>
+								</li>
+								<li>
+									<a href="#" id="dcxt_swdz" onclick="LoadHtml(this,'html/dcxt/dcxt_swdz.html')"><span class="iconfont icon-caidan"></span>水文地质</a>
+								</li>
+								<li>
+									<a href="#" id="dcxt_clgl" onclick="LoadHtml(this,'html/dcxt/dcxt_clgl.html')"><span class="iconfont icon-caidan"></span>储量管理</a>
+								</li>
+								<li>
+									<a href="#"><span class="iconfont icon-caidan"></span>水文地质钻孔排查</a>
+									<ul class="ul_ulhidden">
+										<li>
+											<a href="#" id="dcxt_swdzzkpc_insert" onclick="LoadHtml(this,'html/dcxt/dcxt_swdzzkpc_insert.html')"><span class="iconfont icon-jiantouarrow484"></span>钻孔排查录入</a>
+										</li>
+										<li>
+											<a href="#" id="dcxt_swdzzkpc_select" onclick="LoadHtml(this,'html/dcxt/dcxt_swdzzkpc_select.html')"><span class="iconfont icon-jiantouarrow484"></span>排查信息维护</a>
+										</li>
+										<li>
+											<a href="#" id="dcxt_swdzzkpc_bbdc" onclick="LoadHtml(this,'html/dcxt/dcxt_swdzzkpc_bbdc.html')"><span class="iconfont icon-jiantouarrow484"></span>排查信息报表导出</a>
+										</li>
+									</ul>
+								</li>
+								<li>
+									<a href="#"><span class="iconfont icon-caidan"></span>水文险情预警及处理</a>
+									<ul class="ul_ulhidden">
+										<li>
+											<a href="#" id="dcxt_swxqyjjcl_insert" onclick="LoadHtml(this,'html/dcxt/dcxt_swxqyjjcl_insert.html')"><span class="iconfont icon-jiantouarrow484"></span>水文险情信息录入</a>
+										</li>
+										<li>
+											<a href="#" id="dcxt_swxqyjjcl_select" onclick="LoadHtml(this,'html/dcxt/dcxt_swxqyjjcl_select.html')"><span class="iconfont icon-jiantouarrow484"></span>水文险情信息维护</a>
+										</li>
+										<li>
+											<a href="#" id="dcxt_swxqyjjcl_bbdc" onclick="LoadHtml(this,'html/dcxt/dcxt_swxqyjjcl_bbdc.html')"><span class="iconfont icon-jiantouarrow484"></span>信息报表导出</a>
+										</li>
+									</ul>
+								</li>
+								<li>
+									<a href="#"><span class="iconfont icon-caidan"></span>基本参数设置</a>
+									<ul class="ul_ulhidden">
+										<li>
+											<a href="#" id="dcxt_jbcssz_kqwzsz" onclick="LoadHtml(this,'html/dcxt/dcxt_jbcssz_kqwzsz.html')"><span class="iconfont icon-jiantouarrow484"></span>矿区位置设置</a>
+										</li>
+										<li>
+											<a href="#" id="dcxt_jbcssz_usersz" onclick="LoadHtml(this,'html/dcxt/dcxt_jbcssz_usersz.html')"><span class="iconfont icon-jiantouarrow484"></span>用户/密码/权限设置</a>
+										</li>
+										<li>
+											<a href="#" id="dcxt_jbcssz_gssjdcbsc" onclick="LoadHtml(this,'html/dcxt/dcxt_jbcssz_gssjdcbsc.html')"><span class="iconfont icon-jiantouarrow484"></span>过时数据导出并删除</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+						<li class="eq_li">
+							<a class="eq_info">
+								<span class="iconfont icon-tiaoduji"></span> 调度信息管理
+								<span class="pull-right"><em class="iconfont icon-arrow-right-copy"></em></span>
+							</a>
+							<ul class="ul_hidden">
+								<li class="cjsb">
+									</li><li>
+										<a href="#"><span class="iconfont icon-caidan"></span>安全生产调度报表</a>
+										<ul class="ul_ulhidden">
+											<li>
+												<a href="#" id="ddxt_aqscddbb_insert" onclick="LoadHtml(this,'html/ddxt/ddxt_aqscddbb_insert.html')"><span class="iconfont icon-jiantouarrow484"></span>录入安全生产信息</a>
+											</li>
+											<li>
+												<a href="#" id="dcxt_aqscddbb_select" onclick="LoadHtml(this,'html/ddxt/ddxt_aqscddbb_select.html')"><span class="iconfont icon-jiantouarrow484"></span>安全生产信息维护</a>
+											</li>
+											<li>
+												<a href="#" id="dcxt_aqscddbb_bldsh" onclick="LoadHtml(this,'html/ddxt/ddxt_aqscddbb_bldsh.html')"><span class="iconfont icon-jiantouarrow484"></span>生产情况表领导审核</a>
+											</li>
+											<li>
+												<a href="#" id="ddxt_aqscddbb_scxxbdc" onclick="LoadHtml(this,'html/ddxt/ddxt_aqscddbb_scxxbdc.html')"><span class="iconfont icon-jiantouarrow484"></span>生产信息Excel表导出</a>
+											</li>
+											<li>
+												<a href="#" id="ddxt_aqscddbb_scxxtjfxb" onclick="LoadHtml(this,'html/ddxt/ddxt_aqscddbb_scxxtjfxb.html')"><span class="iconfont icon-jiantouarrow484"></span>生产信息统计分析表</a>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<a href="#"><span class="iconfont icon-caidan"></span>生产安全事故跟踪</a>
+										<ul class="ul_ulhidden">
+											<li>
+												<a href="#" id="ddxt_scaqsggz_insert" onclick="LoadHtml(this,'html/ddxt/ddxt_scaqsggz_insert.html')"><span class="iconfont icon-jiantouarrow484"></span>录入生产安全事故</a>
+											</li>
+											<li>
+												<a href="#" id="ddxt_scaqsggz_select" onclick="LoadHtml(this,'html/ddxt/ddxt_scaqsggz_select.html')"><span class="iconfont icon-jiantouarrow484"></span>生产安全事故处理跟踪</a>
+											</li>
+											<li>
+												<a href="#" id="ddxt_scaqsggz_aqscsgtzbb" onclick="LoadHtml(this,'html/ddxt/ddxt_scaqsggz_aqscsgtzbb.html')"><span class="iconfont icon-jiantouarrow484"></span>安全生产事故台账报表</a>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<a href="#"><span class="iconfont icon-caidan"></span>安全事故统计分析</a>
+										<ul class="ul_ulhidden">
+											<li>
+												<a href="#" id="ddxt_aqsgtjfx_aqscnyxbb" onclick="LoadHtml(this,'html/ddxt/ddxt_aqsgtjfx_aqscnyxbb.html')"><span class="iconfont icon-jiantouarrow484"></span>安全生产年月旬报表</a>
+											</li>
+											<li>
+												<a href="#" id="ddxt_aqsgtjfx_aqscfxtjb" onclick="LoadHtml(this,'html/ddxt/ddxt_aqsgtjfx_aqscfxtjb.html')"><span class="iconfont icon-jiantouarrow484"></span>安全生产分析统计表</a>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<a href="#"><span class="iconfont icon-caidan"></span>基本信息设置</a>
+										<ul class="ul_ulhidden">
+											<li>
+												<a href="#" id="ddxt_jbxxsz_dlyhsz" onclick="LoadHtml(this,'html/ddxt/ddxt_jbxxsz_dlyhsz.html')"><span class="iconfont icon-jiantouarrow484"></span>登录用户设置</a>
+											</li>
+											<li>
+												<a href="#" id="ddxt_jbxxsz_dlyhsz" onclick="LoadHtml(this,'html/ddxt/ddxt_jbxxsz_dlyhsz.html')"><span class="iconfont icon-jiantouarrow484"></span>生产单位设置</a>
+											</li>
+											<li>
+												<a href="#" id="ddxt_jbxxsz_kqwzsz" onclick="LoadHtml(this,'html/ddxt/ddxt_jbxxsz_kqwzsz.html')"><span class="iconfont icon-jiantouarrow484"></span>矿区位置设置</a>
+											</li>
+											<li>
+												<a href="#" id="ddxt_jbxxsz_gssjdcbsc" onclick="LoadHtml(this,'html/ddxt/ddxt_jbxxsz_gssjdcbsc.html')"><span class="iconfont icon-jiantouarrow484"></span>过时数据导出并删除</a>
+											</li>
+										</ul>
+									</li>
+								
+							</ul>
+						</li>
+						<li class="eq_li">
+							<a class="eq_info">
+								<span class="iconfont icon-anquan"></span> 安全风险管控
+								<span class="pull-right"><em class="iconfont icon-arrow-right-copy"></em></span>
+							</a>
+							<ul class="ul_hidden">
+								<li class="cjsb">
+									</li><li>
+										<a href="#"><span class="iconfont icon-caidan"></span>年度风险辨识</a>
+										<ul class="ul_ulhidden">
+											<li>
+												<a href="#" id="aqxt_ndfxbs_insert" onclick="LoadHtml(this,'html/aqxt/aqxt_ndfxbs_insert.html')"><span class="iconfont icon-jiantouarrow484"></span>年度辨识风险录入</a>
+											</li>
+											<li>
+												<a href="#" id="aqxt_ndfxbs_select" onclick="LoadHtml(this,'html/aqxt/aqxt_ndfxbs_select.html')"><span class="iconfont icon-jiantouarrow484"></span>年度风险库维护</a>
+											</li>
+											<li>
+												<a href="#" id="aqxt_ndfxbs_ndfxbb" onclick="LoadHtml(this,'html/aqxt/aqxt_ndfxbs_ndfxbb.html')"><span class="iconfont icon-jiantouarrow484"></span>年度风险报表</a>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<a href="#"><span class="iconfont icon-caidan"></span>专项风险辨识</a>
+										<ul class="ul_ulhidden">
+											<li>
+												<a href="#" id="aqxt_zxfxbs_insert" onclick="LoadHtml(this,'html/aqxt/aqxt_zxfxbs_insert.html')"><span class="iconfont icon-jiantouarrow484"></span>专项辨识录入</a>
+											</li>
+											<li>
+												<a href="#" id="aqxt_zxfxbs_select" onclick="LoadHtml(this,'html/aqxt/aqxt_zxfxbs_select.html')"><span class="iconfont icon-jiantouarrow484"></span>专项辨识维护</a>
+											</li>
+											<li>
+												<a href="#" id="aqxt_zxfxbs_zxbsfxbb" onclick="LoadHtml(this,'html/aqxt/aqxt_zxfxbs_zxbsfxbb.html')"><span class="iconfont icon-jiantouarrow484"></span>专项辨识风险报表</a>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<a href="#"><span class="iconfont icon-caidan"></span>管控效果及分析</a>
+										<ul class="ul_ulhidden">
+											<li>
+												<a href="#" id="aqxt_gkxgjfx_ydzdgk" onclick="LoadHtml(this,'html/aqxt/aqxt_gkxgjfx_ydzdgk.html')"><span class="iconfont icon-jiantouarrow484"></span>月度重点管控效果分析</a>
+											</li>
+											<li>
+												<a href="#" id="aqxt_gkxgjfx_xdzdgk" onclick="LoadHtml(this,'html/aqxt/aqxt_gkxgjfx_xdzdgk.html')"><span class="iconfont icon-jiantouarrow484"></span>旬度重点管控效果分析</a>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<a href="#"><span class="iconfont icon-caidan"></span>风险跟踪及报表</a>
+										<ul class="ul_ulhidden">
+											<li>
+												<a href="#" id="aqxt_fxgzjbb_zjgzjl" onclick="LoadHtml(this,'html/aqxt/aqxt_fxgzjbb_zjgzjl.html')"><span class="iconfont icon-jiantouarrow484"></span>增加跟踪记录</a>
+											</li>
+											<li>
+												<a href="#" id="aqxt_fxgzjbb_gzjlwh" onclick="LoadHtml(this,'html/aqxt/aqxt_fxgzjbb_gzjlwh.html')"><span class="iconfont icon-jiantouarrow484"></span>跟踪记录维护</a>
+											</li>
+											<li>
+												<a href="#" id="aqxt_fxgzjbb_gkcssxjl" onclick="LoadHtml(this,'html/aqxt/aqxt_fxgzjbb_gkcssxjl.html')"><span class="iconfont icon-jiantouarrow484"></span>管控措施失效记录</a>
+											</li>
+											<li>
+												<a href="#" id="aqxt_fxgzjbb_gzjltzbb" onclick="LoadHtml(this,'html/aqxt/aqxt_fxgzjbb_gzjltzbb.html')"><span class="iconfont icon-jiantouarrow484"></span>跟踪记录台账报表</a>
+											</li>
+											<li>
+												<a href="#" id="aqxt_fxgzjbb_gzjlnyxbb" onclick="LoadHtml(this,'html/aqxt/aqxt_fxgzjbb_gzjlnyxbb.html')"><span class="iconfont icon-jiantouarrow484"></span>跟踪记录年月旬报表</a>
+											</li>
+											<li>
+												<a href="#" id="aqxt_fxgzjbb_fkbb" onclick="LoadHtml(this,'html/aqxt/aqxt_fxgzjbb_fkbb.html')"><span class="iconfont icon-jiantouarrow484"></span>罚款报表</a>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<a href="#"><span class="iconfont icon-caidan"></span>风险数据库报表</a>
+										<ul class="ul_ulhidden">
+											<li>
+												<a href="#" id="aqxt_fxsjkbb_fxsbb" onclick="LoadHtml(this,'html/aqxt/aqxt_fxsjkbb_fxsbb.html')"><span class="iconfont icon-jiantouarrow484"></span>风险上报表</a>
+											</li>
+											<li>
+												<a href="#" id="aqxt_fxsjkbb_fxwzfbzst" onclick="LoadHtml(this,'html/aqxt/aqxt_fxsjkbb_fxwzfbzst.html')"><span class="iconfont icon-jiantouarrow484"></span>风险位置分布展示图</a>
+											</li>
+											<li>
+												<a href="#" id="aqxt_fxsjkbb_fxtjbb" onclick="LoadHtml(this,'html/aqxt/aqxt_fxsjkbb_fxtjbb.html')"><span class="iconfont icon-jiantouarrow484"></span>分析统计报表</a>
+											</li>
+											<li>
+												<a href="#" id="aqxt_fxsjkbb_fxfxEecelbb" onclick="LoadHtml(this,'html/aqxt/aqxt_fxsjkbb_fxfxEecelbb.html')"><span class="iconfont icon-jiantouarrow484"></span>风险分析Excel表</a>
+											</li>
+											<li>
+												<a href="#" id="aqxt_fxsjkbb_fxzwxj" onclick="LoadHtml(this,'html/aqxt/aqxt_fxsjkbb_fxzwxj.html')"><span class="iconfont icon-jiantouarrow484"></span>风险转为消警</a>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<a href="#"><span class="iconfont icon-caidan"></span>领导跟踪检查</a>
+										<ul class="ul_ulhidden">
+											<li>
+												<a href="#" id="aqxt_ldgzjc_insert" onclick="LoadHtml(this,'html/aqxt/aqxt_ldgzjc_insert.html')"><span class="iconfont icon-jiantouarrow484"></span>增加跟踪检查记录</a>
+											</li>
+											<li>
+												<a href="#" id="aqxt_ldgzjc_cxxggzjl" onclick="LoadHtml(this,'html/aqxt/aqxt_ldgzjc_cxxggzjl.html')"><span class="iconfont icon-jiantouarrow484"></span>查询修改跟踪记录</a>
+											</li>
+											<li>
+												<a href="#" id="aqxt_ldgzjc_jltjjbb" onclick="LoadHtml(this,'html/aqxt/aqxt_ldgzjc_jltjjbb.html')"><span class="iconfont icon-jiantouarrow484"></span>记录统计及报表</a>
+											</li>
+											<li>
+												<a href="#" id="aqxt_ldgzjc_LEDnrbb" onclick="LoadHtml(this,'html/aqxt/aqxt_ldgzjc_LEDnrbb.html')"><span class="iconfont icon-jiantouarrow484"></span>LED内容报表</a>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<a href="#"><span class="iconfont icon-caidan"></span>基本参数设置</a>
+										<ul class="ul_ulhidden">
+											<li>
+												<a href="#" id="aqxt_jbcssz_kqwzsz" onclick="LoadHtml(this,'html/aqxt/aqxt_jbcssz_kqwzsz.html')"><span class="iconfont icon-jiantouarrow484"></span>矿区位置设置</a>
+											</li>
+											<li>
+												<a href="#" id="aqxt_jbcssz_usersz" onclick="LoadHtml(this,'html/aqxt/aqxt_jbcssz_usersz.html')"><span class="iconfont icon-jiantouarrow484"></span>用户/密码/权限设置</a>
+											</li>
+											<li>
+												<a href="#" id="aqxt_jbcssz_kldsz" onclick="LoadHtml(this,'html/aqxt/aqxt_jbcssz_kldsz.html')"><span class="iconfont icon-jiantouarrow484"></span>矿领导设置</a>
+											</li>
+											<li>
+												<a href="#" id="aqxt_jbcssz_fxlxsz" onclick="LoadHtml(this,'html/aqxt/aqxt_jbcssz_fxlxsz.html')"><span class="iconfont icon-jiantouarrow484"></span>风险类型设置</a>
+											</li>
+											<li>
+												<a href="#" id="aqxt_jbcssz_xgkqbjt" onclick="LoadHtml(this,'html/aqxt/aqxt_jbcssz_xgkqbjt.html')"><span class="iconfont icon-jiantouarrow484"></span>修改矿区背景图</a>
+											</li>
+											<li>
+												<a href="#" id="aqxt_jbcssz_sjkbj" onclick="LoadHtml(this,'html/aqxt/aqxt_jbcssz_sjkbj.html')"><span class="iconfont icon-jiantouarrow484"></span>数据库标记</a>
+											</li>
+											<li>
+												<a href="#" id="aqxt_jbcssz_zxjfxcx" onclick="LoadHtml(this,'html/aqxt/aqxt_jbcssz_zxjfxcx.html')"><span class="iconfont icon-jiantouarrow484"></span>转消警风险查询</a>
+											</li>
+											<li>
+												<a href="#" id="aqxt_jbcssz_gkcsxgjl" onclick="LoadHtml(this,'html/aqxt/aqxt_jbcssz_gkcsxgjl.html')"><span class="iconfont icon-jiantouarrow484"></span>管控措施修改记录</a>
+											</li>
+											<li>
+												<a href="#" id="aqxt_jbcssz_gssjdcbsc" onclick="LoadHtml(this,'html/aqxt/aqxt_jbcssz_gssjdcbsc.html')"><span class="iconfont icon-jiantouarrow484"></span>过时数据导出并删除</a>
+											</li>
+										</ul>
+									</li>
+								
+							</ul>
+						</li>
+						<li class="eq_li">
+							<a class="eq_info">
+								<span class="iconfont icon-yinhuandianwei"></span> 隐患排查治理信息化管理
+								<span class="pull-right"><em class="iconfont icon-arrow-right-copy"></em></span>
+							</a>
+							<ul class="ul_hidden">
+								<li class="cjsb">
+									</li><li>
+										<a href="#"><span class="iconfont icon-caidan"></span>隐患录入</a>
+										<ul class="ul_ulhidden">
+											<li>
+												<a href="#" id="yhxt_yhlr_insert" onclick="LoadHtml(this,'html/yhxt/yhxt_yhlr_insert.html')"><span class="iconfont icon-jiantouarrow484"></span>增加新隐患信息</a>
+											</li>
+											<li>
+												<a href="#" id="yhxt_yhlr_select" onclick="LoadHtml(this,'html/yhxt/yhxt_yhlr_select.html')"><span class="iconfont icon-jiantouarrow484"></span>编辑新录入信息</a>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<a href="#"><span class="iconfont icon-caidan"></span>隐患分发</a>
+										<ul class="ul_ulhidden">
+											<li>
+												<a href="#" id="yhxt_yhff_xyhshff" onclick="LoadHtml(this,'html/yhxt/yhxt_yhff_xyhshff.html')"><span class="iconfont icon-jiantouarrow484"></span>新隐患审核分发</a>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<a href="#"><span class="iconfont icon-caidan"></span>隐患确认及处理</a>
+										<ul class="ul_ulhidden">
+											<li>
+												<a href="#" id="yhxt_yhqrjcl_yhqd" onclick="LoadHtml(this,'html/yhxt/yhxt_yhqrjcl_yhqd.html')"><span class="iconfont icon-jiantouarrow484"></span>隐患签单</a>
+											</li>
+											<li>
+												<a href="#" id="yhxt_yhqrjcl_yhcljgtj" onclick="LoadHtml(this,'html/yhxt/yhxt_yhqrjcl_yhcljgtj.html')"><span class="iconfont icon-jiantouarrow484"></span>隐患处理结果提交</a>
+											</li>
+											<li>
+												<a href="#" id="yhxt_yhqrjcl_yhtz" onclick="LoadHtml(this,'html/yhxt/yhxt_yhqrjcl_yhtz.html')"><span class="iconfont icon-jiantouarrow484"></span>本责任部门_隐患台帐</a>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<a href="#"><span class="iconfont icon-caidan"></span>隐患预警</a>
+										<ul class="ul_ulhidden">
+											<li>
+												<a href="#" id="yhxt_yhyj_csyjtjybb" onclick="LoadHtml(this,'html/yhxt/yhxt_yhyj_csyjtjybb.html')"><span class="iconfont icon-jiantouarrow484"></span>超时预警统计与报表</a>
+											</li>
+											<li>
+												<a href="#" id="yhxt_yhyj_aqyjxxfb" onclick="LoadHtml(this,'html/yhxt/yhxt_yhyj_aqyjxxfb.html')"><span class="iconfont icon-jiantouarrow484"></span>安全预警信息发布</a>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<a href="#"><span class="iconfont icon-caidan"></span>隐患跟踪</a>
+										<ul class="ul_ulhidden">
+											<li>
+												<a href="#" id="yhxt_yhgz_fcpd" onclick="LoadHtml(this,'html/yhxt/yhxt_yhgz_fcpd.html');"><span class="iconfont icon-jiantouarrow484"></span>复查派单</a>
+											</li>
+											<li>
+												<a href="#"><span class="iconfont icon-jiantouarrow484"></span>查看派单任务</a>
+											</li>
+											<li>
+												<a href="#"><span class="iconfont icon-jiantouarrow484"></span>上传复查结果</a>
+											</li>
+											<li>
+												<a href="#"><span class="iconfont icon-jiantouarrow484"></span>复查结果审核及销号</a>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<a href="#"><span class="iconfont icon-caidan"></span>统计分析报表</a>
+										<ul class="ul_ulhidden">
+											<li>
+												<a href="#"><span class="iconfont icon-jiantouarrow484"></span>按流程分类统计</a>
+											</li>
+											<li>
+												<a href="#"><span class="iconfont icon-jiantouarrow484"></span>隐患台账报表</a>
+											</li>
+											<li>
+												<a href="#"><span class="iconfont icon-jiantouarrow484"></span>隐患年月旬报表</a>
+											</li>
+											<li>
+												<a href="#"><span class="iconfont icon-jiantouarrow484"></span>罚款导出报表</a>
+											</li>
+											<li>
+												<a href="#"><span class="iconfont icon-jiantouarrow484"></span>按隐患时间统计图</a>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<a href="#"><span class="iconfont icon-caidan"></span>基本信息设置</a>
+										<ul class="ul_ulhidden">
+											<li>
+												<a href="#"><span class="iconfont icon-jiantouarrow484"></span>增加新隐患信息</a>
+											</li>
+											<li>
+												<a href="#"><span class="iconfont icon-jiantouarrow484"></span>隐患数据查询删除</a>
+											</li>
+											<li>
+												<a href="#"><span class="iconfont icon-jiantouarrow484"></span>隐患罚款条款设置</a>
+											</li>
+											<li>
+												<a href="#"><span class="iconfont icon-jiantouarrow484"></span>隐患类型设置</a>
+											</li>
+											<li>
+												<a href="#"><span class="iconfont icon-jiantouarrow484"></span>登录用户设置</a>
+											</li>
+											<li>
+												<a href="#"><span class="iconfont icon-jiantouarrow484"></span>矿区位置设置</a>
+											</li>
+											<li>
+												<a href="#"><span class="iconfont icon-jiantouarrow484"></span>数据库标记</a>
+											</li>
+											<li>
+												<a href="#"><span class="iconfont icon-jiantouarrow484"></span>过时数据导出及删除</a>
+											</li>
+										</ul>
+									</li>
+								
+							</ul>
+						</li>
+					</ul>
+				</div>
+	
+				<div class="eq_table">
+					<div class="dh">
+						<ul>
+							<li id="btn_home"><span class="iconfont icon-zhuye"></span></li>
+							<li>
+								<a href="#">首页</a>
+							</li>
+							<li class="active1"></li>
+						</ul>
+					</div>
+					<div class="eq_form">
+	
+	
+		
+			<meta charset="UTF-8">
+			<title></title>
+			<style>
+				*{
+					box-sizing:content-box ;
+				}
+				.icon_item {
+					margin-bottom: 1rem;
+					min-height: 900px;
+				}
+				
+				.icon_item>li {
+					width: 140px;
+					height: 90px;
+					margin-left: 0.5%;
+					margin-right: 0.5%;
+					margin-top: 20px;
+					margin-bottom: 20px;
+					background: rgba(48, 165, 255, 0.5);
+					float: left;
+					border-radius: 5px;
+					text-align: center;
+					color: #30a5ff;
+					line-height: 1.2;
+					position: relative;
+				}
+				
+				.icon_item li>a:hover {
+					/*margin-top: 20px;
+					margin-bottom: 20px;
+					background: rgba(48, 165, 255, 0.9);
+					float: left;
+					border-radius: 5px;
+					text-align: center;*/
+					color: white;
+					cursor: pointer;
+				}
+				
+				.iconfont50 {
+					font-size: 50px;
+					color: white;
+					padding-top: 6px;
+					padding-bottom: 6px;
+				}
+				
+				.icon_title {
+					padding-top: 6px;
+					font-size: 14px;
+					font-weight: bold;
+				}
+				.showinfoBox{
+					border: 1px solid #71aaed;
+					background-color: #f1f4f9;
+					min-width: 400px;
+					height:auto ;
+					text-align: left;
+					   padding-bottom: 10px;
+					   position: absolute;
+					   z-index: 999;
+					   
+					display: none;
+					   
+				}
+				.showinfo_title{
+					background-color: #e7eef6;
+					height: 35px;
+					line-height: 35px;
+					color: #4988cd;
+					text-indent: 10px;
+				}
+				.showinfo_titlef{
+					text-indent: 10px;
+				}
+				.li_itme{
+					width: 98%;
+					margin-left: 2%;
+					margin-bottom: 2%;
+					height: 30px;
+					border-bottom: 1px solid #abcae9;
+				}
+				.li_itme>li{
+					float: left;
+					padding: 2px;
+				}
+				.li_itme>li>a:hover{
+					cursor: pointer;
+					color: red;
+				}
+			</style>
+		
+	
+		
+			<ul class="icon_item">
+				<li>
+					<a>
+						<i class="iconfont iconfont50 icon-drxx08"></i>
+						<p class="icon_title">用户权限管理</p>
+					</a>
+				</li>
+				<li>
+					<a>
+						<i class="iconfont iconfont50 icon-canshupeizhi"></i>
+						<p class="icon_title">参数配置管理</p>
+					</a>
+				</li>
+				<li>
+					<a>
+						<i class="iconfont iconfont50 icon-renyuanxinxi"></i>
+						<p class="icon_title">人员信息管理</p>
+					</a>
+				</li>
+				<li>
+					<a>
+						<i class="iconfont iconfont50 icon-bumenrenyuanguanli"></i>
+						<p class="icon_title">部门班组管理</p>
+					</a>
+				</li>
+				<li>
+					<a>
+						<i class="iconfont iconfont50 icon-zhishi"></i>
+						<p class="icon_title">知识管理</p>
+					</a>
+					<div class="showinfoBox">
+						<p class="showinfo_title">知识管理</p>
+						<div class="showinfo_titlef">
+							<p><span class="iconfont icon-jiantouarrow484"></span>专业知识</p>
+							<ul class="li_itme">
+								<li><a onclick="LoadHtml1(this,'html/zsgl/zsgl_zyzz.html')">专业知识</a></li>
+								<li><a onclick="LoadHtml1(this,'html/zsgl/zsgl_zyzz.html')">方法经验</a></li>
+								<li><a onclick="LoadHtml1(this,'html/zsgl/zsgl_zycd.html')">专业问答</a></li>
+								<li><a onclick="LoadHtml1(this,'html/zsgl/zsgl_zycd.html')">专业词典</a></li>
+								<li><a onclick="LoadHtml1(this,'html/zsgl/zsgl_jdyj.html')">经典语句</a></li>
+							</ul>
+							<p><span class="iconfont icon-jiantouarrow484"></span>法规标准</p>
+							<ul class="li_itme">
+								<li><a onclick="LoadHtml1(this,'html/zsgl/zsgl_flfg.html')">法律法规</a></li>
+								<li><a onclick="LoadHtml1(this,'html/zsgl/zsgl_hybz.html')">行业标准</a></li>
+								<li><a onclick="LoadHtml1(this,'html/zsgl/zsgl_hybz.html')">地方法规标准</a></li>
+								<li><a onclick="LoadHtml1(this,'html/zsgl/zsgl_hybz.html')">技术规范</a></li>
+							</ul>
+						</div>
+					</div>
+				</li>
+				<li>
+					<a>
+						<i class="iconfont iconfont50 icon-shebeisheshi"></i>
+						<p class="icon_title">设备设施管理</p>
+					</a>
+				</li>
+				<li>
+					<a>
+						<i class="iconfont iconfont50 icon-tongxin"></i>
+						<p class="icon_title">即时通信系统</p>
+					</a>
+				</li>
+				<li>
+					<a>
+						<i class="iconfont iconfont50 icon-fengxianchaxun"></i>
+						<p class="icon_title">安全风险分级管控</p>
+					</a>
+				</li>
+				<li>
+					<a>
+						<i class="iconfont iconfont50 icon-yinhuandianwei"></i>
+						<p class="icon_title">安全隐患排查治理</p>
+					</a>
+				</li>
+				<li>
+					<a>
+						<i class="iconfont iconfont50 icon--xietongbangong"></i>
+						<p class="icon_title">协同办公系统</p>
+					</a>
+				</li>
+				<li>
+					<a>
+						<i class="iconfont iconfont50 icon-zhibanxinxi-copy"></i>
+						<p class="icon_title">值班管理</p>
+					</a>
+				</li>
+				<li>
+					<a>
+						<i class="iconfont iconfont50 icon-jiuyuan"></i>
+						<p class="icon_title">安全应急救援管理</p>
+					</a>
+				</li>
+				<li>
+					<a>
+						<i class="iconfont  iconfont50 icon-wuzi"></i>
+						<p class="icon_title">物资供应管理</p>
+					</a>
+				</li>
+				<li>
+					<a>
+						<i class="iconfont iconfont50 icon-biaozhun"></i>
+						<p class="icon_title">安全标准化管理</p>
+					</a>
+				</li>
+				<li>
+					<a>
+						<i class="iconfont iconfont50 icon-zuoyeduixiang"></i>
+						<p class="icon_title">安全作业管理</p>
+					</a>
+				</li>
+				<li>
+					<a>
+						<i class="iconfont iconfont50 icon-tiaoduji"></i>
+						<p class="icon_title">生产计划调度</p>
+					</a>
+				</li>
+				<li>
+					<a>
+						<i class="iconfont iconfont50 icon-hetong"></i>
+						<p class="icon_title">合同管理</p>
+					</a>
+					<!--<div class="leftIco showInfoBox" style="display: block; top: 278px; left: 690px; position: absolute;">
+						<div class="showInfoBoxInner"><span class="showInfoBoxIco" style="top: 20px;"></span>
+							<div class="showtitle">合同管理</div>
+							<dl class="inner" style="margin: 0px; padding: 0px; max-height: 340px;"><dt>参数设置</dt>
+								<dd>
+									<a href="javascript:void(0);" onclick="javascript:divCreateStr('1570201','http://183.236.85.107:8010/XTCSS7/contractType_query.action','合同种类');">合同种类</a>
+									<a href="javascript:void(0);" onclick="javascript:divCreateStr('1570202','http://183.236.85.107:8010/XTCSS7/businessClass_query.action','业务分类');">业务分类</a>
+								</dd><dt>合同管理</dt>
+								<dd>
+									<a href="javascript:void(0);" onclick="javascript:divCreateStr('1570101','http://183.236.85.107:8010/XTCSS7/contractInfo_query.action','合同信息');">合同信息</a>
+									<a href="javascript:void(0);" onclick="javascript:divCreateStr('1570102','http://183.236.85.107:8010/XTCSS7/contractTemplate_query.action','合同模板');">合同模板</a>
+								</dd>
+							</dl>
+						</div>
+					</div>-->
+					<div class="showinfoBox">
+						<p class="showinfo_title">合同管理</p>
+						<div class="showinfo_titlef">
+							<p><span class="iconfont icon-jiantouarrow484"></span>参数设置</p>
+							<ul class="li_itme">
+								<li><a onclick="LoadHtml1(this,'html/htgl/htgl_htzl.html')">合同种类</a></li>
+								<li><a onclick="LoadHtml1(this,'html/htgl/htgl_ywfl.html')">业务分类</a></li>
+							</ul>
+							<p><span class="iconfont icon-jiantouarrow484"></span>合同管理</p>
+							<ul class="li_itme">
+								<li><a onclick="LoadHtml1(this,'html/htgl/htgl_htxx.html')">合同信息</a></li>
+								<li><a>业务模板</a></li>
+							</ul>
+						</div>
+					</div>
+				</li>
+				<li>
+					<a>
+						<i class="iconfont iconfont50 icon-cangkucangchu"></i>
+						<p class="icon_title">仓储管理</p>
+					</a>
+				</li>
+				<li>
+					<a>
+						<i class="iconfont iconfont50 icon-chengbenguanli"></i>
+						<p class="icon_title">成本管理</p>
+					</a>
+				</li>
+				<li>
+					<a>
+						<i class="iconfont  iconfont50 icon-fangshui"></i>
+						<p class="icon_title">矿井水防治管理</p>
+					</a>
+				</li>
+				<li>
+					<a>
+						<i class="iconfont iconfont50 icon-channeng"></i>
+						<p class="icon_title">产品产能管理</p>
+					</a>
+				</li>
+				<li>
+					<a>
+						<i class="iconfont iconfont50 icon-jishu"></i>
+						<p class="icon_title">生产技术管理</p>
+					</a>
+				</li>
+				<li>
+					<a>
+						<i class="iconfont iconfont50 icon-dizhizaihai"></i>
+						<p class="icon_title">地质测量管理</p>
+					</a>
+				</li>
+				<li>
+					<a>
+						<i class="iconfont iconfont50 icon-study"></i>
+						<p class="icon_title">教育培训系统</p>
+					</a>
+				</li>
+				<li>
+					<a>
+						<i class="iconfont iconfont50 icon-yejinkuangchan"></i>
+						<p class="icon_title">矿井一通三防管理</p>
+					</a>
+				</li>
+				<li>
+					<a>
+						<i class="iconfont iconfont50 icon-xiaoshouguanli"></i>
+						<p class="icon_title">销售管理</p>
+					</a>
+				</li>
+				<li>
+					<a>
+						<i class="iconfont iconfont50 icon-caiwuguanli"></i>
+						<p class="icon_title">财务管理</p>
+					</a>
+				</li>
+				<li>
+					<a>
+						<i class="iconfont iconfont50 icon-juece"></i>
+						<p class="icon_title">决策支持系统</p>
+					</a>
+				</li>
+			</ul>
+			<script>
+				$(".icon_item>li").mouseover(function(){
+	//				alert("1");
+					$(this).children(".showinfoBox").css("display","block");
+				}).mouseout(function (){  
+					   $(this).children(".showinfoBox").css("display","none"); 
+				});  
+				//点击a标签加载页面
+					function LoadHtml1(obj,url) {
+						var zd_name = $(obj).text();
+						var cj_name = $(obj).parent("li").parent("ul").parent("div").siblings("p").text();
+						$.ajax({
+							type: "get",
+							url: url,
+							async: true,
+							success: function(data) {
+								$('.eq_form').html(data);
+								$(".dh>ul>li>a").text(cj_name);
+								$(".dh>ul>li:eq(2)").text(zd_name);
+							}
+						});
+					}
+			</script>
+		
+	
+	</div>
+				</div>
+				<script type="text/javascript" src="js/jquery-1.12.4.js"></script>
+				<!--jq-form表单插件-->
+				<script type="text/javascript" src="js/jquery.form.js"></script>
+				<!--js-xlsx插件-->
+				<script type="text/javascript" src="js/Excel_dc/xlsx.core.min.js"></script>
+				<script type="text/javascript" src="js/popper.min.js"></script>
+				<script type="text/javascript" src="js/bootstrap.min.js"></script>
+				<script type="text/javascript" src="js/layer/layer.js"></script>
+	
+				<script>
+					//				function getCookie(cname) {
+					//					var name = cname + "=";
+					//					var ca = document.cookie.split(';');
+					//					for(var i = 0; i < ca.length; i++) {
+					//						var c = ca[i].trim();
+					//						if(c.indexOf(name) == 0) {
+					//							return c.substring(name.length, c.length);
+					//						}
+					//					}
+					//					return "";
+					//				}
+	
+					//				var cj_index = getCookie("cj_index");
+					//				if(cj_index != null || cj_index != "") {
+					//					$(".ul_hidden:eq(0)").slideDown();
+					//					$(".ul_ulhidden:eq(" + cj_index + ")").slideDown();
+					//				}
+					//				var cj_name = $(".ul_hidden:eq(0)").children("li:eq(" + cj_index + ")").children("a").text();
+					//				var zd_index = getCookie("zd_index");
+					//				var zd_name = $(".ul_hidden:eq(0)").children("li:eq(" + cj_index + ")").children("ul").children("li:eq(" + zd_index + ")").children("a").text();
+					//				if(zd_index != null || zd_index != "") {
+					//					$(".menu_ul>li:eq(" + cj_index + ") em").toggleClass("icon-jiantou-copy-copy");
+					//				}
+					$(function() {
+						$("li>a").click(function() {
+							//把点击的选项卡向下的图标
+							//						$(this).find("em").toggleClass("icon-jiantou-copy-copy");
+							//						$(".menu_ul>li>a,.ul_hidden>li>a,.ul_ulhidden>li>a").css({
+							//							"background-color": "#263238",
+							//							"color": "#8a979e"
+							//						});
+							//						$(this).css({
+							//							"background-color": "#2b373d",
+							//							"color": "#c5cbcf"
+							//						});
+							if($(".menu_ul>li>a,.ul_hidden>li>a,.ul_ulhidden>li>a").hasClass("active")) {
+								$(".menu_ul>li>a,.ul_hidden>li>a,.ul_ulhidden>li>a").removeClass("active");
+							}
+							$(this).addClass("active");
+	
+							$(this).next("ul").slideToggle();
+							$(this).parent("li").siblings().has("ul").children("ul").slideUp();
+							$(this).parent("li").siblings().find("em").removeClass("icon-jiantou-copy-copy");
+						})
+					})
+	
+					
+					//首页
+					$.ajax({
+						type: "get",
+						url: "html/icon_item.html",
+						async: false,
+						success: function(data) {
+							$('.eq_form').html(data);
+							$(".dh>ul>li>a").text("首页");
+						}
+					});
+					$("#btn_home").click(function() {
+						$.ajax({
+							type: "get",
+							url: "html/icon_item.html",
+							async: true,
+							success: function(data) {
+								$('.eq_form').html(data);
+								$(".dh>ul>li>a").text("首页");
+							}
+						});
+					})
+					$("#index_html").click(function() {
+						$.ajax({
+							type: "get",
+							url: "html/icon_item.html",
+							async: true,
+							success: function(data) {
+								$('.eq_form').html(data);
+								$(".dh>ul>li>a").text("首页");
+							}
+						});
+					})
+					//点击a标签加载页面
+					function LoadHtml(obj,url) {
+						var zd_name = $(obj).text();
+						var cj_name = $(obj).parent("li").parent("ul").siblings("a").text();
+						$.ajax({
+							type: "get",
+							url: url,
+							async: true,
+							success: function(data) {
+								$('.eq_form').html(data);
+								$(".dh>ul>li>a").text(cj_name);
+								$(".dh>ul>li:eq(2)").text(zd_name);
+							}
+						});
+					}
+				</script>
+		
+	
+	</div>
+	</body>
+
+</html>

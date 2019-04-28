@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			#Table1,#Table2 {
+				width: 96%;
+				margin: auto;
+				margin-top: 20px;
+				/*padding: 10px 0px 0px 50px;*/
+				/*text-align: center;*/
+				border: 1px solid #30a5ff;
+				font-size: 14px;
+				color: #30a5ff;
+			}
+			#Table2{
+				text-align: center;
+			}
+			#Table1 tr td:nth-of-type(1){
+				text-align: right;
+			}
+			#Table1 tr td:nth-of-type(3){
+				text-align: right;
+			}
+			#Table1 input{
+				/*width: 50%;*/
+				height: 20px;
+				padding: 2px;
+				margin: 4px;
+			}
+			.btn_tj{
+				border: 0px;
+				border-radius: 3px;
+				color: white;
+				width: 80px;
+				height: 30px;
+				font-size: 14px;
+				background-color: #30a5ff;
+				margin:0 50px;
+			}
+			
+			.btn_tj:hover,.btn_bj:hover{
+				cursor: pointer;
+				background-color: #428bca;
+			}
+			.btn_tr{
+				width: 96%;
+			    height: auto;
+			    margin: auto;
+			    margin-top: 3%;
+			}
+			.btn_bj,.btn_del{
+				border: 0px;
+				border-radius: 3px;
+				color: white;
+				width: 120px;
+				height: 30px;
+				font-size: 14px;
+				background-color: #30a5ff;
+				margin:0 20px;
+			}
+			.btn_del{
+				background-color: #dc3545;
+			}
+			.btn_del:hover{
+				cursor: pointer;
+				background-color: #c82333;
+			}
+		</style>
+	</head>
+
+	<body>
+		<form method="post" action="#" id="Form1" enctype="multipart/form-data">
+			<table id="Table1" border="1" cellspacing="0" cellpadding="5px">
+				<tr>
+					<td>位置：</td>
+					<td><input /><br><select id="sel_zkwz" style="margin: 4px;"><option>请选择或手工输入</option><option>1</option></select></td>
+					<td>排查日期：</td>
+					<td>起始日期：<input type="date" /><br>结束日期：<input type="date" /><br></td>
+					<td><button type="button" class="btn_tj"><i class="iconfont icon-chaxun"></i>查询</button></td>
+				</tr>
+			</table>
+			<div class="btn_tr">
+				<div>
+					<button type="button" class="btn_bj"><i class="iconfont icon-export"></i>导出Excel</button>
+					<!--<button type="button" class="btn_del"><i class="iconfont icon-shanchu"></i>删除选中项</button>-->
+				</div>
+			</div>
+			<table id="Table2" border="1" cellspacing="0" cellpadding="5px">
+				<thead>
+				<tr>
+					<th><input id="check" onchange="dianji()" type="checkbox"></th>
+					<th>企业名称</th>
+					<th>企业编码</th>
+					<th>重大危险源名称</th>
+					<th>重大危险源等级</th>
+					<th>重大危险源类型</th>
+					<th>重大危险源编码</th>
+					<th>是否备案</th>
+					<th>备案编号</th>
+					<th>备案日期</th>
+					<th>填报日期</th>
+					<th>填报人姓名</th>
+					<th>填报人电话</th>
+				</tr>
+			</thead>
+			<tbody>
+
+			</tbody>
+			</table>
+			
+			
+		</form>
+		<script>
+			//把钻孔位置下拉框复制给文本框
+			$(document).ready(function() {
+				$("#sel_zkwz").change(function() {
+					$("#input_zkwz").val($("#sel_zkwz").val());
+				});
+			});
+			//清空表单
+			$("#btn_qk").click(function(){
+				$("#Form1")[0].reset();
+			})
+			
+			
+			
+		</script>
+	</body>
+
+</html>

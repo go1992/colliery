@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			#Table1 {
+				width: 80%;
+				margin: auto;
+				margin-top: 20px;
+				/*padding: 10px 0px 0px 50px;*/
+				/*text-align: center;*/
+				border: 1px solid #30a5ff;
+				font-size: 14px;
+				color: #30a5ff;
+			}
+			#Table1 tr td:nth-of-type(1){
+				text-align: right;
+			}
+			#Table1 tr td:nth-of-type(3){
+				text-align: right;
+			}
+			#Table1 input{
+				/*width: 50%;*/
+				height: 20px;
+				padding: 2px;
+				margin: 4px;
+			}
+			.btn_item{
+
+				width: 80%;
+				margin: auto;
+				margin-top: 20px;
+				text-align: center;
+			}
+			.btn_tj,.btn_qk {
+				border: 0px;
+				border-radius: 3px;
+				color: white;
+				width: 80px;
+				height: 30px;
+				font-size: 14px;
+				background-color: #30a5ff;
+				margin:0 50px;
+			}
+			
+			.btn_tj:hover,.btn_qk:hover {
+				cursor: pointer;
+				background-color: #428bca;
+			}
+			
+			
+			
+		</style>
+	</head>
+
+	<body>
+		<form method="post" action="#" id="Form1" enctype="multipart/form-data">
+			<table id="Table1" border="1" cellspacing="0" cellpadding="5px">
+				<tr>
+					<td>检查时间：</td>
+					<td><input type="date" /> </td>
+					<td>责任单位：</td>
+					<td><input /> </td>
+				</tr>
+				<tr>
+					<td>地点：</td>
+					<td colspan="3"><input id="input_zkwz" placeholder="请选择或手工输入" /><br /><select id="sel_zkwz" style="margin: 4px;"> <option>请选择或手工输入</option><option>1</option></select> </td>
+				</tr>
+				<tr>
+					<td>情况描述：：</td>
+					<td><textarea rows="6" cols="40" style="margin: 4px;"></textarea></td>
+					<td>处理措施：：</td>
+					<td><textarea rows="6" cols="40" style="margin: 4px;"></textarea></td>
+				</tr>
+				<tr>
+					<td>危险等级：</td>
+					<td><input /></td>
+					<td>治理效果：</td>
+					<td><input/> </td>
+				</tr>
+				<tr>
+					<td>记录人：</td>
+					<td><input /></td>
+					<td>审核人：</td>
+					<td><input/> </td>
+				</tr>
+			</table>
+			<div class="btn_item">
+				<button type="button" class="btn_tj"><i class="iconfont icon-tijiao"></i>提交</button>
+				<button id="btn_qk" type="button" class="btn_qk"><i class="iconfont icon-qingkong"></i>清空</button>
+			</div>
+		</form>
+		<script>
+			//把钻孔位置下拉框复制给文本框
+			$(document).ready(function() {
+				$("#sel_zkwz").change(function() {
+					$("#input_zkwz").val($("#sel_zkwz").val());
+				});
+			});
+			//清空表单
+			$("#btn_qk").click(function(){
+				$("#Form1")[0].reset();
+			})
+			
+			$("#btn_dr").click(function() {
+				$("input[name=csv]").csv2arr(function(res) {
+									console.log(res);
+					
+				});
+			});
+			
+			
+			
+		</script>
+	</body>
+
+</html>

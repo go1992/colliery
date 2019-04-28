@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			#Table1,#Table2 {
+				width: 96%;
+				margin: auto;
+				margin-top: 20px;
+				/*padding: 10px 0px 0px 50px;*/
+				/*text-align: center;*/
+				border: 1px solid #30a5ff;
+				font-size: 14px;
+				color: #30a5ff;
+			}
+			#Table2{
+				text-align: center;
+			}
+			#Table1 tr td:nth-of-type(1){
+				text-align: right;
+			}
+			#Table1 tr td:nth-of-type(3){
+				text-align: right;
+			}
+			#Table1 input{
+				/*width: 50%;*/
+				height: 20px;
+				padding: 2px;
+				margin: 4px;
+			}
+			.btn_tj{
+				border: 0px;
+				border-radius: 3px;
+				color: white;
+				width: 80px;
+				height: 30px;
+				font-size: 14px;
+				background-color: #30a5ff;
+				margin:0 50px;
+			}
+			
+			.btn_tj:hover,.btn_bj:hover{
+				cursor: pointer;
+				background-color: #428bca;
+			}
+			.btn_tr{
+				width: 96%;
+			    height: auto;
+			    margin: auto;
+			    margin-top: 3%;
+			}
+			.btn_bj,.btn_del{
+				border: 0px;
+				border-radius: 3px;
+				color: white;
+				width: 120px;
+				height: 30px;
+				font-size: 14px;
+				background-color: #30a5ff;
+				margin:0 20px;
+			}
+			.btn_del{
+				background-color: #dc3545;
+			}
+			.btn_del:hover{
+				cursor: pointer;
+				background-color: #c82333;
+			}
+		</style>
+	</head>
+
+	<body>
+		<form method="post" action="#" id="Form1" enctype="multipart/form-data">
+			<table id="Table1" border="1" cellspacing="0" cellpadding="5px">
+				<tr>
+					<td>新位置：
+						<input id="input_zkwz" type="text" name="id">
+					</td>
+					<td><button type="button" class="btn_tj"><i class="iconfont icon-xinzeng"></i>添加新位置</button></td>
+				</tr>
+			</table>
+			<table id="Table2" border="1" cellspacing="0" cellpadding="5px">
+			</table>
+			
+			
+		</form>
+		<script type="text/javascript" src="js/jquery-1.12.4.js"></script>
+		<!--<script type="text/javascript" src="js/popper.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>-->
+		<script type="text/javascript" src="js/core.min.js"></script>
+		<!--bootstrap-table插件-->
+		<script type="text/javascript" src="js/bootstrap-table.min.js"></script>
+		<!--table导出插件-->
+		<script type="text/javascript" src="js/bootstrap-table-export.min.js"></script>
+		<script type="text/javascript" src="js/tableExport.min.js"></script>
+		<!--bootstrap-table插件汉化-->
+		<script type="text/javascript" src="js/bootstrap-table-zh-CN.min.js"></script>
+		<script>
+            $(function() {
+
+                //1.初始化Table
+                var oTable = new TableInit();
+                oTable.Init();
+
+                //2.初始化Button的点击事件
+                var oButtonInit = new ButtonInit();
+                oButtonInit.Init();
+
+            });
+            var host = HOST;
+            $(function () {
+                $.ajax({
+                    type:"GET",
+                    url:host+"/dc-swdz-zkpc/paichaluru",
+                    dataType: "json",
+                    success: function (res) {
+                        if(res.data.length>0){
+                            $("#input_zkwz").empty();
+                            $("#input_zkwz").append("<option value=''>请选择位置</option>");
+                            for (var i=0;i<res.data.length;i++){
+                                $("#input_zkwz").append('<option value='+res.data[i].id+'>'+res.data[i].xjwz+'</option>');
+                                console.log("data+++++++++++++++++++"+res.data[i].xjwz+"   长度"+res.data.length)
+                            }
+                        }
+                    }
+                });
+
+
+
+            })
+			//初始化表单
+            var TableInit = function() {
+                $('#Table2').bootstrapTable('destroy');
+                var oTableInit = new Object();
+                oTableInit.Init =function() {
+                    $("#Table2").bootstrapTable({
+                        url: host + "/dc-jbcs-kqwz/query",
+                        method: 'GET',
+                        toolbar: '#toolbar',              //工具按钮用哪个容器
+                        striped: true,                      //是否显示行间隔色
+                        cache: false,         //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+                        pagination: true,                   //是否显示分页（*）
+                        sortable: true,                     //是否启用排序
+                        sortOrder: "asc",                   //排序方式
+                        sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+                        pageNumber: 1,                      //初始化加载第一页，默认第一页,并记录
+                        pageSize: rows,                     //每页的记录行数（*）
+                        pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+                        search: false,                      //是否显示表格搜索
+                        minimumCountColumns: 1,             //最少允许的列数
+                        uniqueId: "id",                     //每一行的唯一标识，一般为主键列
+                        detailView: false,                  //是否显示父子表
+                        cardView: false,                    //是否显示详细视图
+                        //得到查询的参数
+                        queryParams: function (params) {
+                            var temp = $("#Form1").serializeJsonObject();//获取自定义查询条件
+                            temp["pageSize"] = params.pageSize;//页面大小
+                            temp["pageNum"] = params.pageNumber;//页码
+                            temp["order"] = params.sortOrder;//排序的方式
+                            temp["ordername"] = params.sortName;//排序的字段
+                            temp["searchParam"] = params.searchText;//搜索值
+                            temp["fields"] = getSearchFields();//要搜索的字段
+
+                            return temp;
+                        },
+                        columns: [{
+                            checkbox: true,
+                            visible: true                  //是否显示复选框
+                        }, {
+                            field: 'id',
+                            title: '数据编号',
+                            sortable: true
+                        }, {
+                            field: 'xjwz',
+                            title: '矿区位置',
+                            sortable: true
+                        }, {
+                            field: 'id',
+                            title: '操作',
+                            width: 120,
+                            align: 'center',
+                            valign: 'middle',
+                            formatter: actionFormatter
+                        }],
+                        onLoadError: function() {
+                            return "加载失败了";
+                        },
+                        onDblClickRow: function (row, $element) {
+                            var id = row.id;
+                            EditViewById(id, 'view');
+                            $("#RowId").val(id);
+                            layer.open({
+                                type: 2,
+                                title: '编辑',
+                                maxmin: true,
+                                shadeClose: true, //点击遮罩关闭层
+                                area: ['1000px', '600px'],
+                                content: 'html/dcxt/dcxt_swdzzkpc_insert.html'
+                            });
+                        }
+                    })
+                }
+				return oTableInit
+			}
+            var ButtonInit = function() {
+                var oInit = new Object();
+                var postdata = {};
+
+                oInit.Init = function() {
+                    //初始化页面上面的按钮事件
+                };
+                return oInit;
+            };
+
+			
+			
+			
+		</script>
+	</body>
+
+</html>

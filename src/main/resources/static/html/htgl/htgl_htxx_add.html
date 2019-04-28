@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="../../fonts/iconfont.css" />
+		<style>
+			#Table1 {
+				width: 96%;
+				margin: auto;
+				margin-top: 20px;
+				/*padding: 10px 0px 0px 50px;*/
+				/*text-align: center;*/
+				border: 1px solid #30a5ff;
+				font-size: 14px;
+				color: #30a5ff;
+			}
+			
+			#Table1 tr td:nth-of-type(1) {
+				text-align: right;
+			}
+			
+			#Table1 tr td:nth-of-type(3) {
+				text-align: right;
+			}
+			
+			#Table1 input {
+				/*width: 50%;*/
+				/*height: 20px;*/
+				padding: 2px;
+				margin: 4px;
+			}
+			
+			.btn_item {
+				width: 80%;
+				margin: auto;
+				margin-top: 20px;
+				text-align: center;
+			}
+			
+			.btn_tj,
+			.btn_qk {
+				border: 0px;
+				border-radius: 3px;
+				color: white;
+				width: 80px;
+				height: 30px;
+				font-size: 14px;
+				background-color: #30a5ff;
+				margin: 0 50px;
+			}
+			
+			.btn_tj:hover,
+			.btn_qk:hover {
+				cursor: pointer;
+				background-color: #428bca;
+			}
+			
+			.btn_xiazai {
+				border: 0px;
+				border-radius: 3px;
+				color: white;
+				width: 120px;
+				height: 30px;
+				font-size: 14px;
+				background-color: #30a5ff;
+			}
+			
+			.btn_sc {
+				border: 0px;
+				border-radius: 3px;
+				color: white;
+				width: 120px;
+				height: 30px;
+				font-size: 14px;
+				background-color: #30a5ff;
+			}
+			
+			.btn_xiazai:hover,
+			.btn_sc:hover {
+				cursor: pointer;
+				background-color: #428bca;
+			}
+			
+			.xiazaiAnddr {
+				width: 80%;
+				height: auto;
+				margin: auto;
+				/*margin-left: 20px;*/
+				margin-top: 20px;
+			}
+			
+			.file_item {
+				position: relative;
+			}
+			
+			#input_file {
+				width: 300px;
+				height: 30px;
+				position: absolute;
+				right: 0;
+				opacity: 0;
+			}
+			#Table2{
+				width: 100%;
+			    height: 34px;
+			    background: #e5eaf0;
+			    position: relative;
+			    z-index: 400;
+			    border: solid 1px #709dce;
+			    background-color: #6b9ccb;
+			}
+		</style>
+	</head>
+
+	<body>
+		<form method="post" action="#" id="Form1" enctype="multipart/form-data">
+			<table id="Table1" border="1" cellspacing="0" cellpadding="5px">
+				<tr>
+					<td>编号：</td>
+					<td><input /></td>
+					<td>名称：</td>
+					<td colspan="3"><input /></td>
+				</tr>
+				<tr>
+					<td>性质：</td>
+					<td>
+						<select>
+							<option>请选择</option>
+							<option>初始合同</option>
+							<option>变更合同</option>
+							<option>补充合同</option>
+						</select>
+					</td>
+					<td>初始合同：</td>
+					<td>
+						<select>
+							<option>请选择</option>
+						</select>
+					</td>
+					<td>合同种类：</td>
+					<td>
+						<select>
+							<option>请选择</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>业务分类：</td>
+					<td>
+						<select>
+							<option>请选择</option>
+						</select>
+					</td>
+					<td>所属业务：</td>
+					<td><input /></td>
+					<td>标的额（元）：</td>
+					<td><input /></td>
+				</tr>
+				<tr>
+					<td>合同标的：</td>
+					<td><input /></td>
+					<td>合同期限：</td>
+					<td><input type="date" /></td>
+					<td>签订日期：</td>
+					<td><input type="date" /></td>
+				</tr>
+				<tr>
+					<td>合同状态：</td>
+					<td>
+						<select>
+							<option>请选择</option>
+							<option>有效</option>
+							<option>未生效</option>
+							<option>完成</option>
+							<option>终止</option>
+							<option>中止</option>
+							<option>失效</option>
+							<option>过期</option>
+						</select>
+					</td>
+					<td>签订地址：</td>
+					<td colspan="3"><input type="date" /></td>
+				</tr>
+				<tr>
+					<td>备注：</td>
+					<td colspan="5">
+						<textarea rows="6" cols="80"></textarea>
+					</td>
+				</tr>
+				<tr>
+					<td>上传文本：</td>
+					<td colspan="5">
+						<table id="Table2">
+							<tr>
+								<td>凭证文本(请选择小于5M的文本)</td>
+								<td>操作</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<button type="button" class="btn_tj"><i class="iconfont icon-tijiao"></i>添加</button>	
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+			<div class="btn_item">
+				<button type="button" class="btn_tj"><i class="iconfont icon-tijiao"></i>提交</button>
+				<button id="btn_qk" type="button" class="btn_qk"><i class="iconfont icon-qingkong"></i>清空</button>
+			</div>
+		</form>
+		<script type="text/javascript" src="/js//jquery-1.12.4.js" ></script>
+		<!--js-xlsx插件-->
+			<script type="text/javascript" src="/js/Excel_dc/xlsx.core.min.js" ></script>
+		<script>
+			//把钻孔位置下拉框复制给文本框
+			$(document).ready(function() {
+				$("#sel_zkwz").change(function() {
+					$("#input_zkwz").val($("#sel_zkwz").val());
+				});
+			});
+			//清空表单
+			$("#btn_qk").click(function() {
+				$("#Form1")[0].reset();
+			})
+
+			$("#btn_dr").click(function() {
+				$("input[name=csv]").csv2arr(function(res) {
+					console.log(res);
+
+				});
+			});
+
+			$(document).ready(function() {
+				$("#input_file").change(function() {
+					$("#input_file1").val($("#input_file").val());
+				});
+			});
+			//Excel导入到form表单
+			$('#input_file').change(function(e) {
+				var files = e.target.files;
+
+				var fileReader = new FileReader();
+				fileReader.onload = function(ev) {
+					try {
+						var data = ev.target.result,
+							workbook = XLSX.read(data, {
+								type: 'binary'
+							}), // 以二进制流方式读取得到整份excel表格对象
+							persons = []; // 存储获取到的数据
+					} catch(e) {
+						console.log('文件类型不正确');
+						return;
+					}
+
+					// 表格的表格范围，可用于判断表头是否数量是否正确
+					var fromTo = '';
+					// 遍历每张表读取
+					for(var sheet in workbook.Sheets) {
+						if(workbook.Sheets.hasOwnProperty(sheet)) {
+							fromTo = workbook.Sheets[sheet]['!ref'];
+							console.log(fromTo);
+							persons = persons.concat(XLSX.utils.sheet_to_json(workbook.Sheets[sheet]));
+							break; // 如果只取第一张表，就取消注释这行
+						}
+					}
+
+					console.log(persons);
+					$("#pc_time").val(persons[0].排查日期);
+					$("#input_zkwz").val(persons[0].钻孔位置);
+					$("#kk_time").val(persons[0].开孔日期);
+					$("#zk_number").val(persons[0].钻孔编号);
+					$("#swqk").val(persons[0].水位情况);
+					$("#knzk").val(persons[0].孔内状况);
+					$("#kkqk").val(persons[0].孔口情况);
+					$("#sejks").val(persons[0].设计孔深);
+					$("#shijks").val(persons[0].实际孔深);
+					$("#jl_people").val(persons[0].记录人);
+					$("#sh_people").val(persons[0].审核人);
+					$("#ywxq_describe").val(persons[0].有无险情描述);
+
+				};
+
+				// 以二进制方式打开文件
+				fileReader.readAsBinaryString(files[0]);
+			});
+		</script>
+	</body>
+
+</html>

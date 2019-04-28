@@ -1,0 +1,365 @@
+* {
+				margin: 0px;
+				padding: 0px;
+				font-size: 13px;
+			}
+	
+			body {
+				-moz-user-select: none;
+				/*火狐*/
+				-webkit-user-select: none;
+				/*webkit浏览器*/
+				-ms-user-select: none;
+				/*IE10*/
+				-khtml-user-select: none;
+				/*早期浏览器*/
+				user-select: none;
+			}
+	
+			header {
+				width: 100%;
+				height: 76px;
+				/*background: #222;*/
+				background-color: #263238;
+				position: fixed;
+				top: 0;
+				z-index: 999;
+				box-shadow: 0px 2px 2px #888888;
+				box-sizing: border-box;
+			}
+	
+			.company_title {
+				overflow: hidden;
+                font-size: 10px;
+                margin-top: 10px;
+			}
+	
+			.company_title>span {
+				color: #fff;
+				font-size: 3em !important;
+			}
+	
+			.company_title>img {
+				margin-left: 40px;
+				margin-right: 10px;
+				width: 40px;
+				padding-bottom: 17px;
+			}
+			.dqzh{
+				margin-top: 10px;
+				margin-right: 3%;
+				padding-left: 30px;
+				width: 13%;
+				height: 35px;
+				line-height: 35px;
+				float: right;
+				color: #fff;
+				border-radius: 35px;
+				background-color: #034775;
+			}
+			.dqzh .tc{
+				float: right;
+				padding-right: 25px;
+				color:#fff
+			}
+			.logo {
+				margin-left: 10%;
+				font-size: 20px;
+				line-height: 76px;
+			}
+	
+			/*.logo>a>img {
+					vertical-align: text-bottom
+				}*/
+	
+			.top_title {
+				color: #337ab7;
+				margin-left: 20px;
+				font-size: 24px;
+				font-weight: bold;
+			}
+	
+			/*左侧导航*/
+	
+			.content {
+				width: 100%;
+				height: auto;
+				background-color: #e9ecf2;
+			}
+	
+			.l_menu {
+				width: 20%;
+				/*overflow-y: scroll;*/
+				float: left;
+				position: fixed;
+				left: 0;
+				top: 76px;
+				bottom: 0;
+				overflow-x: hidden;
+				background-color: #263238;
+			}
+	
+			ul li {
+				list-style: none;
+			}
+	
+			.menu_ul>li>a:hover,
+			.ul_hidden>li>a:hover,
+			.ul_ulhidden>li>a:hover {
+				background-color: #2b373d;
+				color: #c5cbcf;
+				cursor: pointer;
+			}
+	
+			.ul_ulhidden>li>a>span {
+				margin-left: 40px;
+				margin-right: 10px;
+			}
+	
+			a {
+				text-decoration: none;
+			}
+	
+			a:hover {
+				text-decoration: none;
+			}
+	
+			a:focus {
+				text-decoration: none;
+			}
+	
+			.menu_ul {
+				padding-top: 12px;
+				width: 100%;
+				height: auto;
+				margin: auto;
+				/*background: #fff;*/
+				/*color: #30a5ff;*/
+			}
+	
+			.menu_ul>li>a {
+				display: block;
+				width: 100%;
+				padding: 10px;
+				color: #8a979e;
+			}
+	
+			.ul_hidden {
+				display: none;
+			}
+	
+			.ul_hidden a {
+				border: none;
+				display: block;
+				width: 100%;
+				height: 40px;
+				color: #8a979e;
+			}
+	
+			.ul_ulhidden {
+				display: none;
+			}
+	
+			.eq_li {
+				color: #30a5ff;
+			}
+	
+			.eq_li>ul>li {
+				background-color: #263238;
+				color: #8a979e;
+				line-height: 40px;
+			}
+	
+			.eq_li>ul>li>a>span {
+				margin-right: 10px;
+				margin-left: 30px;
+			}
+	
+			.eq_info>span {
+				margin-left: 10px;
+				margin-right: 10px;
+			}
+	
+			.eq_table {
+				width: 80%;
+				height: auto;
+				float: left;
+				margin-left: 20%;
+				margin-top: 76px;
+				/*box-shadow: 2px 2px 2px #888888;*/
+				background-color: gainsboro;
+			}
+	
+			.pull-right {
+				float: right;
+				margin-right: 16px !important;
+			}
+	
+			.dh {
+				width: 100%;
+				height: 40px;
+				line-height: 40px;
+				margin: auto;
+				margin-top: 1%;
+				color: #30a5ff;
+				border-bottom: 1px solid gainsboro;
+				background-color: #e9ecf2;
+				box-shadow: 0px 0px 4px #888888;
+			}
+	
+	
+			.dh>ul {
+				margin-left: 20px;
+			}
+	
+			.dh>ul>li {
+				float: left;
+			}
+	
+			.dh>ul>li+li:before {
+				padding: 0 5px;
+				color: #ccc;
+				content: "/\00a0";
+			}
+	
+			.active1 {
+				color: #00ADDD;
+			}
+	
+			.dh li>a:hover {
+				text-decoration: underline;
+				color: #30a5ff;
+			}
+	
+			.eq_form {
+				overflow: hidden;
+				width: 98%;
+				height: auto;
+				min-height: 790px;
+				margin: auto;
+				margin-top: 1%;
+				margin-bottom: 1%;
+				padding-top: 70px;
+				background-color: #04243E;
+				box-shadow: 0px 0px 4px #888888;
+			}
+	
+			.active2 {
+				background-color: #00ADDD !important;
+				color: #c5cbcf !important;
+			}
+	
+			.tabbable {
+				border: none;
+				margin-bottom: 10px;
+			}
+	
+			.nav {
+				padding-left: 0;
+				margin-bottom: 0;
+				list-style: none;
+			}
+	
+			.nav>li {
+				position: relative;
+				display: block;
+			}
+	
+			.nav-tabs {
+				margin-bottom: 0;
+				margin-left: 0;
+				border: 0;
+				top: 2px;
+				background-color: #f3f3f3;
+				-webkit-box-shadow: 0 0 4px rgba(0, 0, 0, .3);
+				-moz-box-shadow: 0 0 4px rgba(0, 0, 0, .3);
+				box-shadow: 0 0 4px rgba(0, 0, 0, .3);
+				border-bottom: 1px solid #ddd;
+			}
+	
+			.nav-tabs>li {
+				float: left;
+				margin-bottom: 0px;
+				margin-left: 5px;
+			}
+	
+			.nav-tabs li i {
+				position: relative;
+				margin-left: 10px;
+				cursor: pointer;
+			}
+	
+			.nav-tabs li [class*=" fa-"],
+			.nav-tabs li [class^="fa-"] {
+				width: 1.25em;
+				display: inline-block;
+				text-align: center;
+			}
+	
+			#myTab {
+				height: 40px;
+				overflow: hidden;
+			}
+	
+			#myTab>li {
+				height: 35px;
+				overflow: hidden;
+				margin-top: 5px;
+				background: #dedede;
+				background: rgba(0, 0, 0, 0.05);
+				color: #777;
+			}
+	
+			#myTab>li.active,
+			#myTab>li:hover,
+			#myTab>li:focus {
+				background-color: #fff;
+				border-bottom-color: transparent;
+				box-shadow: 0 -2px 3px 0 	rgba(0,173,221,1);
+			}
+	
+			#myTab>li>a {
+				position: relative;
+				display: inline-block;
+				white-space: nowrap;
+				overflow: hidden;
+				padding: 8px 0px 8px 10px;
+				margin: 0 20px 0 0;
+				border-top: 0px;
+				box-shadow: none;
+				background: transparent;
+				line-height: 17px;
+				border: 0;
+				max-width: 108px;
+				color: #777;
+			}
+	
+			#myTab>li.active {
+				border-top: 2px solid #2dc3e8;
+				background-color: white !important;
+			}
+	
+			#myTab li [class*=" fa-"],
+			#myTab li [class^="fa-"] {
+				vertical-align: middle;
+				margin-left: 0px;
+				position: absolute;
+				right: 2px;
+				margin-top: 10px;
+			}
+	
+			.tab-content {
+				background: none;
+				padding: 0;
+				/*padding-top: 5px;*/
+				position: relative;
+			}
+	
+			.tab-content>div {
+				display: none;
+			}
+	
+			.tab-content>div.active {
+				display: block;
+				background-color: white !important;
+			}

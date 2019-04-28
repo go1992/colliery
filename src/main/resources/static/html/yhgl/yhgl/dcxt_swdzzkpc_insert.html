@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			#Table1 {
+				width: 80%;
+				margin: auto;
+				margin-top: 20px;
+				/*padding: 10px 0px 0px 50px;*/
+				/*text-align: center;*/
+				border: 1px solid #30a5ff;
+				font-size: 14px;
+				color: #30a5ff;
+			}
+			
+			#Table1 tr td:nth-of-type(1) {
+				text-align: right;
+			}
+			
+			#Table1 tr td:nth-of-type(3) {
+				text-align: right;
+			}
+			
+			#Table1 input {
+				/*width: 50%;*/
+				/*height: 20px;*/
+				padding: 2px;
+				margin: 4px;
+			}
+			
+			.btn_item {
+				width: 80%;
+				margin: auto;
+				margin-top: 20px;
+				text-align: center;
+			}
+			
+			.btn_tj,
+			.btn_qk {
+				border: 0px;
+				border-radius: 3px;
+				color: white;
+				width: 80px;
+				height: 30px;
+				font-size: 14px;
+				background-color: #30a5ff;
+				margin: 0 50px;
+			}
+			
+			.btn_tj:hover,
+			.btn_qk:hover {
+				cursor: pointer;
+				background-color: #428bca;
+			}
+			
+			.btn_xiazai {
+				border: 0px;
+				border-radius: 3px;
+				color: white;
+				width: 120px;
+				height: 30px;
+				font-size: 14px;
+				background-color: #30a5ff;
+			}
+			
+			.btn_sc {
+				border: 0px;
+				border-radius: 3px;
+				color: white;
+				width: 120px;
+				height: 30px;
+				font-size: 14px;
+				background-color: #30a5ff;
+			}
+			
+			.btn_xiazai:hover,
+			.btn_sc:hover {
+				cursor: pointer;
+				background-color: #428bca;
+			}
+			
+			.xiazaiAnddr {
+				width: 80%;
+				height: auto;
+				margin: auto;
+				/*margin-left: 20px;*/
+				margin-top: 20px;
+			}
+			
+			.file_item {
+				position: relative;
+			}
+			
+			#input_file {
+				width: 300px;
+				height: 30px;
+				position: absolute;
+				right: 0;
+				opacity: 0;
+			}
+		</style>
+	</head>
+
+	<body>
+		<form method="post" action="#" id="Form1" enctype="multipart/form-data">
+			
+			<table id="Table1" border="1" cellspacing="0" cellpadding="5px">
+				<tr>
+					<td>数据编号：</td>
+					<td colspan="3"><input id="pc_time" name="id" /> </td>
+				</tr>
+				<tr style="display:none">
+					<td>用户所属部门名称：</td>
+					<td colspan="3"><input id="ssqymc" name="ssqymc" /> </td>
+				</tr><tr>
+					<td>用户名：</td>
+					<td><input id="swqk" name="yhmdd" /> </td>
+					<td>用户密码：</td>
+					<td><input id="kkqk" name="yhmm" /> </td>
+				</tr>
+				<tr>
+					<td>用户所属部门：</td>
+
+					<td colspan="3"><input id="input_zkwz_yhgl" name="ssmk" placeholder="请选择或手工输入" deptsprop="yhgl" style="display:none"/><br />
+						<select id="sel_zkwz_yhgl">
+							<option value ="1">请选择或手工输入</option>
+						</select>
+					</td>
+				</tr>
+
+				
+			</table>
+			<div class="btn_item">
+				<button type="button" class="btn_tj" id="btn_tj"><i class="iconfont icon-tijiao"></i>提交</button>
+				<button id="btn_qk" type="button" class="btn_qk"><i class="iconfont icon-qingkong"></i>清空</button>
+			</div>
+		</form>
+		<script type="text/javascript" src="../../../js/jquery-1.12.4.js"></script>
+		<script type="text/javascript" src="../../../js/Excel_dc/xlsx.core.min.js"></script>
+		<script type="text/javascript" src="../../../glng/GLOBAL.js"></script>
+		<!--js-xlsx插件-->
+		<script>
+			var host = HOST;
+			var UrlSelect = '/xtgn-yhlb/query';
+			var UrlInsert = '/xtgn-yhlb/save';
+			var UrlUpdate = '/xtgn-yhlb/updateById';
+
+			DEPTS_REF_FUNC();
+
+			var depts = JSON.parse(localStorage.DEPTS_KEY_VALUE);
+			var detpsHtml = '';
+			for(var key in depts){
+				detpsHtml = detpsHtml+'<option value ='+key+'>'+depts[key]+'</option>';
+			}
+			$('#sel_zkwz_yhgl').html(detpsHtml);
+
+			//把钻孔位置下拉框复制给文本框
+			$(document).ready(function() {
+
+				$("#sel_zkwz_yhgl").change(function() {
+					$('#ssqymc').val(depts[$("#sel_zkwz_yhgl").val()]);
+					$("#input_zkwz_yhgl").val($("#sel_zkwz_yhgl").val());
+				});
+			});
+
+			//清空表单
+			$("#btn_qk").click(function() {
+				$("#Form1")[0].reset();
+			})
+
+			$("#btn_dr").click(function() {
+				$("input[name=csv]").csv2arr(function(res) {
+					console.log(res);
+
+				});
+			});
+
+			$(document).ready(function() {
+				$("#input_file").change(function() {
+					$("#input_file1").val($("#input_file").val());
+				});
+			});
+			//Excel导入到form表单
+			$('#input_file').change(function(e) {
+				var files = e.target.files;
+
+				var fileReader = new FileReader();
+				fileReader.onload = function(ev) {
+					try {
+						var data = ev.target.result,
+							workbook = XLSX.read(data, {
+								type: 'binary'
+							}), // 以二进制流方式读取得到整份excel表格对象
+							persons = []; // 存储获取到的数据
+					} catch(e) {
+						console.log('文件类型不正确');
+						return;
+					}
+
+					// 表格的表格范围，可用于判断表头是否数量是否正确
+					var fromTo = '';
+					// 遍历每张表读取
+					for(var sheet in workbook.Sheets) {
+						if(workbook.Sheets.hasOwnProperty(sheet)) {
+							fromTo = workbook.Sheets[sheet]['!ref'];
+							console.log(fromTo);
+							persons = persons.concat(XLSX.utils.sheet_to_json(workbook.Sheets[sheet]));
+							break; // 如果只取第一张表，就取消注释这行
+						}
+					}
+
+					console.log(persons);
+					$("#input_zkwz_yhgl").val(persons[0].数据编号);
+					$("#kk_time").val(persons[0].数据所属煤矿);
+					$("#zk_number").val(persons[0].用户所属区域名称);
+					$("#swqk").val(persons[0].用户名);
+					$("#knzk").val(persons[0].密码);
+				};
+
+				// 以二进制方式打开文件
+				fileReader.readAsBinaryString(files[0]);
+			});
+			var RowId = parent.$('#RowId').val();
+			//实现添加数据或者修改数据
+			$("#btn_tj").click(function() {
+				if(RowId != "" && RowId != undefined && RowId != 'undefined') {
+					$.ajax({
+						type: "post",
+						url: host + UrlUpdate+"?id="+RowId,
+						data: $('#Form1').serialize(), // 你的formid
+						async: false,
+						success: function(data) {
+							alert("修改成功");
+							if(parent)parent.$('#Table2').bootstrapTable('refresh', {
+								url: host + UrlSelect
+							});
+						},
+						error: function(request) {
+							alert("修改失败");
+						}
+					});
+				} else {
+					$.ajax({
+						type: "post",
+						url: host + UrlInsert,
+						data: $('#Form1').serialize(), // 你的formid
+						async: false,
+						success: function(data) {
+							alert("提交成功");
+						},
+						error: function(request) {
+							alert("提交失败");
+						}
+					});
+				}
+
+			})
+			$.fn.loadData = function(obj) {
+				var key, value, tagName, type, arr;
+//				this.reset();
+				for(var x in obj) {
+					if(obj.hasOwnProperty(x)) {
+						key = x;
+						value = obj[x];
+						// console.log(key,value)
+						if(key=='ssmk'&& $('#input_zkwz_yhgl').attr('deptsprop')=='yhgl' ){
+							$('#sel_zkwz_yhgl').val(value);
+							// console.log($('#sel_zkwz_yhgl'),$('#sel_zkwz_yhgl').val(),value);
+						}
+						this.find("[name='" + key + "'],[name='" + key + "[]']").each(function() {
+							tagName = $(this)[0].tagName.toUpperCase();
+							type = $(this).attr('type');
+							if(tagName == 'INPUT') {
+								if(type == 'radio') {
+									if($(this).val() == value) {
+										$(this).attr('checked', true);
+									}
+								} else if(type == 'checkbox') {
+									arr = value.split(',');
+									for(var i = 0; i < arr.length; i++) {
+										if($(this).val() == arr[i]) {
+											$(this).attr('checked', true);
+											break;
+										}
+									}
+								} else {
+									$(this).val(value);
+								}
+							} else if(tagName == 'SELECT' || tagName == 'TEXTAREA') {
+								// $(this).val(value);
+							}
+						});
+					}
+				}
+			}
+			$.ajax({
+				dataType: "json",
+				type: "post",
+				url: host + UrlSelect + '?id=' + RowId,
+				async: false,
+				complete: UN_LODIN_OUT_FUNC,
+				success: function(data) {
+					//					SetFromValues($("#Form1"), data.rows[0]);
+					$("#Form1").loadData(data.rows[0]);
+				},
+				error: function(request) {
+
+				}
+			});
+		</script>
+	</body>
+
+</html>

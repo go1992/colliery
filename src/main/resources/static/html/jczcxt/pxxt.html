@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			select {
+				font-size: 17px;
+				height: 194px;
+				width: 90%;
+			}
+			
+			#Table1 {
+				width: 100%;
+				/*padding: 10px 0px 0px 50px;*/
+				text-align: center;
+			}
+			
+			td {
+				width: 50%;
+			}
+			
+			.btn_xiazai {
+				border: 0px;
+				border-radius: 3px;
+				color: white;
+				width: 120px;
+				height: 30px;
+				font-size: 14px;
+				background-color: #30a5ff;
+			}
+			
+			.btn_xiazai:hover,
+			.btn_sc:hover {
+				cursor: pointer;
+				background-color: #428bca;
+			}
+			
+			.btn_del {
+				border: 0px;
+				border-radius: 3px;
+				color: white;
+				width: 120px;
+				height: 30px;
+				font-size: 14px;
+				background-color: #dc3545;
+			}
+			
+			.btn_del:hover {
+				cursor: pointer;
+				background-color: #c82333;
+			}
+			
+			#input_file {
+				width: 300px;
+				height: 30px;
+				position: absolute;
+				right: 0;
+				opacity: 0;
+			}
+			
+			.file_item {
+				position: relative;
+			}
+			
+			.btn_sc {
+				border: 0px;
+				border-radius: 3px;
+				color: white;
+				width: 100px;
+				height: 30px;
+				font-size: 14px;
+				background-color: #30a5ff;
+			}
+			
+			.sc_title {
+				font-size: 14px;
+				color: #0086B3;
+			}
+			
+			.div_sc {
+				margin-left: 20px;
+				margin-top: 20px;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<form method="post" action="#" id="Form1" enctype="multipart/form-data">
+			<div class="div_sc">
+				<span>1.选择上传文件</span>
+				<span class="file_item">
+					<input id="input_file1" style="height: 28px;border:1px solid gainsboro;border-radius:2px ;" />
+					<button id="btn_xzwj" type="button" class="btn_sc"><i class="iconfont icon-choose1"></i>选择文件</button>	
+					<input name="fileName" type="file" id="input_file" />
+				</span>
+				<input type="radio" name="rad1" checked="checked" value="类型一" /><label>类型一</label>
+				<input type="radio" name="rad1" value="类型二" /><label>类型二</label>
+				<input type="radio" name="rad1" value="类型三" /><label>类型三</label>
+				<input type="radio" name="rad1" value="类型四" /><label>类型四</label>
+				<br />
+				<br />
+				<span>2.上传选择文件</span>
+				<button type="button" class="btn_sc" id="btn_sc"><i class="iconfont icon-shangchuan"></i>上传文件</button>
+			</div>
+			<table id="Table1">
+				<tr>
+					<td class="sc_title">类型一</td>
+					<td class="sc_title">类型二</td>
+				</tr>
+				<tr>
+					<td>
+						<select size="12" id="listbox1">
+						</select>
+						<br />
+					</td>
+					<td>
+						<select size="12" id="listbox2">
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td><button id="btn_jczl_download" type="button" class="btn_xiazai"><i class="iconfont icon-Group-"></i>下载选择文件</button>&nbsp;&nbsp;<button id="btn_jczl_del" type="button" class="btn_del"><i class="iconfont icon-shanchu"></i>删除选择文件</button></td>
+					<td><button id="btn_dzyb_download" type="button" class="btn_xiazai"><i class="iconfont icon-Group-"></i>下载选择文件</button>&nbsp;&nbsp;<button id="btn_dzyb_del" type="button" class="btn_del"><i class="iconfont icon-shanchu"></i>删除选择文件</button></td>
+				</tr>
+				<tr>
+					<td class="sc_title">类型三</td>
+					<td class="sc_title">类型四</td>
+				</tr>
+				<tr>
+					<td>
+						<select size="12" id="listbox3">
+						</select>
+					</td>
+					<td>
+						<select size="12" id="listbox4">
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td><button id="btn_wsdz_download" type="button" class="btn_xiazai"><i class="iconfont icon-Group-"></i>下载选择文件</button>&nbsp;&nbsp;<button id="btn_wsdz_del" type="button" class="btn_del"><i class="iconfont icon-shanchu"></i>删除选择文件</button></td>
+					<td><button id="btn_pc_download" type="button" class="btn_xiazai"><i class="iconfont icon-Group-"></i>下载选择文件</button>&nbsp;&nbsp;<button id="btn_pc_del" type="button" class="btn_del"><i class="iconfont icon-shanchu"></i>删除选择文件</button></td>
+				</tr>
+			</table>
+			<input type="hidden" name="MKname" value="上兴隆煤矿" />
+			<input type="hidden" name="XTname" value="决策支持系统" />
+			<input type="hidden" name="XTCDname" value="培训系统" />
+		</form>
+		<script type="text/javascript" src="../../js/jquery.form.js" ></script>
+		<script>
+			$(document).ready(function() {
+				$('#Form1').attr('action',HOST.replace('apiv1','')+'fileUpload');
+				$("#input_file").change(function() {
+					$("#input_file1").val($("#input_file").val());
+				});
+			});
+			var MKname = "上兴隆煤矿";
+			var XTname = "决策支持系统";
+			var XTCDname = "培训系统";
+			//上传文件到服务器
+			$("#btn_sc").click(function() {
+				$("#Form1").ajaxSubmit(function(data) {
+					if(data == "true") {
+						alert("上传成功！");
+						//重新显示各个文件夹的文件名
+						filename_sel();
+					} else if(data == "false") {
+						alert("上传失败！");
+					}
+				})
+			});
+			//显示各个文件夹的文件名
+			function filename_sel() {
+				var str1 = "";
+				var str2 = "";
+				var str3 = "";
+				var str4 = "";
+				$.ajax({
+					dataType: "json",
+					type: "post",
+					url: HOST.replace('apiv1','')+"getfilename?MKname=" + MKname + "&XTname=" + XTname + "&XTCDname=" + XTCDname + "",
+					async: true,
+					success: function(data) {
+						if(data != null && data != "") {
+							for(var i = 0; i < data.length; i++) {
+								if(data[i].hasOwnProperty("类型一")) {
+									for(var j in data[i].类型一) {
+										str1 += "<option>" + data[i].类型一[j] + "</option>";
+									}
+									$("#listbox1").html(str1);
+								}
+								if(data[i].hasOwnProperty("类型二")) {
+									for(var j in data[i].类型二) {
+										str2 += "<option>" + data[i].类型二[j] + "</option>";	
+									}
+									$("#listbox2").html(str2);
+								}
+								if(data[i].hasOwnProperty("类型三")) {
+									for(var j in data[i].类型三) {
+										str3 += "<option>" + data[i].类型三[j] + "</option>";	
+									}
+									$("#listbox3").html(str3);
+								}
+								if(data[i].hasOwnProperty("类型四")) {
+									for(var j in data[i].类型四 ) {
+										str4 += "<option>" + data[i].类型四[j] + "</option>";		
+									}
+									$("#listbox4").html(str4);
+								}
+							}
+						}
+
+					},
+					error: function() {
+						alert("连接服务器失败！");
+					}
+				});
+			};
+			filename_sel();
+
+			//下载选择的文件
+			function file_download(ZLtype, fileName) {
+				window.location.href = HOST.replace('apiv1','')+"downloadflie?MKname=" + MKname + "&XTname=" + XTname + "&XTCDname=" + XTCDname + "&ZLtype=" + ZLtype + "&fileName=" + fileName + "";
+			};
+			//下载类型一
+			$("#btn_jczl_download").click(function() {
+				var ZLtype = "类型一";
+				var fileName = $("#listbox1").find("option:selected").text();
+				file_download(ZLtype, fileName);
+			});
+			//下载类型二
+			$("#btn_dzyb_download").click(function() {
+				var ZLtype = "类型二";
+				var fileName = $("#listbox2").find("option:selected").text();
+				file_download(ZLtype, fileName);
+			});
+			//下载类型三
+			$("#btn_wsdz_download").click(function() {
+				var ZLtype = "类型三";
+				var fileName = $("#listbox3").find("option:selected").text();
+				file_download(ZLtype, fileName);
+			});
+			//下载类型四  
+			$("#btn_pc_download").click(function() {
+				var ZLtype = "类型四";
+				var fileName = $("#listbox4").find("option:selected").text();
+				file_download(ZLtype, fileName);
+			});
+			//删除选择的文件
+			function file_del(ZLtype,fileName) {
+				$.ajax({
+					dataType: "text",
+					type: "post",
+					url: HOST.replace('apiv1','')+"delfile?MKname=" + MKname + "&XTname=" + XTname + "&XTCDname=" + XTCDname + "&ZLtype=" + ZLtype + "&fileName=" + fileName + "",
+					async: true,
+					success: function(data) {
+						//重新显示各个文件夹的文件名
+						filename_sel();
+					},
+					error: function() {
+						alert("连接服务器失败！");
+					}
+				});
+			};
+			//删除类型一
+			$("#btn_jczl_del").click(function() {
+				var ZLtype = "类型一";
+				var fileName = $("#listbox1").find("option:selected").text();
+				file_del(ZLtype, fileName);
+			});
+			//删除类型二
+			$("#btn_dzyb_del").click(function() {
+				var ZLtype = "类型二";
+				var fileName = $("#listbox2").find("option:selected").text();
+				file_del(ZLtype, fileName);
+			});
+			//删除类型三
+			$("#btn_wsdz_del").click(function() {
+				var ZLtype = "类型三";
+				var fileName = $("#listbox3").find("option:selected").text();
+				file_del(ZLtype, fileName);
+			});
+			//删除类型四 
+			$("#btn_pc_del").click(function() {
+				var ZLtype = "类型四";
+				var fileName = $("#listbox4").find("option:selected").text();
+				file_del(ZLtype, fileName);
+			});
+		</script>
+	</body>
+
+</html>
