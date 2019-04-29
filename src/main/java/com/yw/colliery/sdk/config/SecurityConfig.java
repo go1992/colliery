@@ -41,7 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http.cors().and().authorizeRequests()
                 .antMatchers( "/css/**","/js/**","/img/**","/glng/**","/fonts/**","/apiv1/xtgn-yhlb/getKaptcha")
                 .permitAll()
                 .and()
