@@ -9,9 +9,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.yw.colliery.absys.EPage;
-import com.yw.colliery.absys.ESessionKey;
-import com.yw.colliery.absys.ResultObject;
+import com.yw.colliery.api.base.EPage;
+import com.yw.colliery.api.base.ESessionKey;
+import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.*;
 import com.yw.colliery.service.IXtgnQyfjService;
 import com.yw.colliery.service.MyService;
@@ -20,14 +20,14 @@ import org.apache.commons.collections4.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import lombok.extern.slf4j.Slf4j;
-import com.yw.colliery.absys.BaseController;
+import com.yw.colliery.api.base.BaseController;
 import com.yw.colliery.service.impl.DcJbcsKqwzServiceImpl;
 import com.yw.colliery.service.impl.DcSwdzZkpcServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import static com.yw.colliery.absys.MyUtil.checkNotNull;
+import static com.yw.colliery.api.base.MyUtil.checkNotNull;
 
 /**
  * <p>

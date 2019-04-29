@@ -1,8 +1,8 @@
-package com.yw.colliery.qxcontroller;
+package com.yw.colliery.api.auth;
 
 
 import com.alibaba.fastjson.JSONObject;
-import com.yw.colliery.absys.ESessionKey;
+import com.yw.colliery.api.base.ESessionKey;
 import com.yw.colliery.entity.XtgnYhlb;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

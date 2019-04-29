@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.yw.colliery.absys.BaseController;
-import com.yw.colliery.absys.ESessionKey;
-import com.yw.colliery.absys.ResultObject;
+import com.yw.colliery.api.base.BaseController;
+import com.yw.colliery.api.base.ESessionKey;
+import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.WxyglSjlb;
 import com.yw.colliery.service.impl.WxyglSjlbServiceImpl;
 

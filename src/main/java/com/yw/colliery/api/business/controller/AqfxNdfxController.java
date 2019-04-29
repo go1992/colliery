@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
-import com.yw.colliery.absys.BaseController;
-import com.yw.colliery.absys.ResultObject;
+import com.yw.colliery.api.base.BaseController;
+import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.AqfxCsxg;
 import com.yw.colliery.entity.AqfxNdfx;
 import com.yw.colliery.service.IAqfxCsxgService;

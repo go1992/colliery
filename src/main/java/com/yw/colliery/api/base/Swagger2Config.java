@@ -1,4 +1,4 @@
-package com.yw.colliery.absys;
+package com.yw.colliery.api.base;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

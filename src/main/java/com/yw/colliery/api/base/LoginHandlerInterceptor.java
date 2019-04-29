@@ -1,4 +1,4 @@
-package com.yw.colliery.absys;
+package com.yw.colliery.api.base;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

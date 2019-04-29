@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.yw.colliery.absys.ESessionKey;
-import com.yw.colliery.absys.ResultObject;
+import com.yw.colliery.api.base.ESessionKey;
+import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.XtgnYhlb;
 
 import io.swagger.annotations.ApiImplicitParam;
