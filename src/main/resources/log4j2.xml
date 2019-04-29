@@ -4,7 +4,7 @@
 <configuration status="debug" monitorInterval="30">
 
     <properties>
-        <Property name="filePath">/tmp/slnb_logs/policy_store_server</Property>
+        <Property name="filePath">/tmp/yw_log/colliery</Property>
         <!-- 线上环境
         <property name="filePath">/app/logs</property>-->
         <Property name="logPattern">%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %class{36} %L %M - $$- %msg -$$%xEx%n</Property>
