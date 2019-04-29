@@ -1,5 +1,6 @@
 package com.yw.colliery.sdk.config;
 
+import com.yw.colliery.api.login.service.ValidationCodeFilter;
 import com.yw.colliery.handler.LoginFailureHandler;
 import com.yw.colliery.handler.LoginSuccessHandler;
 import com.yw.colliery.sdk.constans.CollierySafetyConstant;
@@ -13,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
 /**
@@ -29,6 +31,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private LoginFailureHandler loginFailureHandler;
     @Autowired
     private CollierySafetyUserService collierySafetyUserService;
+    @Autowired
+    private ValidationCodeFilter validationCodeFilter;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -41,9 +45,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers( "/css/**","/js/**","/img/**","/glng/**","/fonts/**","/apiv1/xtgn-yhlb/getKaptcha")
                 .permitAll()
                 .and()
+                .addFilterBefore(validationCodeFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin()
                 //指定登录页的路径
-                .loginPage("/bigdatalogin.html")
+//                .loginPage("/bigdatalogin.html")
                 .loginProcessingUrl(CollierySafetyConstant.COLLIERY_LOGIN)
                 .permitAll()
                 .successHandler(loginSuccessHandler)
