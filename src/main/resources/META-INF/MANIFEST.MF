@@ -32,5 +32,5 @@ Class-Path: mybatis-plus-generator-3.1.0.jar log4j-core-2.11.2.jar spr
  g-jcl-5.1.6.RELEASE.jar springfox-swagger2-2.9.2.jar spring-web-5.1.6
  .RELEASE.jar log4j-api-2.11.2.jar mysql-connector-java-5.1.44.jar spr
  ing-boot-starter-json-2.1.4.RELEASE.jar
-Main-Class: com.example.demo.DemoApplication
+Main-Class: com.yw.colliery.DemoApplication
 

@@ -136,7 +136,7 @@ layui.define(function(exports){
   // `$.zepto.fragment` takes a html string and an optional tag name
   // to generate DOM nodes from the given html string.
   // The generated DOM nodes are returned as an array.
-  // This function can be overridden in plugins for example to make
+  // This function can be overridden in plugins for yw to make
   // it compatible with browsers that don't support the DOM fully.
   zepto.fragment = function(html, name, properties) {
     var dom, nodes, container

@@ -45,6 +45,6 @@ logging:
       com.example.demo.mapper: debug
 #存放mapper xml文件的位置
 mybatis-plus:
-  mapper-locations: classpath:/mapper/demo/*/*.xml
+  mapper-locations: classpath:/mapper/colliery/*/*.xml
 
 

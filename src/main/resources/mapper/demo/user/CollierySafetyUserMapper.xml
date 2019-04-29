@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.demo.mapper.user.CollierySafetyUserMapper">
-    <resultMap id="BaseResultMap" type="com.example.demo.entity.user.CollierySafetyUserEntity">
+<mapper namespace="com.yw.colliery.mapper.user.CollierySafetyUserMapper">
+    <resultMap id="BaseResultMap" type="com.yw.colliery.entity.user.CollierySafetyUserEntity">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="user_author" property="userAuthor" jdbcType="VARCHAR"/>
         <result column="user_pwd" property="userPwd" jdbcType="VARCHAR"/>
@@ -23,7 +23,7 @@
         id = #{id,jdbcType=INTEGER}
     </delete>
     
-    <insert id="insert" parameterType="com.example.demo.entity.user.CollierySafetyUserEntity">
+    <insert id="insert" parameterType="com.yw.colliery.entity.user.CollierySafetyUserEntity">
     insert into colliery_user (id, user_author, user_pwd,
       user_name, create_date, create_user,
       modify_date, modify_user)
@@ -31,7 +31,7 @@
       #{userName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{createUser,jdbcType=VARCHAR},
       #{modifyDate,jdbcType=TIMESTAMP}, #{modifyUser,jdbcType=TIMESTAMP})
   </insert>
-    <insert id="insertSelective" parameterType="com.example.demo.entity.user.CollierySafetyUserEntity">
+    <insert id="insertSelective" parameterType="com.yw.colliery.entity.user.CollierySafetyUserEntity">
         insert into colliery_user
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -86,7 +86,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.entity.user.CollierySafetyUserEntity">
+    <update id="updateByPrimaryKeySelective" parameterType="com.yw.colliery.entity.user.CollierySafetyUserEntity">
         update colliery_user
         <set>
             <if test="userAuthor != null">
@@ -113,7 +113,7 @@
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.example.demo.entity.user.CollierySafetyUserEntity">
+    <update id="updateByPrimaryKey" parameterType="com.yw.colliery.entity.user.CollierySafetyUserEntity">
     update colliery_user
     set user_author = #{userAuthor,jdbcType=VARCHAR},
       user_pwd = #{userPwd,jdbcType=VARCHAR},

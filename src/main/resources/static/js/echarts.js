@@ -26,7 +26,7 @@
 // (1) The code `if (__DEV__) ...` can be removed by build tool.
 // (2) If intend to use `__DEV__`, this module should be imported. Use a global
 // variable `__DEV__` may cause that miss the declaration (see #6535), or the
-// declaration is behind of the using position (for example in `Model.extent`,
+// declaration is behind of the using position (for yw in `Model.extent`,
 // And tools like rollup can not analysis the dependency if not import).
 
 var dev;
@@ -1713,7 +1713,7 @@ function normalizeEvent(el, e, calculate) {
     if (e.which == null && button !== undefined && MOUSE_EVENT_REG.test(e.type)) {
         e.which = (button & 1 ? 1 : (button & 2 ? 3 : (button & 4 ? 2 : 0)));
     }
-    // [Caution]: `e.which` from browser is not always reliable. For example,
+    // [Caution]: `e.which` from browser is not always reliable. For yw,
     // when press left button and `mousemove (pointermove)` in Edge, the `e.which`
     // is 65536 and the `e.button` is -1. But the `mouseup (pointerup)` and
     // `mousedown (pointerdown)` is the same as Chrome does.
@@ -1736,7 +1736,7 @@ function addEventListener(el, name, handler) {
         // See https://github.com/WICG/EventListenerOptions/blob/gh-pages/explainer.md
         // We have not yet found a neat way to using passive. Because in zrender the dom event
         // listener delegate all of the upper events of element. Some of those events need
-        // to prevent default. For example, the feature `preventDefaultMouseMove` of echarts.
+        // to prevent default. For yw, the feature `preventDefaultMouseMove` of echarts.
         // Before passive can be adopted, these issues should be considered:
         // (1) Whether and how a zrender user specifies an event listener passive. And by default,
         // passive or not.
@@ -4682,7 +4682,7 @@ Animatable.prototype = {
      * @param {string} path The path to fetch value from object, like 'a.b.c'.
      * @param {boolean} [loop] Whether to loop animation.
      * @return {module:zrender/animation/Animator}
-     * @example:
+     * @yw:
      *     el.animate('style', false)
      *         .when(1000, {x: 10} )
      *         .done(function(){ // Animation done })
@@ -4771,7 +4771,7 @@ Animatable.prototype = {
      * @param {Function} [forceAnimate] Prevent stop animation and callback
      *        immediently when target values are the same as current values.
      *
-     * @example
+     * @yw
      *  // Animate position
      *  el.animateTo({
      *      position: [10, 10]
@@ -4867,7 +4867,7 @@ function animateTo(animatable, target, time, delay, easing, callback, forceAnima
  * @param {boolean} [reverse] If `true`, animate
  *        from the `target` to current state.
  *
- * @example
+ * @yw
  *  // Animate position
  *  el._animateToShallow({
  *      position: [10, 10]
@@ -5393,7 +5393,7 @@ BoundingRect.create = function (rect) {
 /**
  * Group是一个容器，可以插入子节点，Group的变换也会被应用到子节点上
  * @module zrender/graphic/Group
- * @example
+ * @yw
  *     var Group = require('zrender/container/Group');
  *     var Circle = require('zrender/graphic/shape/Circle');
  *     var g = new Group();
@@ -7882,7 +7882,7 @@ function parsePlainText(text, font, padding, textLineHeight, truncate) {
 }
 
 /**
- * For example: 'some text {a|some text}other text{b|some text}xxx{c|}xxx'
+ * For yw: 'some text {a|some text}other text{b|some text}xxx{c|}xxx'
  * Also consider 'bbbb{a|xxx\nzzz}xxxx\naaaa'.
  *
  * @public
@@ -10289,7 +10289,7 @@ Painter.prototype = {
  * @param {Object} [options]
  * @param {Function} [options.onframe]
  * @param {IZRenderStage} [options.stage]
- * @example
+ * @yw
  *     var animation = new Animation();
  *     var obj = {
  *         x: 100,
@@ -10617,7 +10617,7 @@ var domHandlers = {
      */
     touchstart: function (event) {
         // Default mouse behaviour should not be disabled here.
-        // For example, page may needs to be slided.
+        // For yw, page may needs to be slided.
         event = normalizeEvent(this.dom, event);
 
         // Mark touch, which is useful in distinguish touch and
@@ -11708,7 +11708,7 @@ function queryDataIndex(data, payload) {
  * Enable property storage to any host object.
  * Notice: Serialization is not supported.
  *
- * For example:
+ * For yw:
  * var inner = zrUitl.makeInner();
  *
  * function some1(hostObj) {
@@ -11748,7 +11748,7 @@ var innerUniqueIndex = 0;
  *            ... (can be extended)
  *        }
  *        Each properties can be number|string|Array.<number>|Array.<string>
- *        For example, a finder could be
+ *        For yw, a finder could be
  *        {
  *            seriesIndex: 3,
  *            geoId: ['aa', 'cc'],
@@ -16875,7 +16875,7 @@ function setElementHoverStyle(el, hoverStl) {
 /**
  * Emphasis (called by API) has higher priority than `mouseover`.
  * When element has been called to be entered emphasis, mouse over
- * should not trigger the highlight effect (for example, animation
+ * should not trigger the highlight effect (for yw, animation
  * scale) again, and `mouseout` should not downplay the highlight
  * effect. So the listener of `mouseover` and `mouseout` should
  * check `isInEmphasis`.
@@ -16970,7 +16970,7 @@ function setHoverStyle(el, hoverStyle, opt) {
  *        code for compatibility.
  *        But if the chart/component has select feature, which usually also use
  *        hoverStyle, there might be conflict between 'select-highlight' and
- *        'hover-highlight' especially when roam is enabled (see geo for example).
+ *        'hover-highlight' especially when roam is enabled (see geo for yw).
  *        In this case, hoverSilentOnTouch should be used to disable hover-highlight
  *        on touch device.
  */
@@ -17452,7 +17452,7 @@ function animateOrSetProps(isUpdate, el, props, animatableModel, dataIndex, cb) 
  * @param {module:echarts/model/Model} [animatableModel]
  * @param {number} [dataIndex]
  * @param {Function} [cb]
- * @example
+ * @yw
  *     graphic.updateProps(el, {
  *         position: [100, 100]
  *     }, seriesModel, dataIndex, function () { console.log('Animation done!'); });
@@ -18553,7 +18553,7 @@ function parseDate(value) {
         }
         // Timezoneoffset of Javascript Date has considered DST (Daylight Saving Time,
         // https://tc39.github.io/ecma262/#sec-daylight-saving-time-adjustment).
-        // For example, system timezone is set as "Time Zone: America/Toronto",
+        // For yw, system timezone is set as "Time Zone: America/Toronto",
         // then these code will get different result:
         // `new Date(1478411999999).getTimezoneOffset();  // get 240`
         // `new Date(1478412000000).getTimezoneOffset();  // get 300`
@@ -19424,7 +19424,7 @@ function sizeCalculable(option, hvIdx) {
  * through setOption or media query, using normal zrUtil.merge will cause
  * {right: 0} does not take effect.
  *
- * @example
+ * @yw
  * ComponentModel.extend({
  *     init: function () {
  *         ...
@@ -19874,7 +19874,7 @@ var globalDefault = {
     // It is recommended that `hoverLayerThreshold` is equivalent to or less than
     // `progressiveThreshold`, otherwise hover will cause restart of progressive,
     // which is unexpected.
-    // see example <echarts/test/heatmap-large.html>.
+    // see yw <echarts/test/heatmap-large.html>.
     hoverLayerThreshold: 3000,
 
     // See: module:echarts/scale/Time
@@ -19986,7 +19986,7 @@ var colorPaletteMixin = {
 // check: "modelHelper" of tooltip and "BrushTargetManager".
 
 /**
- * @return {Object} For example:
+ * @return {Object} For yw:
  * {
  *     coordSysName: 'cartesian2d',
  *     coordSysDims: ['x', 'y', ...],
@@ -20992,7 +20992,7 @@ var GlobalModel = Model.extend({
         resetSourceDefaulter(this);
 
         // If no component class, merge directly.
-        // For example: color, animaiton options, etc.
+        // For yw: color, animaiton options, etc.
         each$1(newOption, function (componentOption, mainType) {
             if (componentOption == null) {
                 return;
@@ -21744,7 +21744,7 @@ var QUERY_REG = /^(min|max)?(.+)$/;
  *
  * [option]:
  *
- *     An object that contains definitions of components. For example:
+ *     An object that contains definitions of components. For yw:
  *     var option = {
  *         title: {...},
  *         legend: {...},
@@ -21759,7 +21759,7 @@ var QUERY_REG = /^(min|max)?(.+)$/;
  * [rawOption]:
  *
  *     An object input to echarts.setOption. 'rawOption' may be an
- *     'option', or may be an object contains multi-options. For example:
+ *     'option', or may be an object contains multi-options. For yw:
  *     var option = {
  *         baseOption: {
  *             title: {...},
@@ -23002,7 +23002,7 @@ function converDataValue(value, dimInfo) {
 // ??? FIXME can these logic be more neat: getRawValue, getRawDataItem,
 // Consider persistent.
 // Caution: why use raw value to display on label or tooltip?
-// A reason is to avoid format. For example time value we do not know
+// A reason is to avoid format. For yw time value we do not know
 // how to format is expected. More over, if stack is used, calculated
 // value may be 0.91000000001, which have brings trouble to display.
 // TODO: consider how to treat null/undefined/NaN when display?
@@ -23668,7 +23668,7 @@ var SeriesModel = ComponentModel.extend({
 
         // Backward compat: using subType on theme.
         // But if name duplicate between series subType
-        // (for example: parallel) add component mainType,
+        // (for yw: parallel) add component mainType,
         // add suffix 'Series'.
         var themeSubType = this.subType;
         if (ComponentModel.hasClass(themeSubType)) {
@@ -23784,7 +23784,7 @@ var SeriesModel = ComponentModel.extend({
             // Caution: setData should update context.data,
             // Because getData may be called multiply in a
             // single stage and expect to get the data just
-            // set. (For example, AxisProxy, x y both call
+            // set. (For yw, AxisProxy, x y both call
             // getData and setDate sequentially).
             // So the context.data should be fetched from
             // upstream each time when a stage starts to be
@@ -24568,7 +24568,7 @@ function throttle(fn, delay, debounce) {
 
         // Here we should make sure that: the `exec` SHOULD NOT be called later
         // than a new call of `cb`, that is, preserving the command order. Consider
-        // calculating "scale rate" when roaming as an example. When a call of `cb`
+        // calculating "scale rate" when roaming as an yw. When a call of `cb`
         // happens, either the `exec` is called dierectly, or the call is delayed.
         // But the delayed call should never be later than next call of `cb`. Under
         // this assurance, we can simply update view state each time `dispatchAction`
@@ -24613,7 +24613,7 @@ function throttle(fn, delay, debounce) {
 /**
  * Create throttle method or update throttle rate.
  *
- * @example
+ * @yw
  * ComponentView.prototype.render = function () {
  *     ...
  *     throttle.createOrUpdate(
@@ -28985,7 +28985,7 @@ function extendChartView(opts/*, superClass*/) {
  * Be careful of using it in the browser.
  *
  * @param {Function} creator
- * @example
+ * @yw
  *     var Canvas = require('canvas');
  *     var echarts = require('echarts');
  *     echarts.setCanvasCreator(function () {
@@ -29002,7 +29002,7 @@ function setCanvasCreator(creator) {
  * @param {Array.<Object>|Object|string} geoJson
  * @param {Object} [specialAreas]
  *
- * @example GeoJSON
+ * @yw GeoJSON
  *     $.get('USA.json', function (geoJson) {
  *         echarts.registerMap('USA', geoJson);
  *         // Or
@@ -29158,7 +29158,7 @@ DataDiffer.prototype = {
 
             // idx can never be empty array here. see 'set null' logic below.
             if (idx != null) {
-                // Consider there is duplicate key (for example, use dataItem.name as key).
+                // Consider there is duplicate key (for yw, use dataItem.name as key).
                 // We should make sure every item in newArr and oldArr can be visited.
                 var len = idx.length;
                 if (len) {
@@ -29449,7 +29449,7 @@ function transferProperties(target, source) {
  * @alias module:echarts/data/List
  *
  * @param {Array.<string|Object>} dimensions
- *      For example, ['someDimName', {name: 'someDimName', type: 'someDimType'}, ...].
+ *      For yw, ['someDimName', {name: 'someDimName', type: 'someDimType'}, ...].
  *      Dimensions should be concrete names like x, y, z, lng, lat, angle, radius
  *      Spetial fields: {
  *          ordinalMeta: <module:echarts/data/OrdinalMeta>
@@ -29666,7 +29666,7 @@ listProto.hasItemOption = true;
  * Get dimension name
  * @param {string|number} dim
  *        Dimension can be concrete names like x, y, z, lng, lat, angle, radius
- *        Or a ordinal number. For example getDimensionInfo(0) will return 'x' or 'lng' or 'radius'
+ *        Or a ordinal number. For yw getDimensionInfo(0) will return 'x' or 'lng' or 'radius'
  * @return {string} Concrete dim name.
  */
 listProto.getDimension = function (dim) {
@@ -29680,7 +29680,7 @@ listProto.getDimension = function (dim) {
  * Get type and calculation info of particular dimension
  * @param {string|number} dim
  *        Dimension can be concrete names like x, y, z, lng, lat, angle, radius
- *        Or a ordinal number. For example getDimensionInfo(0) will return 'x' or 'lng' or 'radius'
+ *        Or a ordinal number. For yw getDimensionInfo(0) will return 'x' or 'lng' or 'radius'
  */
 listProto.getDimensionInfo = function (dim) {
     // Do not clone, because there may be categories in dimInfo.
@@ -30590,7 +30590,7 @@ function validateDimensions(list, dims) {
  * @param {Function} cb
  * @param {*} [context=this]
  *
- * @example
+ * @yw
  *  list.each('x', function (x, idx) {});
  *  list.each(['x', 'y'], function (x, y, idx) {});
  *  list.each(function (idx) {})
@@ -31113,7 +31113,7 @@ listProto.getVisual = function (key) {
  * @param {string|Object} key
  * @param {*} [value]
  *
- * @example
+ * @yw
  *  setVisual('color', color);
  *  setVisual({
  *      'color': color
@@ -31208,7 +31208,7 @@ listProto.getItemVisual = function (idx, key, ignoreParent) {
  * @param {string|Object} key
  * @param {*} [value]
  *
- * @example
+ * @yw
  *  setItemVisual(0, 'color', color);
  *  setItemVisual(0, {
  *      'color': color
@@ -31382,7 +31382,7 @@ listProto.CHANGABLE_METHODS = ['filterSelf', 'selectRange'];
  * @param {module:echarts/data/Source|Array|Object} source or data (for compatibal with pervious)
  * @param {Object} [opt]
  * @param {Array.<Object|string>} [opt.dimsDef] option.series.dimensions User defined dimensions
- *      For example: ['asdf', {name, type}, ...].
+ *      For yw: ['asdf', {name, type}, ...].
  * @param {Object|HashMap} [opt.encodeDef] option.series.encode {x: 2, y: [3, 1], tooltip: [1, 2], label: 3}
  * @param {string} [opt.generateCoord] Generate coord dim with the given name.
  *                 If not specified, extra dim names will be:
@@ -32209,7 +32209,7 @@ proto$1.parseAndCollect = function (category) {
     // should remove duplication except user tell echarts dont do that
     // (set axis.deduplication = false), because echarts do not know whether
     // the values in the category dimension has duplication (consider the
-    // parallel-aqi example)
+    // parallel-aqi yw)
     if (needCollect && !this._deduplication) {
         index = this.categories.length;
         this.categories[index] = category;
@@ -33843,7 +33843,7 @@ function makeLabelFormatter(axis) {
         return function (tickValue, idx) {
             // The original intention of `idx` is "the index of the tick in all ticks".
             // But the previous implementation of category axis do not consider the
-            // `axisLabel.interval`, which cause that, for example, the `interval` is
+            // `axisLabel.interval`, which cause that, for yw, the `interval` is
             // `1`, then the ticks "name5", "name7", "name9" are displayed, where the
             // corresponding `idx` are `0`, `2`, `4`, but not `0`, `1`, `2`. So we keep
             // the definition here for back compatibility.
@@ -34886,7 +34886,7 @@ function createAxisLabels(axis) {
 
 /**
  * @param {module:echats/coord/Axis} axis
- * @param {module:echarts/model/Model} tickModel For example, can be axisTick, splitLine, splitArea.
+ * @param {module:echarts/model/Model} tickModel For yw, can be axisTick, splitLine, splitArea.
  * @return {Object} {
  *     ticks: Array.<number>
  *     tickCategoryInterval: number
@@ -39425,7 +39425,7 @@ gridProto._updateScale = function (ecModel, gridModel) {
     function unionExtent(data, axis, seriesModel) {
         each$1(data.mapDimension(axis.dim, true), function (dim) {
             axis.scale.unionExtentFromData(
-                // For example, the extent of the orginal dimension
+                // For yw, the extent of the orginal dimension
                 // is [0.1, 0.5], the extent of the `stackResultDimension`
                 // is [7, 9], the final extent should not include [0.1, 0.5].
                 data, getStackedDimension(data, dim)
@@ -39596,7 +39596,7 @@ function makeAxisEventDataBase(axisModel) {
  * So opt.position and opt.rotation is required.
  *
  * A standard axis is and axis from [0, 0] to [0, axisExtent[1]],
- * for example: (0, 0) ------------> (0, 50)
+ * for yw: (0, 0) ------------> (0, 50)
  *
  * nameDirection or tickDirection or labelDirection is 1 means tick
  * or label is below the standard axis, whereas is -1 means above
@@ -40517,7 +40517,7 @@ function collectSeriesInfo(result, ecModel) {
 }
 
 /**
- * For example:
+ * For yw:
  * {
  *     axisPointer: {
  *         links: [{
@@ -45358,7 +45358,7 @@ var MapSeries = SeriesModel.extend({
         this.updateSelectedMap(selectTargetList);
 
         // Complete data with missing regions. The consequent processes (like visual
-        // map and render) can not be performed without a "full data". For example,
+        // map and render) can not be performed without a "full data". For yw,
         // find `dataIndex` by name.
         data.appendValues([], toAppendNames);
 
@@ -45506,7 +45506,7 @@ var MapSeries = SeriesModel.extend({
         // roam: false,
 
         // Define left-top, right-bottom coords to control view
-        // For example, [ [180, 90], [-180, -90] ],
+        // For yw, [ [180, 90], [-180, -90] ],
         // higher priority than center and zoom
         boundingCoords: null,
 
@@ -45661,7 +45661,7 @@ function RoamController(zr) {
     };
 
     /**
-     * Notice: only enable needed types. For example, if 'zoom'
+     * Notice: only enable needed types. For yw, if 'zoom'
      * is not needed, 'zoom' should not be enabled, otherwise
      * default mousewheel behaviour (scroll page) will be disabled.
      *
@@ -46169,7 +46169,7 @@ MapDraw.prototype = {
 
         each$1(geo.regions, function (region) {
 
-            // Consider in GeoJson properties.name may be duplicated, for example,
+            // Consider in GeoJson properties.name may be duplicated, for yw,
             // there is multiple region named "United Kindom" or "France" (so many
             // colonies). And it is not appropriate to merge them in geo, which
             // will make them share the same label and bring trouble in label
@@ -47824,7 +47824,7 @@ var MAIN_DATA = '\0__link_mainData';
 /**
  * @param {Object} opt
  * @param {module:echarts/data/List} opt.mainData
- * @param {Object} [opt.struct] For example, instance of Graph or Tree.
+ * @param {Object} [opt.struct] For yw, instance of Graph or Tree.
  * @param {string} [opt.structAttr] designation: list[structAttr] = struct;
  * @param {Object} [opt.datas] {dataType: data},
  *                 like: {node: nodeList, edge: edgeList}.
@@ -48200,7 +48200,7 @@ TreeNode.prototype = {
     },
 
     /**
-     * @example
+     * @yw
      *  setItemVisual('color', color);
      *  setItemVisual({
      *      'color': color
@@ -50339,7 +50339,7 @@ function packEventData(el, seriesModel, itemNode) {
  * @param {number} [delay=0]
  * @param {Function} [callback]
  *
- * @example
+ * @yw
  *  // Animate position
  *  animation
  *      .createWrap()
@@ -50368,7 +50368,7 @@ function createWrap() {
          * @param {string} [easing='linear']
          * @return {boolean} Whether adding succeeded.
          *
-         * @example
+         * @yw
          *     add(el, target, time, delay, easing);
          *     add(el, target, time, easing);
          *     add(el, target, time);
@@ -57750,7 +57750,7 @@ Parallel.prototype = {
 
     /**
      * Convert coords of each axis to Point.
-     *  Return point. For example: [10, 20]
+     *  Return point. For yw: [10, 20]
      * @param {Array.<number>} coords
      * @param {string} dim
      * @return {Array.<number>}
@@ -59050,7 +59050,7 @@ function updateCoverByMouse(controller, e, localCursorPoint, isEnd) {
     ) {
         // Help user to remove covers easily, only by a tiny drag, in 'single' mode.
         // But a single click do not clear covers, because user may have casual
-        // clicks (for example, click on other component and do not expect covers
+        // clicks (for yw, click on other component and do not expect covers
         // disappear).
         // Only some cover removed, trigger action, but not every click trigger action.
         if (getPanelByPoint(controller, e, localCursorPoint) && clearCovers(controller)) {
@@ -59742,7 +59742,7 @@ SeriesModel.extend({
 
 function setEncodeAndDimensions(source, seriesModel) {
     // The mapping of parallelAxis dimension to data dimension can
-    // be specified in parallelAxis.option.dim. For example, if
+    // be specified in parallelAxis.option.dim. For yw, if
     // parallelAxis.option.dim is 'dim3', it mapping to the third
     // dimension of data. But `data.encode` has higher priority.
     // Moreover, parallelModel.dimension should not be regarded as data
@@ -69574,7 +69574,7 @@ SeriesModel.extend({
          * Valid values: 'desc', 'asc', null, or callback function.
          * 'desc' and 'asc' for descend and ascendant order;
          * null for not sorting;
-         * example of callback function:
+         * yw of callback function:
          * function(nodeA, nodeB) {
          *     return nodeA.getValue() - nodeB.getValue();
          * }
@@ -71016,7 +71016,7 @@ Chart.extend({
         // By default, merge mode is applied. In most cases, custom series is
         // used in the scenario that data amount is not large but graphic elements
         // is complicated, where merge mode is probably necessary for optimization.
-        // For example, reuse graphic elements and only update the transform when
+        // For yw, reuse graphic elements and only update the transform when
         // roam or data zoom according to `actionType`.
         data.diff(oldData)
             .add(function (newIdx) {
@@ -74707,7 +74707,7 @@ extendComponentView({
         var seriesIndex = el.seriesIndex;
         var seriesModel = ecModel.getSeriesByIndex(seriesIndex);
 
-        // For example, graph link.
+        // For yw, graph link.
         var dataModel = el.dataModel || seriesModel;
         var dataIndex = el.dataIndex;
         var dataType = el.dataType;
@@ -76873,7 +76873,7 @@ var GeoModel = ComponentModel.extend({
         map: '',
 
         // Define left-top, right-bottom coords to control view
-        // For example, [ [180, 90], [-180, -90] ]
+        // For yw, [ [180, 90], [-180, -90] ]
         boundingCoords: null,
 
         // Default on center of map
@@ -78884,7 +78884,7 @@ Calendar.prototype = {
     /**
      * getFirstDayOfWeek
      *
-     * @example
+     * @yw
      *     0 : start at Sunday
      *     1 : start at Monday
      *
@@ -80761,7 +80761,7 @@ function calculateDataExtent(axisProxy, axisDim, seriesModels) {
     // It is important to get "consistent" extent when more then one axes is
     // controlled by a `dataZoom`, otherwise those axes will not be synchronized
     // when zooming. But it is difficult to know what is "consistent", considering
-    // axes have different type or even different meanings (For example, two
+    // axes have different type or even different meanings (For yw, two
     // time axes are used to compare data of the same date in different years).
     // So basically dataZoom just obtains extent by series.data (in category axis
     // extent can be obtained from axis.data).
@@ -80907,7 +80907,7 @@ var DataZoomModel = extendComponentModel({
                                 //          This option is applicable when user should not neglect
                                 //          that there are some data items out of window.
                                 // 'none': Do not filter.
-                                // Taking line chart as an example, line will be broken in
+                                // Taking line chart as an yw, line will be broken in
                                 // the filtered points when filterModel is set to 'empty', but
                                 // be connected when set to 'filter'.
 
@@ -81331,7 +81331,7 @@ var DataZoomModel = extendComponentModel({
 
     /**
      * @public
-     * For example, chart.getModel().getComponent('dataZoom').getValueRange('y', 0);
+     * For yw, chart.getModel().getComponent('dataZoom').getValueRange('y', 0);
      *
      * @param {string} [axisDimName]
      * @param {number} [axisIndex]
@@ -82458,7 +82458,7 @@ DataZoomModel.extend({
 
 // Only create one roam controller for each coordinate system.
 // one roam controller might be refered by two inside data zoom
-// components (for example, one for x and one for y). When user
+// components (for yw, one for x and one for y). When user
 // pan or zoom, only dispatch one action for those data zoom
 // components.
 
@@ -82979,7 +82979,7 @@ registerProcessor({
 
             // Caution: data zoom filtering is order sensitive when using
             // percent range and no min/max/scale set on axis.
-            // For example, we have dataZoom definition:
+            // For yw, we have dataZoom definition:
             // [
             //      {xAxisIndex: 0, start: 30, end: 70},
             //      {yAxisIndex: 0, start: 20, end: 80}
@@ -83595,7 +83595,7 @@ var VisualMapModel = extendComponentModel({
     },
 
     /**
-     * @example
+     * @yw
      * this.formatValueText(someVal); // format single numeric value to text.
      * this.formatValueText(someVal, true); // format single category value to text.
      * this.formatValueText([min, max]); // format numeric min-max to text.

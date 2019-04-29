@@ -96,7 +96,7 @@
             <appender-ref ref="SunShineLog"/>
         </logger>
         <!-- 异步logger写日志,指定包路径-->
-        <!--   <AsyncLogger name="com.example.demoserver" level="trace" includeLocation="true">
+        <!--   <AsyncLogger name="com.ywserver" level="trace" includeLocation="true">
                <appender-ref ref="Console"/>
                <appender-ref ref="testLog"/>
                <appender-ref ref="WholeLog"/>

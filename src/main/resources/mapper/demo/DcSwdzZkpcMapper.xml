@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.demo.mapper.DcSwdzZkpcMapper">
-    <resultMap id="zkpc" type="com.example.demo.entity.DcSwdzZkpc" autoMapping="true">
+<mapper namespace="com.yw.colliery.mapper.DcSwdzZkpcMapper">
+    <resultMap id="zkpc" type="com.yw.colliery.entity.DcSwdzZkpc" autoMapping="true">
         <id property="id" column="id"/>
-        <association property="zkwzid" javaType="com.example.demo.entity.DcJbcsKqwz" autoMapping="true" columnPrefix="t_">
+        <association property="zkwzid" javaType="com.yw.colliery.entity.DcJbcsKqwz" autoMapping="true" columnPrefix="t_">
             <id property="id" column="id"/>
         </association>
     </resultMap>
