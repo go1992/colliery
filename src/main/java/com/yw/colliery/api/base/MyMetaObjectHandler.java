@@ -1,4 +1,4 @@
-package com.yw.colliery.absys;
+package com.yw.colliery.api.base;
 
 //@Component
 public class MyMetaObjectHandler {

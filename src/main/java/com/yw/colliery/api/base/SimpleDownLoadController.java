@@ -1,5 +1,5 @@
-package com.yw.colliery.absys;
-import static com.yw.colliery.absys.MyUtil.checkNotNull;
+package com.yw.colliery.api.base;
+import static com.yw.colliery.api.base.MyUtil.checkNotNull;
 
 import java.io.File;
 import java.io.IOException;

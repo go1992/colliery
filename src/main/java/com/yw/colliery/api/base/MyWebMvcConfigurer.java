@@ -1,4 +1,4 @@
-package com.yw.colliery.absys;
+package com.yw.colliery.api.base;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

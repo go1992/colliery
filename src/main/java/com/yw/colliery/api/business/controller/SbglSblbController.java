@@ -1,7 +1,7 @@
 package com.yw.colliery.api.business.controller;
 
 
-import static com.yw.colliery.absys.MyUtil.checkNotNull;
+import static com.yw.colliery.api.base.MyUtil.checkNotNull;
 
 import java.util.List;
 import java.util.Map;
@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.yw.colliery.absys.BaseController;
-import com.yw.colliery.absys.EPage;
-import com.yw.colliery.absys.ESessionKey;
-import com.yw.colliery.absys.ResultObject;
+import com.yw.colliery.api.base.BaseController;
+import com.yw.colliery.api.base.EPage;
+import com.yw.colliery.api.base.ESessionKey;
+import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.SbglSblb;
 import com.yw.colliery.service.impl.SbglSblbServiceImpl;
 

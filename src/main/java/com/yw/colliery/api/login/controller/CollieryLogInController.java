@@ -2,9 +2,9 @@ package com.yw.colliery.api.login.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.yw.colliery.absys.BaseController;
-import com.yw.colliery.absys.ESessionKey;
-import com.yw.colliery.absys.ResultObject;
+import com.yw.colliery.api.base.BaseController;
+import com.yw.colliery.api.base.ESessionKey;
+import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.XtgnQyfj;
 import com.yw.colliery.entity.XtgnYhlb;
 import com.yw.colliery.api.login.service.ValidateHandleService;
@@ -32,7 +32,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static com.yw.colliery.absys.MyUtil.checkNotNull;
+import static com.yw.colliery.api.base.MyUtil.checkNotNull;
 
 /**
  * <p>

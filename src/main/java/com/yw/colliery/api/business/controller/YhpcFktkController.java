@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
-import com.yw.colliery.absys.BaseController;
+import com.yw.colliery.api.base.BaseController;
 import com.yw.colliery.service.impl.YhpcFktkServiceImpl;
 import com.yw.colliery.entity.YhpcFktk;
 /**

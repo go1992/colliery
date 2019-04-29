@@ -119,7 +119,7 @@ public class CodeGenerator {
 //        strategy.setSuperEntityColumns("id");
         strategy.setEntityLombokModel(true);
         strategy.setRestControllerStyle(true);
-        strategy.setSuperControllerClass("com.yw.colliery.absys.BaseController");
+        strategy.setSuperControllerClass("com.yw.colliery.api.base.BaseController");
         //排除表
         strategy.setExclude("");
 //        strategy.setInclude(

@@ -6,7 +6,7 @@ import org.apache.commons.collections4.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.yw.colliery.absys.MyUtil;
+import com.yw.colliery.api.base.MyUtil;
 import com.yw.colliery.mapper.MyMapper;
 import com.yw.colliery.service.MyService;
 
