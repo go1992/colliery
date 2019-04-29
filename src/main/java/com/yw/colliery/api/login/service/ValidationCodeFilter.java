@@ -1,8 +1,11 @@
 package com.yw.colliery.api.login.service;
 
+
 import com.yw.colliery.handler.LoginFailureHandler;
+import com.yw.colliery.sdk.constans.CollierySafetyConstant;
+import com.yw.colliery.sdk.exception.ValidCodeAuthenticationException;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -14,22 +17,17 @@ import java.io.IOException;
 
 
 /**
- * <p>
- *
- * </p>
- *
- * @author liulu-lhq
- * @sinece 2018/12/4
+ * @author xuzhou
  */
-//@DependsOn(value = "redisClientUtil")
 @Component
 public class ValidationCodeFilter extends OncePerRequestFilter {
 
-    @Autowired
-    private RedisTemplate redisTemplate;
 
     @Autowired
     private LoginFailureHandler loginFailureHandler;
+
+    @Autowired
+    private ValidateHandleService validateHandleService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
@@ -41,34 +39,30 @@ public class ValidationCodeFilter extends OncePerRequestFilter {
     }
 
     private boolean checkTypeAndReq(HttpServletRequest httpServletRequest) {
-//        return StringUtils.equals(ScsfConstant.SCSF_LOGIN, httpServletRequest.getRequestURI())
-//                && StringUtils.equalsIgnoreCase(ScsfConstant.REQ_METHOD_POST, httpServletRequest.getMethod());
-        return true;
+        return StringUtils.equals(CollierySafetyConstant.COLLIERY_LOGIN, httpServletRequest.getRequestURI())
+                && StringUtils.equalsIgnoreCase("POST", httpServletRequest.getMethod());
     }
 
     private void validate(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
             throws ServletException, IOException {
-//        String actualCode = redisClientUtil.hGet(ScsfConstant.SCSF_VALID_CODE, httpServletRequest.getSession().getId(), new TypeReference<String>() {
-//        });
-//        String codeInRequest = httpServletRequest.getParameter(ScsfConstant.SCSF_IMAGE_CODE);
-//        if (StringUtils.isBlank(codeInRequest)) {
-//            loginFailureHandler.onAuthenticationFailure(httpServletRequest, httpServletResponse
-//                    , new ValidCodeAuthenticationException("验证码为空或者不存在！"));
-//            return;
-//        }
-//        if (StringUtils.isBlank(actualCode)) {
-//            loginFailureHandler.onAuthenticationFailure(httpServletRequest, httpServletResponse
-//                    , new ValidCodeAuthenticationException("请重新获取最新验证码！"));
-//            return;
-//        }
-//        if (!StringUtils.equals(codeInRequest.trim().toUpperCase(), actualCode)) {
-//            loginFailureHandler.onAuthenticationFailure(httpServletRequest, httpServletResponse
-//                    , new ValidCodeAuthenticationException("验证码不匹配！"));
-//            return;
-//        }
-//        List<String> hDelList = new ArrayList<>();
-//        hDelList.add(httpServletRequest.getSession().getId());
-//        redisClientUtil.hDel(ScsfConstant.SCSF_VALID_CODE, hDelList);
-        //redisTemplate.opsForHash().delete(ScsfConstant.SCSF_VALID_CODE, httpServletRequest.getSession().getId());
+
+        String code = validateHandleService.getValidate(httpServletRequest.getSession().getId());
+        String codeInRequest = httpServletRequest.getParameter("captcha");
+        if (StringUtils.isBlank(codeInRequest)) {
+            loginFailureHandler.onAuthenticationFailure(httpServletRequest, httpServletResponse
+                    , new ValidCodeAuthenticationException("验证码为空或者不存在！"));
+            return;
+        }
+        if (StringUtils.isBlank(code)) {
+            loginFailureHandler.onAuthenticationFailure(httpServletRequest, httpServletResponse
+                    , new ValidCodeAuthenticationException("请重新获取最新验证码！"));
+            return;
+        }
+        if (!StringUtils.equals(codeInRequest.trim().toUpperCase(), code)) {
+            loginFailureHandler.onAuthenticationFailure(httpServletRequest, httpServletResponse
+                    , new ValidCodeAuthenticationException("验证码不匹配！"));
+            return;
+        }
+        validateHandleService.dellValidate(httpServletRequest.getSession().getId());
     }
 }
