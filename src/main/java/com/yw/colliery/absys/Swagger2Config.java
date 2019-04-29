@@ -30,7 +30,7 @@ public class Swagger2Config {
     public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo()).select()
                 // 为当前包路径
-                .apis(RequestHandlerSelectors.basePackage("com.yw.colliery.controller")).paths(PathSelectors.any())
+                .apis(RequestHandlerSelectors.basePackage("com.yw.colliery.api.business.controller")).paths(PathSelectors.any())
                 .build();
     }
  
