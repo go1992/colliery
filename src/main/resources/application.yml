@@ -14,8 +14,8 @@ spring:
       driver-class-name: com.mysql.jdbc.Driver
       #基本属性
       url: jdbc:mysql://47.103.35.95:3306/coal_mine?characterEncoding=utf8&useSSL=true&useSSL=false&allowMultiQueries=true
-      username: root
-      password: root
+      username: *
+      password: *
       #配置初始化大小/最小/最大
       initial-size: 1
       min-idle: 1
@@ -42,7 +42,7 @@ spring:
   redis:
     database: 0
     host: 47.103.35.95
-    port: 6379
+    port: *
     password: 123
     jedis:
       pool:

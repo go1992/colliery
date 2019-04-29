@@ -28,12 +28,11 @@ public class SessionFilter implements Filter {
         CollierySafetyUserEntity safetyUser = LoginSessionUtils.getUser();
         if (safetyUser == null) {
             safetyUser = collierySafetyUserService.selectByUserCode(servletRequest.getParameter(LoginConstant.Request.USER_CODE));
-
             if (safetyUser != null) {
                 SpringSessionUtils.setSession(LoginConstant.Session.WEBAPI_SESSION_USER, safetyUser);
             }
         }
 
-        doFilter(servletRequest, servletResponse, filterChain);
+        filterChain.doFilter(servletRequest, servletResponse);
     }
 }
