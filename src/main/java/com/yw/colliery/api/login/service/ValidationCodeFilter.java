@@ -58,7 +58,7 @@ public class ValidationCodeFilter extends OncePerRequestFilter {
                     , new ValidCodeAuthenticationException("请重新获取最新验证码！"));
             return;
         }
-        if (!StringUtils.equals(codeInRequest.trim().toUpperCase(), code)) {
+        if (!StringUtils.equals(codeInRequest, code)) {
             loginFailureHandler.onAuthenticationFailure(httpServletRequest, httpServletResponse
                     , new ValidCodeAuthenticationException("验证码不匹配！"));
             return;
