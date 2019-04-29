@@ -10,7 +10,7 @@ public @interface AuthModule {
      * 模块id
      * @return
      */
-    int moduleId();
+    String moduleId();
 
     /**
      * 模块名称
