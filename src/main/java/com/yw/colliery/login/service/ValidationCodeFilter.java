@@ -1,6 +1,7 @@
 package com.yw.colliery.login.service;
 
 import com.alibaba.fastjson.TypeReference;
+import com.yw.colliery.handler.LoginFailureHandler;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.DependsOn;
