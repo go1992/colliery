@@ -4,7 +4,7 @@ import com.yw.colliery.api.login.service.ValidationCodeFilter;
 import com.yw.colliery.handler.LoginFailureHandler;
 import com.yw.colliery.handler.LoginSuccessHandler;
 import com.yw.colliery.sdk.constans.CollierySafetyConstant;
-import com.yw.colliery.user.CollierySafetyUserService;
+import com.yw.colliery.service.user.CollierySafetyUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

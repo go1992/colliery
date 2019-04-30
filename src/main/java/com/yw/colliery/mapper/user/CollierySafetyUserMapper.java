@@ -4,6 +4,8 @@ package com.yw.colliery.mapper.user;
 import com.yw.colliery.entity.user.CollierySafetyUserEntity;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 
 /**
 * @description: 验证成功处理
@@ -44,4 +46,17 @@ public interface CollierySafetyUserMapper {
      * @return
      */
     CollierySafetyUserEntity selectByUserCode(String userCode);
+
+    /**
+     * 查询所有用户
+     * @return
+     */
+    List<CollierySafetyUserEntity> selectAllUser();
+
+    /**
+     * 根据用户id查询
+     * @param userId
+     * @return
+     */
+    CollierySafetyUserEntity selectByUserId(Integer userId);
 }

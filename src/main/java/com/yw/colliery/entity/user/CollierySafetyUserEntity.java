@@ -24,7 +24,7 @@ public class CollierySafetyUserEntity implements UserDetails {
 
     private Date modifyDate;
 
-    private Date modifyUser;
+    private String modifyUser;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -60,4 +60,5 @@ public class CollierySafetyUserEntity implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }

@@ -6,7 +6,7 @@ import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
 import com.yw.colliery.api.base.BaseController;
-import com.yw.colliery.service.impl.DdxxScddServiceImpl;
+import com.yw.colliery.service.business.impl.DdxxScddServiceImpl;
 import com.yw.colliery.entity.DdxxScdd;
 /**
  * <p>

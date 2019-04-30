@@ -20,7 +20,7 @@ import com.yw.colliery.api.base.BaseController;
 import com.yw.colliery.api.base.ESessionKey;
 import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.WxyglSjlb;
-import com.yw.colliery.service.impl.WxyglSjlbServiceImpl;
+import com.yw.colliery.service.business.impl.WxyglSjlbServiceImpl;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

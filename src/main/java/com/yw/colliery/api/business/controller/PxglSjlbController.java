@@ -26,7 +26,7 @@ import com.yw.colliery.api.base.ESessionKey;
 import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.PxglSjlb;
 import com.yw.colliery.entity.SbglSblb;
-import com.yw.colliery.service.impl.PxglSjlbServiceImpl;
+import com.yw.colliery.service.business.impl.PxglSjlbServiceImpl;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;

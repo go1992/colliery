@@ -31,8 +31,8 @@ import com.yw.colliery.entity.ScglScjh;
 import com.yw.colliery.entity.ScglSjcl;
 import com.yw.colliery.entity.XtgnQyfj;
 import com.yw.colliery.entity.XtgnYhlb;
-import com.yw.colliery.service.IXtgnQyfjService;
-import com.yw.colliery.service.MyService;
+import com.yw.colliery.service.business.IXtgnQyfjService;
+import com.yw.colliery.service.business.MyService;
 
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;

@@ -20,8 +20,8 @@ import com.yw.colliery.entity.WxyglSjlb;
 import com.yw.colliery.mapper.DdxxScddMapper;
 import com.yw.colliery.mapper.DdxxScsgMapper;
 import com.yw.colliery.mapper.WxyglSjlbMapper;
-import com.yw.colliery.service.IDcSwdzZkpcService;
-import com.yw.colliery.service.ISbglSblbService;
+import com.yw.colliery.service.business.IDcSwdzZkpcService;
+import com.yw.colliery.service.business.ISbglSblbService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

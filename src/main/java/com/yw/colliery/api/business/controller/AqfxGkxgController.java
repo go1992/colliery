@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yw.colliery.api.base.BaseController;
-import com.yw.colliery.service.impl.AqfxGkxgServiceImpl;
+import com.yw.colliery.service.business.impl.AqfxGkxgServiceImpl;
 import com.yw.colliery.entity.AqfxGkxg;
 /**
  * <p>

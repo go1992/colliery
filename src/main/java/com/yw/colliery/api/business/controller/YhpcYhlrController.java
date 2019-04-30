@@ -24,7 +24,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.yw.colliery.api.base.BaseController;
 import com.yw.colliery.api.base.ESessionKey;
 import com.yw.colliery.api.base.ResultObject;
-import com.yw.colliery.service.impl.YhpcYhlrServiceImpl;
+import com.yw.colliery.service.business.impl.YhpcYhlrServiceImpl;
 import com.yw.colliery.entity.YhpcYhlr;
 
 /**

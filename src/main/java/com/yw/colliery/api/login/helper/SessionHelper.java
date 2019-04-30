@@ -4,7 +4,7 @@ import com.yw.colliery.entity.user.CollierySafetyUserEntity;
 import com.yw.colliery.sdk.constans.LoginConstant;
 import com.yw.colliery.sdk.utils.LoginSessionUtils;
 import com.yw.colliery.sdk.utils.SpringSessionUtils;
-import com.yw.colliery.user.CollierySafetyUserService;
+import com.yw.colliery.service.user.CollierySafetyUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

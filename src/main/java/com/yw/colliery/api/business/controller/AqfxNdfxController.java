@@ -12,8 +12,8 @@ import com.yw.colliery.api.base.BaseController;
 import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.AqfxCsxg;
 import com.yw.colliery.entity.AqfxNdfx;
-import com.yw.colliery.service.IAqfxCsxgService;
-import com.yw.colliery.service.impl.AqfxNdfxServiceImpl;
+import com.yw.colliery.service.business.IAqfxCsxgService;
+import com.yw.colliery.service.business.impl.AqfxNdfxServiceImpl;
 
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;

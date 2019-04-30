@@ -25,7 +25,7 @@ import com.yw.colliery.api.base.EPage;
 import com.yw.colliery.api.base.ESessionKey;
 import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.DdxxScsg;
-import com.yw.colliery.service.impl.DdxxScsgServiceImpl;
+import com.yw.colliery.service.business.impl.DdxxScsgServiceImpl;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;

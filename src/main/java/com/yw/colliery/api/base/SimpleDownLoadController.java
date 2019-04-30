@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yw.colliery.entity.AqfxCsxg;
-import com.yw.colliery.service.impl.AqfxCsxgServiceImpl;
+import com.yw.colliery.service.business.impl.AqfxCsxgServiceImpl;
 
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;

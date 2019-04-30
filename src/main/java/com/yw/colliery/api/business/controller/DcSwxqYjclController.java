@@ -18,7 +18,7 @@ import com.yw.colliery.api.base.BaseController;
 import com.yw.colliery.api.base.ESessionKey;
 import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.DcSwxqYjcl;
-import com.yw.colliery.service.impl.DcSwxqYjclServiceImpl;
+import com.yw.colliery.service.business.impl.DcSwxqYjclServiceImpl;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

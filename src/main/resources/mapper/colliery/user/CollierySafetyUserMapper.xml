@@ -131,4 +131,17 @@
         from colliery_user
         where user_name = #{userCode}
     </select>
+
+    <select id="selectAllUser" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from colliery_user
+    </select>
+
+    <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from colliery_user
+        where id = #{userId}
+    </select>
 </mapper>
