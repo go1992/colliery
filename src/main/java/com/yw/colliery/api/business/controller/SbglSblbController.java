@@ -9,6 +9,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.yw.colliery.sdk.aop.AuthModule;
+import com.yw.colliery.sdk.constans.AuthConstant;
 import org.apache.commons.collections4.MapUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -90,6 +92,7 @@ public class SbglSblbController extends BaseController<SbglSblbServiceImpl,SbglS
 	})
 //	@RequestMapping("/myCount")
 	@PostMapping("/myCount")
+	@AuthModule(moduleId = AuthConstant.Module.DEVICE_MANAGE_MODULE)
 	public Object myCount(@ApiParam(hidden=true)@RequestParam Map<String,Object> params
 			, @ApiParam(hidden=true) HttpServletRequest request
 			) {

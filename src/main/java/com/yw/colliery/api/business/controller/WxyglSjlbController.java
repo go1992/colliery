@@ -8,6 +8,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.yw.colliery.sdk.aop.AuthModule;
+import com.yw.colliery.sdk.constans.AuthConstant;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,6 +42,7 @@ public class WxyglSjlbController extends BaseController<WxyglSjlbServiceImpl,Wxy
 
 	@ApiOperation(value = "决策统计",response=ResultObject.class)
 	@PostMapping("/countToPieChart")
+	@AuthModule(moduleId = AuthConstant.Module.DANGER_MANAGE_MODULE)
 	public Object countBy(@ApiParam(hidden=true) @RequestParam Map<String,Object> params
 			, @ApiParam(hidden=true) HttpServletRequest request
 			) {

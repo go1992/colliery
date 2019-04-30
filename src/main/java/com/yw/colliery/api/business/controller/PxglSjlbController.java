@@ -10,6 +10,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.yw.colliery.sdk.aop.AuthModule;
+import com.yw.colliery.sdk.constans.AuthConstant;
 import org.apache.commons.collections4.MapUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,6 +51,7 @@ public class PxglSjlbController extends BaseController<PxglSjlbServiceImpl,PxglS
 	
 	@ApiOperation(value = "决策统计",response=ResultObject.class)
 	@PostMapping("/countToPieChart")
+	@AuthModule(moduleId = AuthConstant.Module.TRAIN_MANAGE_MODULE)
 	public Object countBy(@ApiParam(hidden=true) @RequestParam Map<String,Object> params
 			, @ApiParam(hidden=true) HttpServletRequest request
 			) {

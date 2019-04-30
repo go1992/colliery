@@ -5,10 +5,13 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.yw.colliery.api.base.BaseController;
 import com.yw.colliery.api.base.ESessionKey;
 import com.yw.colliery.api.base.ResultObject;
+import com.yw.colliery.api.login.helper.SessionHelper;
 import com.yw.colliery.entity.XtgnQyfj;
 import com.yw.colliery.entity.XtgnYhlb;
 import com.yw.colliery.api.login.service.ValidateHandleService;
 import com.yw.colliery.api.login.service.impl.XtgnYhlbServiceImpl;
+import com.yw.colliery.sdk.aop.AuthModule;
+import com.yw.colliery.sdk.constans.AuthConstant;
 import com.yw.colliery.service.IXtgnQyfjService;
 import com.google.code.kaptcha.Constants;
 import io.swagger.annotations.*;
@@ -51,6 +54,9 @@ public class CollieryLogInController extends BaseController<XtgnYhlbServiceImpl,
 
     @Autowired
     private ValidateHandleService validateHandleService;
+
+    @Autowired
+    private SessionHelper sessionHelper;
 
     /*
      * 登陆
@@ -139,7 +145,10 @@ public class CollieryLogInController extends BaseController<XtgnYhlbServiceImpl,
 
         }
 
-
+        //登录成功保存用户安全信息到session
+        if (resultObject.getCode().equals(ResultObject.SUCCESS)) {
+            sessionHelper.saveSafetyUser(username);
+        }
         return resultObject;
     }
 
@@ -172,6 +181,7 @@ public class CollieryLogInController extends BaseController<XtgnYhlbServiceImpl,
         }
 
     }
+
 }
 
 
