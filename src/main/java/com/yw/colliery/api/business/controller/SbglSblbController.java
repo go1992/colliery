@@ -1,22 +1,6 @@
 package com.yw.colliery.api.business.controller;
 
 
-import static com.yw.colliery.api.base.MyUtil.checkNotNull;
-
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import com.yw.colliery.sdk.aop.AuthModule;
-import com.yw.colliery.sdk.constans.AuthConstant;
-import org.apache.commons.collections4.MapUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.yw.colliery.api.base.BaseController;
@@ -25,13 +9,20 @@ import com.yw.colliery.api.base.ESessionKey;
 import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.SbglSblb;
 import com.yw.colliery.service.business.impl.SbglSblbServiceImpl;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.MapUtils;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.List;
+import java.util.Map;
+
+import static com.yw.colliery.api.base.MyUtil.checkNotNull;
 /**
  * <p>
  * 设备管理-设备列表 前端控制器
@@ -92,7 +83,6 @@ public class SbglSblbController extends BaseController<SbglSblbServiceImpl,SbglS
 	})
 //	@RequestMapping("/myCount")
 	@PostMapping("/myCount")
-	@AuthModule(moduleId = AuthConstant.Module.DEVICE_MANAGE_MODULE)
 	public Object myCount(@ApiParam(hidden=true)@RequestParam Map<String,Object> params
 			, @ApiParam(hidden=true) HttpServletRequest request
 			) {

@@ -12,7 +12,9 @@ public class CollierySafetyUserEntity implements UserDetails {
 
     private Integer id;
 
-    private String userAuthor;
+    private Integer roleId;
+
+    private Integer departId;
 
     private String userPwd;
 

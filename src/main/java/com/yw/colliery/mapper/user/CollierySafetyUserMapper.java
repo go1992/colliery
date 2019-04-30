@@ -45,7 +45,7 @@ public interface CollierySafetyUserMapper {
      * * @param userCode
      * @return
      */
-    CollierySafetyUserEntity selectByUserCode(String userCode);
+    CollierySafetyUserEntity selectByUserName(String userCode);
 
     /**
      * 查询所有用户

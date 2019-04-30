@@ -1,6 +1,7 @@
 package com.yw.colliery.sdk.aop;
 
 import com.yw.colliery.entity.user.CollierySafetyUserEntity;
+import com.yw.colliery.entity.user.UserAuthEntity;
 import com.yw.colliery.sdk.constans.AuthConstant;
 import com.yw.colliery.sdk.exception.AuthException;
 import com.yw.colliery.sdk.utils.LoginSessionUtils;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @Author renzhiqiang
@@ -31,15 +33,16 @@ public class AuthModuleAop {
     @Around("@annotation(authModule)")
     public Object auth(ProceedingJoinPoint point, AuthModule authModule) throws Throwable{
         //1.从session中获取用户
-        CollierySafetyUserEntity safetyUser = LoginSessionUtils.getUser();
+        UserAuthEntity userAuthEntity = LoginSessionUtils.getUser();
         //2.判断用户模块权限
-        if (safetyUser == null || StringUtils.isEmpty(safetyUser.getUserAuthor())) {
+        if (userAuthEntity == null || CollectionUtils.isEmpty(userAuthEntity.getAuthList())) {
             //3.返回模块认证异常
             throw new AuthException(AuthException.AuthEnum.MODULE, AuthConstant.Module.NO_MODULE_AUTH);
         } else {
             //4.遍历检查模块权限
-            List<String> authors = Arrays.asList(safetyUser.getUserAuthor().split(","));
-            boolean success = authors.stream().anyMatch(author -> author.equals(authModule.moduleId()));
+            List<Integer> authors = userAuthEntity.getAuthList().stream().map(userAuth -> userAuth.getId())
+                    .collect(Collectors.toList());
+            boolean success = authors.stream().anyMatch(author -> author == authModule.authId());
             if (success) {
                 return point.proceed();
             } else {

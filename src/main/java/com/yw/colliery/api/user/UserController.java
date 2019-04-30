@@ -1,13 +1,13 @@
-package com.yw.colliery.api.user.controller;
+package com.yw.colliery.api.user;
 
 import com.yw.colliery.entity.user.CollierySafetyUserEntity;
-import com.yw.colliery.sdk.request.UserAuthRequest;
+import com.yw.colliery.sdk.request.UserRequest;
 import com.yw.colliery.sdk.response.ApiCode;
 import com.yw.colliery.sdk.response.ApiResponse;
+import com.yw.colliery.sdk.utils.EncodeUtils;
 import com.yw.colliery.service.user.CollierySafetyUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.thymeleaf.util.StringUtils;
 
 import java.util.Date;
 
@@ -23,7 +23,7 @@ public class UserController {
     private CollierySafetyUserService collierySafetyUserService;
 
     @PostMapping("/add")
-    public ApiResponse addUser(@RequestBody UserAuthRequest request) {
+    public ApiResponse addUser(@RequestBody UserRequest request) {
         CollierySafetyUserEntity entity = transfer(request);
         try {
             int result = collierySafetyUserService.addSafetyUser(entity);
@@ -34,7 +34,7 @@ public class UserController {
     }
 
     @PostMapping("/update")
-    public ApiResponse updateUser(@RequestBody UserAuthRequest request) {
+    public ApiResponse updateUser(@RequestBody UserRequest request) {
         CollierySafetyUserEntity entity = transfer(request);
         try {
             int result = collierySafetyUserService.updateSafetyUSer(entity);
@@ -65,12 +65,13 @@ public class UserController {
     }
 
 
-    private CollierySafetyUserEntity transfer(UserAuthRequest request) {
+    private CollierySafetyUserEntity transfer(UserRequest request) {
         CollierySafetyUserEntity entity = new CollierySafetyUserEntity();
-        entity.setUserAuthor(StringUtils.join(request.getUserAuthors(), ","));
-        entity.setUserName(request.getUserName());
-        entity.setUserPwd(request.getPassword());
+        entity.setUserName(EncodeUtils.encode(request.getUserName()));
+        entity.setUserPwd(EncodeUtils.encode(request.getPassword()));
         entity.setId(request.getUserId());
+        entity.setRoleId(request.getRoleId());
+        entity.setDepartId(request.getDepartId());
         entity.setCreateUser(request.getCreateUser() != null ? request.getCreateUser() : null);
         entity.setModifyDate(request.getModifyDate() != null ? request.getModifyDate() : new Date());
         entity.setModifyUser(request.getModifyUser());

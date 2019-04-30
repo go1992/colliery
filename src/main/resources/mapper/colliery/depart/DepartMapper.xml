@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yw.colliery.mapper.depart.DepartMapper">
+    <resultMap id="BaseResultMap" type="com.yw.colliery.entity.depart.DepartmentEntity">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="department_name" property="departName" jdbcType="VARCHAR"/>
+        <result column="auth_ids" property="authIds" jdbcType="INTEGER"/>
+        <result column="create_user" property="createUser" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP"/>
+        <result column="modify_user" property="modifyUser" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+       id, department_name, auth_ids, create_user, create_date, modify_date, modify_user
+    </sql>
+
+
+    <insert id="addDepart" parameterType="com.yw.colliery.entity.depart.DepartmentEntity" useGeneratedKeys="true" keyProperty="id">
+        insert into colliery_department
+          (department_name, auth_ids,create_user,create_date,modify_date, modify_user)
+        values
+          (#{departName,jdbcType=VARCHAR},
+           #{authId,jdbcType=INTEGER},
+           #{createUser,jdbcType=VARCHAR},
+           #{createDate,jdbcType=TIMESTAMP},
+           #{modifyDate,jdbcType=TIMESTAMP},
+           #{modifyUser,jdbcType=TIMESTAMP})
+    </insert>
+
+    <update id="updateDepart" parameterType="com.yw.colliery.entity.depart.DepartmentEntity">
+        update colliery_department
+        <set>
+            <if test="roleName != null">
+                department_name = #{departName,jdbcType=VARCHAR},
+            </if>
+            <if test="authLevel != null">
+                auth_ids = #{authIds,jdbcType=VARCHAR},
+            </if>
+            <if test="createUser != null">
+                create_user = #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyUser != null">
+                modify_user = #{modifyUser,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyDate != null">
+                modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{departId,jdbcType=INTEGER}
+    </update>
+
+    <delete id="deleteDepart" parameterType="java.lang.Integer">
+      delete
+        from colliery_department
+      where
+        id = #{departId,jdbcType=INTEGER}
+    </delete>
+
+    <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+      select
+        <include refid="Base_Column_List"/>
+      from colliery_department
+      where id = #{departId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from colliery_department
+    </select>
+</mapper>

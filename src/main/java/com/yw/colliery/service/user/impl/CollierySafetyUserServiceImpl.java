@@ -22,13 +22,13 @@ public class CollierySafetyUserServiceImpl implements CollierySafetyUserService{
     private CollierySafetyUserMapper collierySafetyUserMapper;
 
     @Override
-    public CollierySafetyUserEntity selectByUserCode(String userCode) {
-        return collierySafetyUserMapper.selectByUserCode(userCode);
+    public CollierySafetyUserEntity selectByUserName(String userName) {
+        return collierySafetyUserMapper.selectByUserName(userName);
     }
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        CollierySafetyUserEntity scsfUser = this.selectByUserCode(userName);
+        CollierySafetyUserEntity scsfUser = this.selectByUserName(userName);
         if(scsfUser == null){
             throw new UsernameNotFoundException("用户不存在");
         }

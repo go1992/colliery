@@ -15,7 +15,7 @@ public @interface AuthModule {
      * 模块id
      * @return
      */
-    String moduleId();
+    int authId();
 
 
     /**

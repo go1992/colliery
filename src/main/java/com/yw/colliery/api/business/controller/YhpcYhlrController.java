@@ -1,31 +1,26 @@
 package com.yw.colliery.api.business.controller;
 
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import com.yw.colliery.sdk.aop.AuthModule;
-import com.yw.colliery.sdk.constans.AuthConstant;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.yw.colliery.api.base.BaseController;
 import com.yw.colliery.api.base.ESessionKey;
 import com.yw.colliery.api.base.ResultObject;
-import com.yw.colliery.service.business.impl.YhpcYhlrServiceImpl;
 import com.yw.colliery.entity.YhpcYhlr;
+import com.yw.colliery.service.business.impl.YhpcYhlrServiceImpl;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -43,7 +38,6 @@ public class YhpcYhlrController extends BaseController<YhpcYhlrServiceImpl,YhpcY
 	
 	@ApiOperation(value = "决策统计",response=ResultObject.class)
 	@PostMapping("/countToPieChart")
-	@AuthModule(moduleId = AuthConstant.Module.TROUBLE_SHOOT_MODULE)
 	public Object countBy(@ApiParam(hidden=true) @RequestParam Map<String,Object> params
 			, @ApiParam(hidden=true) HttpServletRequest request
 			) {

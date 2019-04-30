@@ -14,11 +14,15 @@ import java.util.List;
  **/
 @Data
 @ToString
-public class UserAuthRequest implements Serializable {
+public class UserRequest implements Serializable {
 
     private static final long serialVersionUID = 2935708705058109509L;
 
     private Integer userId;
+
+    private Integer roleId;
+
+    private Integer departId;
 
     private String userName;
 

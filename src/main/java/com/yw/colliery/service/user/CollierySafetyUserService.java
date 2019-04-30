@@ -12,7 +12,7 @@ import java.util.List;
  **/
 public interface CollierySafetyUserService extends UserDetailsService {
 
-    CollierySafetyUserEntity selectByUserCode(String userCode);
+    CollierySafetyUserEntity selectByUserName(String userCode);
 
     int addSafetyUser(CollierySafetyUserEntity userEntity);
 
