@@ -1,5 +1,6 @@
 package com.yw.colliery.api.user;
 
+import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.user.CollierySafetyUserEntity;
 import com.yw.colliery.sdk.request.UserRequest;
 import com.yw.colliery.sdk.response.ApiCode;
@@ -23,44 +24,44 @@ public class UserController {
     private CollierySafetyUserService collierySafetyUserService;
 
     @PostMapping("/add")
-    public ApiResponse addUser(@RequestBody UserRequest request) {
+    public ResultObject addUser(@RequestBody UserRequest request) {
         CollierySafetyUserEntity entity = transfer(request);
         try {
             int result = collierySafetyUserService.addSafetyUser(entity);
-            return ApiResponse.buildSucessResponse(result);
+            return ResultObject.buildSucessResponse(result);
         } catch (Exception e) {
-            return ApiResponse.buildResponse(ApiCode.CODE_FAIL, "新增用户失败!");
+            return ResultObject.buildFailResponse("新增用户失败!");
         }
     }
 
     @PostMapping("/update")
-    public ApiResponse updateUser(@RequestBody UserRequest request) {
+    public ResultObject updateUser(@RequestBody UserRequest request) {
         CollierySafetyUserEntity entity = transfer(request);
         try {
             int result = collierySafetyUserService.updateSafetyUSer(entity);
-            return ApiResponse.buildSucessResponse(result);
+            return ResultObject.buildSucessResponse(result);
         } catch (Exception e) {
-            return ApiResponse.buildResponse(ApiCode.CODE_FAIL, "修改用户失败!");
+            return ResultObject.buildFailResponse("修改用户失败!");
         }
     }
 
     @GetMapping("/delete/{userId}")
-    public ApiResponse deleteUser(@PathVariable Integer userId) {
+    public ResultObject deleteUser(@PathVariable Integer userId) {
         try {
             int result = collierySafetyUserService.deleteSafetyUSer(userId);
-            return ApiResponse.buildSucessResponse(result);
+            return ResultObject.buildSucessResponse(result);
         } catch (Exception e) {
-            return ApiResponse.buildResponse(ApiCode.CODE_FAIL, "删除用户失败!");
+            return ResultObject.buildFailResponse("删除用户失败!");
         }
     }
 
     @GetMapping("/select/{userId}")
-    public ApiResponse selectUserById(@PathVariable Integer userId) {
+    public ResultObject selectUserById(@PathVariable Integer userId) {
         try {
             CollierySafetyUserEntity result = collierySafetyUserService.selectyUserId(userId);
-            return ApiResponse.buildSucessResponse(result);
+            return ResultObject.buildSucessResponse(result);
         } catch (Exception e) {
-            return ApiResponse.buildResponse(ApiCode.CODE_FAIL, "查询用户失败!");
+            return ResultObject.buildFailResponse("查询用户失败!");
         }
     }
 

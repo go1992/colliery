@@ -1,5 +1,6 @@
 package com.yw.colliery.api.depart;
 
+import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.depart.DepartmentEntity;
 import com.yw.colliery.sdk.response.ApiCode;
 import com.yw.colliery.sdk.response.ApiResponse;
@@ -21,52 +22,52 @@ public class DepartmentController {
     private DepartmentService departmentService;
 
     @PostMapping("/add")
-    public ApiResponse addDepart(@RequestBody DepartmentEntity departmentEntity) {
+    public ResultObject addDepart(@RequestBody DepartmentEntity departmentEntity) {
         try {
             int result = departmentService.addDepart(departmentEntity);
-            return ApiResponse.buildSucessResponse(result);
+            return ResultObject.buildSucessResponse(result);
         } catch (Exception e) {
-            return ApiResponse.buildResponse(ApiCode.CODE_FAIL, "新增部门失败!");
+            return ResultObject.buildFailResponse("新增部门失败!");
         }
     }
 
     @PostMapping("/update")
-    public ApiResponse updateDepart(@RequestBody DepartmentEntity departmentEntity) {
+    public ResultObject updateDepart(@RequestBody DepartmentEntity departmentEntity) {
         try {
             int result = departmentService.updateDepart(departmentEntity);
-            return ApiResponse.buildSucessResponse(result);
+            return ResultObject.buildSucessResponse(result);
         } catch (Exception e) {
-            return ApiResponse.buildResponse(ApiCode.CODE_FAIL, "修改部门失败!");
+            return ResultObject.buildFailResponse("修改部门失败!");
         }
     }
 
     @GetMapping("/delete/{departId}")
-    public ApiResponse deleteDepart(@PathVariable Integer departId) {
+    public ResultObject deleteDepart(@PathVariable Integer departId) {
         try {
             int result = departmentService.deleteDepart(departId);
-            return ApiResponse.buildSucessResponse(result);
+            return ResultObject.buildSucessResponse(result);
         } catch (Exception e) {
-            return ApiResponse.buildResponse(ApiCode.CODE_FAIL, "删除部门失败!");
+            return ResultObject.buildFailResponse("删除部门失败!");
         }
     }
 
     @GetMapping("/select/{departId}")
-    public ApiResponse selectRoleById(@PathVariable Integer departId) {
+    public ResultObject selectRoleById(@PathVariable Integer departId) {
         try {
             DepartmentEntity departmentEntity = departmentService.selectById(departId);
-            return ApiResponse.buildSucessResponse(departmentEntity);
+            return ResultObject.buildSucessResponse(departmentEntity);
         } catch (Exception e) {
-            return ApiResponse.buildResponse(ApiCode.CODE_FAIL, "查询部门失败!");
+            return ResultObject.buildFailResponse("查询部门失败!");
         }
     }
 
     @GetMapping("/select/all")
-    public ApiResponse selectAll() {
+    public ResultObject selectAll() {
         try {
             List<DepartmentEntity> departmentEntityList = departmentService.selectAll();
-            return ApiResponse.buildSucessResponse(departmentEntityList);
+            return ResultObject.buildSucessResponse(departmentEntityList);
         } catch (Exception e) {
-            return ApiResponse.buildResponse(ApiCode.CODE_FAIL, "查询部门列表失败!");
+            return ResultObject.buildFailResponse("查询部门列表失败!");
         }
     }
 }

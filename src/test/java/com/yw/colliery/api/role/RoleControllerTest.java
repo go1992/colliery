@@ -1,9 +1,7 @@
 package com.yw.colliery.api.role;
 
-import com.yw.colliery.entity.depart.DepartmentEntity;
+import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.role.RoleEntity;
-import com.yw.colliery.sdk.response.ApiCode;
-import com.yw.colliery.sdk.response.ApiResponse;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.http.HttpEntity;
@@ -30,8 +28,8 @@ public class RoleControllerTest {
         entity.setModifyUser("test_user");
         entity.setModifyDate(new Date());
         HttpEntity<RoleEntity> httpEntity = new HttpEntity<RoleEntity>(entity);
-        ResponseEntity<ApiResponse> response = template.postForEntity("http://localhost:8888/role/add" , httpEntity , ApiResponse.class);
-        Assert.assertEquals(response.getBody().getCode(), ApiCode.CODE_SUCCESS.code());
+        ResponseEntity<ResultObject> response = template.postForEntity("http://localhost:8888/role/add" , httpEntity , ResultObject.class);
+        Assert.assertEquals(response.getBody().getStatus(), ResultObject.SUCCESS);
     }
 
     @Test
@@ -46,29 +44,29 @@ public class RoleControllerTest {
         entity.setModifyUser("test_user1");
         entity.setModifyDate(new Date());
         HttpEntity<RoleEntity> httpEntity = new HttpEntity<RoleEntity>(entity);
-        ResponseEntity<ApiResponse> response = template.postForEntity("http://localhost:8888/role/update" , httpEntity , ApiResponse.class);
-        Assert.assertEquals(response.getBody().getCode(), ApiCode.CODE_SUCCESS.code());
+        ResponseEntity<ResultObject> response = template.postForEntity("http://localhost:8888/role/update" , httpEntity , ResultObject.class);
+        Assert.assertEquals(response.getBody().getStatus(), ResultObject.SUCCESS);
     }
 
 
     @Test
     public void select() {
         RestTemplate template = new RestTemplate();
-        ResponseEntity<ApiResponse> response = template.getForEntity("http://localhost:8888/role/select/1" , ApiResponse.class);
-        Assert.assertEquals(response.getBody().getCode(), ApiCode.CODE_SUCCESS.code());
+        ResponseEntity<ResultObject> response = template.getForEntity("http://localhost:8888/role/select/1" , ResultObject.class);
+        Assert.assertEquals(response.getBody().getStatus(), ResultObject.SUCCESS);
     }
 
     @Test
     public void selectAll() {
         RestTemplate template = new RestTemplate();
-        ResponseEntity<ApiResponse> response = template.getForEntity("http://localhost:8888/role/select/all" , ApiResponse.class);
-        Assert.assertEquals(response.getBody().getCode(), ApiCode.CODE_SUCCESS.code());
+        ResponseEntity<ResultObject> response = template.getForEntity("http://localhost:8888/role/select/all" , ResultObject.class);
+        Assert.assertEquals(response.getBody().getStatus(), ResultObject.SUCCESS);
     }
 
     @Test
     public void delete() {
         RestTemplate template = new RestTemplate();
-        ResponseEntity<ApiResponse> response = template.getForEntity("http://localhost:8888/role/delete/1" , ApiResponse.class);
-        Assert.assertEquals(response.getBody().getCode(), ApiCode.CODE_SUCCESS.code());
+        ResponseEntity<ResultObject> response = template.getForEntity("http://localhost:8888/role/delete/1" , ResultObject.class);
+        Assert.assertEquals(response.getBody().getStatus(), ResultObject.SUCCESS);
     }
 }

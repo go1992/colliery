@@ -12,7 +12,7 @@ import java.lang.annotation.*;
 @Documented
 public @interface AuthModule {
     /**
-     * 模块id
+     * 权限id
      * @return
      */
     int authId();
