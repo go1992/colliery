@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yw.colliery.mapper.unsafe.UnsafeMapper">
+    <resultMap id="BaseResultMap" type="com.yw.colliery.entity.unsafe.UnsafeInfoEntity">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="location" property="location" jdbcType="VARCHAR"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="level" property="level" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="coal_mine" property="coalMine" jdbcType="VARCHAR"/>
+        <result column="check_person" property="checkPerson" jdbcType="VARCHAR"/>
+        <result column="check_type" property="checkType" jdbcType="VARCHAR"/>
+        <result column="check_time" property="checkType" jdbcType="DATETIME"/>
+        <result column="reform_date" property="reformDate" jdbcType="VARCHAR"/>
+        <result column="reform_measure" property="reformMeasure" jdbcType="VARCHAR"/>
+        <result column="duty_depart" property="dutyDpart" jdbcType="VARCHAR"/>
+        <result column="duty_person" property="dutyPerson" jdbcType="VARCHAR"/>
+        <result column="fine_reason" property="fineReason" jdbcType="VARCHAR"/>
+        <result column="fine_money" property="fineMoney" jdbcType="VARCHAR"/>
+        <result column="fine_find" property="fineFind" jdbcType="VARCHAR"/>
+        <result column="deal_process" property="dealProcess" jdbcType="VARCHAR"/>
+        <result column="create_user" property="createUser" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="DATETIME"/>
+        <result column="modify_user" property="modifyUser" jdbcType="VARCHAR"/>
+        <result column="modify_date" property="modifyDate" jdbcType="DATETIME"/>
+        <result column="extra1" property="extra1" jdbcType="VARCHAR"/>
+        <result column="extra2" property="extra2" jdbcType="VARCHAR"/>
+        <result column="extra3" property="extra3" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+       id,
+       location,
+       content,
+       type,
+       level,
+       status,
+       coal_mine,
+       check_person,
+       check_type,
+       check_time,
+       reform_date,
+       reform_measure,
+       duty_depart,
+       duty_person,
+       fine_money,
+       fine_find,
+       deal_process,
+       create_user,
+       create_date,
+       modify_suer,
+       modify_date,
+       extra1,
+       extra2,
+       extra3
+    </sql>
+
+
+    <insert id="insertUnsafe" parameterType="com.yw.colliery.entity.unsafe.UnsafeInfoEntity" keyProperty="id">
+        insert into colliery_unsafe_info
+          (
+           location,
+           content, 
+           type,
+           level, 
+           status, 
+           coal_mine,
+           check_person,
+           check_type,
+           check_time,
+           reform_date,
+           reform_measure,
+           duty_depart,
+           duty_person,
+           fine_money,
+           fine_find,
+           deal_process,
+           create_user,
+           create_date,
+           extra1,
+           extra2,
+           extra3
+           )
+        values
+          (
+           #{location,jdbcType=VARCHAR},
+           #{content,jdbcType=VARCHAR},
+           #{type,jdbcType=VARCHAR},
+           #{level,jdbcType=VARCHAR},
+           #{status,jdbcType=VARCHAR},
+           #{coalMine,jdbcType=VARCHAR},
+           #{checkPerson,jdbcType=VARCHAR},
+           #{checkType,jdbcType=VARCHAR},
+           #{checkTime,jdbcType=DATETIME},
+           #{reformDate,jdbcType=VARCHAR},
+           #{reformMeasure,jdbcType=VARCHAR},
+           #{dutyDpart,jdbcType=VARCHAR},
+           #{dutyPerson,jdbcType=VARCHAR},
+           #{fineReason,jdbcType=VARCHAR},
+           #{fineMoney,jdbcType=VARCHAR},
+           #{fineFind,jdbcType=VARCHAR},
+           #{dealProcess,jdbcType=VARCHAR},
+           #{createUser,jdbcType=VARCHAR},
+           #{createDate,jdbcType=DATETIME},
+           #{extra1,jdbcType=VARCHAR},
+           #{extra2,jdbcType=VARCHAR},
+           #{extra3,jdbcType=VARCHAR},
+           )
+    </insert>
+
+    <update id="updateUnsafeInfo" parameterType="com.yw.colliery.entity.unsafe.UnsafeInfoEntity">
+        update colliery_unsafe_info
+        <set>
+            <if test="status != null">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="dutyDepart != null">
+                duty_depart= #{dutyDepart,jdbcType=VARCHAR},
+            </if>
+            <if test="reformDate != null">
+                reform_date = #{reformDate,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyUser != null">
+                modify_user = #{modifyUser,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyDate != null">
+                modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="selectUnsafeInfoByDepartList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from colliery_unsafe_info
+        WHERE
+        depart_id = #{depart}
+        AND
+        (status = 0 or status = 2)
+    </select>
+
+    <select id="selectAllUnsafeInfo" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from colliery_unsafe_info
+        WHERE
+        (status = 0 or status = 2)
+    </select>
+
+    <select id="selectAllUnsafeInfoByStatus" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from colliery_unsafe_info
+        WHERE
+        status = #{status}
+    </select>
+
+
+</mapper>
