@@ -17,7 +17,7 @@ import java.util.Date;
  * @Date 2019-04-30
  **/
 @RestController
-@RequestMapping("/apiv1/user")
+@RequestMapping("/user")
 public class UserController {
     @Autowired
     private CollierySafetyUserService collierySafetyUserService;
@@ -44,8 +44,8 @@ public class UserController {
         }
     }
 
-    @GetMapping("/delete")
-    public ApiResponse deleteUser(@RequestParam Integer userId) {
+    @GetMapping("/delete/{userId}")
+    public ApiResponse deleteUser(@PathVariable Integer userId) {
         try {
             int result = collierySafetyUserService.deleteSafetyUSer(userId);
             return ApiResponse.buildSucessResponse(result);
@@ -73,7 +73,7 @@ public class UserController {
         entity.setRoleId(request.getRoleId());
         entity.setDepartId(request.getDepartId());
         entity.setCreateUser(request.getCreateUser() != null ? request.getCreateUser() : null);
-        entity.setModifyDate(request.getModifyDate() != null ? request.getModifyDate() : new Date());
+        entity.setModifyDate(request.getCreateUser() != null ? null : new Date());
         entity.setModifyUser(request.getModifyUser());
         return entity;
     }

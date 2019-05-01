@@ -1,5 +1,7 @@
 package com.yw.colliery.sdk.response;
 
+import lombok.ToString;
+
 import java.io.Serializable;
 
 /**
@@ -7,6 +9,7 @@ import java.io.Serializable;
  * @Description 响应结果
  * @Date 2019-04-09
  **/
+@ToString
 public class ApiResponse<T> implements Serializable {
 
     private static final long serialVersionUID = 1L;

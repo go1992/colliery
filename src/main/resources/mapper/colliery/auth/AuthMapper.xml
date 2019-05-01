@@ -31,10 +31,10 @@
     <update id="updateAuth" parameterType="com.yw.colliery.entity.auth.AuthEntity">
         update colliery_auth
         <set>
-            <if test="roleName != null">
+            <if test="name != null">
                 auth_name = #{name,jdbcType=VARCHAR},
             </if>
-            <if test="authLevel != null">
+            <if test="level != null">
                 auth_level = #{level,jdbcType=VARCHAR},
             </if>
             <if test="createUser != null">
@@ -50,10 +50,10 @@
                 modify_date = #{modifyDate,jdbcType=TIMESTAMP},
             </if>
         </set>
-        where id = #{authId,jdbcType=INTEGER}
+        where id = #{id,jdbcType=INTEGER}
     </update>
 
-    <delete id="deleteRole" parameterType="java.lang.Integer">
+    <delete id="deleteAuth" parameterType="java.lang.Integer">
       delete
         from colliery_auth
       where

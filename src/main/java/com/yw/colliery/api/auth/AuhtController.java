@@ -1,8 +1,7 @@
 package com.yw.colliery.api.auth;
 
+import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.auth.AuthEntity;
-import com.yw.colliery.entity.user.CollierySafetyUserEntity;
-import com.yw.colliery.sdk.request.UserRequest;
 import com.yw.colliery.sdk.response.ApiCode;
 import com.yw.colliery.sdk.response.ApiResponse;
 import com.yw.colliery.service.auth.AuthService;
@@ -42,8 +41,8 @@ public class AuhtController {
         }
     }
 
-    @GetMapping("/delete")
-    public ApiResponse deleteAuth(@RequestParam Integer authId) {
+    @GetMapping("/delete/{authId}")
+    public ApiResponse deleteAuth(@PathVariable Integer authId) {
         try {
             int result = authService.deleteAuth(authId);
             return ApiResponse.buildSucessResponse(result);
@@ -62,7 +61,7 @@ public class AuhtController {
         }
     }
 
-    @GetMapping("/selectAll")
+    @GetMapping("/select/all")
     public ApiResponse selectAll() {
         try {
             List<AuthEntity> authList = authService.selectAll();

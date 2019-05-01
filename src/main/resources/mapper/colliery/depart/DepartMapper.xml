@@ -5,6 +5,7 @@
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="department_name" property="departName" jdbcType="VARCHAR"/>
         <result column="auth_ids" property="authIds" jdbcType="INTEGER"/>
+        <result column="coal_mine" property="coalMine" jdbcType="VARCHAR"/>
         <result column="create_user" property="createUser" jdbcType="VARCHAR"/>
         <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
         <result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP"/>
@@ -12,16 +13,17 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-       id, department_name, auth_ids, create_user, create_date, modify_date, modify_user
+       id, department_name, auth_ids, coal_mine, create_user, create_date, modify_date, modify_user
     </sql>
 
 
     <insert id="addDepart" parameterType="com.yw.colliery.entity.depart.DepartmentEntity" useGeneratedKeys="true" keyProperty="id">
         insert into colliery_department
-          (department_name, auth_ids,create_user,create_date,modify_date, modify_user)
+          (department_name, auth_ids,coal_mine,create_user,create_date,modify_date, modify_user)
         values
           (#{departName,jdbcType=VARCHAR},
-           #{authId,jdbcType=INTEGER},
+           #{authIds,jdbcType=INTEGER},
+           #{coalMine,jdbcType=INTEGER},
            #{createUser,jdbcType=VARCHAR},
            #{createDate,jdbcType=TIMESTAMP},
            #{modifyDate,jdbcType=TIMESTAMP},
@@ -31,11 +33,14 @@
     <update id="updateDepart" parameterType="com.yw.colliery.entity.depart.DepartmentEntity">
         update colliery_department
         <set>
-            <if test="roleName != null">
+            <if test="departName != null">
                 department_name = #{departName,jdbcType=VARCHAR},
             </if>
-            <if test="authLevel != null">
+            <if test="authIds != null">
                 auth_ids = #{authIds,jdbcType=VARCHAR},
+            </if>
+            <if test="coalMine != null">
+                coal_mine = #{coalMine,jdbcType=VARCHAR},
             </if>
             <if test="createUser != null">
                 create_user = #{createUser,jdbcType=VARCHAR},
@@ -50,7 +55,7 @@
                 modify_date = #{modifyDate,jdbcType=TIMESTAMP},
             </if>
         </set>
-        where id = #{departId,jdbcType=INTEGER}
+        where id = #{id,jdbcType=INTEGER}
     </update>
 
     <delete id="deleteDepart" parameterType="java.lang.Integer">

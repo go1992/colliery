@@ -28,11 +28,7 @@ public class UserRequest implements Serializable {
 
     private String password;
 
-    private List<String> userAuthors;
-
     private String createUser;
 
     private String modifyUser;
-
-    private Date modifyDate;
 }

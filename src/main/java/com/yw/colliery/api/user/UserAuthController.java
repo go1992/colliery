@@ -19,7 +19,7 @@ public class UserAuthController {
     @Autowired
     private UserAuthService userAuthService;
 
-    @GetMapping("/select/{userId}")
+    @GetMapping("/select/id/{userId}")
     public ApiResponse selectUserById(@PathVariable Integer userId) {
         try {
             UserAuthEntity userAuthEntity = userAuthService.selectByUserId(userId);
@@ -29,7 +29,7 @@ public class UserAuthController {
         }
     }
 
-    @GetMapping("/select/{userName}")
+    @GetMapping("/select/name/{userName}")
     public ApiResponse selectUserById(@PathVariable String userName) {
         try {
             UserAuthEntity userAuthEntity = userAuthService.selectByUserName(userName);

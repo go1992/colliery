@@ -40,10 +40,10 @@ public class RoleController {
         }
     }
 
-    @GetMapping("/delete")
-    public ApiResponse deleteRole(@RequestParam Integer RoleId) {
+    @GetMapping("/delete/{roleId}")
+    public ApiResponse deleteRole(@PathVariable Integer roleId) {
         try {
-            int result = roleService.deleteRole(RoleId);
+            int result = roleService.deleteRole(roleId);
             return ApiResponse.buildSucessResponse(result);
         } catch (Exception e) {
             return ApiResponse.buildResponse(ApiCode.CODE_FAIL, "删除角色失败!");
@@ -60,7 +60,7 @@ public class RoleController {
         }
     }
 
-    @GetMapping("/selectAll")
+    @GetMapping("/select/all")
     public ApiResponse selectAll() {
         try {
             List<RoleEntity> RoleList = roleService.selectAll();

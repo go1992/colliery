@@ -1,6 +1,7 @@
 package com.yw.colliery.service.auth;
 
 import com.yw.colliery.entity.auth.AuthEntity;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 

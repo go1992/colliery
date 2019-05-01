@@ -25,6 +25,8 @@ public class DepartmentEntity implements Serializable {
 
     private String departName;
 
+    private String coalMine;
+
     private String createUser;
 
     private Date createDate;

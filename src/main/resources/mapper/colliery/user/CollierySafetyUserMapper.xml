@@ -3,9 +3,10 @@
 <mapper namespace="com.yw.colliery.mapper.user.CollierySafetyUserMapper">
     <resultMap id="BaseResultMap" type="com.yw.colliery.entity.user.CollierySafetyUserEntity">
         <id column="id" property="id" jdbcType="INTEGER"/>
-        <result column="user_author" property="userAuthor" jdbcType="VARCHAR"/>
-        <result column="user_pwd" property="userPwd" jdbcType="VARCHAR"/>
+        <result column="role_id" property="roleId" jdbcType="INTEGER"/>
+        <result column="depart_id" property="departId" jdbcType="INTEGER"/>
         <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="user_pwd" property="userPwd" jdbcType="VARCHAR"/>
         <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
         <result column="create_user" property="createUser" jdbcType="VARCHAR"/>
         <result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP"/>
@@ -13,7 +14,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-      id, user_author, user_pwd, user_name, create_date, create_user, modify_date, modify_user
+      id, role_id, depart_id, user_pwd, user_name, create_date, create_user, modify_date, modify_user
     </sql>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
@@ -24,10 +25,10 @@
     </delete>
     
     <insert id="insert" parameterType="com.yw.colliery.entity.user.CollierySafetyUserEntity">
-    insert into colliery_user (id, user_author, user_pwd,
+    insert into colliery_user (id, role_id, depart_id, user_pwd,
       user_name, create_date, create_user,
       modify_date, modify_user)
-    values (#{id,jdbcType=INTEGER}, #{userAuthor,jdbcType=VARCHAR}, #{userPwd,jdbcType=VARCHAR},
+    values (#{id,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER}, #{departId,jdbcType=INTEGER}, #{userPwd,jdbcType=VARCHAR},
       #{userName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{createUser,jdbcType=VARCHAR},
       #{modifyDate,jdbcType=TIMESTAMP}, #{modifyUser,jdbcType=TIMESTAMP})
   </insert>
@@ -37,8 +38,11 @@
             <if test="id != null">
                 id,
             </if>
-            <if test="userAuthor != null">
-                user_author,
+            <if test="roleId != null">
+                role_id,
+            </if>
+            <if test="departId != null">
+                depart_id,
             </if>
             <if test="userPwd != null">
                 user_pwd,
@@ -63,8 +67,11 @@
             <if test="id != null">
                 #{id,jdbcType=INTEGER},
             </if>
-            <if test="userAuthor != null">
-                #{userAuthor,jdbcType=VARCHAR},
+            <if test="roleId != null">
+                #{roleId,jdbcType=INTEGER},
+            </if>
+            <if test="departId != null">
+                #{departId,jdbcType=INTEGER},
             </if>
             <if test="userPwd != null">
                 #{userPwd,jdbcType=VARCHAR},
@@ -89,8 +96,11 @@
     <update id="updateByPrimaryKeySelective" parameterType="com.yw.colliery.entity.user.CollierySafetyUserEntity">
         update colliery_user
         <set>
-            <if test="userAuthor != null">
-                user_author = #{userAuthor,jdbcType=VARCHAR},
+            <if test="roleId != null">
+                role_id = #{roleId,jdbcType=INTEGER},
+            </if>
+            <if test="departId != null">
+                depart_id = #{departId,jdbcType=INTEGER},
             </if>
             <if test="userPwd != null">
                 user_pwd = #{userPwd,jdbcType=VARCHAR},
@@ -115,21 +125,24 @@
     </update>
     <update id="updateByPrimaryKey" parameterType="com.yw.colliery.entity.user.CollierySafetyUserEntity">
     update colliery_user
-    set user_author = #{userAuthor,jdbcType=VARCHAR},
-      user_pwd = #{userPwd,jdbcType=VARCHAR},
-      user_name = #{userName,jdbcType=VARCHAR},
-      create_date = #{createDate,jdbcType=TIMESTAMP},
-      create_user = #{createUser,jdbcType=VARCHAR},
-      modify_date = #{modifyDate,jdbcType=TIMESTAMP},
-      modify_user = #{modifyUser,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
+      set
+          role_id = #{roleId,jdbcType=INTEGER},
+          depart_id = #{departId,jdbcType=INTEGER},
+          user_pwd = #{userPwd,jdbcType=VARCHAR},
+          user_name = #{userName,jdbcType=VARCHAR},
+          create_date = #{createDate,jdbcType=TIMESTAMP},
+          create_user = #{createUser,jdbcType=VARCHAR},
+          modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+          modify_user = #{modifyUser,jdbcType=TIMESTAMP}
+    where
+      id = #{id,jdbcType=INTEGER}
   </update>
 
     <select id="selectByUserName" resultMap="BaseResultMap" parameterType="String">
         select
         <include refid="Base_Column_List"/>
         from colliery_user
-        where user_name = #{userCode}
+        where user_name = #{userName}
     </select>
 
     <select id="selectAllUser" resultMap="BaseResultMap">

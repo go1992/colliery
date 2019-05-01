@@ -21,7 +21,7 @@ public class DepartmentController {
     private DepartmentService departmentService;
 
     @PostMapping("/add")
-    public ApiResponse addRole(@RequestBody DepartmentEntity departmentEntity) {
+    public ApiResponse addDepart(@RequestBody DepartmentEntity departmentEntity) {
         try {
             int result = departmentService.addDepart(departmentEntity);
             return ApiResponse.buildSucessResponse(result);
@@ -40,8 +40,8 @@ public class DepartmentController {
         }
     }
 
-    @GetMapping("/delete")
-    public ApiResponse deleteDepart(@RequestParam Integer departId) {
+    @GetMapping("/delete/{departId}")
+    public ApiResponse deleteDepart(@PathVariable Integer departId) {
         try {
             int result = departmentService.deleteDepart(departId);
             return ApiResponse.buildSucessResponse(result);
@@ -60,7 +60,7 @@ public class DepartmentController {
         }
     }
 
-    @GetMapping("/selectAll")
+    @GetMapping("/select/all")
     public ApiResponse selectAll() {
         try {
             List<DepartmentEntity> departmentEntityList = departmentService.selectAll();

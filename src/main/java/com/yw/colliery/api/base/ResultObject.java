@@ -24,4 +24,18 @@ public class ResultObject {
 	private String message;
 	@ApiModelProperty(value="接口调用数据结果")
 	private Object result;
+
+	public static ResultObject buildSucessResponse(Object result){
+		ResultObject response = new ResultObject();
+		response.setStatus(SUCCESS);
+		response.setResult(result);
+		return response;
+	}
+
+	public static ResultObject buildFailResponse(String msg){
+		ResultObject response = new ResultObject();
+		response.setStatus(FAILED);
+		response.setResult(msg);
+		return response;
+	}
 }
