@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import com.yw.colliery.service.user.CollierySafetyUserService;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -37,11 +38,13 @@ public class CollierySafetyUserServiceImpl implements CollierySafetyUserService{
 
     @Override
     public int addSafetyUser(CollierySafetyUserEntity userEntity) {
+        userEntity.setCreateDate(new Date());
         return collierySafetyUserMapper.insert(userEntity);
     }
 
     @Override
     public int updateSafetyUSer(CollierySafetyUserEntity userEntity) {
+        userEntity.setModifyDate(new Date());
         return collierySafetyUserMapper.updateByPrimaryKey(userEntity);
     }
 

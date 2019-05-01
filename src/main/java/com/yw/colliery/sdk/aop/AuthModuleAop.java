@@ -36,14 +36,12 @@ public class AuthModuleAop {
         //1.从session中获取用户
         UserAuthEntity userAuthEntity = LoginSessionUtils.getUser();
         //2.判断用户模块权限
-        if (userAuthEntity == null || CollectionUtils.isEmpty(userAuthEntity.getAuthList())) {
+        if (userAuthEntity == null || CollectionUtils.isEmpty(userAuthEntity.getAuthIds())) {
             //3.返回模块认证异常
             return ResultObject.buildFailResponse(AuthConstant.Module.NO_MODULE_AUTH);
         } else {
             //4.遍历检查模块权限
-            List<Integer> authors = userAuthEntity.getAuthList().stream().map(userAuth -> userAuth.getId())
-                    .collect(Collectors.toList());
-            boolean success = authors.stream().anyMatch(author -> author == authModule.authId());
+            boolean success = userAuthEntity.getAuthIds().stream().anyMatch(authId -> authId == authModule.authId());
             if (success) {
                 return point.proceed();
             } else {

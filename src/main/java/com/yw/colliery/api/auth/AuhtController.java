@@ -3,6 +3,7 @@ package com.yw.colliery.api.auth;
 import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.auth.AuthEntity;
 import com.yw.colliery.service.auth.AuthService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +16,7 @@ import java.util.List;
  **/
 @RestController
 @RequestMapping("/auth")
+@Slf4j
 public class AuhtController {
     @Autowired
     private AuthService authService;

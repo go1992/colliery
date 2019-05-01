@@ -2,9 +2,8 @@ package com.yw.colliery.api.role;
 
 import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.role.RoleEntity;
-import com.yw.colliery.sdk.response.ApiCode;
-import com.yw.colliery.sdk.response.ApiResponse;
 import com.yw.colliery.service.role.RoleService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +16,7 @@ import java.util.List;
  **/
 @RestController
 @RequestMapping("/role")
+@Slf4j
 public class RoleController {
     @Autowired
     private RoleService roleService;
