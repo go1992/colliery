@@ -1,7 +1,6 @@
 package com.yw.colliery.api.user;
 
-import com.yw.colliery.sdk.response.ApiCode;
-import com.yw.colliery.sdk.response.ApiResponse;
+import com.yw.colliery.api.base.ResultObject;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.http.ResponseEntity;
@@ -17,14 +16,14 @@ public class UserAuthControllerTest {
     @Test
     public void selectByUserId() {
         RestTemplate template = new RestTemplate();
-        ResponseEntity<ApiResponse> response = template.getForEntity("http://localhost:8888/user-auth/select/id/1" , ApiResponse.class);
-        Assert.assertEquals(response.getBody().getCode(), ApiCode.CODE_SUCCESS.code());
+        ResponseEntity<ResultObject> response = template.getForEntity("http://localhost:8888/user-auth/select/id/1", ResultObject.class);
+        Assert.assertEquals(response.getBody().getStatus(), ResultObject.SUCCESS);
     }
 
     @Test
     public void selectByUserName() {
         RestTemplate template = new RestTemplate();
-        ResponseEntity<ApiResponse> response = template.getForEntity("http://localhost:8888/userauth/select/name/test_user" , ApiResponse.class);
-        Assert.assertEquals(response.getBody().getCode(), ApiCode.CODE_SUCCESS.code());
+        ResponseEntity<ResultObject> response = template.getForEntity("http://localhost:8888/userauth/select/name/test_user" , ResultObject.class);
+        Assert.assertEquals(response.getBody().getStatus(), ResultObject.SUCCESS);
     }
 }

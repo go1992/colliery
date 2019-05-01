@@ -1,5 +1,6 @@
 package com.yw.colliery.api.depart;
 
+import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.auth.AuthEntity;
 import com.yw.colliery.entity.depart.DepartmentEntity;
 import com.yw.colliery.sdk.response.ApiCode;
@@ -35,8 +36,8 @@ public class DepartControllerTest {
         entity.setModifyUser("test_user");
         entity.setModifyDate(new Date());
         HttpEntity<DepartmentEntity> httpEntity = new HttpEntity<DepartmentEntity>(entity);
-        ResponseEntity<ApiResponse> response = template.postForEntity("http://localhost:8888/department/add" , httpEntity , ApiResponse.class);
-        Assert.assertEquals(response.getBody().getCode(), ApiCode.CODE_SUCCESS.code());
+        ResponseEntity<ResultObject> response = template.postForEntity("http://localhost:8888/department/add" , httpEntity , ResultObject.class);
+        Assert.assertEquals(response.getBody().getStatus(), ResultObject.SUCCESS);
     }
 
     @Test
@@ -52,29 +53,29 @@ public class DepartControllerTest {
         entity.setModifyUser("test_user1");
         entity.setModifyDate(new Date());
         HttpEntity<DepartmentEntity> httpEntity = new HttpEntity<DepartmentEntity>(entity);
-        ResponseEntity<ApiResponse> response = template.postForEntity("http://localhost:8888/epartment/update" , httpEntity , ApiResponse.class);
-        Assert.assertEquals(response.getBody().getCode(), ApiCode.CODE_SUCCESS.code());
+        ResponseEntity<ResultObject> response = template.postForEntity("http://localhost:8888/epartment/update" , httpEntity , ResultObject.class);
+        Assert.assertEquals(response.getBody().getStatus(), ResultObject.SUCCESS);
     }
 
 
     @Test
     public void select() {
         RestTemplate template = new RestTemplate();
-        ResponseEntity<ApiResponse> response = template.getForEntity("http://localhost:8888/department/select/1" , ApiResponse.class);
-        Assert.assertEquals(response.getBody().getCode(), ApiCode.CODE_SUCCESS.code());
+        ResponseEntity<ResultObject> response = template.getForEntity("http://localhost:8888/department/select/1" , ResultObject.class);
+        Assert.assertEquals(response.getBody().getStatus(), ResultObject.SUCCESS);
     }
 
     @Test
     public void selectAll() {
         RestTemplate template = new RestTemplate();
-        ResponseEntity<ApiResponse> response = template.getForEntity("http://localhost:8888/department/select/all" , ApiResponse.class);
-        Assert.assertEquals(response.getBody().getCode(), ApiCode.CODE_SUCCESS.code());
+        ResponseEntity<ResultObject> response = template.getForEntity("http://localhost:8888/department/select/all" , ResultObject.class);
+        Assert.assertEquals(response.getBody().getStatus(), ResultObject.SUCCESS);
     }
 
     @Test
     public void delete() {
         RestTemplate template = new RestTemplate();
-        ResponseEntity<ApiResponse> response = template.getForEntity("http://localhost:8888/department/delete/1" , ApiResponse.class);
-        Assert.assertEquals(response.getBody().getCode(), ApiCode.CODE_SUCCESS.code());
+        ResponseEntity<ResultObject> response = template.getForEntity("http://localhost:8888/department/delete/1" , ResultObject.class);
+        Assert.assertEquals(response.getBody().getStatus(), ResultObject.SUCCESS);
     }
 }

@@ -1,5 +1,6 @@
 package com.yw.colliery.api.role;
 
+import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.role.RoleEntity;
 import com.yw.colliery.sdk.response.ApiCode;
 import com.yw.colliery.sdk.response.ApiResponse;
@@ -21,52 +22,52 @@ public class RoleController {
     private RoleService roleService;
 
     @PostMapping("/add")
-    public ApiResponse addRole(@RequestBody RoleEntity RoleEntity) {
+    public ResultObject addRole(@RequestBody RoleEntity RoleEntity) {
         try {
             int result = roleService.addRole(RoleEntity);
-            return ApiResponse.buildSucessResponse(result);
+            return ResultObject.buildSucessResponse(result);
         } catch (Exception e) {
-            return ApiResponse.buildResponse(ApiCode.CODE_FAIL, "新增角色失败!");
+            return ResultObject.buildFailResponse("新增角色失败!");
         }
     }
 
     @PostMapping("/update")
-    public ApiResponse updateRole(@RequestBody RoleEntity RoleEntity) {
+    public ResultObject updateRole(@RequestBody RoleEntity RoleEntity) {
         try {
             int result = roleService.updateRole(RoleEntity);
-            return ApiResponse.buildSucessResponse(result);
+            return ResultObject.buildSucessResponse(result);
         } catch (Exception e) {
-            return ApiResponse.buildResponse(ApiCode.CODE_FAIL, "修改角色失败!");
+            return ResultObject.buildFailResponse("修改角色失败!");
         }
     }
 
     @GetMapping("/delete/{roleId}")
-    public ApiResponse deleteRole(@PathVariable Integer roleId) {
+    public ResultObject deleteRole(@PathVariable Integer roleId) {
         try {
             int result = roleService.deleteRole(roleId);
-            return ApiResponse.buildSucessResponse(result);
+            return ResultObject.buildSucessResponse(result);
         } catch (Exception e) {
-            return ApiResponse.buildResponse(ApiCode.CODE_FAIL, "删除角色失败!");
+            return ResultObject.buildFailResponse("删除角色失败!");
         }
     }
 
     @GetMapping("/select/{roleId}")
-    public ApiResponse selectRoleById(@PathVariable Integer roleId) {
+    public ResultObject selectRoleById(@PathVariable Integer roleId) {
         try {
             RoleEntity RoleEntity = roleService.selectById(roleId);
-            return ApiResponse.buildSucessResponse(RoleEntity);
+            return ResultObject.buildSucessResponse(RoleEntity);
         } catch (Exception e) {
-            return ApiResponse.buildResponse(ApiCode.CODE_FAIL, "查询角色失败!");
+            return ResultObject.buildFailResponse("查询角色失败!");
         }
     }
 
     @GetMapping("/select/all")
-    public ApiResponse selectAll() {
+    public ResultObject selectAll() {
         try {
             List<RoleEntity> RoleList = roleService.selectAll();
-            return ApiResponse.buildSucessResponse(RoleList);
+            return ResultObject.buildSucessResponse(RoleList);
         } catch (Exception e) {
-            return ApiResponse.buildResponse(ApiCode.CODE_FAIL, "查询角色列表失败!");
+            return ResultObject.buildFailResponse("查询角色列表失败!");
         }
     }
 }

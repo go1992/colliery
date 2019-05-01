@@ -1,5 +1,6 @@
 package com.yw.colliery.api.user;
 
+import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.user.CollierySafetyUserEntity;
 import com.yw.colliery.entity.user.UserAuthEntity;
 import com.yw.colliery.sdk.response.ApiCode;
@@ -20,22 +21,22 @@ public class UserAuthController {
     private UserAuthService userAuthService;
 
     @GetMapping("/select/id/{userId}")
-    public ApiResponse selectUserById(@PathVariable Integer userId) {
+    public ResultObject selectUserById(@PathVariable Integer userId) {
         try {
             UserAuthEntity userAuthEntity = userAuthService.selectByUserId(userId);
-            return ApiResponse.buildSucessResponse(userAuthEntity);
+            return ResultObject.buildSucessResponse(userAuthEntity);
         } catch (Exception e) {
-            return ApiResponse.buildResponse(ApiCode.CODE_FAIL, "查询用户权限失败!");
+            return ResultObject.buildFailResponse("查询用户权限失败!");
         }
     }
 
     @GetMapping("/select/name/{userName}")
-    public ApiResponse selectUserById(@PathVariable String userName) {
+    public ResultObject selectUserById(@PathVariable String userName) {
         try {
             UserAuthEntity userAuthEntity = userAuthService.selectByUserName(userName);
-            return ApiResponse.buildSucessResponse(userAuthEntity);
+            return ResultObject.buildSucessResponse(userAuthEntity);
         } catch (Exception e) {
-            return ApiResponse.buildResponse(ApiCode.CODE_FAIL, "查询用户权限失败!");
+            return ResultObject.buildFailResponse("查询用户权限失败!");
         }
     }
 

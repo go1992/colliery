@@ -1,5 +1,6 @@
 package com.yw.colliery.sdk.aop;
 
+import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.user.CollierySafetyUserEntity;
 import com.yw.colliery.entity.user.UserAuthEntity;
 import com.yw.colliery.sdk.constans.AuthConstant;
@@ -37,7 +38,7 @@ public class AuthModuleAop {
         //2.判断用户模块权限
         if (userAuthEntity == null || CollectionUtils.isEmpty(userAuthEntity.getAuthList())) {
             //3.返回模块认证异常
-            throw new AuthException(AuthException.AuthEnum.MODULE, AuthConstant.Module.NO_MODULE_AUTH);
+            return ResultObject.buildFailResponse(AuthConstant.Module.NO_MODULE_AUTH);
         } else {
             //4.遍历检查模块权限
             List<Integer> authors = userAuthEntity.getAuthList().stream().map(userAuth -> userAuth.getId())
@@ -46,7 +47,7 @@ public class AuthModuleAop {
             if (success) {
                 return point.proceed();
             } else {
-                throw new AuthException(AuthException.AuthEnum.MODULE, AuthConstant.Module.NO_MODULE_AUTH);
+                return ResultObject.buildFailResponse(AuthConstant.Module.NO_MODULE_AUTH);
             }
         }
     }
