@@ -2,6 +2,7 @@ package com.yw.colliery.mapper.auth;
 
 import com.yw.colliery.entity.auth.AuthEntity;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -42,7 +43,7 @@ public interface AuthMapper {
      * @param ids
      * @return
      */
-    List<AuthEntity> selectByLevelAndIds(Integer level, List<Integer> ids);
+    List<AuthEntity> selectByLevelAndIds(@Param(value = "level")Integer level, @Param(value = "ids") List<Integer> ids);
 
 
     /**

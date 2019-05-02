@@ -54,17 +54,18 @@ public class UserAuthServiceImpl implements UserAuthService {
             //创建用户时肯定是关联了角色和部门的，所以如下信息正常不会为空
             RoleEntity role = roleService.selectById(roleId);
             DepartmentEntity department = departmentService.selectById(departId);
-            List<Integer> ids = Arrays.asList(department.getAuthIds().split(","))
-                    .stream()
-                    .map(item -> Integer.valueOf(item))
-                    .collect(Collectors.toList());
+            if (role != null && department != null) {
+                List<Integer> ids = Arrays.asList(department.getAuthIds().split(","))
+                        .stream()
+                        .map(item -> Integer.valueOf(item))
+                        .collect(Collectors.toList());
 
-            List<AuthEntity> authList = authService.selectByLevelAndIds(role.getAuthLevel(), ids);
+                List<AuthEntity> authList = authService.selectByLevelAndIds(role.getAuthLevel(), ids);
 
-            if (!CollectionUtils.isEmpty(authList)) {
-                return new UserAuthEntity(user, authList.stream().map(auth -> auth.getId()).collect(Collectors.toList()));
+                if (!CollectionUtils.isEmpty(authList)) {
+                    return new UserAuthEntity(user, authList.stream().map(auth -> auth.getId()).collect(Collectors.toList()));
+                }
             }
-
         }
         return null;
     }

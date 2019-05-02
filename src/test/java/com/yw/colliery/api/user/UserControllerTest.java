@@ -24,7 +24,7 @@ public class UserControllerTest {
         entity.setRoleId(1);
         entity.setDepartId(1);
         entity.setUserName("test_user");
-        entity.setPassword("test_password");
+        entity.setUserPwd("test_password");
         entity.setCreateUser("test_user");
         entity.setModifyUser("test_user");
         HttpEntity<UserRequest> httpEntity = new HttpEntity<UserRequest>(entity);
@@ -39,7 +39,7 @@ public class UserControllerTest {
         entity.setRoleId(1);
         entity.setDepartId(1);
         entity.setUserName("test_user1");
-        entity.setPassword("test_password1");
+        entity.setUserPwd("test_password");
         entity.setCreateUser("test_user1");
         entity.setModifyUser("test_user1");
         HttpEntity<UserRequest> httpEntity = new HttpEntity<UserRequest>(entity);

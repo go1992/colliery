@@ -2,11 +2,11 @@ package com.yw.colliery.api.role;
 
 import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.role.RoleEntity;
-import org.junit.Assert;
-import org.junit.Test;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
+import org.testng.Assert;
+import org.testng.annotations.Test;
 
 import java.util.Date;
 
@@ -21,11 +21,11 @@ public class RoleControllerTest {
     public void add() {
         RestTemplate template = new RestTemplate();
         RoleEntity entity = new RoleEntity();
-        entity.setRoleName("test_role");
+        entity.setRoleName("超级管理员");
         entity.setAuthLevel(1);
-        entity.setCreateUser("test_user");
+        entity.setCreateUser("超级管理员");
         entity.setCreateDate(new Date());
-        entity.setModifyUser("test_user");
+        entity.setModifyUser("超级管理员");
         entity.setModifyDate(new Date());
         HttpEntity<RoleEntity> httpEntity = new HttpEntity<RoleEntity>(entity);
         ResponseEntity<ResultObject> response = template.postForEntity("http://localhost:8888/role/add" , httpEntity , ResultObject.class);
