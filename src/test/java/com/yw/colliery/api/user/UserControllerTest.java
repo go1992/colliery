@@ -51,7 +51,7 @@ public class UserControllerTest {
     @Test
     public void select() {
         RestTemplate template = new RestTemplate();
-        ResponseEntity<ResultObject> response = template.getForEntity("http://localhost:8888/user/select/1" , ResultObject.class);
+        ResponseEntity<ResultObject> response = template.getForEntity("http://localhost:8888/user/select/allinfo/1" , ResultObject.class);
         Assert.assertEquals(response.getBody().getStatus(), ResultObject.SUCCESS);
     }
 

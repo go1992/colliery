@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -47,6 +48,19 @@ public class UserServiceImpl implements UserService {
         return handUser(user);
     }
 
+    @Override
+    public List<UserEntity> selectAll() {
+        List<CollierySafetyUserEntity> allSafeUser = collierySafetyUserService.selectAllUser();
+        List<UserEntity> allUser = new ArrayList<>();
+        for (CollierySafetyUserEntity safeUser : allSafeUser) {
+            UserEntity userEntity = handUser(safeUser);
+            if (userEntity != null){
+                allUser.add(userEntity);
+            }
+        }
+        return allUser;
+    }
+
     private UserEntity handUser(CollierySafetyUserEntity user) {
         if (user != null) {
             Integer roleId = user.getRoleId();
@@ -55,15 +69,16 @@ public class UserServiceImpl implements UserService {
             //创建用户时肯定是关联了角色和部门的，所以如下信息正常不会为空
             RoleEntity role = roleService.selectById(roleId);
             DepartmentEntity department = departmentService.selectById(departId);
-            List<Integer> ids = Arrays.asList(department.getAuthIds().split(","))
-                    .stream()
-                    .map(item -> Integer.valueOf(item))
-                    .collect(Collectors.toList());
+            List<AuthEntity> authList = new ArrayList<>();
+            if (role != null && department != null) {
+                List<Integer> ids = Arrays.asList(department.getAuthIds().split(","))
+                        .stream()
+                        .map(item -> Integer.valueOf(item))
+                        .collect(Collectors.toList());
 
-            List<AuthEntity> authList = authService.selectByLevelAndIds(role.getAuthLevel(), ids);
-
+                authList = authService.selectByLevelAndIds(role.getAuthLevel(), ids);
+            }
             return new UserEntity(user, role, department, authList);
-
         }
         return null;
     }

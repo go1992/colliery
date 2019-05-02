@@ -52,7 +52,7 @@ public class DepartmentController {
     }
 
     @GetMapping("/select/{departId}")
-    public ResultObject selectRoleById(@PathVariable Integer departId) {
+    public ResultObject selectDepartById(@PathVariable Integer departId) {
         try {
             DepartmentEntity departmentEntity = departmentService.selectById(departId);
             return ResultObject.buildSucessResponse(departmentEntity);
