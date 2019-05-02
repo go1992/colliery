@@ -82,7 +82,7 @@ public class UserController {
     private CollierySafetyUserEntity transfer(UserRequest request) {
         CollierySafetyUserEntity entity = new CollierySafetyUserEntity();
         entity.setUserName(request.getUserName());
-        entity.setUserPwd(EncodeUtils.encode(request.getUserPwd()));
+        entity.setUserPwd(request.getUserPwd() != null ? EncodeUtils.encode(request.getUserPwd()): null);
         entity.setId(request.getUserId());
         entity.setRoleId(request.getRoleId());
         entity.setDepartId(request.getDepartId());
