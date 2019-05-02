@@ -11,19 +11,19 @@
         <result column="coal_mine" property="coalMine" jdbcType="VARCHAR"/>
         <result column="check_person" property="checkPerson" jdbcType="VARCHAR"/>
         <result column="check_type" property="checkType" jdbcType="VARCHAR"/>
-        <result column="check_time" property="checkType" jdbcType="DATETIME"/>
+        <result column="check_time" property="checkType" jdbcType="TIMESTAMP"/>
         <result column="reform_date" property="reformDate" jdbcType="VARCHAR"/>
         <result column="reform_measure" property="reformMeasure" jdbcType="VARCHAR"/>
-        <result column="duty_depart" property="dutyDpart" jdbcType="VARCHAR"/>
+        <result column="duty_depart" property="dutyDepart" jdbcType="VARCHAR"/>
         <result column="duty_person" property="dutyPerson" jdbcType="VARCHAR"/>
         <result column="fine_reason" property="fineReason" jdbcType="VARCHAR"/>
         <result column="fine_money" property="fineMoney" jdbcType="VARCHAR"/>
         <result column="fine_find" property="fineFind" jdbcType="VARCHAR"/>
         <result column="deal_process" property="dealProcess" jdbcType="VARCHAR"/>
         <result column="create_user" property="createUser" jdbcType="VARCHAR"/>
-        <result column="create_date" property="createDate" jdbcType="DATETIME"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
         <result column="modify_user" property="modifyUser" jdbcType="VARCHAR"/>
-        <result column="modify_date" property="modifyDate" jdbcType="DATETIME"/>
+        <result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP"/>
         <result column="extra1" property="extra1" jdbcType="VARCHAR"/>
         <result column="extra2" property="extra2" jdbcType="VARCHAR"/>
         <result column="extra3" property="extra3" jdbcType="VARCHAR"/>
@@ -49,7 +49,7 @@
        deal_process,
        create_user,
        create_date,
-       modify_suer,
+       modify_user,
        modify_date,
        extra1,
        extra2,
@@ -73,6 +73,7 @@
            reform_measure,
            duty_depart,
            duty_person,
+           fine_reason,
            fine_money,
            fine_find,
            deal_process,
@@ -92,20 +93,20 @@
            #{coalMine,jdbcType=VARCHAR},
            #{checkPerson,jdbcType=VARCHAR},
            #{checkType,jdbcType=VARCHAR},
-           #{checkTime,jdbcType=DATETIME},
+           #{checkTime,jdbcType=TIMESTAMP},
            #{reformDate,jdbcType=VARCHAR},
            #{reformMeasure,jdbcType=VARCHAR},
-           #{dutyDpart,jdbcType=VARCHAR},
+           #{dutyDepart,jdbcType=VARCHAR},
            #{dutyPerson,jdbcType=VARCHAR},
            #{fineReason,jdbcType=VARCHAR},
            #{fineMoney,jdbcType=VARCHAR},
            #{fineFind,jdbcType=VARCHAR},
            #{dealProcess,jdbcType=VARCHAR},
            #{createUser,jdbcType=VARCHAR},
-           #{createDate,jdbcType=DATETIME},
+           #{createDate,jdbcType=TIMESTAMP},
            #{extra1,jdbcType=VARCHAR},
            #{extra2,jdbcType=VARCHAR},
-           #{extra3,jdbcType=VARCHAR},
+           #{extra3,jdbcType=VARCHAR}
            )
     </insert>
 
