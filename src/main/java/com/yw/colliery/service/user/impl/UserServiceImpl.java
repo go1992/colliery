@@ -5,11 +5,12 @@ import com.yw.colliery.entity.depart.DepartmentEntity;
 import com.yw.colliery.entity.role.RoleEntity;
 import com.yw.colliery.entity.user.CollierySafetyUserEntity;
 import com.yw.colliery.entity.user.UserAuthEntity;
+import com.yw.colliery.entity.user.UserEntity;
 import com.yw.colliery.service.auth.AuthService;
 import com.yw.colliery.service.depart.DepartmentService;
 import com.yw.colliery.service.role.RoleService;
 import com.yw.colliery.service.user.CollierySafetyUserService;
-import com.yw.colliery.service.user.UserAuthService;
+import com.yw.colliery.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -20,11 +21,11 @@ import java.util.stream.Collectors;
 
 /**
  * @Author renzhiqiang
- * @Description 用户权限实现类
- * @Date 2019-04-30
+ * @Description 用户实现类
+ * @Date 2019-05-01
  **/
 @Service
-public class UserAuthServiceImpl implements UserAuthService {
+public class UserServiceImpl implements UserService {
     @Autowired
     private RoleService roleService;
     @Autowired
@@ -35,18 +36,18 @@ public class UserAuthServiceImpl implements UserAuthService {
     private CollierySafetyUserService collierySafetyUserService;
 
     @Override
-    public UserAuthEntity selectByUserId(Integer userId) {
+    public UserEntity selectByUserId(Integer userId) {
         CollierySafetyUserEntity user = collierySafetyUserService.selectyUserId(userId);
         return handUser(user);
     }
 
     @Override
-    public UserAuthEntity selectByUserName(String userName) {
+    public UserEntity selectByUserName(String userName) {
         CollierySafetyUserEntity user = collierySafetyUserService.selectByUserName(userName);
         return handUser(user);
     }
 
-    private UserAuthEntity handUser(CollierySafetyUserEntity user) {
+    private UserEntity handUser(CollierySafetyUserEntity user) {
         if (user != null) {
             Integer roleId = user.getRoleId();
             Integer departId = user.getDepartId();
@@ -61,9 +62,7 @@ public class UserAuthServiceImpl implements UserAuthService {
 
             List<AuthEntity> authList = authService.selectByLevelAndIds(role.getAuthLevel(), ids);
 
-            if (!CollectionUtils.isEmpty(authList)) {
-                return new UserAuthEntity(user, authList.stream().map(auth -> auth.getId()).collect(Collectors.toList()));
-            }
+            return new UserEntity(user, role, department, authList);
 
         }
         return null;

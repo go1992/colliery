@@ -27,7 +27,7 @@ import com.yw.colliery.service.business.ISbglSblbService;
 @SpringBootTest
 
 @EnableScheduling
-public class DemoApplicationTests {
+public class CollieryApplicationTests {
 
     @Autowired
     private IDcSwdzZkpcService iDcSwdzZkpcService;

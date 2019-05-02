@@ -2,15 +2,14 @@ package com.yw.colliery.api.user;
 
 import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.user.CollierySafetyUserEntity;
+import com.yw.colliery.entity.user.UserEntity;
 import com.yw.colliery.sdk.request.UserRequest;
-import com.yw.colliery.sdk.response.ApiCode;
-import com.yw.colliery.sdk.response.ApiResponse;
 import com.yw.colliery.sdk.utils.EncodeUtils;
 import com.yw.colliery.service.user.CollierySafetyUserService;
+import com.yw.colliery.service.user.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Date;
 
 /**
  * @Author renzhiqiang
@@ -19,9 +18,12 @@ import java.util.Date;
  **/
 @RestController
 @RequestMapping("/user")
+@Slf4j
 public class UserController {
     @Autowired
     private CollierySafetyUserService collierySafetyUserService;
+    @Autowired
+    private UserService userService;
 
     @PostMapping("/add")
     public ResultObject addUser(@RequestBody UserRequest request) {
@@ -65,6 +67,26 @@ public class UserController {
         }
     }
 
+    @GetMapping("/select/allinfo/id/{userId}")
+    public ResultObject selectUserAllInfo(@PathVariable Integer userId) {
+        try {
+            UserEntity result = userService.selectByUserId(userId);
+            return ResultObject.buildSucessResponse(result);
+        } catch (Exception e) {
+            return ResultObject.buildFailResponse("查询用户全部信息失败!");
+        }
+    }
+
+    @GetMapping("/select/allinfo/name/{userName}")
+    public ResultObject selectUserAllInfo(@PathVariable String userName) {
+        try {
+            UserEntity result = userService.selectByUserName(userName);
+            return ResultObject.buildSucessResponse(result);
+        } catch (Exception e) {
+            return ResultObject.buildFailResponse("查询全部信息失败!");
+        }
+    }
+
 
     private CollierySafetyUserEntity transfer(UserRequest request) {
         CollierySafetyUserEntity entity = new CollierySafetyUserEntity();
@@ -73,8 +95,7 @@ public class UserController {
         entity.setId(request.getUserId());
         entity.setRoleId(request.getRoleId());
         entity.setDepartId(request.getDepartId());
-        entity.setCreateUser(request.getCreateUser() != null ? request.getCreateUser() : null);
-        entity.setModifyDate(request.getCreateUser() != null ? null : new Date());
+        entity.setCreateUser(request.getCreateUser());
         entity.setModifyUser(request.getModifyUser());
         return entity;
     }
