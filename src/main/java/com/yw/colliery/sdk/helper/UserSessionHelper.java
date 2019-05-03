@@ -16,6 +16,9 @@ import com.yw.colliery.service.user.UserRelationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 /**
  * @Author: renzhiqiang
  * @Description: 用户存储session过滤器
@@ -63,7 +66,7 @@ public class UserSessionHelper implements EventListener<UpdateSessionEvent>{
                 user.setPcrq(userRelation.getSafetyUser().getCreateDate());
                 user.setSsqymc(depart.getId());
                 SpringSessionUtils.setSession(ESessionKey.User.key, user);
-                SpringSessionUtils.setSession(ESessionKey.DeptsIds.key, depart.getCoalMine());
+                SpringSessionUtils.setSession(ESessionKey.DeptsIds.key, Collections.singletonList(depart.getCoalMine()));
                 StringBuffer sbf = new StringBuffer("(");
                 sbf.append(depart.getId());
                 sbf.append(")");
