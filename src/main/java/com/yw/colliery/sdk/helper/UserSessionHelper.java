@@ -1,6 +1,7 @@
 package com.yw.colliery.sdk.helper;
 
 import com.yw.colliery.api.base.ESessionKey;
+import com.yw.colliery.entity.XtgnYhlb;
 import com.yw.colliery.entity.depart.DepartmentEntity;
 import com.yw.colliery.entity.user.UserRelationEntity;
 import com.yw.colliery.sdk.constans.LoginConstant;
@@ -54,6 +55,14 @@ public class UserSessionHelper implements EventListener<UpdateSessionEvent>{
             SpringSessionUtils.setSession(LoginConstant.Session.WEBAPI_SESSION_USER, userRelation);
             DepartmentEntity depart = departmentService.selectById(userRelation.getSafetyUser().getDepartId());
             if (depart != null) {
+                XtgnYhlb user = new XtgnYhlb();
+                user.setId(Long.valueOf(userRelation.getSafetyUser().getId()));
+                user.setSsmk(depart.getCoalMine());
+                user.setYhmdd(userRelation.getSafetyUser().getUsername());
+                user.setYhmm(userRelation.getSafetyUser().getPassword());
+                user.setPcrq(userRelation.getSafetyUser().getCreateDate());
+                user.setSsqymc(depart.getId());
+                SpringSessionUtils.setSession(ESessionKey.User.key, user);
                 SpringSessionUtils.setSession(ESessionKey.DeptsIds.key, depart.getCoalMine());
                 StringBuffer sbf = new StringBuffer("(");
                 sbf.append(depart.getId());
