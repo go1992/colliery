@@ -3,19 +3,23 @@ package com.yw.colliery.api.unsafe;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.yw.colliery.api.base.EPage;
 import com.yw.colliery.dto.ResultDTO;
 import com.yw.colliery.entity.unsafe.UnsafeInfoEntity;
 import com.yw.colliery.entity.unsafe.UnsafePlanEntity;
-import com.yw.colliery.entity.user.UserAuthEntity;
+import com.yw.colliery.sdk.config.PageBean;
 import com.yw.colliery.sdk.utils.LoginSessionUtils;
 import com.yw.colliery.service.unsafe.UnsafePlanService;
 import com.yw.colliery.service.unsafe.UnsafeService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 /**
@@ -25,10 +29,12 @@ import java.util.Date;
 @RestController
 @RequestMapping("/apiv1/unsafePlan")
 @Slf4j
-public class UnsafePlanController {
+public class UnsafePlanController implements ApplicationListener<ContextRefreshedEvent> {
 
     @Autowired
     private UnsafePlanService unsafePlanService;
+
+    private static final ConcurrentHashMap<String,String> COLUMN_NAME_MAP = new ConcurrentHashMap<>();
 
 
     /**
@@ -40,13 +46,13 @@ public class UnsafePlanController {
     @PostMapping("/save")
     public ResultDTO input(@RequestBody String data) {
         try {
-            UserAuthEntity user = LoginSessionUtils.getUser();
-            if (user == null) {
-                return new ResultDTO(ResultDTO.FAILED, "登陆已过期，请重新登陆");
-            }
+//            UserAuthEntity user = LoginSessionUtils.getUser();
+//            if (user == null) {
+//                return new ResultDTO(ResultDTO.FAILED, "登陆已过期，请重新登陆");
+//            }
             UnsafePlanEntity unsafeInfoEntity = JSONObject.toJavaObject(JSON.parseObject(data), UnsafePlanEntity.class);
-            unsafeInfoEntity.setCreateUser(user.getSafetyUser().getUsername());
-//            unsafeInfoEntity.setCreateUser("xz");
+//            unsafeInfoEntity.setCreateUser(user.getSafetyUser().getUsername());
+            unsafeInfoEntity.setCreateUser("xz");
             unsafeInfoEntity.setCreateDate(new Date());
             Integer integer = unsafePlanService.unsafePlanInsert(unsafeInfoEntity);
             if (integer < 0) {
@@ -55,7 +61,7 @@ public class UnsafePlanController {
             return new ResultDTO(ResultDTO.SUCCESS, "持久化隐患排查计划数据成功");
         } catch (Exception e) {
             log.error("保存隐患排查数据异常", e);
-            return new ResultDTO(ResultDTO.SUCCESS, "保存隐患排查数据异常");
+            return new ResultDTO(ResultDTO.FAILED, "保存隐患排查数据异常");
         }
 
     }
@@ -66,22 +72,33 @@ public class UnsafePlanController {
      * @param
      * @return
      */
-    @GetMapping("/get")
-    public ResultDTO getAllUnsafeInfo(@RequestBody String data) {
+    @PostMapping("/get")
+    public Object getAllUnsafeInfo(@RequestBody String data) {
         try {
-            UserAuthEntity user = LoginSessionUtils.getUser();
-            if (user == null) {
-                return new ResultDTO(ResultDTO.FAILED, "登陆已过期，请重新登陆");
-            }
+//            UserAuthEntity user = LoginSessionUtils.getUser();
+//            if (user == null) {
+//                return new ResultDTO(ResultDTO.FAILED, "登陆已过期，请重新登陆");
+//            }
+            log.info("data>>>>>"+data);
+
             UnsafePlanEntity unsafeInfoEntity = JSONObject.toJavaObject(JSON.parseObject(data), UnsafePlanEntity.class);
-            ArrayList<UnsafeInfoEntity> allUnsafeInfo = new ArrayList<>(unsafePlanService.getUnsafePlanInfo(unsafeInfoEntity));
-            if (allUnsafeInfo.isEmpty()) {
-                return new ResultDTO(ResultDTO.SUCCESS, "未查询到隐患排查计划数据");
+            //列名转换一下
+            if(unsafeInfoEntity.getOrderName() != null){
+                unsafeInfoEntity.setOrderName(COLUMN_NAME_MAP.get(unsafeInfoEntity.getOrderName()));
             }
-            return new ResultDTO<>(allUnsafeInfo, ResultDTO.SUCCESS, "获取处理的隐患排计划查成功");
+            PageBean unsafePlanInfo = unsafePlanService.getUnsafePlanInfo(unsafeInfoEntity, Optional.ofNullable(unsafeInfoEntity.getPageNum()).orElse(0),Optional.ofNullable(unsafeInfoEntity.getPageSize()).orElse(0));
+            log.info("pageNum>>>>>"+unsafeInfoEntity.getPageNum());
+            HashMap<String, Object> resultMap = new HashMap<>();
+            if (unsafePlanInfo.getList().isEmpty()) {
+                return new ResultDTO(ResultDTO.FAILED, "未查询到隐患排查计划数据");
+            }
+
+            resultMap.put("total",unsafePlanInfo.getTotal());
+            resultMap.put("rows",unsafePlanInfo.getList());
+            return resultMap;
         } catch (Exception e) {
             log.error("获取隐患排查计划列表异常", e);
-            return new ResultDTO(ResultDTO.SUCCESS, "获取隐患隐排查计划列表异常");
+            return new ResultDTO(ResultDTO.FAILED, "获取隐患隐排查计划列表异常");
         }
 
     }
@@ -89,7 +106,7 @@ public class UnsafePlanController {
 
 
     /**
-     * 处理隐患数据
+     * 更新隐患计划
      *
      * @param
      * @return
@@ -97,12 +114,13 @@ public class UnsafePlanController {
     @PostMapping("/update")
     public ResultDTO submit(@RequestBody String data) {
         try {
-            UserAuthEntity user = LoginSessionUtils.getUser();
-            if (user == null) {
-                return new ResultDTO(ResultDTO.FAILED, "登陆已过期，请重新登陆");
-            }
+//            UserAuthEntity user = LoginSessionUtils.getUser();
+//            if (user == null) {
+//                return new ResultDTO(ResultDTO.FAILED, "登陆已过期，请重新登陆");
+//            }
             UnsafePlanEntity unsafeInfoEntity = JSONObject.toJavaObject(JSON.parseObject(data), UnsafePlanEntity.class);
-            unsafeInfoEntity.setModifyUser(user.getSafetyUser().getUsername());
+//            unsafeInfoEntity.setModifyUser(user.getSafetyUser().getUsername());
+            unsafeInfoEntity.setModifyUser("xz");
             unsafeInfoEntity.setModifyDate(new Date());
             Integer integer = unsafePlanService.upateUnsafePlanInfo(unsafeInfoEntity);
             if (integer < 0) {
@@ -111,9 +129,44 @@ public class UnsafePlanController {
             return new ResultDTO(ResultDTO.SUCCESS, "更新隐患排查计划信息成功");
         } catch (Exception e) {
             log.error("更新隐患排查计划信息异常", e);
-            return new ResultDTO(ResultDTO.SUCCESS, "更新隐患排查计划信息异常");
+            return new ResultDTO(ResultDTO.FAILED, "更新隐患排查计划信息异常");
         }
 
     }
 
+    /**
+     * 删除隐患计划
+     *
+     * @param
+     * @return
+     */
+    @PostMapping("/delete")
+    public ResultDTO delete(@RequestBody String data) {
+        try {
+//            UserAuthEntity user = LoginSessionUtils.getUser();
+//            if (user == null) {
+//                return new ResultDTO(ResultDTO.FAILED, "登陆已过期，请重新登陆");
+//            }
+            List<String> strings = JSON.parseArray(data, String.class);
+            Integer integer = unsafePlanService.deleteUnsafePlanInfo(strings);
+            if (integer < 0) {
+                return new ResultDTO(ResultDTO.FAILED, "删除隐患排查计划信息失败");
+            }
+            return new ResultDTO(ResultDTO.SUCCESS, "删除隐患排查计划信息成功");
+        } catch (Exception e) {
+            log.error("更新隐患排查计划信息异常", e);
+            return new ResultDTO(ResultDTO.FAILED, "删除隐患排查计划信息异常");
+        }
+
+    }
+
+    @Override
+    public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
+        COLUMN_NAME_MAP.put("planId","plan_id");
+        COLUMN_NAME_MAP.put("content","plan_content");
+        COLUMN_NAME_MAP.put("planName","plan_name");
+        COLUMN_NAME_MAP.put("type","plan_type");
+        COLUMN_NAME_MAP.put("departName","plan_depart_name");
+        COLUMN_NAME_MAP.put("planDate","plan_date");
+    }
 }

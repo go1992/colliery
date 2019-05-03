@@ -1,6 +1,7 @@
 package com.yw.colliery.entity.unsafe;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -34,11 +35,50 @@ public class UnsafePlanEntity implements Serializable {
     /**
      * 计划内容
      */
-        private String content;
+    private String content;
+    /**
+     * 计划内容
+     */
+    private String planName;
     /**
      * 排查部门
      */
     private String departName;
+    /**
+     * 页数
+     */
+    @JsonIgnore
+    private Integer pageNum=0;
+    /**
+     * 每页大小
+     */
+    @JsonIgnore
+    private Integer pageSize=0;
+    /**
+     * 排序的字段
+     */
+    @JsonIgnore
+    private String orderName;
+    /**
+     * 升序还是降序
+     */
+    @JsonIgnore
+    private String order;
+
+    /**
+     * 起始时间
+     */
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    @JsonIgnore
+    private Date startTime;
+    /**
+     * 结束时间
+     */
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    @JsonIgnore
+    private Date endTime;
     /**
      * 排查类型
      */
@@ -51,6 +91,8 @@ public class UnsafePlanEntity implements Serializable {
     /**
      * 排查日期
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date planDate;
 
     /**
@@ -61,6 +103,8 @@ public class UnsafePlanEntity implements Serializable {
     /**
      * 创建日期
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date createDate;
 
     /**

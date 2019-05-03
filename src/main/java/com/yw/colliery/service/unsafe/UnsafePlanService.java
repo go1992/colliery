@@ -3,6 +3,7 @@ package com.yw.colliery.service.unsafe;
 
 import com.yw.colliery.entity.unsafe.UnsafeInfoEntity;
 import com.yw.colliery.entity.unsafe.UnsafePlanEntity;
+import com.yw.colliery.sdk.config.PageBean;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public interface UnsafePlanService {
      * @param
      * @return
      */
-    List<UnsafeInfoEntity> getUnsafePlanInfo(UnsafePlanEntity unsafePlanEntity);
+    PageBean getUnsafePlanInfo(UnsafePlanEntity unsafePlanEntity, int pagNum, int pagSize);
 
 
     /**
@@ -29,5 +30,12 @@ public interface UnsafePlanService {
      * @return
      */
     Integer upateUnsafePlanInfo(UnsafePlanEntity unsafePlanEntity);
+
+    /**
+     * 删除隐患计划数据
+     * @param planIdList
+     * @return
+     */
+    Integer deleteUnsafePlanInfo(List<String> planIdList);
 
 }

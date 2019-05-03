@@ -126,7 +126,7 @@ public class UnsafeController {
      * @return
      */
     @PostMapping("/get/unsafeInfo/condition")
-    public ResultDTO getUnsafeInfoByCondition(@RequestBody String data) {
+    public Object getUnsafeInfoByCondition(@RequestBody String data) {
         try {
             UnsafeInfoEntity unsafeInfoEntity = JSONObject.toJavaObject(JSON.parseObject(data), UnsafeInfoEntity.class);
             ArrayList<UnsafeInfoEntity> unsafeInfoByUnsafeInfoEntity = new ArrayList<>(unsafeService.getUnsafeInfoByUnsafeInfoEntity(unsafeInfoEntity));
@@ -219,7 +219,7 @@ public class UnsafeController {
     @PostMapping("/sign")
     public ResultDTO sign(@RequestParam("id") Long id) {
         try {
-            UserAuthEntity user = LoginSessionUtils.getUser();
+            UserRelationEntity user = LoginSessionUtils.getUser();
             if (user == null) {
                 return new ResultDTO(ResultDTO.FAILED, "登陆已过期，请重新登陆");
             }

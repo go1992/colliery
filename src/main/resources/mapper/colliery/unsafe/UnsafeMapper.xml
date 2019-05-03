@@ -43,7 +43,7 @@
        level,
        distributed_status,
        status,
-       sing_status,
+       sign_status,
        coal_mine,
        check_person,
        check_type,

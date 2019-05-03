@@ -3,22 +3,28 @@
 <mapper namespace="com.yw.colliery.mapper.unsafe.UnsafePlanMapper">
     <resultMap id="BaseResultMap" type="com.yw.colliery.entity.unsafe.UnsafePlanEntity">
         <id column="plan_id" property="planId" jdbcType="INTEGER"/>
+        <result column="plan_name" property="planName" jdbcType="VARCHAR"/>
         <result column="plan_content" property="content" jdbcType="VARCHAR"/>
         <result column="plan_type" property="type" jdbcType="VARCHAR"/>
         <result column="plan_depart_name" property="departName" jdbcType="VARCHAR"/>
         <result column="plan_location" property="location" jdbcType="VARCHAR"/>
         <result column="plan_date" property="planDate" jdbcType="TIMESTAMP"/>
+        <result column="create_user" property="createUser" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="modify_user" property="modifyUser" jdbcType="VARCHAR"/>
+        <result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">
        plan_id,
+       plan_name,
        plan_content,
        plan_type,
        plan_depart_name,
        plan_location,
        plan_date,
        create_user,
-       crete_date,
+       create_date,
        modify_user,
        modify_date
     </sql>
@@ -28,6 +34,7 @@
         insert into colliery_unsafe_plan
           (
             plan_content,
+            plan_name,
             plan_type,
             plan_depart_name,
             plan_location,
@@ -38,20 +45,24 @@
         values
           (
            #{content,jdbcType=VARCHAR},
+           #{planName,jdbcType=VARCHAR},
            #{type,jdbcType=VARCHAR},
            #{departName,jdbcType=VARCHAR},
            #{location,jdbcType=VARCHAR},
            #{planDate,jdbcType=TIMESTAMP},
-           #{create_user,jdbcType=VARCHAR},
-           #{create_date,jdbcType=TIMESTAMP}
+           #{createUser,jdbcType=VARCHAR},
+           #{createDate,jdbcType=TIMESTAMP}
            )
     </insert>
 
     <update id="updateUnsafePlan" parameterType="com.yw.colliery.entity.unsafe.UnsafePlanEntity">
-        update colliery_unsafe_info
+        update colliery_unsafe_plan
         <set>
             <if test="content != null">
                 plan_content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="planName != null">
+                plan_name = #{planName,jdbcType=VARCHAR},
             </if>
             <if test="type != null">
                 plan_type= #{type,jdbcType=VARCHAR},
@@ -78,7 +89,7 @@
     <select id="selectByUnsafePlanInfo" resultMap="BaseResultMap" parameterType="com.yw.colliery.entity.unsafe.UnsafePlanEntity">
         select
         <include refid="Base_Column_List"/>
-        from colliery_unsafe_info
+        from colliery_unsafe_plan
         WHERE
         1=1
         <if test="planId!=null">
@@ -96,10 +107,27 @@
         <if test="location!=null">
             AND plan_location = #{location}
         </if>
-        <if test="planDate!=null">
-            AND plan_date = #{planDate}
+        <if test="startTime!=null">
+            AND plan_date &gt; #{startTime}
+        </if>
+        <if test="endTime!=null">
+            AND plan_date &lt; #{endTime}
+        </if>
+        <if test="orderName !=null">
+            ORDER BY ${orderName} ${order}
         </if>
     </select>
 
+    <delete id="deleteById" parameterType="java.util.List">
+        DELETE FROM
+        colliery_unsafe_plan
+        WHERE
+        plan_id
+        in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+
+    </delete>
 
 </mapper>
