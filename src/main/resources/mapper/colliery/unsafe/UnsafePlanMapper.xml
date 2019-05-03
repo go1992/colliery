@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yw.colliery.mapper.unsafe.UnsafePlanMapper">
+    <resultMap id="BaseResultMap" type="com.yw.colliery.entity.unsafe.UnsafePlanEntity">
+        <id column="plan_id" property="planId" jdbcType="INTEGER"/>
+        <result column="plan_content" property="content" jdbcType="VARCHAR"/>
+        <result column="plan_type" property="type" jdbcType="VARCHAR"/>
+        <result column="plan_depart_name" property="departName" jdbcType="VARCHAR"/>
+        <result column="plan_location" property="location" jdbcType="VARCHAR"/>
+        <result column="plan_date" property="planDate" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+       plan_id,
+       plan_content,
+       plan_type,
+       plan_depart_name,
+       plan_location,
+       plan_date,
+       create_user,
+       crete_date,
+       modify_user,
+       modify_date
+    </sql>
+
+
+    <insert id="insertUnsafePlan" parameterType="com.yw.colliery.entity.unsafe.UnsafePlanEntity" keyProperty="id">
+        insert into colliery_unsafe_plan
+          (
+            plan_content,
+            plan_type,
+            plan_depart_name,
+            plan_location,
+            plan_date,
+            create_user,
+            create_date
+           )
+        values
+          (
+           #{content,jdbcType=VARCHAR},
+           #{type,jdbcType=VARCHAR},
+           #{departName,jdbcType=VARCHAR},
+           #{location,jdbcType=VARCHAR},
+           #{planDate,jdbcType=TIMESTAMP},
+           #{create_user,jdbcType=VARCHAR},
+           #{create_date,jdbcType=TIMESTAMP}
+           )
+    </insert>
+
+    <update id="updateUnsafePlan" parameterType="com.yw.colliery.entity.unsafe.UnsafePlanEntity">
+        update colliery_unsafe_info
+        <set>
+            <if test="content != null">
+                plan_content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                plan_type= #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="departName != null">
+                plan_depart_name = #{departName,jdbcType=VARCHAR},
+            </if>
+            <if test="location != null">
+                plan_location = #{location,jdbcType=VARCHAR},
+            </if>
+            <if test="planDate != null">
+                plan_date = #{planDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyUser != null">
+                modify_user = #{modifyUser,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyDate != null">
+                modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where plan_id = #{planId,jdbcType=BIGINT}
+    </update>
+
+    <select id="selectByUnsafePlanInfo" resultMap="BaseResultMap" parameterType="com.yw.colliery.entity.unsafe.UnsafePlanEntity">
+        select
+        <include refid="Base_Column_List"/>
+        from colliery_unsafe_info
+        WHERE
+        1=1
+        <if test="planId!=null">
+           AND plan_id = #{planId}
+        </if>
+        <if test="content!=null">
+            AND plan_content = #{content}
+        </if>
+        <if test="type!=null">
+            AND plan_type &lt; #{type}
+        </if>
+        <if test="departName!=null">
+            AND plan_depart_name = #{departName}
+        </if>
+        <if test="location!=null">
+            AND plan_location = #{location}
+        </if>
+        <if test="planDate!=null">
+            AND plan_date = #{planDate}
+        </if>
+    </select>
+
+
+</mapper>

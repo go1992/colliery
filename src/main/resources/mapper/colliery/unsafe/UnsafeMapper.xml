@@ -3,11 +3,15 @@
 <mapper namespace="com.yw.colliery.mapper.unsafe.UnsafeMapper">
     <resultMap id="BaseResultMap" type="com.yw.colliery.entity.unsafe.UnsafeInfoEntity">
         <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="depart_id" property="departId" jdbcType="INTEGER"/>
+        <result column="plan_id" property="planId" jdbcType="INTEGER"/>
         <result column="location" property="location" jdbcType="VARCHAR"/>
         <result column="content" property="content" jdbcType="VARCHAR"/>
         <result column="type" property="type" jdbcType="VARCHAR"/>
         <result column="level" property="level" jdbcType="VARCHAR"/>
         <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="distributed_status" property="distributedStatus" jdbcType="VARCHAR"/>
+        <result column="sign_status" property="signStatus" jdbcType="VARCHAR"/>
         <result column="coal_mine" property="coalMine" jdbcType="VARCHAR"/>
         <result column="check_person" property="checkPerson" jdbcType="VARCHAR"/>
         <result column="check_type" property="checkType" jdbcType="VARCHAR"/>
@@ -31,11 +35,15 @@
 
     <sql id="Base_Column_List">
        id,
+       depart_id,
        location,
+       plan_id,
        content,
        type,
        level,
+       distributed_status,
        status,
+       sing_status,
        coal_mine,
        check_person,
        check_type,
@@ -77,6 +85,10 @@
            fine_money,
            fine_find,
            deal_process,
+           strat_depart_id,
+           distributed_status,
+           plan_id,
+           sign_status,
            create_user,
            create_date,
            extra1,
@@ -102,6 +114,10 @@
            #{fineMoney,jdbcType=VARCHAR},
            #{fineFind,jdbcType=VARCHAR},
            #{dealProcess,jdbcType=VARCHAR},
+           #{startDepartId,jdbcType=INTEGER},
+           #{distributedStatus,jdbcType=VARCHAR},
+           #{planId,jdbcType=INTEGER},
+           #{signStatus,jdbcType=VARCHAR},
            #{createUser,jdbcType=VARCHAR},
            #{createDate,jdbcType=TIMESTAMP},
            #{extra1,jdbcType=VARCHAR},
@@ -119,14 +135,20 @@
             <if test="dutyDepart != null">
                 duty_depart= #{dutyDepart,jdbcType=VARCHAR},
             </if>
+            <if test="distributedStatus != null">
+                distributed_status = #{distributedStatus,jdbcType=VARCHAR},
+            </if>
             <if test="reformDate != null">
                 reform_date = #{reformDate,jdbcType=VARCHAR},
             </if>
             <if test="modifyUser != null">
-                modify_user = #{modifyUser,jdbcType=TIMESTAMP},
+                modify_user = #{modifyUser,jdbcType=VARCHAR},
             </if>
             <if test="modifyDate != null">
                 modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="signStatus != null">
+                sign_status = #{signStatus,jdbcType=VARCHAR},
             </if>
         </set>
         where id = #{id,jdbcType=BIGINT}
@@ -156,6 +178,62 @@
         from colliery_unsafe_info
         WHERE
         status = #{status}
+    </select>
+
+    <select id="selectByUnsafeInfo" resultMap="BaseResultMap" parameterType="com.yw.colliery.entity.unsafe.UnsafeInfoEntity">
+        select
+        <include refid="Base_Column_List"/>
+        from colliery_unsafe_info
+        WHERE
+        1=1
+        <if test="id!=null">
+           AND id = #{id}
+        </if>
+        <if test="startCheckDate!=null">
+            AND check_date &gt; #{startCheckDate}
+        </if>
+        <if test="endCheckDate!=null">
+            AND check_date &lt; #{endCheckDate}
+        </if>
+        <if test="status!=null">
+            AND status = #{status}
+        </if>
+        <if test="level!=null">
+            AND level = #{level}
+        </if>
+        <if test="dutyDepart!=null">
+            AND duty_depart = #{dutyDepart}
+        </if>
+        <if test="checkType!=null">
+            AND check_type = #{checkType}
+        </if>
+        <if test="checkPerson!=null">
+            AND check_person = #{checkPerson}
+        </if>
+        <if test="departId!=null">
+            AND depart_id = #{departId}
+        </if>
+        <if test="planId!=null">
+            AND plan_id = #{planId}
+        </if>
+        <if test="distributedStatus!=null">
+            AND distributed_status = #{distributedStatus}
+        </if>
+        <if test="coalMine!=null">
+            AND coal_mine = #{coalMine}
+        </if>
+        <if test="reformDate!=null">
+            AND reform_date = #{reformDate}
+        </if>
+        <if test="dutyPerson!=null">
+            AND duty_person = #{dutyPerson}
+        </if>
+        <if test="startDepartId!=null">
+            AND strat_depart_id = #{startDepartId}
+        </if>
+        <if test="signStatus!=null">
+            AND sign_status = #{signStatus}
+        </if>>
     </select>
 
 

@@ -42,6 +42,18 @@ public class UnsafeInfoEntity implements Serializable {
      * 处理部门的
      */
     private Integer departId;
+    /**
+     * 发起部门的ID
+     */
+    private Integer startDepartId;
+    /**
+     * 计划ID
+     */
+    private Integer planId;
+    /**
+     * 分发状态
+     */
+    private String distributedStatus;
 
     /**
      * 隐患内容
@@ -62,6 +74,10 @@ public class UnsafeInfoEntity implements Serializable {
      * 隐患状态
      */
     private String status;
+    /**
+     * 签单状态
+     */
+    private String signStatus;
 
 
     /**
@@ -147,6 +163,16 @@ public class UnsafeInfoEntity implements Serializable {
      * 修改日期
      */
     private Date modifyDate;
+
+    /**
+     * 开始检查时间
+     */
+    private Date startCheckDate;
+
+    /**
+     * 结束检查时间
+     */
+    private Date endCheckDate;
 
     /**
      * 预留字段1

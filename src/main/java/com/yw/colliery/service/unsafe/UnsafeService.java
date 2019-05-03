@@ -35,4 +35,11 @@ public interface UnsafeService {
      * @return
      */
     Integer upateUnsafeInfo(UnsafeInfoEntity unsafeInfoEntity);
+
+    /**
+     * 条件查询隐患数据
+     * @param unsafeInfoEntity
+     * @return
+     */
+    List<UnsafeInfoEntity> getUnsafeInfoByUnsafeInfoEntity(UnsafeInfoEntity unsafeInfoEntity);
 }

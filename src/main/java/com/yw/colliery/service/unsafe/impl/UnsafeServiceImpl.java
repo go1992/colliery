@@ -36,4 +36,9 @@ public class UnsafeServiceImpl implements UnsafeService {
     public Integer upateUnsafeInfo(UnsafeInfoEntity unsafeInfoEntity) {
         return unsafeMapper.updateUnsafeInfo(unsafeInfoEntity);
     }
+
+    @Override
+    public List<UnsafeInfoEntity> getUnsafeInfoByUnsafeInfoEntity(UnsafeInfoEntity unsafeInfoEntity) {
+        return unsafeMapper.selectByUnsafeInfo(unsafeInfoEntity);
+    }
 }

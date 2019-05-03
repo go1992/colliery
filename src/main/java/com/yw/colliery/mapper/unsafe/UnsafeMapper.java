@@ -37,4 +37,11 @@ public interface UnsafeMapper {
      * @return
      */
     Integer updateUnsafeInfo(UnsafeInfoEntity unsafeInfoEntity);
+
+    /**
+     * 条件查询
+     * @param unsafeInfoEntity
+     * @return
+     */
+    List<UnsafeInfoEntity> selectByUnsafeInfo(UnsafeInfoEntity unsafeInfoEntity);
 }
