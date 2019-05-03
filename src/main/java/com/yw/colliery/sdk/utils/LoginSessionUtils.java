@@ -1,6 +1,6 @@
 package com.yw.colliery.sdk.utils;
 
-import com.yw.colliery.entity.user.UserAuthEntity;
+import com.yw.colliery.entity.user.UserRelationEntity;
 import com.yw.colliery.sdk.constans.LoginConstant;
 
 /**
@@ -13,7 +13,7 @@ public class LoginSessionUtils {
      * 获取session中的用户信息
      * @return
      */
-    public static UserAuthEntity getUser() {
-        return (UserAuthEntity) SpringSessionUtils.getSession(LoginConstant.Session.WEBAPI_SESSION_USER);
+    public static UserRelationEntity getUser() {
+        return (UserRelationEntity) SpringSessionUtils.getSession(LoginConstant.Session.WEBAPI_SESSION_USER);
     }
 }

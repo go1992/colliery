@@ -1,7 +1,6 @@
 package com.yw.colliery.handler;
 
-import com.yw.colliery.api.base.ResultObject;
-import com.yw.colliery.api.login.helper.UserSessionHelper;
+import com.yw.colliery.api.system.controller.login.helper.UserSessionHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -37,7 +36,7 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
         out.flush();
         out.close();
         String loginName = authentication.getName();
-        //登录成功保存用户安全信息到session
-        userSessionHelper.saveSafetyUser(loginName);
+        //登录成功保存用户关联信息到session
+        userSessionHelper.saveUserRelationInfo(loginName);
     }
 }
