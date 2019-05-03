@@ -38,6 +38,13 @@ public interface AuthMapper {
     AuthEntity selectById(Integer authId);
 
     /**
+     * 根据权限id集合查询
+     * @param ids
+     * @return
+     */
+    List<AuthEntity> selectByIds(List<Integer> ids);
+
+    /**
      * 根据等级和id集合查询权限集合
      * @param level
      * @param ids

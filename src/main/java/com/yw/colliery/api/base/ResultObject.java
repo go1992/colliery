@@ -35,7 +35,7 @@ public class ResultObject {
 	public static ResultObject buildFailResponse(String msg){
 		ResultObject response = new ResultObject();
 		response.setStatus(FAILED);
-		response.setResult(msg);
+		response.setMessage(msg);
 		return response;
 	}
 }

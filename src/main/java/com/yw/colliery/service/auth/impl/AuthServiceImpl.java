@@ -39,6 +39,11 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
+    public List<AuthEntity> selectByIds(List<Integer> ids) {
+        return authMapper.selectByIds(ids);
+    }
+
+    @Override
     public List<AuthEntity> selectByLevelAndIds(Integer level, List<Integer> ids) {
         return authMapper.selectByLevelAndIds(level, ids);
     }

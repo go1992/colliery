@@ -4,23 +4,16 @@ import java.lang.annotation.*;
 
 /**
  * @Author: renzhiqiang
- * @Description: 模块认证注解
+ * @Description: 权限模块注解
  * @Date: 2019/4/29
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
+@Target({ElementType.METHOD, ElementType.TYPE})
 @Documented
 public @interface AuthModule {
     /**
      * 权限id
      * @return
      */
-    int authId();
-
-
-    /**
-     * 模块名称
-     * @return
-     */
-    String moduleName() default "暂不支持查询模块名称";
+    int[] authId();
 }

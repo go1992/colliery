@@ -5,15 +5,13 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.yw.colliery.dto.ResultDTO;
 import com.yw.colliery.entity.unsafe.UnsafeInfoEntity;
-import com.yw.colliery.entity.user.UserAuthEntity;
+import com.yw.colliery.entity.user.UserRelationEntity;
 import com.yw.colliery.sdk.utils.LoginSessionUtils;
-import com.yw.colliery.service.depart.DepartmentService;
 import com.yw.colliery.service.unsafe.UnsafeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -40,7 +38,7 @@ public class UnsafeController {
     @PostMapping("/save")
     public ResultDTO input(@RequestBody String data) {
         try {
-            UserAuthEntity user = LoginSessionUtils.getUser();
+            UserRelationEntity user = LoginSessionUtils.getUser();
             if (user == null) {
                 return new ResultDTO(ResultDTO.FAILED, "登陆已过期，请重新登陆");
             }
@@ -90,7 +88,7 @@ public class UnsafeController {
      */
     @GetMapping("/get/depart/unsafeInfo")
     public ResultDTO getUnsafeInfo() {
-        UserAuthEntity user = LoginSessionUtils.getUser();
+        UserRelationEntity user = LoginSessionUtils.getUser();
         if (user == null) {
             return new ResultDTO(ResultDTO.FAILED, "登陆已过期，请重新登陆");
         }
@@ -117,7 +115,7 @@ public class UnsafeController {
      */
     @PostMapping("/submit/unsafeInfo")
     public ResultDTO submit(@RequestParam("id") Long id) {
-        UserAuthEntity user = LoginSessionUtils.getUser();
+        UserRelationEntity user = LoginSessionUtils.getUser();
         if (user == null) {
             return new ResultDTO(ResultDTO.FAILED, "登陆已过期，请重新登陆");
         }
@@ -147,7 +145,7 @@ public class UnsafeController {
      */
     @PostMapping("/apply/distributed")
     public ResultDTO distributed(@RequestParam("id") Long id,@RequestParam("departId") int departId) {
-        UserAuthEntity user = LoginSessionUtils.getUser();
+        UserRelationEntity user = LoginSessionUtils.getUser();
         if (user == null) {
             return new ResultDTO(ResultDTO.FAILED, "登陆已过期，请重新登陆");
         }
