@@ -1,5 +1,6 @@
 package com.yw.colliery.entity.depart;
 
+import com.yw.colliery.entity.auth.AuthEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,6 +8,7 @@ import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Author renzhiqiang
@@ -34,4 +36,6 @@ public class DepartmentEntity implements Serializable {
     private String modifyUser;
 
     private Date modifyDate;
+
+    List<AuthEntity> authList;
 }

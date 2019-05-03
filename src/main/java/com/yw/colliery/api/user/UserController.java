@@ -11,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @Author renzhiqiang
  * @Description 用户操作
@@ -58,17 +60,7 @@ public class UserController {
     }
 
     @GetMapping("/select/{userId}")
-    public ResultObject selectUserById(@PathVariable Integer userId) {
-        try {
-            CollierySafetyUserEntity result = collierySafetyUserService.selectyUserId(userId);
-            return ResultObject.buildSucessResponse(result);
-        } catch (Exception e) {
-            return ResultObject.buildFailResponse("查询用户失败!");
-        }
-    }
-
-    @GetMapping("/select/allinfo/id/{userId}")
-    public ResultObject selectUserAllInfo(@PathVariable Integer userId) {
+    public ResultObject selectUser(@PathVariable Integer userId) {
         try {
             UserEntity result = userService.selectByUserId(userId);
             return ResultObject.buildSucessResponse(result);
@@ -77,21 +69,20 @@ public class UserController {
         }
     }
 
-    @GetMapping("/select/allinfo/name/{userName}")
-    public ResultObject selectUserAllInfo(@PathVariable String userName) {
+    @GetMapping("/select/all")
+    public ResultObject selectUserAll() {
         try {
-            UserEntity result = userService.selectByUserName(userName);
+            List<UserEntity> result = userService.selectAll();
             return ResultObject.buildSucessResponse(result);
         } catch (Exception e) {
-            return ResultObject.buildFailResponse("查询全部信息失败!");
+            return ResultObject.buildFailResponse("查询所有用户信息失败!");
         }
     }
 
-
     private CollierySafetyUserEntity transfer(UserRequest request) {
         CollierySafetyUserEntity entity = new CollierySafetyUserEntity();
-        entity.setUserName(EncodeUtils.encode(request.getUserName()));
-        entity.setUserPwd(EncodeUtils.encode(request.getPassword()));
+        entity.setUserName(request.getUserName());
+        entity.setUserPwd(request.getUserPwd() != null ? EncodeUtils.encode(request.getUserPwd()): null);
         entity.setId(request.getUserId());
         entity.setRoleId(request.getRoleId());
         entity.setDepartId(request.getDepartId());

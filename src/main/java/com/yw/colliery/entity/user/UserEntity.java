@@ -22,7 +22,7 @@ import java.util.List;
 @NoArgsConstructor
 public class UserEntity implements Serializable {
     private static final long serialVersionUID = 2844749949913628495L;
-    private CollierySafetyUserEntity safetyUserEntity;
+    private CollierySafetyUserEntity userEntity;
 
     private RoleEntity roleEntity;
 
