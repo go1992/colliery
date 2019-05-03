@@ -1,8 +1,6 @@
 package com.yw.colliery.sdk.interceptor;
 
-import com.alibaba.fastjson.JSON;
-import com.yw.colliery.api.system.controller.login.helper.UserSessionHelper;
-import com.yw.colliery.entity.auth.AuthEntity;
+import com.yw.colliery.sdk.helper.UserSessionHelper;
 import com.yw.colliery.entity.user.CollierySafetyUserEntity;
 import com.yw.colliery.entity.user.UserRelationEntity;
 import com.yw.colliery.sdk.utils.LoginSessionUtils;
@@ -16,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * @Author: renzhiqiang
- * @Description: 用户session处理拦截器
+ * @Description: 用户session处理拦截器(太消耗数据库性能了，先暂时不开启)
  * @Date: 2019/5/3
  */
 @Component
@@ -39,7 +37,7 @@ public class UserSessionInterceptor implements HandlerInterceptor{
                 return true;
             } else {
                 //用户信息被修改
-                userSessionHelper.updateUserRelationInfo(safetyUser.getUsername());
+                userSessionHelper.updateUserRelationInfo();
             }
             return true;
         } else {

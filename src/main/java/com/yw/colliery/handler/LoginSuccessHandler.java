@@ -1,6 +1,6 @@
 package com.yw.colliery.handler;
 
-import com.yw.colliery.api.system.controller.login.helper.UserSessionHelper;
+import com.yw.colliery.sdk.helper.UserSessionHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;

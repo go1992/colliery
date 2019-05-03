@@ -4,6 +4,8 @@ import com.yw.colliery.entity.auth.AuthEntity;
 import com.yw.colliery.entity.depart.DepartmentEntity;
 import com.yw.colliery.mapper.auth.AuthMapper;
 import com.yw.colliery.mapper.depart.DepartMapper;
+import com.yw.colliery.sdk.message.publisher.EventPublisher;
+import com.yw.colliery.service.depart.DepartEvent;
 import com.yw.colliery.service.depart.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,10 +25,16 @@ public class DepartmentServiceImpl implements DepartmentService {
     private DepartMapper departMapper;
     @Autowired
     private AuthMapper authMapper;
+    @Autowired
+    private EventPublisher eventPublisher;
 
     @Override
     public int addDepart(DepartmentEntity entity) {
-        return departMapper.addDepart(entity);
+        int result =  departMapper.addDepart(entity);
+        if (result > 0) {
+            eventPublisher.publish(new DepartEvent());
+        }
+        return result;
     }
 
     @Override

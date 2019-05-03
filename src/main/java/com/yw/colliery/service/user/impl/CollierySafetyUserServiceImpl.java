@@ -2,6 +2,8 @@ package com.yw.colliery.service.user.impl;
 
 import com.yw.colliery.entity.user.CollierySafetyUserEntity;
 import com.yw.colliery.mapper.user.CollierySafetyUserMapper;
+import com.yw.colliery.sdk.message.publisher.EventPublisher;
+import com.yw.colliery.service.user.UserEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -21,6 +23,8 @@ public class CollierySafetyUserServiceImpl implements CollierySafetyUserService{
 
     @Autowired
     private CollierySafetyUserMapper collierySafetyUserMapper;
+    @Autowired
+    private EventPublisher eventPublisher;
 
     @Override
     public CollierySafetyUserEntity selectByUserName(String userName) {
@@ -45,6 +49,7 @@ public class CollierySafetyUserServiceImpl implements CollierySafetyUserService{
     @Override
     public int updateSafetyUSer(CollierySafetyUserEntity userEntity) {
         userEntity.setModifyDate(new Date());
+        eventPublisher.publish(new UserEvent());
         return collierySafetyUserMapper.updateByPrimaryKey(userEntity);
     }
 
