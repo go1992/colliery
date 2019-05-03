@@ -2,6 +2,8 @@ package com.yw.colliery.api.system.controller.role;
 
 import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.role.RoleEntity;
+import com.yw.colliery.sdk.aop.AuthModule;
+import com.yw.colliery.sdk.constans.AuthConstant;
 import com.yw.colliery.service.role.RoleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,7 @@ public class RoleController {
     private RoleService roleService;
 
     @PostMapping("/add")
+    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE_SUPER)
     public ResultObject addRole(@RequestBody RoleEntity RoleEntity) {
         try {
             int result = roleService.addRole(RoleEntity);
@@ -32,6 +35,7 @@ public class RoleController {
     }
 
     @PostMapping("/update")
+    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE_SUPER)
     public ResultObject updateRole(@RequestBody RoleEntity RoleEntity) {
         try {
             int result = roleService.updateRole(RoleEntity);
@@ -42,6 +46,7 @@ public class RoleController {
     }
 
     @GetMapping("/delete/{roleId}")
+    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE_SUPER)
     public ResultObject deleteRole(@PathVariable Integer roleId) {
         try {
             int result = roleService.deleteRole(roleId);
@@ -52,6 +57,7 @@ public class RoleController {
     }
 
     @GetMapping("/select/{roleId}")
+    @AuthModule(authId = {AuthConstant.Module.SYSTEM_MODULE_WATCH, AuthConstant.Module.SYSTEM_MODULE_WATCH})
     public ResultObject selectRoleById(@PathVariable Integer roleId) {
         try {
             RoleEntity RoleEntity = roleService.selectById(roleId);
@@ -62,6 +68,7 @@ public class RoleController {
     }
 
     @GetMapping("/select/all")
+    @AuthModule(authId = {AuthConstant.Module.SYSTEM_MODULE_WATCH, AuthConstant.Module.SYSTEM_MODULE_WATCH})
     public ResultObject selectAll() {
         try {
             List<RoleEntity> RoleList = roleService.selectAll();

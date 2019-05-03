@@ -7,6 +7,7 @@ import com.yw.colliery.sdk.constans.AuthConstant;
 import com.yw.colliery.sdk.utils.LoginSessionUtils;
 import com.yw.colliery.service.auth.AuthService;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -16,6 +17,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @Author renzhiqiang
@@ -45,7 +47,9 @@ public class AuthModuleAop {
             if (success) {
                 return point.proceed();
             } else {
-                return ResultObject.buildFailResponse(String.format("您没有:%s", authList.get(0).getName()));
+                List<String> authNameList = authList.stream().map(auth -> auth.getName()).collect(Collectors.toList());
+                String message = StringUtils.join(authNameList, ",");
+                return ResultObject.buildFailResponse(String.format("您没有:%s", message));
             }
         }
     }

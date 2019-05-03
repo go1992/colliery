@@ -6,6 +6,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.yw.colliery.dto.ResultDTO;
 import com.yw.colliery.entity.unsafe.UnsafeInfoEntity;
 import com.yw.colliery.entity.user.UserRelationEntity;
+import com.yw.colliery.sdk.aop.AuthModule;
+import com.yw.colliery.sdk.constans.AuthConstant;
 import com.yw.colliery.sdk.utils.LoginSessionUtils;
 import com.yw.colliery.service.unsafe.UnsafeService;
 import lombok.extern.slf4j.Slf4j;
@@ -36,6 +38,7 @@ public class UnsafeController {
      * @return
      */
     @PostMapping("/save")
+    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE_SUPER)
     public ResultDTO input(@RequestBody String data) {
         try {
             UserRelationEntity user = LoginSessionUtils.getUser();
@@ -66,6 +69,7 @@ public class UnsafeController {
      * @return
      */
     @GetMapping("/get/all/unsafeInfo")
+    @AuthModule(authId = {AuthConstant.Module.UNSAFE_MODULE_WATCH, AuthConstant.Module.UNSAFE_MODULE_SUPER})
     public ResultDTO getAllUnsafeInfo() {
         try {
             ArrayList<UnsafeInfoEntity> allUnsafeInfo = new ArrayList<>(unsafeService.getAllUnsafeInfo());
@@ -87,6 +91,7 @@ public class UnsafeController {
      * @return
      */
     @GetMapping("/get/depart/unsafeInfo")
+    @AuthModule(authId = {AuthConstant.Module.UNSAFE_MODULE_WATCH, AuthConstant.Module.UNSAFE_MODULE_SUPER})
     public ResultDTO getUnsafeInfo() {
         UserRelationEntity user = LoginSessionUtils.getUser();
         if (user == null) {
@@ -114,6 +119,7 @@ public class UnsafeController {
      * @return
      */
     @PostMapping("/submit/unsafeInfo")
+    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE_SUPER)
     public ResultDTO submit(@RequestParam("id") Long id) {
         UserRelationEntity user = LoginSessionUtils.getUser();
         if (user == null) {
@@ -144,6 +150,7 @@ public class UnsafeController {
      * @return
      */
     @PostMapping("/apply/distributed")
+    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE_SUPER)
     public ResultDTO distributed(@RequestParam("id") Long id,@RequestParam("departId") int departId) {
         UserRelationEntity user = LoginSessionUtils.getUser();
         if (user == null) {

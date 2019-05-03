@@ -26,7 +26,7 @@ public class AuthControllerTest {
     public void add() {
         RestTemplate template = new RestTemplate();
         AuthEntity entity = new AuthEntity();
-        entity.setName("隐患治理");
+        entity.setName("测试权限");
         entity.setLevel(2);
         entity.setCreateUser("admin");
         entity.setCreateDate(new Date());

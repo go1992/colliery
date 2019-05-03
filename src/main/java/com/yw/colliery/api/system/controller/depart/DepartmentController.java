@@ -2,6 +2,8 @@ package com.yw.colliery.api.system.controller.depart;
 
 import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.depart.DepartmentEntity;
+import com.yw.colliery.sdk.aop.AuthModule;
+import com.yw.colliery.sdk.constans.AuthConstant;
 import com.yw.colliery.service.depart.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +22,7 @@ public class DepartmentController {
     private DepartmentService departmentService;
 
     @PostMapping("/add")
+    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE_SUPER)
     public ResultObject addDepart(@RequestBody DepartmentEntity departmentEntity) {
         try {
             int result = departmentService.addDepart(departmentEntity);
@@ -30,6 +33,7 @@ public class DepartmentController {
     }
 
     @PostMapping("/update")
+    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE_SUPER)
     public ResultObject updateDepart(@RequestBody DepartmentEntity departmentEntity) {
         try {
             int result = departmentService.updateDepart(departmentEntity);
@@ -40,6 +44,7 @@ public class DepartmentController {
     }
 
     @GetMapping("/delete/{departId}")
+    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE_SUPER)
     public ResultObject deleteDepart(@PathVariable Integer departId) {
         try {
             int result = departmentService.deleteDepart(departId);
@@ -50,6 +55,7 @@ public class DepartmentController {
     }
 
     @GetMapping("/select/{departId}")
+    @AuthModule(authId = {AuthConstant.Module.SYSTEM_MODULE_SUPER,AuthConstant.Module.SYSTEM_MODULE_WATCH})
     public ResultObject selectDepartById(@PathVariable Integer departId) {
         try {
             DepartmentEntity departmentEntity = departmentService.selectById(departId);
@@ -60,6 +66,7 @@ public class DepartmentController {
     }
 
     @GetMapping("/select/all")
+    @AuthModule(authId = {AuthConstant.Module.SYSTEM_MODULE_SUPER,AuthConstant.Module.SYSTEM_MODULE_WATCH})
     public ResultObject selectAll() {
         try {
             List<DepartmentEntity> departmentEntityList = departmentService.selectAll();

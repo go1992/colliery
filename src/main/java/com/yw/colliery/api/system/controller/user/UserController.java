@@ -3,6 +3,8 @@ package com.yw.colliery.api.system.controller.user;
 import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.user.CollierySafetyUserEntity;
 import com.yw.colliery.entity.user.UserEntity;
+import com.yw.colliery.sdk.aop.AuthModule;
+import com.yw.colliery.sdk.constans.AuthConstant;
 import com.yw.colliery.sdk.request.UserRequest;
 import com.yw.colliery.sdk.utils.EncodeUtils;
 import com.yw.colliery.service.user.CollierySafetyUserService;
@@ -28,6 +30,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/add")
+    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE_SUPER)
     public ResultObject addUser(@RequestBody UserRequest request) {
         CollierySafetyUserEntity entity = transfer(request);
         try {
@@ -39,6 +42,7 @@ public class UserController {
     }
 
     @PostMapping("/update")
+    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE_SUPER)
     public ResultObject updateUser(@RequestBody UserRequest request) {
         CollierySafetyUserEntity entity = transfer(request);
         try {
@@ -50,6 +54,7 @@ public class UserController {
     }
 
     @GetMapping("/delete/{userId}")
+    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE_SUPER)
     public ResultObject deleteUser(@PathVariable Integer userId) {
         try {
             int result = collierySafetyUserService.deleteSafetyUSer(userId);
@@ -60,6 +65,7 @@ public class UserController {
     }
 
     @GetMapping("/select/{userId}")
+    @AuthModule(authId = {AuthConstant.Module.SYSTEM_MODULE_WATCH, AuthConstant.Module.SYSTEM_MODULE_WATCH})
     public ResultObject selectUser(@PathVariable Integer userId) {
         try {
             UserEntity result = userService.selectByUserId(userId);
@@ -70,6 +76,7 @@ public class UserController {
     }
 
     @GetMapping("/select/all")
+    @AuthModule(authId = {AuthConstant.Module.SYSTEM_MODULE_WATCH, AuthConstant.Module.SYSTEM_MODULE_WATCH})
     public ResultObject selectUserAll() {
         try {
             List<UserEntity> result = userService.selectAll();

@@ -42,7 +42,7 @@ public interface AuthMapper {
      * @param ids
      * @return
      */
-    List<AuthEntity> selectByIds(List<Integer> ids);
+    List<AuthEntity> selectByIds(@Param(value = "ids") List<Integer> ids);
 
     /**
      * 根据等级和id集合查询权限集合
