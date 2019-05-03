@@ -66,7 +66,7 @@ public class UserSessionHelper implements EventListener<UpdateSessionEvent>{
                 user.setPcrq(userRelation.getSafetyUser().getCreateDate());
                 user.setSsqymc(depart.getId());
                 SpringSessionUtils.setSession(ESessionKey.User.key, user);
-                SpringSessionUtils.setSession(ESessionKey.DeptsIds.key, Collections.singletonList(depart.getId()));
+                SpringSessionUtils.setSession(ESessionKey.DeptsIds.key, Collections.singletonList(String.valueOf(depart.getId())));
                 StringBuffer sbf = new StringBuffer("(");
                 sbf.append(depart.getId());
                 sbf.append(")");
