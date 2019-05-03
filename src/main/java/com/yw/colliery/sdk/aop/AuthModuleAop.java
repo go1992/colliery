@@ -36,17 +36,18 @@ public class AuthModuleAop {
         UserRelationEntity userRelation = LoginSessionUtils.getUser();
         //2.查询权限信息
         List<Integer> authIds = Arrays.asList(ArrayUtils.toObject(authModule.authId()));
-        List<AuthEntity> authList = authService.selectByIds(authIds);
         //3.判断用户模块权限
-        if (CollectionUtils.isEmpty(userRelation.getAuthIds())) {
-            //3.返回模块认证异常
+        if (CollectionUtils.isEmpty(userRelation.getAuthList())) {
+            //4.返回模块认证异常
             return ResultObject.buildFailResponse(AuthConstant.Module.NO_MODULE_AUTH);
         } else {
-            //4.遍历检查模块权限
-            boolean success = userRelation.getAuthIds().stream().anyMatch(authId -> authIds.contains(authId));
+            //5.遍历检查模块权限
+            boolean success = userRelation.getAuthList().stream().anyMatch(auth -> authIds.contains(auth.getId()));
             if (success) {
                 return point.proceed();
             } else {
+                //6.没有权限的话就去查询这些权限信息，方便返回给用户具体的信息
+                List<AuthEntity> authList = authService.selectByIds(authIds);
                 List<String> authNameList = authList.stream().map(auth -> auth.getName()).collect(Collectors.toList());
                 String message = StringUtils.join(authNameList, ",");
                 return ResultObject.buildFailResponse(String.format("您没有:%s", message));

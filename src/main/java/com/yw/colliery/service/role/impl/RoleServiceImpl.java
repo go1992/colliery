@@ -2,6 +2,8 @@ package com.yw.colliery.service.role.impl;
 
 import com.yw.colliery.entity.role.RoleEntity;
 import com.yw.colliery.mapper.role.RoleMapper;
+import com.yw.colliery.sdk.message.publisher.EventPublisher;
+import com.yw.colliery.service.role.RoleEvent;
 import com.yw.colliery.service.role.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,8 @@ import java.util.List;
 public class RoleServiceImpl implements RoleService {
     @Autowired
     private RoleMapper roleMapper;
+    @Autowired
+    private EventPublisher eventPublisher;
 
     @Override
     public int addRole(RoleEntity entity) {
@@ -25,7 +29,11 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public int updateRole(RoleEntity entity) {
-        return roleMapper.updateRole(entity);
+        int result = roleMapper.updateRole(entity);
+        if (result > 0) {
+            eventPublisher.publish(new RoleEvent());
+        }
+        return result;
     }
 
     @Override

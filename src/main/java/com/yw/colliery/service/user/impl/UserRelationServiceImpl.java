@@ -63,7 +63,7 @@ public class UserRelationServiceImpl implements UserRelationService {
                 List<AuthEntity> authList = authService.selectByLevelAndIds(role.getAuthLevel(), ids);
 
                 if (!CollectionUtils.isEmpty(authList)) {
-                    return new UserRelationEntity(user, authList.stream().map(auth -> auth.getId()).collect(Collectors.toList()));
+                    return new UserRelationEntity(user, authList);
                 }
             }
         }
