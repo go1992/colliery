@@ -4,7 +4,7 @@
     <resultMap id="BaseResultMap" type="com.yw.colliery.entity.unsafe.UnsafeInfoEntity">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="depart_id" property="departId" jdbcType="INTEGER"/>
-        <result column="plan_id" property="planId" jdbcType="INTEGER"/>
+        <result column="plan_name" property="planName" jdbcType="VARCHAR"/>
         <result column="location" property="location" jdbcType="VARCHAR"/>
         <result column="content" property="content" jdbcType="VARCHAR"/>
         <result column="type" property="type" jdbcType="VARCHAR"/>
@@ -15,7 +15,7 @@
         <result column="coal_mine" property="coalMine" jdbcType="VARCHAR"/>
         <result column="check_person" property="checkPerson" jdbcType="VARCHAR"/>
         <result column="check_type" property="checkType" jdbcType="VARCHAR"/>
-        <result column="check_time" property="checkType" jdbcType="TIMESTAMP"/>
+        <result column="check_time" property="checkTime" jdbcType="TIMESTAMP"/>
         <result column="reform_date" property="reformDate" jdbcType="VARCHAR"/>
         <result column="reform_measure" property="reformMeasure" jdbcType="VARCHAR"/>
         <result column="duty_depart" property="dutyDepart" jdbcType="VARCHAR"/>
@@ -37,7 +37,7 @@
        id,
        depart_id,
        location,
-       plan_id,
+       plan_name,
        content,
        type,
        level,
@@ -87,7 +87,7 @@
            deal_process,
            strat_depart_id,
            distributed_status,
-           plan_id,
+           plan_name,
            sign_status,
            create_user,
            create_date,
@@ -116,7 +116,7 @@
            #{dealProcess,jdbcType=VARCHAR},
            #{startDepartId,jdbcType=INTEGER},
            #{distributedStatus,jdbcType=VARCHAR},
-           #{planId,jdbcType=INTEGER},
+           #{planName,jdbcType=VARCHAR},
            #{signStatus,jdbcType=VARCHAR},
            #{createUser,jdbcType=VARCHAR},
            #{createDate,jdbcType=TIMESTAMP},
@@ -137,6 +137,54 @@
             </if>
             <if test="distributedStatus != null">
                 distributed_status = #{distributedStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="location != null">
+                location = #{location,jdbcType=VARCHAR},
+            </if>
+            <if test="planName != null">
+                plan_name = #{planName,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="level != null">
+                level = #{level,jdbcType=VARCHAR},
+            </if>
+            <if test="checkTime != null">
+                check_time = #{checkTime,jdbcType=VARCHAR},
+            </if>
+            <if test="coalMine != null">
+                coal_mine = #{coalMine,jdbcType=VARCHAR},
+            </if>
+            <if test="checkPerson != null">
+                check_person = #{checkPerson,jdbcType=VARCHAR},
+            </if>
+            <if test="checkType != null">
+                check_type = #{checkType,jdbcType=VARCHAR},
+            </if>
+            <if test="reformMeasure != null">
+                reform_measure = #{reformMeasure,jdbcType=VARCHAR},
+            </if>
+            <if test="dutyDepart != null">
+                duty_depart = #{dutyDepart,jdbcType=VARCHAR},
+            </if>
+            <if test="dutyPerson != null">
+                duty_person = #{dutyPerson,jdbcType=VARCHAR},
+            </if>
+            <if test="fineReason != null">
+                fine_reason = #{fineReason,jdbcType=VARCHAR},
+            </if>
+            <if test="fineMoney != null">
+                fine_money = #{fineMoney,jdbcType=VARCHAR},
+            </if>
+            <if test="fineFind != null">
+                fine_find = #{fineFind,jdbcType=VARCHAR},
+            </if>
+            <if test="dealProcess != null">
+                deal_process = #{dealProcess,jdbcType=VARCHAR},
             </if>
             <if test="reformDate != null">
                 reform_date = #{reformDate,jdbcType=VARCHAR},
@@ -213,8 +261,8 @@
         <if test="departId!=null">
             AND depart_id = #{departId}
         </if>
-        <if test="planId!=null">
-            AND plan_id = #{planId}
+        <if test="planName!=null">
+            AND plan_name = #{planName}
         </if>
         <if test="distributedStatus!=null">
             AND distributed_status = #{distributedStatus}
@@ -233,8 +281,23 @@
         </if>
         <if test="signStatus!=null">
             AND sign_status = #{signStatus}
-        </if>>
+        </if>
+        <if test="orderName !=null">
+            ORDER BY ${orderName} ${order}
+        </if>
     </select>
+
+    <delete id="deleteById" parameterType="java.util.List">
+        DELETE FROM
+        colliery_unsafe_info
+        WHERE
+        id
+        in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+
+    </delete>
 
 
 </mapper>

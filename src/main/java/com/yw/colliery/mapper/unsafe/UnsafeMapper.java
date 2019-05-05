@@ -2,6 +2,7 @@ package com.yw.colliery.mapper.unsafe;
 
 
 import com.yw.colliery.entity.unsafe.UnsafeInfoEntity;
+import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.ArrayList;
@@ -44,4 +45,11 @@ public interface UnsafeMapper {
      * @return
      */
     List<UnsafeInfoEntity> selectByUnsafeInfo(UnsafeInfoEntity unsafeInfoEntity);
+
+    /**
+     * 删除隐患数据
+     * @param idList
+     * @return
+     */
+    Integer deleteById(List<String> idList);
 }

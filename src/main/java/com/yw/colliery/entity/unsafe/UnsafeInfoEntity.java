@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -47,9 +48,29 @@ public class UnsafeInfoEntity implements Serializable {
      */
     private Integer startDepartId;
     /**
-     * 计划ID
+     * 计划名称
      */
-    private Integer planId;
+    private String planName;
+    /**
+     * 页数
+     */
+    @JsonIgnore
+    private Integer pageNum=0;
+    /**
+     * 每页大小
+     */
+    @JsonIgnore
+    private Integer pageSize=0;
+    /**
+     * 排序的字段
+     */
+    @JsonIgnore
+    private String orderName;
+    /**
+     * 升序还是降序
+     */
+    @JsonIgnore
+    private String order;
     /**
      * 分发状态
      */

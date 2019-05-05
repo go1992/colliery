@@ -3,6 +3,7 @@ package com.yw.colliery.service.unsafe;
 
 import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.unsafe.UnsafeInfoEntity;
+import com.yw.colliery.sdk.config.PageBean;
 
 import java.util.List;
 
@@ -41,5 +42,12 @@ public interface UnsafeService {
      * @param unsafeInfoEntity
      * @return
      */
-    List<UnsafeInfoEntity> getUnsafeInfoByUnsafeInfoEntity(UnsafeInfoEntity unsafeInfoEntity);
+    PageBean<UnsafeInfoEntity> getUnsafeInfoByUnsafeInfoEntity(UnsafeInfoEntity unsafeInfoEntity, int pagNum, int pagSize);
+
+    /**
+     * 删除隐患数据
+     * @param idList
+     * @return
+     */
+    Integer delete(List<String> idList);
 }
