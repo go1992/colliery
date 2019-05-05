@@ -1,7 +1,9 @@
 package com.yw.colliery.service.user.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.yw.colliery.entity.user.CollierySafetyUserEntity;
 import com.yw.colliery.mapper.user.CollierySafetyUserMapper;
+import com.yw.colliery.sdk.config.PageParam;
 import com.yw.colliery.sdk.message.publisher.EventPublisher;
 import com.yw.colliery.service.user.UserEvent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,5 +68,11 @@ public class CollierySafetyUserServiceImpl implements CollierySafetyUserService{
     @Override
     public CollierySafetyUserEntity selectyUserId(Integer userId) {
         return collierySafetyUserMapper.selectByUserId(userId);
+    }
+
+    @Override
+    public List<CollierySafetyUserEntity> selectByPage(PageParam param) {
+        PageHelper.startPage(param.getPageNum(), param.getPageSize(), param.generateOderBy());
+        return collierySafetyUserMapper.selectAllUser();
     }
 }

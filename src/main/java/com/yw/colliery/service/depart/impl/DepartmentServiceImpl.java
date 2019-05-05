@@ -1,9 +1,11 @@
 package com.yw.colliery.service.depart.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.yw.colliery.entity.auth.AuthEntity;
 import com.yw.colliery.entity.depart.DepartmentEntity;
 import com.yw.colliery.mapper.auth.AuthMapper;
 import com.yw.colliery.mapper.depart.DepartMapper;
+import com.yw.colliery.sdk.config.PageParam;
 import com.yw.colliery.sdk.message.publisher.EventPublisher;
 import com.yw.colliery.service.depart.DepartEvent;
 import com.yw.colliery.service.depart.DepartmentService;
@@ -63,6 +65,23 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public List<DepartmentEntity> selectAll() {
+        List<DepartmentEntity> departs =  departMapper.selectAll();
+        for (DepartmentEntity entity : departs) {
+            if (entity != null) {
+                List<AuthEntity> authList = Arrays.asList(entity.getAuthIds().split(","))
+                        .stream()
+                        .map(authId -> Integer.valueOf(authId))
+                        .map(authId -> authMapper.selectById(authId))
+                        .collect(Collectors.toList());
+                entity.setAuthList(authList);
+            }
+        }
+        return departs;
+    }
+
+    @Override
+    public List<DepartmentEntity> selectByPage(PageParam param) {
+        PageHelper.startPage(param.getPageNum(), param.getPageSize(), param.generateOderBy());
         List<DepartmentEntity> departs =  departMapper.selectAll();
         for (DepartmentEntity entity : departs) {
             if (entity != null) {

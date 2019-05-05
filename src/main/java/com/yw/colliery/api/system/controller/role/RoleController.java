@@ -3,7 +3,9 @@ package com.yw.colliery.api.system.controller.role;
 import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.role.RoleEntity;
 import com.yw.colliery.sdk.aop.AuthModule;
+import com.yw.colliery.sdk.config.PageParam;
 import com.yw.colliery.sdk.constans.AuthConstant;
+import com.yw.colliery.sdk.utils.ResponseUtils;
 import com.yw.colliery.service.role.RoleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,10 +71,10 @@ public class RoleController {
 
     @GetMapping("/select/all")
     @AuthModule(authId = {AuthConstant.Module.SYSTEM_MODULE_WATCH, AuthConstant.Module.SYSTEM_MODULE_WATCH})
-    public ResultObject selectAll() {
+    public Object selectAll(@RequestBody PageParam param) {
         try {
-            List<RoleEntity> RoleList = roleService.selectAll();
-            return ResultObject.buildSucessResponse(RoleList);
+            List<RoleEntity> roleList = roleService.selectByPage(param);
+            return ResponseUtils.wrapResponse(roleList);
         } catch (Exception e) {
             return ResultObject.buildFailResponse("查询角色列表失败!");
         }

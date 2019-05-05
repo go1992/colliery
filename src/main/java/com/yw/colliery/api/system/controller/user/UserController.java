@@ -4,9 +4,11 @@ import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.user.CollierySafetyUserEntity;
 import com.yw.colliery.entity.user.UserEntity;
 import com.yw.colliery.sdk.aop.AuthModule;
+import com.yw.colliery.sdk.config.PageParam;
 import com.yw.colliery.sdk.constans.AuthConstant;
 import com.yw.colliery.sdk.request.UserRequest;
 import com.yw.colliery.sdk.utils.EncodeUtils;
+import com.yw.colliery.sdk.utils.ResponseUtils;
 import com.yw.colliery.service.user.CollierySafetyUserService;
 import com.yw.colliery.service.user.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -77,10 +79,10 @@ public class UserController {
 
     @GetMapping("/select/all")
     @AuthModule(authId = {AuthConstant.Module.SYSTEM_MODULE_WATCH, AuthConstant.Module.SYSTEM_MODULE_WATCH})
-    public ResultObject selectUserAll() {
+    public Object selectUserAll(@RequestBody PageParam param) {
         try {
-            List<UserEntity> result = userService.selectAll();
-            return ResultObject.buildSucessResponse(result);
+            List<UserEntity> result = userService.selectByPage(param);
+            return ResponseUtils.wrapResponse(result);
         } catch (Exception e) {
             return ResultObject.buildFailResponse("查询所有用户信息失败!");
         }

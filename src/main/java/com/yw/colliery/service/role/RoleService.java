@@ -1,6 +1,8 @@
 package com.yw.colliery.service.role;
 
 import com.yw.colliery.entity.role.RoleEntity;
+import com.yw.colliery.sdk.config.PageBean;
+import com.yw.colliery.sdk.config.PageParam;
 
 import java.util.List;
 
@@ -43,4 +45,10 @@ public interface RoleService {
      * @return
      */
     List<RoleEntity> selectAll();
+
+    /**
+     * 分页查询角色
+     * @return
+     */
+    List<RoleEntity> selectByPage(PageParam param);
 }
