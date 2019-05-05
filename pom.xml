@@ -230,6 +230,12 @@
             <version>6.8.13</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+              <groupId>com.github.pagehelper</groupId>
+              <artifactId>pagehelper</artifactId>
+              <version>4.1.6</version>
+        </dependency>
     </dependencies>
 
     <build>
