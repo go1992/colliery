@@ -91,7 +91,7 @@ public class AuthController {
             }
             return ResultObject.buildSucessResponse(false);
         } catch (Exception e) {
-            return ResultObject.buildFailResponse("查询用户失败!");
+            return ResultObject.buildFailResponse("查询该用户在当前模块的权限失败!");
         }
     }
 }
