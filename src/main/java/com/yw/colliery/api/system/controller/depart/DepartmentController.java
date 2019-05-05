@@ -3,7 +3,9 @@ package com.yw.colliery.api.system.controller.depart;
 import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.depart.DepartmentEntity;
 import com.yw.colliery.sdk.aop.AuthModule;
+import com.yw.colliery.sdk.config.PageParam;
 import com.yw.colliery.sdk.constans.AuthConstant;
+import com.yw.colliery.sdk.utils.ResponseUtils;
 import com.yw.colliery.service.depart.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -67,10 +69,10 @@ public class DepartmentController {
 
     @GetMapping("/select/all")
     @AuthModule(authId = {AuthConstant.Module.SYSTEM_MODULE_SUPER,AuthConstant.Module.SYSTEM_MODULE_WATCH})
-    public ResultObject selectAll() {
+    public Object selectAll(@RequestBody PageParam param) {
         try {
-            List<DepartmentEntity> departmentEntityList = departmentService.selectAll();
-            return ResultObject.buildSucessResponse(departmentEntityList);
+            List<DepartmentEntity> departmentEntityList = departmentService.selectByPage(param);
+            return ResponseUtils.wrapResponse(departmentEntityList);
         } catch (Exception e) {
             return ResultObject.buildFailResponse("查询部门列表失败!");
         }

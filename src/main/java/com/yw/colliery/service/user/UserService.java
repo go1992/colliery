@@ -1,6 +1,7 @@
 package com.yw.colliery.service.user;
 
 import com.yw.colliery.entity.user.UserEntity;
+import com.yw.colliery.sdk.config.PageParam;
 
 import java.util.List;
 
@@ -15,4 +16,10 @@ public interface UserService {
     UserEntity selectByUserName(String userName);
 
     List<UserEntity> selectAll();
+
+    /**
+     * 分页查询用户
+     * @return
+     */
+    List<UserEntity> selectByPage(PageParam param);
 }

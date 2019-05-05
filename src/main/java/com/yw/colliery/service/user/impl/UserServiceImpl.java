@@ -1,10 +1,12 @@
 package com.yw.colliery.service.user.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.yw.colliery.entity.auth.AuthEntity;
 import com.yw.colliery.entity.depart.DepartmentEntity;
 import com.yw.colliery.entity.role.RoleEntity;
 import com.yw.colliery.entity.user.CollierySafetyUserEntity;
 import com.yw.colliery.entity.user.UserEntity;
+import com.yw.colliery.sdk.config.PageParam;
 import com.yw.colliery.service.auth.AuthService;
 import com.yw.colliery.service.depart.DepartmentService;
 import com.yw.colliery.service.role.RoleService;
@@ -79,5 +81,19 @@ public class UserServiceImpl implements UserService {
             return new UserEntity(user, role, department, authList);
         }
         return null;
+    }
+
+
+    @Override
+    public List<UserEntity> selectByPage(PageParam param) {
+        List<CollierySafetyUserEntity> allSafeUser = collierySafetyUserService.selectByPage(param);
+        List<UserEntity> allUser = new ArrayList<>();
+        for (CollierySafetyUserEntity safeUser : allSafeUser) {
+            UserEntity userEntity = handUser(safeUser);
+            if (userEntity != null){
+                allUser.add(userEntity);
+            }
+        }
+        return allUser;
     }
 }

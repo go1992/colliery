@@ -4,8 +4,10 @@ import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.auth.AuthEntity;
 import com.yw.colliery.entity.user.UserRelationEntity;
 import com.yw.colliery.sdk.aop.AuthModule;
+import com.yw.colliery.sdk.config.PageParam;
 import com.yw.colliery.sdk.constans.AuthConstant;
 import com.yw.colliery.sdk.utils.LoginSessionUtils;
+import com.yw.colliery.sdk.utils.ResponseUtils;
 import com.yw.colliery.service.auth.AuthService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,10 +73,10 @@ public class AuthController {
 
     @GetMapping("/select/all")
     @AuthModule(authId = {AuthConstant.Module.SYSTEM_MODULE_SUPER, AuthConstant.Module.SYSTEM_MODULE_WATCH})
-    public ResultObject selectAll() {
+    public Object selectAll(@RequestBody PageParam param) {
         try {
-            List<AuthEntity> authList = authService.selectAll();
-            return ResultObject.buildSucessResponse(authList);
+            List<AuthEntity> authList = authService.selectByPage(param);
+            return ResponseUtils.wrapResponse(authList);
         } catch (Exception e) {
             return ResultObject.buildFailResponse("查询权限列表失败!");
         }
