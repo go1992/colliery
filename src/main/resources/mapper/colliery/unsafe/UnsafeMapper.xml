@@ -133,6 +133,9 @@
             <if test="status != null">
                 status = #{status,jdbcType=VARCHAR},
             </if>
+            <if test="departId != null">
+                depart_id= #{departId,jdbcType=INTEGER},
+            </if>
             <if test="dutyDepart != null">
                 duty_depart= #{dutyDepart,jdbcType=VARCHAR},
             </if>
