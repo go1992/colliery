@@ -52,6 +52,7 @@
        reform_measure,
        duty_depart,
        duty_person,
+       fine_reason,
        fine_money,
        fine_find,
        deal_process,

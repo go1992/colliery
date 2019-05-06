@@ -173,6 +173,8 @@ public class UnsafeInfoEntity implements Serializable {
     /**
      * 创建日期
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss", timezone = "GMT+8")
     private Date createDate;
 
     /**
@@ -183,16 +185,22 @@ public class UnsafeInfoEntity implements Serializable {
     /**
      * 修改日期
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss", timezone = "GMT+8")
     private Date modifyDate;
 
     /**
      * 开始检查时间
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date startCheckDate;
 
     /**
      * 结束检查时间
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date endCheckDate;
 
     /**
