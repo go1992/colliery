@@ -198,10 +198,10 @@ public class UnsafeController implements ApplicationListener<ContextRefreshedEve
     @PostMapping("/apply/distributed")
     @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE_SUPER)
     public ResultDTO distributed(@RequestParam("id") Long id, @RequestParam("departId") int departId) {
-        UserRelationEntity user = LoginSessionUtils.getUser();
-        if (user == null) {
-            return new ResultDTO(ResultDTO.FAILED, "登陆已过期，请重新登陆");
-        }
+//        UserRelationEntity user = LoginSessionUtils.getUser();
+//        if (user == null) {
+//            return new ResultDTO(ResultDTO.FAILED, "登陆已过期，请重新登陆");
+//        }
         try {
             UnsafeInfoEntity unsafeInfoEntity = new UnsafeInfoEntity();
             //分发隐患数据的ID
@@ -211,7 +211,8 @@ public class UnsafeController implements ApplicationListener<ContextRefreshedEve
             //标记为已分发
             unsafeInfoEntity.setDistributedStatus("1");
             //分发的用户
-            unsafeInfoEntity.setModifyUser(user.getSafetyUser().getUsername());
+//            unsafeInfoEntity.setModifyUser(user.getSafetyUser().getUsername());
+            unsafeInfoEntity.setModifyUser("xz");
             //分发的时间
             unsafeInfoEntity.setModifyDate(new Date());
             Integer integer = unsafeService.upateUnsafeInfo(unsafeInfoEntity);
