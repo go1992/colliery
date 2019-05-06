@@ -7,6 +7,8 @@
         <result column="depart_id" property="departId" jdbcType="INTEGER"/>
         <result column="user_name" property="userName" jdbcType="VARCHAR"/>
         <result column="user_pwd" property="userPwd" jdbcType="VARCHAR"/>
+        <result column="depart_name" property="departName" jdbcType="VARCHAR"/>
+        <result column="role_name" property="roleName" jdbcType="VARCHAR"/>
         <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
         <result column="create_user" property="createUser" jdbcType="VARCHAR"/>
         <result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP"/>
@@ -158,14 +160,26 @@
 
     <select id="selectAllUser" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List"/>
-        from colliery_user
+            A.id as  id, A.role_id as role_id, A.depart_id as depart_id,
+            user_pwd, user_name, A.create_date as create_date, A.create_user as create_user,
+            A.modify_date as modify_date, A.modify_user as modify_user,
+            B.department_name as depart_name,
+            C.role_name as role_name
+        from colliery_user A
+          INNER JOIN colliery_department B on A.depart_id=B.id
+          INNER JOIN colliery_role C ON A.role_id=C.id
     </select>
 
     <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
-        <include refid="Base_Column_List"/>
-        from colliery_user
-        where id = #{userId}
+          A.id as  id, A.role_id as role_id, A.depart_id as depart_id,
+            user_pwd, user_name, A.create_date as create_date, A.create_user as create_user,
+            A.modify_date as modify_date, A.modify_user as modify_user,
+            B.department_name as depart_name,
+            C.role_name as role_name
+        from colliery_user A
+            INNER JOIN colliery_department B on A.depart_id=B.id
+            INNER JOIN colliery_role C ON A.role_id=C.id
+        where A.id = #{userId}
     </select>
 </mapper>

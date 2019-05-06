@@ -73,10 +73,10 @@ public class UserController {
     @AuthModule(authId = {AuthConstant.Module.SYSTEM_MODULE_WATCH, AuthConstant.Module.SYSTEM_MODULE_WATCH})
     public ResultObject selectUser(@PathVariable Integer userId) {
         try {
-            UserEntity result = userService.selectByUserId(userId);
+            CollierySafetyUserEntity result = collierySafetyUserService.selectyUserId(userId);
             return ResultObject.buildSucessResponse(result);
         } catch (Exception e) {
-            return ResultObject.buildFailResponse("查询用户全部信息失败!");
+            return ResultObject.buildFailResponse("查询用户信息失败!");
         }
     }
 
