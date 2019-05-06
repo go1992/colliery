@@ -196,7 +196,7 @@ public class UnsafeController implements ApplicationListener<ContextRefreshedEve
      * @return
      */
     @PostMapping("/apply/distributed")
-    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE_SUPER)
+//    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE_SUPER)
     public ResultDTO distributed(@RequestParam("id") Long id, @RequestParam("departId") int departId) {
 //        UserRelationEntity user = LoginSessionUtils.getUser();
 //        if (user == null) {
