@@ -2,6 +2,7 @@ package com.yw.colliery.mapper.role;
 
 import com.yw.colliery.entity.role.RoleEntity;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -27,6 +28,8 @@ public interface RoleMapper {
      * @return
      */
     int deleteRole(Integer roleId);
+
+    int deleteRoleByIds(@Param("roleIds") List<Integer> roleIds);
 
     /**
      * 根据id查询角色

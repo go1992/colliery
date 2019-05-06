@@ -1,9 +1,11 @@
 package com.yw.colliery.api.system.controller.auth;
 
+import com.alibaba.fastjson.JSON;
 import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.auth.AuthEntity;
 import com.yw.colliery.entity.user.UserRelationEntity;
 import com.yw.colliery.sdk.aop.AuthModule;
+import com.yw.colliery.sdk.config.PageBean;
 import com.yw.colliery.sdk.config.PageParam;
 import com.yw.colliery.sdk.constans.AuthConstant;
 import com.yw.colliery.sdk.utils.LoginSessionUtils;
@@ -49,11 +51,12 @@ public class AuthController {
         }
     }
 
-    @GetMapping("/delete/{authId}")
+    @PostMapping("/delete")
     @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE_SUPER)
-    public ResultObject deleteAuth(@PathVariable Integer authId) {
+    public ResultObject deleteAuth(@PathVariable String data) {
         try {
-            int result = authService.deleteAuth(authId);
+            List<Integer> authIds = JSON.parseArray(data, Integer.class);
+            int result = authService.deleteAuthByIds(authIds);
             return ResultObject.buildSucessResponse(result);
         } catch (Exception e) {
             return ResultObject.buildFailResponse("删除权限失败!");
@@ -71,12 +74,12 @@ public class AuthController {
         }
     }
 
-    @GetMapping("/select/all")
+    @PostMapping("/select/all")
     @AuthModule(authId = {AuthConstant.Module.SYSTEM_MODULE_SUPER, AuthConstant.Module.SYSTEM_MODULE_WATCH})
     public Object selectAll(@RequestBody PageParam param) {
         try {
-            List<AuthEntity> authList = authService.selectByPage(param);
-            return ResponseUtils.wrapResponse(authList);
+            PageBean<AuthEntity> pageBean = authService.selectByPage(param);
+            return ResponseUtils.wrapResponse(pageBean);
         } catch (Exception e) {
             return ResultObject.buildFailResponse("查询权限列表失败!");
         }

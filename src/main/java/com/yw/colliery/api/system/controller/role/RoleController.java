@@ -1,8 +1,10 @@
 package com.yw.colliery.api.system.controller.role;
 
+import com.alibaba.fastjson.JSON;
 import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.role.RoleEntity;
 import com.yw.colliery.sdk.aop.AuthModule;
+import com.yw.colliery.sdk.config.PageBean;
 import com.yw.colliery.sdk.config.PageParam;
 import com.yw.colliery.sdk.constans.AuthConstant;
 import com.yw.colliery.sdk.utils.ResponseUtils;
@@ -47,11 +49,12 @@ public class RoleController {
         }
     }
 
-    @GetMapping("/delete/{roleId}")
+    @PostMapping("/delete")
     @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE_SUPER)
-    public ResultObject deleteRole(@PathVariable Integer roleId) {
+    public ResultObject deleteRole(@RequestBody String data) {
         try {
-            int result = roleService.deleteRole(roleId);
+            List<Integer> roleIds = JSON.parseArray(data, Integer.class);
+            int result = roleService.deleteRoleByIds(roleIds);
             return ResultObject.buildSucessResponse(result);
         } catch (Exception e) {
             return ResultObject.buildFailResponse("删除角色失败!");
@@ -69,12 +72,12 @@ public class RoleController {
         }
     }
 
-    @GetMapping("/select/all")
+    @PostMapping("/select/all")
     @AuthModule(authId = {AuthConstant.Module.SYSTEM_MODULE_WATCH, AuthConstant.Module.SYSTEM_MODULE_WATCH})
     public Object selectAll(@RequestBody PageParam param) {
         try {
-            List<RoleEntity> roleList = roleService.selectByPage(param);
-            return ResponseUtils.wrapResponse(roleList);
+            PageBean<RoleEntity> pageBean = roleService.selectByPage(param);
+            return ResponseUtils.wrapResponse(pageBean);
         } catch (Exception e) {
             return ResultObject.buildFailResponse("查询角色列表失败!");
         }

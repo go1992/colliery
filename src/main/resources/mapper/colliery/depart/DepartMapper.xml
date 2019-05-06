@@ -77,4 +77,14 @@
         <include refid="Base_Column_List"/>
         from colliery_department
     </select>
+
+    <delete id="deleteDepartByIds">
+        delete
+        from colliery_department
+        where
+        id IN
+        <foreach collection="departIds" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
 </mapper>

@@ -96,4 +96,13 @@
         </foreach>
     </select>
 
+    <delete id="deleteAuthByIds">
+        delete
+        from colliery_auth
+        where
+        id IN
+        <foreach collection="authIds" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
 </mapper>

@@ -3,6 +3,7 @@ package com.yw.colliery.mapper.user;
 
 import com.yw.colliery.entity.user.CollierySafetyUserEntity;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -21,6 +22,9 @@ public interface CollierySafetyUserMapper {
      * @return
      */
     int deleteByPrimaryKey(Integer id);
+
+
+    int deleteUserByIds(@Param("userIds") List<Integer> userIds);
 
     /**
      * 插入用户信息

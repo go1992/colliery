@@ -55,9 +55,14 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public List<RoleEntity> selectByPage(PageParam param) {
+    public PageBean<RoleEntity> selectByPage(PageParam param) {
         PageHelper.startPage(param.getPageNum(), param.getPageSize(), param.generateOderBy());
         List<RoleEntity> roleEntityList = roleMapper.selectAll();
-        return roleEntityList;
+        return new PageBean(roleEntityList);
+    }
+
+    @Override
+    public int deleteRoleByIds(List<Integer> roleIds) {
+        return roleMapper.deleteRoleByIds(roleIds);
     }
 }

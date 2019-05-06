@@ -2,6 +2,7 @@ package com.yw.colliery.mapper.depart;
 
 import com.yw.colliery.entity.depart.DepartmentEntity;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -27,6 +28,8 @@ public interface DepartMapper {
      * @return
      */
     int deleteDepart(Integer departId);
+
+    int deleteDepartByIds(@Param("departIds") List<Integer> departIds);
 
     /**
      * 根据id查询部门

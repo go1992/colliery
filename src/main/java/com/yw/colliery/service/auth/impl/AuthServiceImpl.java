@@ -3,6 +3,7 @@ package com.yw.colliery.service.auth.impl;
 import com.github.pagehelper.PageHelper;
 import com.yw.colliery.entity.auth.AuthEntity;
 import com.yw.colliery.mapper.auth.AuthMapper;
+import com.yw.colliery.sdk.config.PageBean;
 import com.yw.colliery.sdk.config.PageParam;
 import com.yw.colliery.service.auth.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,8 +57,13 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public List<AuthEntity> selectByPage(PageParam param) {
+    public PageBean<AuthEntity> selectByPage(PageParam param) {
         PageHelper.startPage(param.getPageNum(), param.getPageSize(), param.generateOderBy());
-        return authMapper.selectAll();
+        return new PageBean<>(authMapper.selectAll());
+    }
+
+    @Override
+    public int deleteAuthByIds(List<Integer> authIds) {
+        return authMapper.deleteAuthByIds(authIds);
     }
 }

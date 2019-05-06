@@ -23,6 +23,17 @@
       where
         id = #{id,jdbcType=INTEGER}
     </delete>
+
+    <delete id="deleteUserByIds" parameterType="java.lang.Integer">
+      delete
+        from colliery_user
+      where
+        id IN
+        <foreach collection="userIds" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
     
     <insert id="insert" parameterType="com.yw.colliery.entity.user.CollierySafetyUserEntity">
     insert into colliery_user (id, role_id, depart_id, user_pwd,

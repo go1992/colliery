@@ -1,9 +1,11 @@
 package com.yw.colliery.api.system.controller.user;
 
+import com.alibaba.fastjson.JSON;
 import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.user.CollierySafetyUserEntity;
 import com.yw.colliery.entity.user.UserEntity;
 import com.yw.colliery.sdk.aop.AuthModule;
+import com.yw.colliery.sdk.config.PageBean;
 import com.yw.colliery.sdk.config.PageParam;
 import com.yw.colliery.sdk.constans.AuthConstant;
 import com.yw.colliery.sdk.request.UserRequest;
@@ -55,11 +57,12 @@ public class UserController {
         }
     }
 
-    @GetMapping("/delete/{userId}")
+    @PostMapping("/delete")
     @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE_SUPER)
-    public ResultObject deleteUser(@PathVariable Integer userId) {
+    public ResultObject deleteUser(@RequestBody String data) {
         try {
-            int result = collierySafetyUserService.deleteSafetyUSer(userId);
+            List<Integer> userIds = JSON.parseArray(data, Integer.class);
+            int result = collierySafetyUserService.deleteUserByIds(userIds);
             return ResultObject.buildSucessResponse(result);
         } catch (Exception e) {
             return ResultObject.buildFailResponse("删除用户失败!");
@@ -77,12 +80,12 @@ public class UserController {
         }
     }
 
-    @GetMapping("/select/all")
+    @PostMapping("/select/all")
     @AuthModule(authId = {AuthConstant.Module.SYSTEM_MODULE_WATCH, AuthConstant.Module.SYSTEM_MODULE_WATCH})
     public Object selectUserAll(@RequestBody PageParam param) {
         try {
-            List<UserEntity> result = userService.selectByPage(param);
-            return ResponseUtils.wrapResponse(result);
+            PageBean<CollierySafetyUserEntity> pageBean = collierySafetyUserService.selectByPage(param);
+            return ResponseUtils.wrapResponse(pageBean);
         } catch (Exception e) {
             return ResultObject.buildFailResponse("查询所有用户信息失败!");
         }

@@ -30,6 +30,8 @@ public interface AuthMapper {
      */
     int deleteAuth(Integer authId);
 
+    int deleteAuthByIds(@Param("authIds") List<Integer> authIds);
+
     /**
      * 根据id查询权限
      * @param authId

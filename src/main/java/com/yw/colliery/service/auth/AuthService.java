@@ -1,6 +1,7 @@
 package com.yw.colliery.service.auth;
 
 import com.yw.colliery.entity.auth.AuthEntity;
+import com.yw.colliery.sdk.config.PageBean;
 import com.yw.colliery.sdk.config.PageParam;
 
 import java.util.List;
@@ -65,5 +66,7 @@ public interface AuthService {
      * 分页查询权限
      * @return
      */
-    List<AuthEntity> selectByPage(PageParam param);
+    PageBean<AuthEntity> selectByPage(PageParam param);
+
+    int deleteAuthByIds(List<Integer> authIds);
 }

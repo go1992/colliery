@@ -50,5 +50,7 @@ public interface RoleService {
      * 分页查询角色
      * @return
      */
-    List<RoleEntity> selectByPage(PageParam param);
+    PageBean<RoleEntity> selectByPage(PageParam param);
+
+    int deleteRoleByIds(List<Integer> roleIds);
 }

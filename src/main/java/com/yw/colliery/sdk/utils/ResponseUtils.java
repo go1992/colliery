@@ -1,7 +1,6 @@
 package com.yw.colliery.sdk.utils;
 
-import com.google.common.collect.Lists;
-import org.springframework.util.CollectionUtils;
+import com.yw.colliery.sdk.config.PageBean;
 
 import java.io.Serializable;
 import java.util.List;
@@ -13,36 +12,19 @@ import java.util.List;
  **/
 public class ResponseUtils {
 
-    public static<T>  WrapResponse<T> wrapResponse(List<T> list) {
-        if (CollectionUtils.isEmpty(list)) {
-            WrapResponse<T> response = new WrapResponse(0, null);
-            return response;
-        }
+    public static<T>  WrapResponse<T> wrapResponse(PageBean<T> pageBean) {
 
-        int total = list.size();
-        List<T> rows = list;
-        return new WrapResponse(total, rows);
-    }
-
-    public static<T>  WrapResponse<T> wrapResponse(T data) {
-        if (data == null) {
-            WrapResponse<T> response = new WrapResponse(0, null);
-            return response;
-        }
-
-        int total = 1;
-        List<T> rows = Lists.newArrayList(data);
-        return new WrapResponse(total, rows);
+        return new WrapResponse(pageBean.getTotal(), pageBean.getList());
     }
 
 
     static class WrapResponse<T> implements Serializable {
 
         private static final long serialVersionUID = 8191775120233384606L;
-        private int total;
+        private long total;
         private List<T> rows;
 
-        public WrapResponse(int total, List<T> rows) {
+        public WrapResponse(long total, List<T> rows) {
             this.total = total;
             this.rows = rows;
         }
@@ -51,11 +33,11 @@ public class ResponseUtils {
             return serialVersionUID;
         }
 
-        public int getTotal() {
+        public long getTotal() {
             return total;
         }
 
-        public void setTotal(int total) {
+        public void setTotal(long total) {
             this.total = total;
         }
 

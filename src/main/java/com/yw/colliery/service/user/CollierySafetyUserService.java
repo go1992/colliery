@@ -1,6 +1,7 @@
 package com.yw.colliery.service.user;
 
 import com.yw.colliery.entity.user.CollierySafetyUserEntity;
+import com.yw.colliery.sdk.config.PageBean;
 import com.yw.colliery.sdk.config.PageParam;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -21,9 +22,11 @@ public interface CollierySafetyUserService extends UserDetailsService {
 
     int deleteSafetyUSer(Integer userId);
 
+    int deleteUserByIds(List<Integer> userIds);
+
     List<CollierySafetyUserEntity> selectAllUser();
 
-    List<CollierySafetyUserEntity> selectByPage(PageParam param);
+    PageBean<CollierySafetyUserEntity> selectByPage(PageParam param);
 
     CollierySafetyUserEntity selectyUserId(Integer userId);
 }

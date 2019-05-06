@@ -3,6 +3,7 @@ package com.yw.colliery.service.user.impl;
 import com.github.pagehelper.PageHelper;
 import com.yw.colliery.entity.user.CollierySafetyUserEntity;
 import com.yw.colliery.mapper.user.CollierySafetyUserMapper;
+import com.yw.colliery.sdk.config.PageBean;
 import com.yw.colliery.sdk.config.PageParam;
 import com.yw.colliery.sdk.message.publisher.EventPublisher;
 import com.yw.colliery.service.user.UserEvent;
@@ -71,8 +72,15 @@ public class CollierySafetyUserServiceImpl implements CollierySafetyUserService{
     }
 
     @Override
-    public List<CollierySafetyUserEntity> selectByPage(PageParam param) {
+    public PageBean<CollierySafetyUserEntity> selectByPage(PageParam param) {
         PageHelper.startPage(param.getPageNum(), param.getPageSize(), param.generateOderBy());
-        return collierySafetyUserMapper.selectAllUser();
+        return new PageBean(collierySafetyUserMapper.selectAllUser());
     }
+
+    @Override
+    public int deleteUserByIds(List<Integer> userIds) {
+        return collierySafetyUserMapper.deleteUserByIds(userIds);
+    }
+
+
 }

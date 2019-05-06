@@ -1,8 +1,10 @@
 package com.yw.colliery.api.system.controller.depart;
 
+import com.alibaba.fastjson.JSON;
 import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.depart.DepartmentEntity;
 import com.yw.colliery.sdk.aop.AuthModule;
+import com.yw.colliery.sdk.config.PageBean;
 import com.yw.colliery.sdk.config.PageParam;
 import com.yw.colliery.sdk.constans.AuthConstant;
 import com.yw.colliery.sdk.utils.ResponseUtils;
@@ -45,11 +47,12 @@ public class DepartmentController {
         }
     }
 
-    @GetMapping("/delete/{departId}")
+    @PostMapping("/delete")
     @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE_SUPER)
-    public ResultObject deleteDepart(@PathVariable Integer departId) {
+    public ResultObject deleteDepart(@RequestBody String data) {
         try {
-            int result = departmentService.deleteDepart(departId);
+            List<Integer> departIds = JSON.parseArray(data, Integer.class);
+            int result = departmentService.deleteDepartByIds(departIds);
             return ResultObject.buildSucessResponse(result);
         } catch (Exception e) {
             return ResultObject.buildFailResponse("删除部门失败!");
@@ -67,12 +70,12 @@ public class DepartmentController {
         }
     }
 
-    @GetMapping("/select/all")
+    @PostMapping("/select/all")
     @AuthModule(authId = {AuthConstant.Module.SYSTEM_MODULE_SUPER,AuthConstant.Module.SYSTEM_MODULE_WATCH})
     public Object selectAll(@RequestBody PageParam param) {
         try {
-            List<DepartmentEntity> departmentEntityList = departmentService.selectByPage(param);
-            return ResponseUtils.wrapResponse(departmentEntityList);
+            PageBean<DepartmentEntity> pageBean = departmentService.selectByPage(param);
+            return ResponseUtils.wrapResponse(pageBean);
         } catch (Exception e) {
             return ResultObject.buildFailResponse("查询部门列表失败!");
         }

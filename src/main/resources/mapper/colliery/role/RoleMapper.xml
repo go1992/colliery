@@ -72,4 +72,14 @@
         <include refid="Base_Column_List"/>
         from colliery_role
     </select>
+
+    <delete id="deleteRoleByIds">
+        delete
+        from colliery_role
+        where
+        id IN
+        <foreach collection="roleIds" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
 </mapper>
