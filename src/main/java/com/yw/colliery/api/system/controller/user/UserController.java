@@ -94,7 +94,8 @@ public class UserController {
     private CollierySafetyUserEntity transfer(UserRequest request) {
         CollierySafetyUserEntity entity = new CollierySafetyUserEntity();
         entity.setUserName(request.getUserName());
-        entity.setUserPwd(request.getUserPwd() != null ? EncodeUtils.encode(request.getUserPwd()): null);
+        //这里做个控制，防止前端回传加密后的密码过来，更新了就坏事了
+        entity.setUserPwd(request.getUserPwd() != null&&(request.getUserPwd().length() < 20) ? EncodeUtils.encode(request.getUserPwd()): null);
         entity.setId(request.getUserId());
         entity.setRoleId(request.getRoleId());
         entity.setDepartId(request.getDepartId());
