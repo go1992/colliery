@@ -26,6 +26,10 @@ public final class AuthConstant {
         public static final int UNSAFE_MODULE_SUPER = 7;
         /**隐患治理-查看权限.**/
         public static final int UNSAFE_MODULE_WATCH = 8;
+        /**调度信息管理-增删改权限.**/
+        public static final int DISPATCH_MODULE_SUPER = 9;
+        /**调度信息管理-查看权限.**/
+        public static final int DISPATCH_MODULE_WATCH = 10;
     }
 
     public static enum Module1 {
