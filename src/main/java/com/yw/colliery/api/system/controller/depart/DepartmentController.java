@@ -7,11 +7,14 @@ import com.yw.colliery.sdk.aop.AuthModule;
 import com.yw.colliery.sdk.config.PageBean;
 import com.yw.colliery.sdk.config.PageParam;
 import com.yw.colliery.sdk.constans.AuthConstant;
+import com.yw.colliery.sdk.request.DepartRequest;
 import com.yw.colliery.sdk.utils.ResponseUtils;
 import com.yw.colliery.service.depart.DepartmentService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,9 +30,9 @@ public class DepartmentController {
 
     @PostMapping("/add")
     @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE_SUPER)
-    public ResultObject addDepart(@RequestBody DepartmentEntity departmentEntity) {
+    public ResultObject addDepart(@RequestBody DepartRequest request) {
         try {
-            int result = departmentService.addDepart(departmentEntity);
+            int result = departmentService.addDepart(transfer(request));
             return ResultObject.buildSucessResponse(result);
         } catch (Exception e) {
             return ResultObject.buildFailResponse("新增部门失败!");
@@ -38,9 +41,9 @@ public class DepartmentController {
 
     @PostMapping("/update")
     @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE_SUPER)
-    public ResultObject updateDepart(@RequestBody DepartmentEntity departmentEntity) {
+    public ResultObject updateDepart(@RequestBody DepartRequest request) {
         try {
-            int result = departmentService.updateDepart(departmentEntity);
+            int result = departmentService.updateDepart(transfer(request));
             return ResultObject.buildSucessResponse(result);
         } catch (Exception e) {
             return ResultObject.buildFailResponse("修改部门失败!");
@@ -79,5 +82,16 @@ public class DepartmentController {
         } catch (Exception e) {
             return ResultObject.buildFailResponse("查询部门列表失败!");
         }
+    }
+
+    private DepartmentEntity transfer(DepartRequest request) {
+        DepartmentEntity entity = new DepartmentEntity();
+        entity.setAuthIds(StringUtils.join(request.getAuthIds(), ","));
+        entity.setCoalMine(request.getCoalMine());
+        entity.setModifyUser(request.getModifyUser());
+        entity.setCreateUser(request.getCreateUser() != null ? request.getCreateUser() : "system");
+        entity.setId(request.getId());
+        entity.setDepartName(request.getDepartName());
+        return entity;
     }
 }

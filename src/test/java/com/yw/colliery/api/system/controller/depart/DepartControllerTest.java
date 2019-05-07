@@ -2,12 +2,15 @@ package com.yw.colliery.api.system.controller.depart;
 
 import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.depart.DepartmentEntity;
+import com.yw.colliery.sdk.request.DepartRequest;
+import org.assertj.core.util.Lists;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
 import java.util.Date;
 
 /**
@@ -21,15 +24,15 @@ public class DepartControllerTest {
     @Test
     public void add() {
         RestTemplate template = new RestTemplate();
-        DepartmentEntity entity = new DepartmentEntity();
+        DepartRequest entity = new DepartRequest();
         entity.setDepartName("test_part");
-        entity.setAuthIds("1,2");
+        entity.setAuthIds(Lists.newArrayList("1","2"));
         entity.setCoalMine("test_coal_mine");
         entity.setCreateUser("test_user");
         entity.setCreateDate(new Date());
         entity.setModifyUser("test_user");
         entity.setModifyDate(new Date());
-        HttpEntity<DepartmentEntity> httpEntity = new HttpEntity<DepartmentEntity>(entity);
+        HttpEntity<DepartRequest> httpEntity = new HttpEntity<DepartRequest>(entity);
         ResponseEntity<ResultObject> response = template.postForEntity("http://localhost:8888/department/add" , httpEntity , ResultObject.class);
         Assert.assertEquals(response.getBody().getStatus(), ResultObject.SUCCESS);
     }
@@ -37,17 +40,17 @@ public class DepartControllerTest {
     @Test
     public void update() {
         RestTemplate template = new RestTemplate();
-        DepartmentEntity entity = new DepartmentEntity();
-        entity.setId(1);
-        entity.setDepartName("test_part1");
-        entity.setAuthIds("1,2");
-        entity.setCoalMine("test_coal_mine1");
-        entity.setCreateUser("test_user1");
-        entity.setCreateDate(new Date());
-        entity.setModifyUser("test_user1");
-        entity.setModifyDate(new Date());
-        HttpEntity<DepartmentEntity> httpEntity = new HttpEntity<DepartmentEntity>(entity);
-        ResponseEntity<ResultObject> response = template.postForEntity("http://localhost:8888/epartment/update" , httpEntity , ResultObject.class);
+        DepartRequest request = new DepartRequest();
+        request.setId(10);
+        request.setDepartName("test_part1");
+        request.setAuthIds(Arrays.asList(new String[]{"1","2"}));
+        request.setCoalMine("test_coal_mine1");
+        request.setCreateUser("test_user1");
+        request.setCreateDate(new Date());
+        request.setModifyUser("test_user1");
+        request.setModifyDate(new Date());
+        HttpEntity<DepartRequest> httpEntity = new HttpEntity<DepartRequest>(request);
+        ResponseEntity<ResultObject> response = template.postForEntity("http://localhost:8090/department/update" , httpEntity , ResultObject.class);
         Assert.assertEquals(response.getBody().getStatus(), ResultObject.SUCCESS);
     }
 
