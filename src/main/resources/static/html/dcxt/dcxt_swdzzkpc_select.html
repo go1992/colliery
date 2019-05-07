@@ -106,11 +106,9 @@
 		<input type="hidden" id="RowId" />
 			<table id="Table1" border="1" cellspacing="0" cellpadding="5px">
 				<tr>
-					<td>矿区位置：</td>
-					<td><select id="input_zkwz" name="zkwz">
-							<option value="">请选择位置</option>
-						</select>
-					</td>
+
+					<td>钻孔位置：</td>
+					<td><input id="input_zkwz" /><br></td>
 
 					<td>排查日期：</td>
 					<td>起始日期：<input type="date" id="starttime" name="startTime" value="<%=date()%>" /><br>结束日期：<input type="date" id="endtime" name="endTime" /><br></td>
@@ -124,6 +122,26 @@
 				</div>
 			</div>
 			<table id="Table2" border="1" cellspacing="0" cellpadding="5px">
+				<!--<thead>
+				<tr>
+					<th><input id="check" onchange="dianji()" type="checkbox"></th>
+					<th>排查日期</th>
+					<th>开孔日期</th>
+					<th>位置</th>
+					<th>钻孔编号</th>
+					<th>水位情况</th>
+					<th>孔内状况</th>
+					<th>孔口情况</th>
+					<th>设计孔深</th>
+					<th>实际孔深</th>
+					<th>有无险情</th>
+					<th>记录人</th>
+					<th>审核人</th>
+				</tr>
+			</thead>
+			<tbody>
+
+			</tbody>-->
 			</table>
 		</form>
 		<script type="text/javascript" src="js/jquery-1.12.4.js"></script>
@@ -139,6 +157,12 @@
 		<script type="text/javascript" src="js/bootstrap-table-zh-CN.min.js"></script>
 		
 		<script>
+			//把钻孔位置下拉框复制给文本框
+			$(document).ready(function() {
+				$("#sel_zkwz").change(function() {
+					$("#input_zkwz").val($("#sel_zkwz").val());
+				});
+			});
 			//清空表单
 			$("#btn_qk").click(function() {
 				$("#Form1")[0].reset();
@@ -155,25 +179,8 @@
 
 			});
 			var host = HOST;
-			var UrlSelect = '/dc-swdz-zkpc/queryzkpc';
+			var UrlSelect = '/dc-swdz-zkpc/query';
 			var UrlDelete = '/dc-swdz-zkpc/removeByIds';
-            $(function () {
-                $.ajax({
-                    type:"GET",
-                    url:host+"/dc-swdz-zkpc/paichaluru",
-                    dataType: "json",
-                    success: function (res) {
-                        if(res.data.length>0){
-                            $("#input_zkwz").empty();
-                            $("#input_zkwz").append("<option value=''>请选择位置</option>");
-                            for (var i=0;i<res.data.length;i++){
-                                $("#input_zkwz").append('<option value='+res.data[i].id+'>'+res.data[i].xjwz+'</option>');
-                                console.log("data+++++++++++++++++++"+res.data[i].xjwz+"   长度"+res.data.length)
-                            }
-                        }
-                    }
-                });
-            })
 			var TableInit = function() {
 				$('#Table2').bootstrapTable('destroy');
 				var oTableInit = new Object();
@@ -211,15 +218,15 @@
 						selectItemName: 'name',
 						smartDisplay: true, //设置为 true可以在分页和卡片视图快速切换
 						sidePagination: 'server', //设置在哪里进行分页，可选值为 ‘client’ 或者 ‘server’。设置 ‘server’时，必须设置 服务器数据地址（url）或者重写ajax方法
-						search: true, //是否启用搜索框
+						search: false, //是否启用搜索框
 						searchAlign: 'right', //指定 搜索框 水平方向的位置。’left’ or ‘right’
 						searchOnEnterKey: false, //设置为 true时，按回车触发搜索方法，否则自动触发搜索方法
 						strictSearch: false, //设置为 true启用 全匹配搜索，否则为模糊搜索
 						showHeader: true, //是否显示列头
 						showFooter: false, //是否显示列脚
-						showColumns: true, //是否显示 内容列下拉框
-						showRefresh: true, //是否显示 刷新按钮
-						showToggle: true, //是否显示 切换试图（table/card）按钮
+						showColumns: false, //是否显示 内容列下拉框
+						showRefresh: false, //是否显示 刷新按钮
+						showToggle: false, //是否显示 切换试图（table/card）按钮
 						showPaginationSwitch: true, //是否显示 数据条数选择框
 						buttonsAlign: 'right', //指定 按钮 水平方向的位置。’left’ or ‘right’
 						toolbarAlign: 'left', //指定 toolbar 水平方向的位置。’left’ or ‘right’
@@ -341,7 +348,7 @@
 					temp["searchParam"]=params.searchText;//搜索值
 					temp["fields"]=getSearchFields();//要搜索的字段
 
-					temp['zkwz'] = $("#input_zkwz").val();
+					temp['id'] = $("#input_zkwz").val()?$("#input_zkwz").val():'';
 					temp['startTime'] = $("#starttime").val()?$("#starttime").val():'';
 					temp['endTime'] = $("#endtime").val()?$("#endtime").val():'';					
 					return temp;

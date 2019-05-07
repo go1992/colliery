@@ -133,10 +133,7 @@
 				</tr>
 				<tr>
 					<td>钻孔位置：</td>
-					<td><select id="input_zkwz" name="zkwz">
-						<option value="">请选择位置</option>
-						</select>
-					</td>
+					<td><input id="input_zkwz" name="zkwz"/></td>
 					<td>开孔日期：</td>
 					<td><input type="date" id="endtime" name="kkrq" /> </td>
 				</tr>
@@ -183,31 +180,12 @@
 			var UrlSelect = '/dc-swdz-zkpc/query';
 			var UrlInsert = '/dc-swdz-zkpc/save';
 			var UrlUpdate = '/dc-swdz-zkpc/updateById';
-			$(function () {
-                $.ajax({
-                    type:"GET",
-                    url:host+"/dc-swdz-zkpc/paichaluru",
-                    dataType: "json",
-                    success: function (res) {
-						if(res.data.length>0){
-                            $("#input_zkwz").empty();
-                            $("#input_zkwz").append("<option value=''>请选择位置</option>");
-							for (var i=0;i<res.data.length;i++){
-								$("#input_zkwz").append('<option value='+res.data[i].id+'>'+res.data[i].xjwz+'</option>');
-								console.log("data+++++++++++++++++++"+res.data[i].xjwz+"   长度"+res.data.length)
-							}
-						}
-                    }
-                });
-            })
 			//把钻孔位置下拉框复制给文本框
-			/*$(document).ready(function() {
+			$(document).ready(function() {
 				$("#sel_zkwz").change(function() {
 					$("#input_zkwz").val($("#sel_zkwz").val());
 				});
-
-
-			});*/
+			});
 			//清空表单
 			$("#btn_qk").click(function() {
 				$("#Form1")[0].reset();
@@ -267,6 +245,7 @@
 					$("#jl_people").val(persons[0].记录人);
 					$("#sh_people").val(persons[0].审核人);
 					$("#ywxq_describe").val(persons[0].有无险情描述);
+
 				};
 
 				// 以二进制方式打开文件

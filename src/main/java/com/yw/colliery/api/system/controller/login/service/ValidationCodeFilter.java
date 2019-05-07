@@ -4,6 +4,7 @@ package com.yw.colliery.api.system.controller.login.service;
 import com.yw.colliery.handler.LoginFailureHandler;
 import com.yw.colliery.sdk.constans.CollierySafetyConstant;
 import com.yw.colliery.sdk.exception.ValidCodeAuthenticationException;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,6 +21,7 @@ import java.io.IOException;
  * @author xuzhou
  */
 @Component
+@Slf4j
 public class ValidationCodeFilter extends OncePerRequestFilter {
 
 
@@ -31,9 +33,9 @@ public class ValidationCodeFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
-//        if (checkTypeAndReq(httpServletRequest)) {
-//            validate(httpServletRequest, httpServletResponse);
-//        }
+        if (checkTypeAndReq(httpServletRequest)) {
+            validate(httpServletRequest, httpServletResponse);
+        }
         filterChain.doFilter(httpServletRequest, httpServletResponse);
 
     }

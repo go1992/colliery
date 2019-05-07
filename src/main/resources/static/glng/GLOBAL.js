@@ -1,4 +1,4 @@
-var HOST = 'http://localhost:8090/apiv1';
+var HOST = 'http://47.103.35.95:8888';
 // var HOST = 'http://127.0.0.1:8090/apiv1';
 var SUCCESS = 'success';
 var FAILED = 'failed';

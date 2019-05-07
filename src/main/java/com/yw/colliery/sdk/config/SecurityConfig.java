@@ -48,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(validationCodeFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin()
                 //指定登录页的路径
-//                .loginPage("/bigdatalogin.html")
+                .loginPage("/bigdatalogin.html")
                 .loginProcessingUrl(CollierySafetyConstant.COLLIERY_LOGIN)
                 .permitAll()
                 .successHandler(loginSuccessHandler)

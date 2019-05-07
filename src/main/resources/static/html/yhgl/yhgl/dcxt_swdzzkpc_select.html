@@ -84,13 +84,12 @@
 
 	<body>
 		<form method="post" action="#" id="Form1" enctype="multipart/form-data">
-		<input type="hidden" id="RowId" />
+		<input type="hidden" id="RowId" name="id"/>
 			<table id="Table1" border="1" cellspacing="0" cellpadding="5px">
 				<tr>
-					<td>数据编号：</td>
-					<td><input id="input_zkwz" /><br></td>
-					<td>用户名：</td>
-					<td><input id="username_selectpar" /><br></td>
+				
+					<td>用户id：</td>
+					<td><input id="id" /><br></td>
 					<td><button type="button" class="btn_tj" id="btn_sel"><i class="iconfont icon-chaxun"></i>查询</button></td>
 				</tr>
 			</table>
@@ -123,18 +122,17 @@
 			</tbody>-->
 			</table>
 		</form>
-		<script type="text/javascript" src="../../../js/jquery-1.12.4.js"></script>
+		<script type="text/javascript" src="js/jquery-1.12.4.js"></script>
 		<!--<script type="text/javascript" src="js/popper.min.js"></script>
 		<script type="text/javascript" src="js/bootstrap.min.js"></script>-->
-		<script type="text/javascript" src="../../../js/core.min.js"></script>
+		<script type="text/javascript" src="js/core.min.js"></script>
 		<!--bootstrap-table插件-->
-		<script type="text/javascript" src="../../../js/bootstrap-table.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap-table.min.js"></script>
 		<!--table导出插件-->
-		<script type="text/javascript" src="../../../js/bootstrap-table-export.min.js"></script>
-		<script type="text/javascript" src="../../../js/tableExport.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap-table-export.min.js"></script>
+		<script type="text/javascript" src="js/tableExport.min.js"></script>
 		<!--bootstrap-table插件汉化-->
-		<script type="text/javascript" src="../../../js/bootstrap-table-zh-CN.min.js"></script>
-		<script type="text/javascript" src="../../../glng/GLOBAL.js"></script>
+		<script type="text/javascript" src="js/bootstrap-table-zh-CN.min.js"></script>
 		<script>
 			//把钻孔位置下拉框复制给文本框
 			$(document).ready(function() {
@@ -157,9 +155,9 @@
 				oButtonInit.Init();
 
 			});
-			var host = HOST;
-			var UrlSelect = '/xtgn-yhlb/query';
-			var UrlDelete = '/xtgn-yhlb/removeByIds';
+			var host = "http://47.103.35.95:8888";
+			var UrlSelect = '/user/select/all';
+			var UrlDelete = '/user/delete';
 			var TableInit = function() {
 				$('#Table2').bootstrapTable('destroy');
 				var oTableInit = new Object();
@@ -168,8 +166,9 @@
 					$('#Table2').bootstrapTable({
 						method: 'post',
 						toolbar: '#toolbar', //工具按钮用哪个容器
-						contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+//						contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 						url: host + UrlSelect,
+						
 						dataType: 'json',
 						undefinedText: '-', //当数据为 undefined 时显示的字符
 						striped: true, //是否显示行间隔色
@@ -197,15 +196,15 @@
 						selectItemName: 'name',
 						smartDisplay: true, //设置为 true可以在分页和卡片视图快速切换
 						sidePagination: 'server', //设置在哪里进行分页，可选值为 ‘client’ 或者 ‘server’。设置 ‘server’时，必须设置 服务器数据地址（url）或者重写ajax方法
-						search: true, //是否启用搜索框
+						search: false, //是否启用搜索框
 						searchAlign: 'right', //指定 搜索框 水平方向的位置。’left’ or ‘right’
 						searchOnEnterKey: false, //设置为 true时，按回车触发搜索方法，否则自动触发搜索方法
 						strictSearch: false, //设置为 true启用 全匹配搜索，否则为模糊搜索
 						showHeader: true, //是否显示列头
 						showFooter: false, //是否显示列脚
-						showColumns: true, //是否显示 内容列下拉框
-						showRefresh: true, //是否显示 刷新按钮
-						showToggle: true, //是否显示 切换试图（table/card）按钮
+						showColumns: false, //是否显示 内容列下拉框
+						showRefresh: false, //是否显示 刷新按钮
+						showToggle: false, //是否显示 切换试图（table/card）按钮
 						showPaginationSwitch: true, //是否显示 数据条数选择框
 						buttonsAlign: 'right', //指定 按钮 水平方向的位置。’left’ or ‘right’
 						toolbarAlign: 'left', //指定 toolbar 水平方向的位置。’left’ or ‘right’
@@ -232,28 +231,36 @@
 						columns: [{
 								checkbox: true
 							},
-							
 							{
 								field: "id",
-								title: "数据编号",
+								title: "id",
 								sortable: "true"
 							},
 							{
-								field: "ssqymc",
-								title: "用户所属部门",
+								field: "roleName",
+								title: "角色",
 								sortable: "true"
 							},
 							{
-								field: "yhmdd",
+								field: "departName",
+								title: "部门",
+								sortable: "true"
+							},
+							{
+								field: "username",
 								title: "用户名",
 								sortable: "true"
 							},
 							{
-								field: "yhmm",
-								title: "密码",
+								field: "userPwd",
+								title: "用户密码",
 								sortable: "true"
 							},
-							
+							{
+								field: "createUser",
+								title: "创建者",
+								sortable: "true"
+							},
 						],
 						onLoadSuccess: function() {},
 						onLoadError: function() {
@@ -283,8 +290,7 @@
 					temp["ordername"]=params.sortName;//排序的字段
 					temp["searchParam"]=params.searchText;//搜索值
 					temp["fields"]=getSearchFields();//要搜索的字段
-					temp['id'] = $("#input_zkwz").val()?$("#input_zkwz").val():'';
-					temp['yhmdd'] = $("#username_selectpar").val()?$("#username_selectpar").val():'';
+					
 					return temp;
 				};
 				return oTableInit;
@@ -309,28 +315,32 @@
 				});
 			});
 			//实现删除数据的方法
-			$("#btn_del").click(function() {
-				var ids = ""; //得到用户选择的数据的ID
-				var rows = $('#Table2').bootstrapTable('getSelections');
-				for(var i = 0; i < rows.length; i++) {
-					ids += rows[i].id + ',';
-				}
-				ids = ids.substring(0, ids.length - 1);
+			$("#btn_del").click(function() {var message = confirm("是否确定删除数据？");
+				if(message == true) {
+					var ids = []; //得到用户选择的数据的ID
+					var rows = $('#Table2').bootstrapTable('getSelections');
+					for(var i = 0; i < rows.length; i++) {
+						//					ids += rows[i].planId + ',';
+						ids.push(rows[i].id);
+					}
 				//				alert(ids);
 				$.ajax({
-					type: "post",
-					url: host + UrlDelete,
-					data: {
-						params: ids
-					},
-					dataType: "json",
-					success: function(json) {
-						alert("删除成功！");
-						$('#Table2').bootstrapTable('refresh', {
-							url: host + UrlSelect
-						});
-					}
-				});
+						contentType: "application/json;charset=utf-8",
+						type: "post",
+						url: host + UrlDelete,
+						data: JSON.stringify(ids),
+						dataType: "json",
+						success: function(data) {
+							if(data.status == "success") {
+								alert("删除成功！");
+							}
+							$('#Table2').bootstrapTable('refresh', {
+								url: host + UrlSelect
+							});
+						}
+					});
+				}
+
 			})
 			//实现编辑数据的方法
 			$("#btn_bj").click(function() {
@@ -383,6 +393,7 @@
 				return json;
 			}
 		</script>
+			
 	</body>
 
 </html>
