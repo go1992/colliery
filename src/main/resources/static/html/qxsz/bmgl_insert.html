@@ -119,7 +119,7 @@
 				</tr>
 				<tr>
 					<td>权限列表：</td>
-					<td><select id="sel_zkwz" name="authIds" style="margin: 4px;">
+					<td><select id="sel_zkwz" name="authIds" multiple="true" style="margin: 4px;">
 						<option value="1">系统设置-增删改权限</option>
 						<option value="2">系统设置-查看权限</option>
 						<option value="1">地测防治水管理-增删改权限</option>
@@ -128,6 +128,7 @@
 						<option value="2">安全风险管控-查看</option>
 						<option value="1">隐患治理-增删改权限</option>
 						<option value="2">隐患治理-查看权限</option>
+						<p>按住Ctrl选择多个</p>
 					</select></td>
 				</tr>
 				<tr>
@@ -136,12 +137,23 @@
 				</tr>
 			</table>
 			<div class="btn_item">
-				<button type="button" class="btn_tj" id="btn_tj"><i class="iconfont icon-tijiao"></i>提交</button>
+				<button type="button" class="btn_tj" id="btn_tj" onclick="fun()"><i class="iconfont icon-tijiao"></i>提交</button>
 				<button id="btn_qk" type="button" class="btn_qk"><i class="iconfont icon-qingkong"></i>清空</button>
 			</div>
 		</form>
 		<script type="text/javascript" src="http://127.0.0.1:8020/static/js/jquery-1.12.4.js"></script>
 		<script type="text/javascript" src="http://127.0.0.1:8020/static/js/layer/layer.js"></script>
+		<script>
+			function fun(){
+    var select = document.getElementById("sel_zkwz");
+    var ng ;
+    for(i=0;i<select.length;i++){
+        if(select.options[i].selected){
+            ng.push(select[i].value);
+        }
+    }
+}
+		</script>
 		<!--js-xlsx插件-->
 		<script>
 			$("#btn_qk").click(function() {
