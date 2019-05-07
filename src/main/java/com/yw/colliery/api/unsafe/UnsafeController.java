@@ -165,17 +165,18 @@ public class UnsafeController implements ApplicationListener<ContextRefreshedEve
      * @return
      */
     @PostMapping("/submit/unsafeInfo")
-    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE_SUPER)
+//    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE_SUPER)
     public ResultDTO submit(@RequestParam("id") Long id) {
-        UserRelationEntity user = LoginSessionUtils.getUser();
-        if (user == null) {
-            return new ResultDTO(ResultDTO.FAILED, "登陆已过期，请重新登陆");
-        }
+//        UserRelationEntity user = LoginSessionUtils.getUser();
+//        if (user == null) {
+//            return new ResultDTO(ResultDTO.FAILED, "登陆已过期，请重新登陆");
+//        }
         try {
             UnsafeInfoEntity unsafeInfoEntity = new UnsafeInfoEntity();
             unsafeInfoEntity.setId(id);
             unsafeInfoEntity.setStatus("1");
-            unsafeInfoEntity.setModifyUser(user.getSafetyUser().getUsername());
+//            unsafeInfoEntity.setModifyUser(user.getSafetyUser().getUsername());
+            unsafeInfoEntity.setModifyUser("xz");
             unsafeInfoEntity.setModifyDate(new Date());
             Integer integer = unsafeService.upateUnsafeInfo(unsafeInfoEntity);
             if (integer < 0) {
@@ -236,14 +237,15 @@ public class UnsafeController implements ApplicationListener<ContextRefreshedEve
     @PostMapping("/sign")
     public ResultDTO sign(@RequestParam("id") Long id) {
         try {
-            UserRelationEntity user = LoginSessionUtils.getUser();
-            if (user == null) {
-                return new ResultDTO(ResultDTO.FAILED, "登陆已过期，请重新登陆");
-            }
+//            UserRelationEntity user = LoginSessionUtils.getUser();
+//            if (user == null) {
+//                return new ResultDTO(ResultDTO.FAILED, "登陆已过期，请重新登陆");
+//            }
             UnsafeInfoEntity unsafeInfoEntity = new UnsafeInfoEntity();
             unsafeInfoEntity.setId(id);
             unsafeInfoEntity.setSignStatus("1");
-            unsafeInfoEntity.setModifyUser(user.getSafetyUser().getUsername());
+//            unsafeInfoEntity.setModifyUser(user.getSafetyUser().getUsername());
+            unsafeInfoEntity.setModifyUser("xz");
             unsafeInfoEntity.setModifyDate(new Date());
             Integer integer = unsafeService.upateUnsafeInfo(unsafeInfoEntity);
             if (integer < 0) {
