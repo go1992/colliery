@@ -6,6 +6,9 @@ import com.yw.colliery.api.base.BaseController;
 import com.yw.colliery.api.base.ESessionKey;
 import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.YhpcYhlr;
+import com.yw.colliery.entity.YhpcYhlr;
+import com.yw.colliery.sdk.aop.AuthModule;
+import com.yw.colliery.sdk.constans.AuthConstant;
 import com.yw.colliery.service.business.impl.YhpcYhlrServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -38,6 +41,7 @@ public class YhpcYhlrController extends BaseController<YhpcYhlrServiceImpl,YhpcY
 	
 	@ApiOperation(value = "决策统计",response=ResultObject.class)
 	@PostMapping("/countToPieChart")
+	@AuthModule(authId = {AuthConstant.Module.UNSAFE_MODULE_SUPER,AuthConstant.Module.UNSAFE_MODULE_WATCH})
 	public Object countBy(@ApiParam(hidden=true) @RequestParam Map<String,Object> params
 			, @ApiParam(hidden=true) HttpServletRequest request
 			) {
@@ -79,4 +83,42 @@ public class YhpcYhlrController extends BaseController<YhpcYhlrServiceImpl,YhpcY
 	public Object fenfa(@) {
 		
 	}*/
+
+
+	@Override
+	@AuthModule(authId = {AuthConstant.Module.UNSAFE_MODULE_SUPER,AuthConstant.Module.UNSAFE_MODULE_WATCH})
+	public Object query(Map<String, Object> params, HttpServletRequest request) {
+		return super.query(params, request);
+	}
+
+	@Override
+	@AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE_SUPER)
+	public Object save(YhpcYhlr params, HttpServletRequest request) throws Exception {
+		return super.save(params, request);
+	}
+
+	@Override
+	@AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE_SUPER)
+	public Object saveBatch(String params) {
+		return super.saveBatch(params);
+	}
+
+	@Override
+	@AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE_SUPER)
+	public Object updateById(YhpcYhlr params) {
+		return super.updateById(params);
+	}
+
+	@Override
+	@AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE_SUPER)
+	public Object updateBatchById(String params) {
+		return super.updateBatchById(params);
+	}
+
+	@Override
+	@AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE_SUPER)
+	public Object removeByIds(String params) {
+		return super.removeByIds(params);
+	}
+
 }

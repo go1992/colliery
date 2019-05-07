@@ -10,6 +10,9 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.yw.colliery.entity.DdxxScsg;
+import com.yw.colliery.sdk.aop.AuthModule;
+import com.yw.colliery.sdk.constans.AuthConstant;
 import org.apache.commons.collections4.MapUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -157,6 +160,47 @@ public class DdxxScsgController extends BaseController<DdxxScsgServiceImpl,DdxxS
 		return map;
 		
 	}
-			
+
+	@Override
+	@AuthModule(authId = {AuthConstant.Module.DISPATCH_MODULE_SUPER,AuthConstant.Module.DISPATCH_MODULE_WATCH})
+	public Object query(Map<String, Object> params, HttpServletRequest request) {
+		return super.query(params, request);
+	}
+
+	@Override
+	@AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE_SUPER)
+	public Object save(DdxxScsg params, HttpServletRequest request) throws Exception {
+		return super.save(params, request);
+	}
+
+	@Override
+	@AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE_SUPER)
+	public Object saveBatch(String params) {
+		return super.saveBatch(params);
+	}
+
+	@Override
+	@AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE_SUPER)
+	public Object updateById(DdxxScsg params) {
+		return super.updateById(params);
+	}
+
+	@Override
+	@AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE_SUPER)
+	public Object updateBatchById(String params) {
+		return super.updateBatchById(params);
+	}
+
+	@Override
+	@AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE_SUPER)
+	public Object removeByIds(String params) {
+		return super.removeByIds(params);
+	}
+
+	@Override
+	@AuthModule(authId = {AuthConstant.Module.DISPATCH_MODULE_SUPER,AuthConstant.Module.DISPATCH_MODULE_WATCH})
+	public Object countBy(Map<String, Object> params, HttpServletRequest request) {
+		return super.countBy(params, request);
+	}
 
 }

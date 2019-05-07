@@ -13,6 +13,8 @@ import com.yw.colliery.api.base.EPage;
 import com.yw.colliery.api.base.ESessionKey;
 import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.*;
+import com.yw.colliery.sdk.aop.AuthModule;
+import com.yw.colliery.sdk.constans.AuthConstant;
 import com.yw.colliery.service.business.IXtgnQyfjService;
 import com.yw.colliery.service.business.MyService;
 import io.swagger.annotations.*;
@@ -21,7 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import lombok.extern.slf4j.Slf4j;
 import com.yw.colliery.api.base.BaseController;
-import com.yw.colliery.service.business.impl.DcJbcsKqwzServiceImpl;
+import com.yw.colliery.service.business.impl.DcSwdzZkpcServiceImpl;
 import com.yw.colliery.service.business.impl.DcSwdzZkpcServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,7 +46,7 @@ import static com.yw.colliery.api.base.MyUtil.checkNotNull;
 public class DcSwdzZkpcController extends BaseController<DcSwdzZkpcServiceImpl,DcSwdzZkpc> {
 	
 	@Autowired
-	public DcJbcsKqwzServiceImpl serviceImpl;
+	public DcSwdzZkpcServiceImpl serviceImpl;
 	
 	@Autowired
 	public DcSwdzZkpcServiceImpl zkpcServiceImpl;
@@ -57,12 +59,12 @@ public class DcSwdzZkpcController extends BaseController<DcSwdzZkpcServiceImpl,D
 	
 	//查询位置，让其在录入时可以下拉选择
 	@GetMapping("/paichaluru")
-	public JSONObject dcJbcsKqwz(){
-		List<DcJbcsKqwz> dcJbcsKqwz =serviceImpl.list();
+	public JSONObject DcSwdzZkpc(){
+		List<DcSwdzZkpc> DcSwdzZkpc =serviceImpl.list();
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("status",200);
 		jsonObject.put("message","查询成功");
-		jsonObject.put("data",dcJbcsKqwz);
+		jsonObject.put("data",DcSwdzZkpc);
 		return jsonObject;
 	}
 
@@ -110,6 +112,7 @@ public class DcSwdzZkpcController extends BaseController<DcSwdzZkpcServiceImpl,D
 
 			})
 	@PostMapping("/queryzkpc")
+	@AuthModule(authId = {AuthConstant.Module.GEODETIC_MODULE_SUPER,AuthConstant.Module.GEODETIC_MODULE_WATCH})
 	public Object query(@ApiParam(hidden=true)@RequestParam Map<String,Object> params
 			, @ApiParam(hidden=true) HttpServletRequest request
 	) {
@@ -211,5 +214,39 @@ public class DcSwdzZkpcController extends BaseController<DcSwdzZkpcServiceImpl,D
 	}
 
 
+	@Override
+	@AuthModule(authId = AuthConstant.Module.GEODETIC_MODULE_SUPER)
+	public Object save(DcSwdzZkpc params, HttpServletRequest request) throws Exception {
+		return super.save(params, request);
+	}
 
+	@Override
+	@AuthModule(authId = AuthConstant.Module.GEODETIC_MODULE_SUPER)
+	public Object saveBatch(String params) {
+		return super.saveBatch(params);
+	}
+
+	@Override
+	@AuthModule(authId = AuthConstant.Module.GEODETIC_MODULE_SUPER)
+	public Object updateById(DcSwdzZkpc params) {
+		return super.updateById(params);
+	}
+
+	@Override
+	@AuthModule(authId = AuthConstant.Module.GEODETIC_MODULE_SUPER)
+	public Object updateBatchById(String params) {
+		return super.updateBatchById(params);
+	}
+
+	@Override
+	@AuthModule(authId = AuthConstant.Module.GEODETIC_MODULE_SUPER)
+	public Object removeByIds(String params) {
+		return super.removeByIds(params);
+	}
+
+	@Override
+	@AuthModule(authId = {AuthConstant.Module.GEODETIC_MODULE_SUPER,AuthConstant.Module.GEODETIC_MODULE_WATCH})
+	public Object countBy(Map<String, Object> params, HttpServletRequest request) {
+		return super.countBy(params, request);
+	}
 }
