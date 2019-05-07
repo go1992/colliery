@@ -89,7 +89,10 @@
         <include refid="Base_Column_List"/>
         from colliery_auth
         where
-        auth_level = #{level,jdbcType=INTEGER}
+        1=1
+        <if test="level != null and level!=1">
+            auth_level = #{level,jdbcType=INTEGER}
+        </if>
         AND id IN
         <foreach collection="ids" item="item" open="(" separator="," close=")">
             #{item}
