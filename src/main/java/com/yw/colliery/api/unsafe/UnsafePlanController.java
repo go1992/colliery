@@ -7,6 +7,7 @@ import com.yw.colliery.api.base.EPage;
 import com.yw.colliery.dto.ResultDTO;
 import com.yw.colliery.entity.unsafe.UnsafeInfoEntity;
 import com.yw.colliery.entity.unsafe.UnsafePlanEntity;
+import com.yw.colliery.entity.user.UserRelationEntity;
 import com.yw.colliery.sdk.config.PageBean;
 import com.yw.colliery.sdk.utils.LoginSessionUtils;
 import com.yw.colliery.service.unsafe.UnsafePlanService;
@@ -46,13 +47,13 @@ public class UnsafePlanController implements ApplicationListener<ContextRefreshe
     @PostMapping("/save")
     public ResultDTO input(@RequestBody String data) {
         try {
-//            UserAuthEntity user = LoginSessionUtils.getUser();
-//            if (user == null) {
-//                return new ResultDTO(ResultDTO.FAILED, "登陆已过期，请重新登陆");
-//            }
+            UserRelationEntity user = LoginSessionUtils.getUser();
+            if (user == null) {
+                return new ResultDTO(ResultDTO.FAILED, "登陆已过期，请重新登陆");
+            }
             UnsafePlanEntity unsafeInfoEntity = JSONObject.toJavaObject(JSON.parseObject(data), UnsafePlanEntity.class);
-//            unsafeInfoEntity.setCreateUser(user.getSafetyUser().getUsername());
-            unsafeInfoEntity.setCreateUser("xz");
+            unsafeInfoEntity.setCreateUser(user.getSafetyUser().getUsername());
+//            unsafeInfoEntity.setCreateUser("xz");
             unsafeInfoEntity.setCreateDate(new Date());
             Integer integer = unsafePlanService.unsafePlanInsert(unsafeInfoEntity);
             if (integer < 0) {
@@ -75,10 +76,10 @@ public class UnsafePlanController implements ApplicationListener<ContextRefreshe
     @PostMapping("/get")
     public Object getAllUnsafeInfo(@RequestBody String data) {
         try {
-//            UserAuthEntity user = LoginSessionUtils.getUser();
-//            if (user == null) {
-//                return new ResultDTO(ResultDTO.FAILED, "登陆已过期，请重新登陆");
-//            }
+            UserRelationEntity user = LoginSessionUtils.getUser();
+            if (user == null) {
+                return new ResultDTO(ResultDTO.FAILED, "登陆已过期，请重新登陆");
+            }
             log.info("data>>>>>"+data);
 
             UnsafePlanEntity unsafeInfoEntity = JSONObject.toJavaObject(JSON.parseObject(data), UnsafePlanEntity.class);
@@ -114,13 +115,13 @@ public class UnsafePlanController implements ApplicationListener<ContextRefreshe
     @PostMapping("/update")
     public ResultDTO submit(@RequestBody String data) {
         try {
-//            UserAuthEntity user = LoginSessionUtils.getUser();
-//            if (user == null) {
-//                return new ResultDTO(ResultDTO.FAILED, "登陆已过期，请重新登陆");
-//            }
+            UserRelationEntity user = LoginSessionUtils.getUser();
+            if (user == null) {
+                return new ResultDTO(ResultDTO.FAILED, "登陆已过期，请重新登陆");
+            }
             UnsafePlanEntity unsafeInfoEntity = JSONObject.toJavaObject(JSON.parseObject(data), UnsafePlanEntity.class);
-//            unsafeInfoEntity.setModifyUser(user.getSafetyUser().getUsername());
-            unsafeInfoEntity.setModifyUser("xz");
+            unsafeInfoEntity.setModifyUser(user.getSafetyUser().getUsername());
+//            unsafeInfoEntity.setModifyUser("xz");
             unsafeInfoEntity.setModifyDate(new Date());
             Integer integer = unsafePlanService.upateUnsafePlanInfo(unsafeInfoEntity);
             if (integer < 0) {
@@ -143,10 +144,10 @@ public class UnsafePlanController implements ApplicationListener<ContextRefreshe
     @PostMapping("/delete")
     public ResultDTO delete(@RequestBody String data) {
         try {
-//            UserAuthEntity user = LoginSessionUtils.getUser();
-//            if (user == null) {
-//                return new ResultDTO(ResultDTO.FAILED, "登陆已过期，请重新登陆");
-//            }
+            UserRelationEntity user = LoginSessionUtils.getUser();
+            if (user == null) {
+                return new ResultDTO(ResultDTO.FAILED, "登陆已过期，请重新登陆");
+            }
             List<String> strings = JSON.parseArray(data, String.class);
             Integer integer = unsafePlanService.deleteUnsafePlanInfo(strings);
             if (integer < 0) {

@@ -5,7 +5,7 @@
 		<meta charset="UTF-8">
 		<title></title>
 		<link rel="stylesheet" href="js/layer/mobile/need/layer.css" />
-		
+
 		<script>
 			    $(document).ready(function () {
 			        var time = new Date();
@@ -36,24 +36,24 @@
 				font-size: 14px;
 				color: #30a5ff;
 			}
-			
+
 			#Table2 {
 				text-align: center;
 			}
-			
+
 			#Table1 tr td:nth-of-type(1) {
 				text-align: right;
 			}
-			
+
 			#Table1 tr td:nth-of-type(3) {
 				text-align: right;
 			}
-			
+
 			#Table1 input {
 				padding: 2px;
 				margin: 4px;
 			}
-			
+
 			.btn_tj {
 				border: 0px;
 				border-radius: 3px;
@@ -64,20 +64,20 @@
 				background-color: #30a5ff;
 				margin: 0 50px;
 			}
-			
+
 			.btn_tj:hover,
 			.btn_bj:hover {
 				cursor: pointer;
 				background-color: #428bca;
 			}
-			
+
 			.btn_tr {
 				position: relative;
 				display: -ms-inline-flexbox;
 				display: inline-flex;
 				vertical-align: middle;
 			}
-			
+
 			.btn_bj,
 			.btn_del {
 				border: 0px;
@@ -89,11 +89,11 @@
 				background-color: #30a5ff;
 				margin: 0 20px;
 			}
-			
+
 			.btn_del {
 				background-color: #dc3545;
 			}
-			
+
 			.btn_del:hover {
 				cursor: pointer;
 				background-color: #c82333;
@@ -155,7 +155,7 @@
 		<script type="text/javascript" src="js/tableExport.min.js"></script>
 		<!--bootstrap-table插件汉化-->
 		<script type="text/javascript" src="js/bootstrap-table-zh-CN.min.js"></script>
-		
+
 		<script>
 			//把钻孔位置下拉框复制给文本框
 			$(document).ready(function() {
@@ -179,7 +179,7 @@
 
 			});
 			var host = HOST;
-			var UrlSelect = '/dc-swdz-zkpc/query';
+			var UrlSelect = '/dc-swdz-zkpc/queryzkpc';
 			var UrlDelete = '/dc-swdz-zkpc/removeByIds';
 			var TableInit = function() {
 				$('#Table2').bootstrapTable('destroy');
@@ -245,9 +245,9 @@
 						showExport: true, //是否显示导出
 						exportDataType: "basic", //basic', 'all', 'selected'.
 						exportOptions: {
-							ignoreColumn: [0, 0], //忽略某一列的索引  
-							fileName: '导出数据', //文件名称设置  
-							worksheetName: 'sheet1', //表格工作区名称  
+							ignoreColumn: [0, 0], //忽略某一列的索引
+							fileName: '导出数据', //文件名称设置
+							worksheetName: 'sheet1', //表格工作区名称
 							tableName: '导出数据',
 						},
 						columns: [{
@@ -350,7 +350,7 @@
 
 					temp['id'] = $("#input_zkwz").val()?$("#input_zkwz").val():'';
 					temp['startTime'] = $("#starttime").val()?$("#starttime").val():'';
-					temp['endTime'] = $("#endtime").val()?$("#endtime").val():'';					
+					temp['endTime'] = $("#endtime").val()?$("#endtime").val():'';
 					return temp;
 				};
 				return oTableInit;

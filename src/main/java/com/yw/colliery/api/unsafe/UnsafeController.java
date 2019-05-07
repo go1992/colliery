@@ -45,16 +45,16 @@ public class UnsafeController implements ApplicationListener<ContextRefreshedEve
      * @return
      */
     @PostMapping("/save")
-//    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE_SUPER)
+    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE_SUPER)
     public ResultDTO input(@RequestBody String data) {
         try {
-//            UserRelationEntity user = LoginSessionUtils.getUser();
-//            if (user == null) {
-//                return new ResultDTO(ResultDTO.FAILED, "登陆已过期，请重新登陆");
-//            }
+            UserRelationEntity user = LoginSessionUtils.getUser();
+            if (user == null) {
+                return new ResultDTO(ResultDTO.FAILED, "登陆已过期，请重新登陆");
+            }
             UnsafeInfoEntity unsafeInfoEntity = JSONObject.toJavaObject(JSON.parseObject(data), UnsafeInfoEntity.class);
-//            unsafeInfoEntity.setCreateUser(user.getSafetyUser().getUsername());
-            unsafeInfoEntity.setCreateUser("xz");
+            unsafeInfoEntity.setCreateUser(user.getSafetyUser().getUsername());
+//            unsafeInfoEntity.setCreateUser("xz");
             unsafeInfoEntity.setCreateDate(new Date());
             //未处理
             unsafeInfoEntity.setStatus("0");
@@ -83,7 +83,7 @@ public class UnsafeController implements ApplicationListener<ContextRefreshedEve
      * @return
      */
     @GetMapping("/get/all/unsafeInfo")
-//    @AuthModule(authId = {AuthConstant.Module.UNSAFE_MODULE_WATCH, AuthConstant.Module.UNSAFE_MODULE_SUPER})
+    @AuthModule(authId = {AuthConstant.Module.UNSAFE_MODULE_WATCH, AuthConstant.Module.UNSAFE_MODULE_SUPER})
     public Object getAllUnsafeInfo() {
         try {
             ArrayList<UnsafeInfoEntity> allUnsafeInfo = new ArrayList<>(unsafeService.getAllUnsafeInfo());
@@ -105,7 +105,7 @@ public class UnsafeController implements ApplicationListener<ContextRefreshedEve
      * @return
      */
     @GetMapping("/get/depart/unsafeInfo")
-//    @AuthModule(authId = {AuthConstant.Module.UNSAFE_MODULE_WATCH, AuthConstant.Module.UNSAFE_MODULE_SUPER})
+    @AuthModule(authId = {AuthConstant.Module.UNSAFE_MODULE_WATCH, AuthConstant.Module.UNSAFE_MODULE_SUPER})
     public ResultDTO getUnsafeInfo() {
         UserRelationEntity user = LoginSessionUtils.getUser();
         if (user == null) {
@@ -165,18 +165,18 @@ public class UnsafeController implements ApplicationListener<ContextRefreshedEve
      * @return
      */
     @PostMapping("/submit/unsafeInfo")
-//    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE_SUPER)
+    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE_SUPER)
     public ResultDTO submit(@RequestParam("id") Long id) {
-//        UserRelationEntity user = LoginSessionUtils.getUser();
-//        if (user == null) {
-//            return new ResultDTO(ResultDTO.FAILED, "登陆已过期，请重新登陆");
-//        }
+        UserRelationEntity user = LoginSessionUtils.getUser();
+        if (user == null) {
+            return new ResultDTO(ResultDTO.FAILED, "登陆已过期，请重新登陆");
+        }
         try {
             UnsafeInfoEntity unsafeInfoEntity = new UnsafeInfoEntity();
             unsafeInfoEntity.setId(id);
             unsafeInfoEntity.setStatus("1");
-//            unsafeInfoEntity.setModifyUser(user.getSafetyUser().getUsername());
-            unsafeInfoEntity.setModifyUser("xz");
+            unsafeInfoEntity.setModifyUser(user.getSafetyUser().getUsername());
+//            unsafeInfoEntity.setModifyUser("xz");
             unsafeInfoEntity.setModifyDate(new Date());
             Integer integer = unsafeService.upateUnsafeInfo(unsafeInfoEntity);
             if (integer < 0) {
@@ -197,12 +197,12 @@ public class UnsafeController implements ApplicationListener<ContextRefreshedEve
      * @return
      */
     @PostMapping("/apply/distributed")
-//    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE_SUPER)
+    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE_SUPER)
     public ResultDTO distributed(@RequestParam("id") Long id, @RequestParam("departId") int departId) {
-//        UserRelationEntity user = LoginSessionUtils.getUser();
-//        if (user == null) {
-//            return new ResultDTO(ResultDTO.FAILED, "登陆已过期，请重新登陆");
-//        }
+        UserRelationEntity user = LoginSessionUtils.getUser();
+        if (user == null) {
+            return new ResultDTO(ResultDTO.FAILED, "登陆已过期，请重新登陆");
+        }
         try {
             UnsafeInfoEntity unsafeInfoEntity = new UnsafeInfoEntity();
             //分发隐患数据的ID
@@ -237,15 +237,15 @@ public class UnsafeController implements ApplicationListener<ContextRefreshedEve
     @PostMapping("/sign")
     public ResultDTO sign(@RequestParam("id") Long id) {
         try {
-//            UserRelationEntity user = LoginSessionUtils.getUser();
-//            if (user == null) {
-//                return new ResultDTO(ResultDTO.FAILED, "登陆已过期，请重新登陆");
-//            }
+            UserRelationEntity user = LoginSessionUtils.getUser();
+            if (user == null) {
+                return new ResultDTO(ResultDTO.FAILED, "登陆已过期，请重新登陆");
+            }
             UnsafeInfoEntity unsafeInfoEntity = new UnsafeInfoEntity();
             unsafeInfoEntity.setId(id);
             unsafeInfoEntity.setSignStatus("1");
-//            unsafeInfoEntity.setModifyUser(user.getSafetyUser().getUsername());
-            unsafeInfoEntity.setModifyUser("xz");
+            unsafeInfoEntity.setModifyUser(user.getSafetyUser().getUsername());
+//            unsafeInfoEntity.setModifyUser("xz");
             unsafeInfoEntity.setModifyDate(new Date());
             Integer integer = unsafeService.upateUnsafeInfo(unsafeInfoEntity);
             if (integer < 0) {
@@ -268,10 +268,10 @@ public class UnsafeController implements ApplicationListener<ContextRefreshedEve
     @PostMapping("/delete")
     public ResultDTO delete(@RequestBody String data) {
         try {
-//            UserAuthEntity user = LoginSessionUtils.getUser();
-//            if (user == null) {
-//                return new ResultDTO(ResultDTO.FAILED, "登陆已过期，请重新登陆");
-//            }
+            UserRelationEntity user = LoginSessionUtils.getUser();
+            if (user == null) {
+                return new ResultDTO(ResultDTO.FAILED, "登陆已过期，请重新登陆");
+            }
             List<String> strings = JSON.parseArray(data, String.class);
             Integer integer = unsafeService.delete(strings);
             if (integer < 0) {
@@ -294,13 +294,13 @@ public class UnsafeController implements ApplicationListener<ContextRefreshedEve
     @PostMapping("/update")
     public ResultDTO submit(@RequestBody String data) {
         try {
-//            UserAuthEntity user = LoginSessionUtils.getUser();
-//            if (user == null) {
-//                return new ResultDTO(ResultDTO.FAILED, "登陆已过期，请重新登陆");
-//            }
+            UserRelationEntity user = LoginSessionUtils.getUser();
+            if (user == null) {
+                return new ResultDTO(ResultDTO.FAILED, "登陆已过期，请重新登陆");
+            }
             UnsafeInfoEntity unsafeInfoEntity = JSONObject.toJavaObject(JSON.parseObject(data), UnsafeInfoEntity.class);
-//            unsafeInfoEntity.setModifyUser(user.getSafetyUser().getUsername());
-            unsafeInfoEntity.setModifyUser("xz");
+            unsafeInfoEntity.setModifyUser(user.getSafetyUser().getUsername());
+//            unsafeInfoEntity.setModifyUser("xz");
             unsafeInfoEntity.setModifyDate(new Date());
             Integer integer = unsafeService.upateUnsafeInfo(unsafeInfoEntity);
             if (integer < 0) {
