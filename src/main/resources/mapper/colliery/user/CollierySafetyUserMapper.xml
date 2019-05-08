@@ -148,7 +148,13 @@
           modify_date = #{modifyDate,jdbcType=TIMESTAMP},
           modify_user = #{modifyUser,jdbcType=TIMESTAMP}
     where
-      id = #{id,jdbcType=INTEGER}
+        1=1
+        <if test="id != null">
+            AND id = #{id,jdbcType=INTEGER}
+        </if>
+        <if test="userName != null">
+            AND user_name = #{userName,jdbcType=VARCHAR}
+        </if>
   </update>
 
     <select id="selectByUserName" resultMap="BaseResultMap" parameterType="String">

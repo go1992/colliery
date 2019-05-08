@@ -167,7 +167,7 @@
 			<p class="dqzh">
 				<span id="showUserName">当前账户:李梅</span>
 				<a href="bigdatalogin.html">
-					<span class="tc">退出</span>
+					<span class="tc" onclick="destroySession()">退出</span>
 				</a>
 			</p>
 
@@ -682,6 +682,14 @@
 	<script type="text/javascript" src="js/echarts.min.js"></script>
 	<script type="text/javascript" src="glng/GLOBAL.js"></script>
 	<script>
+        function destroySession(){
+            $.ajax({
+                type:"get",
+                url:"http://47.103.35.95:8888/apiv1/session/destroy",
+                success: function () {
+                }
+            });};
+
 		function fc(){
 		$.ajax({
 			type:"get",
