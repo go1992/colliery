@@ -15,12 +15,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.yw.colliery.entity.XtgnYhlb;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
 public class DownloadFileController {
+	private Logger logger = LoggerFactory.getLogger(DownloadFileController.class);
 	/**
 	 * 文件下载
 	 * @param request
@@ -116,7 +120,7 @@ public class DownloadFileController {
 		
 		@SuppressWarnings("unchecked")
 		List<String> userDepts = (List<String>)request.getSession().getAttribute(ESessionKey.DeptsIds.key);
-		
+
 		for(String each : userDepts) {
 			String path = MyUtil.FILE_PATH+""+File.separator+"gz-mk-system"+File.separator+each+File.separator+XTname+File.separator+XTCDname;
 			File file = new File(path);
@@ -149,7 +153,7 @@ public class DownloadFileController {
 	            System.out.println("文件：" + file.getPath());
 	        }
 		}
-		
+
         return list;
     }
 	

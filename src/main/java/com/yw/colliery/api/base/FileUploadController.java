@@ -7,6 +7,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,7 +21,7 @@ import com.yw.colliery.entity.XtgnYhlb;
 @Controller
 public class FileUploadController {
 
-    
+    private Logger logger = LoggerFactory.getLogger(FileUploadController.class);
     /**
      * 实现文件上传
      * */
@@ -30,9 +32,9 @@ public class FileUploadController {
     	String XTname = request.getParameter("XTname");//煤矿系统名称
     	String XTCDname = request.getParameter("XTCDname");//煤矿系统菜单名称
     	String ZLtype = request.getParameter("rad1");//资料类型
-    	System.out.println( "上传文件属性：煤矿名称-->"+MKname+",系统名称-->"+XTname+",资料类型-->"+ZLtype);
+    	logger.info( "上传文件属性：煤矿名称-->"+MKname+",系统名称-->"+XTname+",资料类型-->"+ZLtype);
     	MultipartFile file = ((MultipartHttpServletRequest)request).getFile("fileName");
-        if(file.isEmpty() || MKname.isEmpty() || XTname.isEmpty() || ZLtype.isEmpty()){//判断文件是否为空
+        if(file == null ||file.isEmpty() || MKname.isEmpty() || XTname.isEmpty() || ZLtype.isEmpty()){//判断文件是否为空
             return "false";
         }
         String fileName = file.getOriginalFilename();
@@ -116,7 +118,7 @@ public class FileUploadController {
     }
     
 	/**删除指定目录下的指定文件
-	 * @param req
+	 * @param request
 	 * @return
 	 */
 	@RequestMapping("/delfile")
@@ -128,7 +130,7 @@ public class FileUploadController {
     	String XTCDname = request.getParameter("XTCDname");//煤矿系统菜单名称
     	String ZLtype = request.getParameter("ZLtype");//资料类型
     	String fileName = request.getParameter("fileName");//文件名称
-    	System.out.println( "下载文件属性：煤矿名称-->"+MKname+",系统名称-->"+XTname+",煤矿系统菜单名称-->"+XTCDname+",资料类型-->"+ZLtype+",文件名称-->"+fileName);
+        logger.info(String.format("删除文件参数:%s,%s,%s,%s,%s", MKname, XTname, XTCDname, ZLtype, fileName));
 	        if (fileName != null) {
 	        	String[] deptsPath = fileName.split("/");
 	        	String fileDept = deptsPath[0];
@@ -146,9 +148,9 @@ public class FileUploadController {
 		            if (file.isDirectory()) {
 		            	// 获取路径下的所有文件
 		                File[] files = file.listFiles();
-		                System.out.println("待删文件：" + fileOwnName);
+		                logger.info("待删文件：" + fileOwnName);
 		                for (int i = 0; i < files.length; i++) {
-		                	System.out.println("文件：" + files[i].getName());
+                            logger.info("文件：" + files[i].getName());
 		                	if(files[i].getName().equals(fileOwnName)){
 		                		System.out.println("删除文件：" + files[i].getName());
 		                		files[i].delete();
