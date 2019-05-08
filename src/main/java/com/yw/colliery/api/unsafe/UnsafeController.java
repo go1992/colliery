@@ -48,12 +48,8 @@ public class UnsafeController implements ApplicationListener<ContextRefreshedEve
     @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE_SUPER)
     public ResultDTO input(@RequestBody String data) {
         try {
-            UserRelationEntity user = LoginSessionUtils.getUser();
-            if (user == null) {
-                return new ResultDTO(ResultDTO.FAILED, "登陆已过期，请重新登陆");
-            }
             UnsafeInfoEntity unsafeInfoEntity = JSONObject.toJavaObject(JSON.parseObject(data), UnsafeInfoEntity.class);
-            unsafeInfoEntity.setCreateUser(user.getSafetyUser().getUsername());
+            unsafeInfoEntity.setCreateUser("system");
 //            unsafeInfoEntity.setCreateUser("xz");
             unsafeInfoEntity.setCreateDate(new Date());
             //未处理
@@ -167,15 +163,11 @@ public class UnsafeController implements ApplicationListener<ContextRefreshedEve
     @PostMapping("/submit/unsafeInfo")
     @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE_SUPER)
     public ResultDTO submit(@RequestParam("id") Long id) {
-        UserRelationEntity user = LoginSessionUtils.getUser();
-        if (user == null) {
-            return new ResultDTO(ResultDTO.FAILED, "登陆已过期，请重新登陆");
-        }
         try {
             UnsafeInfoEntity unsafeInfoEntity = new UnsafeInfoEntity();
             unsafeInfoEntity.setId(id);
             unsafeInfoEntity.setStatus("1");
-            unsafeInfoEntity.setModifyUser(user.getSafetyUser().getUsername());
+            unsafeInfoEntity.setModifyUser("system");
 //            unsafeInfoEntity.setModifyUser("xz");
             unsafeInfoEntity.setModifyDate(new Date());
             Integer integer = unsafeService.upateUnsafeInfo(unsafeInfoEntity);
@@ -199,10 +191,6 @@ public class UnsafeController implements ApplicationListener<ContextRefreshedEve
     @PostMapping("/apply/distributed")
     @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE_SUPER)
     public ResultDTO distributed(@RequestParam("id") Long id, @RequestParam("departId") int departId) {
-        UserRelationEntity user = LoginSessionUtils.getUser();
-        if (user == null) {
-            return new ResultDTO(ResultDTO.FAILED, "登陆已过期，请重新登陆");
-        }
         try {
             UnsafeInfoEntity unsafeInfoEntity = new UnsafeInfoEntity();
             //分发隐患数据的ID

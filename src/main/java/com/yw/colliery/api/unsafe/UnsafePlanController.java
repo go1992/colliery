@@ -47,12 +47,8 @@ public class UnsafePlanController implements ApplicationListener<ContextRefreshe
     @PostMapping("/save")
     public ResultDTO input(@RequestBody String data) {
         try {
-            UserRelationEntity user = LoginSessionUtils.getUser();
-            if (user == null) {
-                return new ResultDTO(ResultDTO.FAILED, "登陆已过期，请重新登陆");
-            }
             UnsafePlanEntity unsafeInfoEntity = JSONObject.toJavaObject(JSON.parseObject(data), UnsafePlanEntity.class);
-            unsafeInfoEntity.setCreateUser(user.getSafetyUser().getUsername());
+            unsafeInfoEntity.setCreateUser("system");
 //            unsafeInfoEntity.setCreateUser("xz");
             unsafeInfoEntity.setCreateDate(new Date());
             Integer integer = unsafePlanService.unsafePlanInsert(unsafeInfoEntity);
@@ -76,10 +72,6 @@ public class UnsafePlanController implements ApplicationListener<ContextRefreshe
     @PostMapping("/get")
     public Object getAllUnsafeInfo(@RequestBody String data) {
         try {
-            UserRelationEntity user = LoginSessionUtils.getUser();
-            if (user == null) {
-                return new ResultDTO(ResultDTO.FAILED, "登陆已过期，请重新登陆");
-            }
             log.info("data>>>>>"+data);
 
             UnsafePlanEntity unsafeInfoEntity = JSONObject.toJavaObject(JSON.parseObject(data), UnsafePlanEntity.class);
@@ -115,12 +107,8 @@ public class UnsafePlanController implements ApplicationListener<ContextRefreshe
     @PostMapping("/update")
     public ResultDTO submit(@RequestBody String data) {
         try {
-            UserRelationEntity user = LoginSessionUtils.getUser();
-            if (user == null) {
-                return new ResultDTO(ResultDTO.FAILED, "登陆已过期，请重新登陆");
-            }
             UnsafePlanEntity unsafeInfoEntity = JSONObject.toJavaObject(JSON.parseObject(data), UnsafePlanEntity.class);
-            unsafeInfoEntity.setModifyUser(user.getSafetyUser().getUsername());
+            unsafeInfoEntity.setModifyUser("system");
 //            unsafeInfoEntity.setModifyUser("xz");
             unsafeInfoEntity.setModifyDate(new Date());
             Integer integer = unsafePlanService.upateUnsafePlanInfo(unsafeInfoEntity);
@@ -144,10 +132,6 @@ public class UnsafePlanController implements ApplicationListener<ContextRefreshe
     @PostMapping("/delete")
     public ResultDTO delete(@RequestBody String data) {
         try {
-            UserRelationEntity user = LoginSessionUtils.getUser();
-            if (user == null) {
-                return new ResultDTO(ResultDTO.FAILED, "登陆已过期，请重新登陆");
-            }
             List<String> strings = JSON.parseArray(data, String.class);
             Integer integer = unsafePlanService.deleteUnsafePlanInfo(strings);
             if (integer < 0) {
