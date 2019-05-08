@@ -60,7 +60,7 @@ public class UserSessionHelper implements EventListener<UpdateSessionEvent>{
             if (depart != null) {
                 XtgnYhlb user = new XtgnYhlb();
                 user.setId(Long.valueOf(userRelation.getSafetyUser().getId()));
-                user.setSsmk(depart.getCoalMine());
+                user.setSsmk(String.valueOf(depart.getId()));
                 user.setYhmdd(userRelation.getSafetyUser().getUsername());
                 user.setYhmm(userRelation.getSafetyUser().getPassword());
                 user.setPcrq(userRelation.getSafetyUser().getCreateDate());
