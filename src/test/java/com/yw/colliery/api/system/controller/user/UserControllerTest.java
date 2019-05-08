@@ -26,7 +26,7 @@ public class UserControllerTest {
         entity.setCreateUser("test_user");
         entity.setModifyUser("test_user");
         HttpEntity<UserRequest> httpEntity = new HttpEntity<UserRequest>(entity);
-        ResponseEntity<ResultObject> response = template.postForEntity("http://localhost:8888/user/add" , httpEntity , ResultObject.class);
+        ResponseEntity<ResultObject> response = template.postForEntity("http://47.103.35.95:8888/user/add" , httpEntity , ResultObject.class);
         Assert.assertEquals(response.getBody().getStatus(), ResultObject.SUCCESS);
     }
 
@@ -41,7 +41,7 @@ public class UserControllerTest {
         entity.setCreateUser("test_user1");
         entity.setModifyUser("test_user1");
         HttpEntity<UserRequest> httpEntity = new HttpEntity<UserRequest>(entity);
-        ResponseEntity<ResultObject> response = template.postForEntity("http://localhost:8888/user/update" , httpEntity , ResultObject.class);
+        ResponseEntity<ResultObject> response = template.postForEntity("http://47.103.35.95:8888/user/update" , httpEntity , ResultObject.class);
         Assert.assertEquals(response.getBody().getStatus(), ResultObject.SUCCESS);
     }
 
@@ -49,7 +49,7 @@ public class UserControllerTest {
     @Test
     public void select() {
         RestTemplate template = new RestTemplate();
-        ResponseEntity<ResultObject> response = template.getForEntity("http://localhost:8888/user/select/allinfo/1" , ResultObject.class);
+        ResponseEntity<ResultObject> response = template.getForEntity("http://47.103.35.95:8888/user/select/allinfo/1" , ResultObject.class);
         Assert.assertEquals(response.getBody().getStatus(), ResultObject.SUCCESS);
     }
 
@@ -57,7 +57,7 @@ public class UserControllerTest {
     @Test
     public void delete() {
         RestTemplate template = new RestTemplate();
-        ResponseEntity<ResultObject> response = template.getForEntity("http://localhost:8888/user/delete/1" , ResultObject.class);
+        ResponseEntity<ResultObject> response = template.getForEntity("http://47.103.35.95:8888/user/delete/1" , ResultObject.class);
         Assert.assertEquals(response.getBody().getStatus(), ResultObject.SUCCESS);
     }
 }

@@ -33,7 +33,7 @@ public class DepartControllerTest {
         entity.setModifyUser("test_user");
         entity.setModifyDate(new Date());
         HttpEntity<DepartRequest> httpEntity = new HttpEntity<DepartRequest>(entity);
-        ResponseEntity<ResultObject> response = template.postForEntity("http://localhost:8888/department/add" , httpEntity , ResultObject.class);
+        ResponseEntity<ResultObject> response = template.postForEntity("http://47.103.35.95:8888/department/add" , httpEntity , ResultObject.class);
         Assert.assertEquals(response.getBody().getStatus(), ResultObject.SUCCESS);
     }
 
@@ -50,7 +50,7 @@ public class DepartControllerTest {
         request.setModifyUser("test_user1");
         request.setModifyDate(new Date());
         HttpEntity<DepartRequest> httpEntity = new HttpEntity<DepartRequest>(request);
-        ResponseEntity<ResultObject> response = template.postForEntity("http://localhost:8090/department/update" , httpEntity , ResultObject.class);
+        ResponseEntity<ResultObject> response = template.postForEntity("http://47.103.35.95:8090/department/update" , httpEntity , ResultObject.class);
         Assert.assertEquals(response.getBody().getStatus(), ResultObject.SUCCESS);
     }
 
@@ -58,21 +58,21 @@ public class DepartControllerTest {
     @Test
     public void select() {
         RestTemplate template = new RestTemplate();
-        ResponseEntity<ResultObject> response = template.getForEntity("http://localhost:8888/department/select/1" , ResultObject.class);
+        ResponseEntity<ResultObject> response = template.getForEntity("http://47.103.35.95:8888/department/select/1" , ResultObject.class);
         Assert.assertEquals(response.getBody().getStatus(), ResultObject.SUCCESS);
     }
 
     @Test
     public void selectAll() {
         RestTemplate template = new RestTemplate();
-        ResponseEntity<ResultObject> response = template.getForEntity("http://localhost:8888/department/select/all" , ResultObject.class);
+        ResponseEntity<ResultObject> response = template.getForEntity("http://47.103.35.95:8888/department/select/all" , ResultObject.class);
         Assert.assertEquals(response.getBody().getStatus(), ResultObject.SUCCESS);
     }
 
     @Test
     public void delete() {
         RestTemplate template = new RestTemplate();
-        ResponseEntity<ResultObject> response = template.getForEntity("http://localhost:8888/department/delete/1" , ResultObject.class);
+        ResponseEntity<ResultObject> response = template.getForEntity("http://47.103.35.95:8888/department/delete/1" , ResultObject.class);
         Assert.assertEquals(response.getBody().getStatus(), ResultObject.SUCCESS);
     }
 }
