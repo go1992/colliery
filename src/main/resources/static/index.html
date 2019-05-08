@@ -686,8 +686,8 @@
 		$.ajax({
 			type:"get",
 			url:"http://47.103.35.95:8888/auth/cover/2",
-			success: function () {
-					if(result=="false"){
+			success: function (data) {
+					if(data.result=="false"){
 						$(".a").remove();
 						alert('你没有该模块的查看权限')
 					}
@@ -697,8 +697,8 @@
 		$.ajax({
 			type:"get",
 			url:"http://47.103.35.95:8888/auth/cover/4",
-			success: function () {
-					if(result=="false"){
+			success: function (data) {
+					if(data.result=="false"){
 						$(".b").remove();
 						alert('你没有该模块的查看权限')
 					}
@@ -708,8 +708,8 @@
 		$.ajax({
 			type:"get",
 			url:"http://47.103.35.95:8888/auth/cover/6",
-			success: function () {
-					if(result=="false"){
+			success: function (data) {
+					if(data.result=="false"){
 						$(".c").remove();
 						alert('你没有该模块的查看权限')
 					}
@@ -719,8 +719,8 @@
 		$.ajax({
 			type:"get",
 			url:"http://47.103.35.95:8888/auth/cover/8",
-			success: function () {
-					if(result=="false"){
+			success: function (data) {
+					if(data.result=="false"){
 						$(".d").remove();
 						alert('你没有该模块的查看权限')
 					}
@@ -730,8 +730,8 @@
 		$.ajax({
 			type:"get",
 			url:"http://47.103.35.95:8888/auth/cover/10",
-			success: function () {
-					if(result=="false"){
+			success: function (data) {
+					if(data.result=="false"){
 						$(".e").remove();
 						alert('你没有该模块的查看权限')
 					}
