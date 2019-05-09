@@ -13,6 +13,8 @@ import com.yw.colliery.service.depart.DepartEvent;
 import com.yw.colliery.service.depart.DepartmentService;
 import com.yw.colliery.service.role.RoleEvent;
 import com.yw.colliery.service.user.UserRelationService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -30,6 +32,7 @@ public class UserSessionHelper implements EventListener<UpdateSessionEvent>{
     private UserRelationService userRelationService;
     @Autowired
     private DepartmentService departmentService;
+    private Logger logger = LoggerFactory.getLogger(UserSessionHelper.class);
 
     /**
      * 保存用户关联信息到session
@@ -78,6 +81,7 @@ public class UserSessionHelper implements EventListener<UpdateSessionEvent>{
     @Override
     public void listen(UpdateSessionEvent event) {
         if (event instanceof UpdateSessionEvent) {
+            logger.info("收到消息类型：" + event.getClass().getName() + " 更新session用户信息!");
             updateUserRelationInfo();
         }
     }

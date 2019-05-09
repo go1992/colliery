@@ -22,7 +22,7 @@ public class CollierySafetyUserEntity implements UserDetails {
 
     private String userPwd;
 
-    private String userName;
+    private String name;
 
     private Date createDate;
 
@@ -44,7 +44,7 @@ public class CollierySafetyUserEntity implements UserDetails {
 
     @Override
     public String getUsername() {
-        return userName;
+        return name;
     }
 
     @Override

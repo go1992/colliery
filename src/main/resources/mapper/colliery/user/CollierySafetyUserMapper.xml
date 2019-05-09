@@ -5,7 +5,7 @@
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="role_id" property="roleId" jdbcType="INTEGER"/>
         <result column="depart_id" property="departId" jdbcType="INTEGER"/>
-        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="user_name" property="name" jdbcType="VARCHAR"/>
         <result column="user_pwd" property="userPwd" jdbcType="VARCHAR"/>
         <result column="depart_name" property="departName" jdbcType="VARCHAR"/>
         <result column="role_name" property="roleName" jdbcType="VARCHAR"/>
@@ -42,7 +42,7 @@
       user_name, create_date, create_user,
       modify_date, modify_user)
     values (#{id,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER}, #{departId,jdbcType=INTEGER}, #{userPwd,jdbcType=VARCHAR},
-      #{userName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{createUser,jdbcType=VARCHAR},
+      #{name,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{createUser,jdbcType=VARCHAR},
       #{modifyDate,jdbcType=TIMESTAMP}, #{modifyUser,jdbcType=TIMESTAMP})
   </insert>
     <insert id="insertSelective" parameterType="com.yw.colliery.entity.user.CollierySafetyUserEntity">
@@ -60,7 +60,7 @@
             <if test="userPwd != null">
                 user_pwd,
             </if>
-            <if test="userName != null">
+            <if test="name != null">
                 user_name,
             </if>
             <if test="createDate != null">
@@ -89,8 +89,8 @@
             <if test="userPwd != null">
                 #{userPwd,jdbcType=VARCHAR},
             </if>
-            <if test="userName != null">
-                #{userName,jdbcType=VARCHAR},
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
             </if>
             <if test="createDate != null">
                 #{createDate,jdbcType=TIMESTAMP},
@@ -118,8 +118,8 @@
             <if test="userPwd != null">
                 user_pwd = #{userPwd,jdbcType=VARCHAR},
             </if>
-            <if test="userName != null">
-                user_name = #{userName,jdbcType=VARCHAR},
+            <if test="name != null">
+                user_name = #{name,jdbcType=VARCHAR},
             </if>
             <if test="createDate != null">
                 create_date = #{createDate,jdbcType=TIMESTAMP},
@@ -138,22 +138,39 @@
     </update>
     <update id="updateByPrimaryKey" parameterType="com.yw.colliery.entity.user.CollierySafetyUserEntity">
     update colliery_user
-      set
-          role_id = #{roleId,jdbcType=INTEGER},
-          depart_id = #{departId,jdbcType=INTEGER},
-          user_pwd = #{userPwd,jdbcType=VARCHAR},
-          user_name = #{userName,jdbcType=VARCHAR},
-          create_date = #{createDate,jdbcType=TIMESTAMP},
-          create_user = #{createUser,jdbcType=VARCHAR},
-          modify_date = #{modifyDate,jdbcType=TIMESTAMP},
-          modify_user = #{modifyUser,jdbcType=TIMESTAMP}
+        <set>
+        <if test="roleId != null">
+            role_id = #{roleId,jdbcType=INTEGER},
+        </if>
+        <if test="departId != null">
+            depart_id = #{departId,jdbcType=INTEGER},
+        </if>
+        <if test="userPwd != null">
+            user_pwd = #{userPwd,jdbcType=VARCHAR},
+        </if>
+        <if test="name != null">
+            user_name = #{name,jdbcType=VARCHAR},
+        </if>
+        <if test="createDate != null">
+            create_date = #{createDate,jdbcType=TIMESTAMP},
+        </if>
+        <if test="createUser != null">
+            create_user = #{createUser,jdbcType=VARCHAR},
+        </if>
+        <if test="modifyDate != null">
+            modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+        </if>
+        <if test="modifyUser != null">
+            modify_user = #{modifyUser,jdbcType=TIMESTAMP},
+        </if>
+        </set>
     where
         1=1
         <if test="id != null">
             AND id = #{id,jdbcType=INTEGER}
         </if>
-        <if test="userName != null">
-            AND user_name = #{userName,jdbcType=VARCHAR}
+        <if test="name != null">
+            AND user_name = #{name,jdbcType=VARCHAR}
         </if>
   </update>
 
@@ -161,7 +178,7 @@
         select
         <include refid="Base_Column_List"/>
         from colliery_user
-        where user_name = #{userName}
+        where user_name = #{name}
     </select>
 
     <select id="selectAllUser" resultMap="BaseResultMap">

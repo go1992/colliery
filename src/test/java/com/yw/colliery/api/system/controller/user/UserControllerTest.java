@@ -21,7 +21,7 @@ public class UserControllerTest {
         UserRequest entity = new UserRequest();
         entity.setRoleId(1);
         entity.setDepartId(1);
-        entity.setUserName("测试账号");
+        entity.setName("测试账号");
         entity.setUserPwd("test");
         entity.setCreateUser("test_user");
         entity.setModifyUser("test_user");
@@ -36,7 +36,7 @@ public class UserControllerTest {
         UserRequest entity = new UserRequest();
         entity.setRoleId(1);
         entity.setDepartId(1);
-        entity.setUserName("test_user1");
+        entity.setName("test_user1");
         entity.setUserPwd("test_password");
         entity.setCreateUser("test_user1");
         entity.setModifyUser("test_user1");

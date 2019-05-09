@@ -52,8 +52,11 @@ public class CollierySafetyUserServiceImpl implements CollierySafetyUserService{
     @Override
     public int updateSafetyUSer(CollierySafetyUserEntity userEntity) {
         userEntity.setModifyDate(new Date());
-        eventPublisher.publish(new UserEvent());
-        return collierySafetyUserMapper.updateByPrimaryKey(userEntity);
+        int result = collierySafetyUserMapper.updateByPrimaryKey(userEntity);
+        if (result > 0) {
+            eventPublisher.publish(new UserEvent());
+        }
+        return result;
     }
 
     @Override

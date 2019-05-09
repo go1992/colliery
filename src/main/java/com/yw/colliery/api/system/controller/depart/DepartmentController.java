@@ -2,6 +2,7 @@ package com.yw.colliery.api.system.controller.depart;
 
 import com.alibaba.fastjson.JSON;
 import com.yw.colliery.api.base.ResultObject;
+import com.yw.colliery.api.system.controller.auth.AuthController;
 import com.yw.colliery.entity.depart.DepartmentEntity;
 import com.yw.colliery.sdk.aop.AuthModule;
 import com.yw.colliery.sdk.config.PageBean;
@@ -11,6 +12,8 @@ import com.yw.colliery.sdk.request.DepartRequest;
 import com.yw.colliery.sdk.utils.ResponseUtils;
 import com.yw.colliery.service.depart.DepartmentService;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +30,7 @@ import java.util.List;
 public class DepartmentController {
     @Autowired
     private DepartmentService departmentService;
-
+    private Logger logger = LoggerFactory.getLogger(DepartmentController.class);
     @PostMapping("/add")
     @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE_SUPER)
     public ResultObject addDepart(@RequestBody DepartRequest request) {
@@ -35,6 +38,7 @@ public class DepartmentController {
             int result = departmentService.addDepart(transfer(request));
             return ResultObject.buildSucessResponse(result);
         } catch (Exception e) {
+            logger.error("新增部门失败!", e);
             return ResultObject.buildFailResponse("新增部门失败!");
         }
     }
@@ -46,6 +50,7 @@ public class DepartmentController {
             int result = departmentService.updateDepart(transfer(request));
             return ResultObject.buildSucessResponse(result);
         } catch (Exception e) {
+            logger.error("修改部门失败!", e);
             return ResultObject.buildFailResponse("修改部门失败!");
         }
     }
@@ -58,6 +63,7 @@ public class DepartmentController {
             int result = departmentService.deleteDepartByIds(departIds);
             return ResultObject.buildSucessResponse(result);
         } catch (Exception e) {
+            logger.error("删除部门失败!", e);
             return ResultObject.buildFailResponse("删除部门失败!");
         }
     }
@@ -69,6 +75,7 @@ public class DepartmentController {
             DepartmentEntity departmentEntity = departmentService.selectById(departId);
             return ResultObject.buildSucessResponse(departmentEntity);
         } catch (Exception e) {
+            logger.error("查询部门失败!", e);
             return ResultObject.buildFailResponse("查询部门失败!");
         }
     }
@@ -80,6 +87,7 @@ public class DepartmentController {
             PageBean<DepartmentEntity> pageBean = departmentService.selectByPage(param);
             return ResponseUtils.wrapResponse(pageBean);
         } catch (Exception e) {
+            logger.error("查询部门列表失败!", e);
             return ResultObject.buildFailResponse("查询部门列表失败!");
         }
     }

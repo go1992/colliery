@@ -3,7 +3,6 @@ package com.yw.colliery.api.system.controller.user;
 import com.alibaba.fastjson.JSON;
 import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.user.CollierySafetyUserEntity;
-import com.yw.colliery.entity.user.UserEntity;
 import com.yw.colliery.sdk.aop.AuthModule;
 import com.yw.colliery.sdk.config.PageBean;
 import com.yw.colliery.sdk.config.PageParam;
@@ -14,6 +13,8 @@ import com.yw.colliery.sdk.utils.ResponseUtils;
 import com.yw.colliery.service.user.CollierySafetyUserService;
 import com.yw.colliery.service.user.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,7 +33,7 @@ public class UserController {
     private CollierySafetyUserService collierySafetyUserService;
     @Autowired
     private UserService userService;
-
+    private Logger logger = LoggerFactory.getLogger(UserController.class);
     @PostMapping("/add")
     @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE_SUPER)
     public ResultObject addUser(@RequestBody UserRequest request) {
@@ -41,6 +42,7 @@ public class UserController {
             int result = collierySafetyUserService.addSafetyUser(entity);
             return ResultObject.buildSucessResponse(result);
         } catch (Exception e) {
+            logger.error("新增用户失败!", e);
             return ResultObject.buildFailResponse("新增用户失败!");
         }
     }
@@ -53,6 +55,7 @@ public class UserController {
             int result = collierySafetyUserService.updateSafetyUSer(entity);
             return ResultObject.buildSucessResponse(result);
         } catch (Exception e) {
+            logger.error("修改用户失败!", e);
             return ResultObject.buildFailResponse("修改用户失败!");
         }
     }
@@ -65,6 +68,7 @@ public class UserController {
             int result = collierySafetyUserService.deleteUserByIds(userIds);
             return ResultObject.buildSucessResponse(result);
         } catch (Exception e) {
+            logger.error("删除用户失败!", e);
             return ResultObject.buildFailResponse("删除用户失败!");
         }
     }
@@ -76,6 +80,7 @@ public class UserController {
             CollierySafetyUserEntity result = collierySafetyUserService.selectyUserId(userId);
             return ResultObject.buildSucessResponse(result);
         } catch (Exception e) {
+            logger.error("查询用户信息失败!", e);
             return ResultObject.buildFailResponse("查询用户信息失败!");
         }
     }
@@ -87,15 +92,16 @@ public class UserController {
             PageBean<CollierySafetyUserEntity> pageBean = collierySafetyUserService.selectByPage(param);
             return ResponseUtils.wrapResponse(pageBean);
         } catch (Exception e) {
+            logger.error("查询所有用户信息失败!", e);
             return ResultObject.buildFailResponse("查询所有用户信息失败!");
         }
     }
 
     private CollierySafetyUserEntity transfer(UserRequest request) {
         CollierySafetyUserEntity entity = new CollierySafetyUserEntity();
-        entity.setUserName(request.getUserName());
+        entity.setName(request.getName());
         //这里做个控制，防止前端回传加密后的密码过来，更新了就坏事了
-        entity.setUserPwd(request.getUserPwd() != null&&(request.getUserPwd().length() < 20) ? EncodeUtils.encode(request.getUserPwd()): null);
+        entity.setUserPwd((request.getUserPwd() != null&&(request.getUserPwd().length() < 20)) ? EncodeUtils.encode(request.getUserPwd()): null);
         entity.setId(request.getUserId());
         entity.setRoleId(request.getRoleId());
         entity.setDepartId(request.getDepartId());

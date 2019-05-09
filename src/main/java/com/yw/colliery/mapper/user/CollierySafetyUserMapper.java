@@ -49,7 +49,7 @@ public interface CollierySafetyUserMapper {
      * * @param userCode
      * @return
      */
-    CollierySafetyUserEntity selectByUserName(String userName);
+    CollierySafetyUserEntity selectByUserName(String name);
 
     /**
      * 查询所有用户

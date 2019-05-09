@@ -86,12 +86,11 @@ public class AuthController {
             return ResultObject.buildFailResponse("查询权限列表失败!");
         }
     }
-    private Logger logger = LoggerFactory.getLogger(AuthController.class);
+
     @GetMapping("/cover/{authId}")
     public ResultObject coverUserAuth(@PathVariable Integer authId) {
         try {
             UserRelationEntity userRelation = LoginSessionUtils.getUser();
-            logger.info(userRelation.toString() + "  authId=="+ authId);
             if (userRelation != null) {
                 List<AuthEntity> authList = userRelation.getAuthList();
                 boolean result = authList.stream().anyMatch(authEntity -> authEntity.getId() == authId);

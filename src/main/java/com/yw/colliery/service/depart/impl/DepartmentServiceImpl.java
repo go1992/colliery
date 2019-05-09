@@ -34,15 +34,16 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public int addDepart(DepartmentEntity entity) {
         int result =  departMapper.addDepart(entity);
-        if (result > 0) {
-            eventPublisher.publish(new DepartEvent());
-        }
         return result;
     }
 
     @Override
     public int updateDepart(DepartmentEntity entity) {
-        return departMapper.updateDepart(entity);
+        int result = departMapper.updateDepart(entity);
+        if (result > 0) {
+            eventPublisher.publish(new DepartEvent());
+        }
+        return result;
     }
 
     @Override

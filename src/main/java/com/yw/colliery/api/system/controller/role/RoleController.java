@@ -10,6 +10,8 @@ import com.yw.colliery.sdk.constans.AuthConstant;
 import com.yw.colliery.sdk.utils.ResponseUtils;
 import com.yw.colliery.service.role.RoleService;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +28,7 @@ import java.util.List;
 public class RoleController {
     @Autowired
     private RoleService roleService;
-
+    private Logger logger = LoggerFactory.getLogger(RoleController.class);
     @PostMapping("/add")
     @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE_SUPER)
     public ResultObject addRole(@RequestBody RoleEntity RoleEntity) {
@@ -34,6 +36,7 @@ public class RoleController {
             int result = roleService.addRole(RoleEntity);
             return ResultObject.buildSucessResponse(result);
         } catch (Exception e) {
+            logger.error("新增角色失败!", e);
             return ResultObject.buildFailResponse("新增角色失败!");
         }
     }
@@ -45,6 +48,7 @@ public class RoleController {
             int result = roleService.updateRole(RoleEntity);
             return ResultObject.buildSucessResponse(result);
         } catch (Exception e) {
+            logger.error("修改角色失败!", e);
             return ResultObject.buildFailResponse("修改角色失败!");
         }
     }
@@ -57,6 +61,7 @@ public class RoleController {
             int result = roleService.deleteRoleByIds(roleIds);
             return ResultObject.buildSucessResponse(result);
         } catch (Exception e) {
+            logger.error("删除角色失败!", e);
             return ResultObject.buildFailResponse("删除角色失败!");
         }
     }
@@ -68,6 +73,7 @@ public class RoleController {
             RoleEntity RoleEntity = roleService.selectById(roleId);
             return ResultObject.buildSucessResponse(RoleEntity);
         } catch (Exception e) {
+            logger.error("查询角色失败!", e);
             return ResultObject.buildFailResponse("查询角色失败!");
         }
     }
@@ -79,6 +85,7 @@ public class RoleController {
             PageBean<RoleEntity> pageBean = roleService.selectByPage(param);
             return ResponseUtils.wrapResponse(pageBean);
         } catch (Exception e) {
+            logger.error("查询角色列表失败!", e);
             return ResultObject.buildFailResponse("查询角色列表失败!");
         }
     }
