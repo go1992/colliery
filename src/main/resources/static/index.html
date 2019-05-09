@@ -682,20 +682,14 @@
 	<script type="text/javascript" src="js/echarts.min.js"></script>
 	<script type="text/javascript" src="glng/GLOBAL.js"></script>
 	<script>
-        function destroySession(){
-            $.ajax({
-                type:"get",
-                url:"http://47.103.35.95:8888/apiv1/session/destroy",
-                success: function () {
-                }
-            });};
+
 
 		function fc(){
 		$.ajax({
 			type:"get",
-			url:"http://47.103.35.95:8888/auth/cover/2",
+			url:"http://localhost:8888/auth/cover/2",
 			success: function (data) {
-					if(data.result=="false"){
+					if(data.result==false){
 						$(".a").remove();
 						alert('你没有该模块的查看权限')
 					}
@@ -704,9 +698,9 @@
 		function fc1(){
 		$.ajax({
 			type:"get",
-			url:"http://47.103.35.95:8888/auth/cover/4",
+			url:"http://localhost:8888/auth/cover/4",
 			success: function (data) {
-					if(data.result=="false"){
+					if(data.result==false){
 						$(".b").remove();
 						alert('你没有该模块的查看权限')
 					}
@@ -715,9 +709,9 @@
 		function fc2(){
 		$.ajax({
 			type:"get",
-			url:"http://47.103.35.95:8888/auth/cover/6",
+			url:"http://localhost:8888/auth/cover/6",
 			success: function (data) {
-					if(data.result=="false"){
+					if(data.result==false){
 						$(".c").remove();
 						alert('你没有该模块的查看权限')
 					}
@@ -726,9 +720,9 @@
 		function fc3(){
 		$.ajax({
 			type:"get",
-			url:"http://47.103.35.95:8888/auth/cover/8",
+			url:"http://localhost:8888/auth/cover/8",
 			success: function (data) {
-					if(data.result=="false"){
+					if(data.result==false){
 						$(".d").remove();
 						alert('你没有该模块的查看权限')
 					}
@@ -737,14 +731,22 @@
 		function fc4(){
 		$.ajax({
 			type:"get",
-			url:"http://47.103.35.95:8888/auth/cover/10",
+			url:"http://localhost:8888/auth/cover/10",
 			success: function (data) {
-					if(data.result=="false"){
+					if(data.result==false){
 						$(".e").remove();
 						alert('你没有该模块的查看权限')
 					}
 				}
 		});};
+
+		function destroySession(){
+			$.ajax({
+				type:"get",
+				url:"http://localhost:8888/apiv1/session/destroy",
+				success: function () {
+				}
+			});};
 	</script>
 	<script>
 		//				function getCookie(cname) {
