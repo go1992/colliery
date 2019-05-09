@@ -7,6 +7,7 @@ import com.yw.colliery.entity.user.UserRelationEntity;
 import com.yw.colliery.sdk.constans.LoginConstant;
 import com.yw.colliery.sdk.message.event.UpdateSessionEvent;
 import com.yw.colliery.sdk.message.listener.EventListener;
+import com.yw.colliery.sdk.message.publisher.EventPublisher;
 import com.yw.colliery.sdk.utils.LoginSessionUtils;
 import com.yw.colliery.sdk.utils.SpringSessionUtils;
 import com.yw.colliery.service.depart.DepartEvent;
@@ -15,6 +16,7 @@ import com.yw.colliery.service.role.RoleEvent;
 import com.yw.colliery.service.user.UserRelationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -27,12 +29,19 @@ import java.util.Collections;
  * @Date: 2019/5/2
  */
 @Component
-public class UserSessionHelper implements EventListener<UpdateSessionEvent>{
+public class UserSessionHelper implements EventListener<UpdateSessionEvent>, InitializingBean {
     @Autowired
     private UserRelationService userRelationService;
     @Autowired
     private DepartmentService departmentService;
     private Logger logger = LoggerFactory.getLogger(UserSessionHelper.class);
+    @Autowired
+    private EventPublisher eventPublisher;
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        eventPublisher.registListener(this);
+    }
 
     /**
      * 保存用户关联信息到session
