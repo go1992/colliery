@@ -133,6 +133,10 @@ public class UnsafePlanController implements ApplicationListener<ContextRefreshe
     public ResultDTO delete(@RequestBody String data) {
         try {
             List<String> strings = JSON.parseArray(data, String.class);
+            List<String> allUsedPlan = unsafePlanService.getAllUsedPlan(strings);
+            if (!allUsedPlan.isEmpty()){
+                return new ResultDTO(ResultDTO.FAILED, "删除列表中存在已使用的计划，不能删除");
+            }
             Integer integer = unsafePlanService.deleteUnsafePlanInfo(strings);
             if (integer < 0) {
                 return new ResultDTO(ResultDTO.FAILED, "删除隐患排查计划信息失败");

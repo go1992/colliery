@@ -38,4 +38,11 @@ public interface UnsafePlanService {
      */
     Integer deleteUnsafePlanInfo(List<String> planIdList);
 
+    /**
+     * 获取在使用的计划
+     * @param planIdList
+     * @return
+     */
+    List<String> getAllUsedPlan(List<String> planIdList);
+
 }

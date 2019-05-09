@@ -44,9 +44,17 @@ public class UnsafeInfoEntity implements Serializable {
      */
     private Integer departId;
     /**
+     * 处理部门的name
+     */
+    private String departName;
+    /**
      * 发起部门的ID
      */
     private Integer startDepartId;
+    /**
+     * 发起部门name
+     */
+    private String startDepartName;
     /**
      * 计划名称
      */

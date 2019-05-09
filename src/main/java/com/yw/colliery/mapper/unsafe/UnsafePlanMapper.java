@@ -42,5 +42,12 @@ public interface UnsafePlanMapper {
      * @return
      */
     Integer deleteById(List<String> planIdList);
+
+    /**
+     * 获取已经使用的计划数据
+     * @param planIdList
+     * @return
+     */
+    List<String> selectUsedPlan (List<String> planIdList);
 }
 

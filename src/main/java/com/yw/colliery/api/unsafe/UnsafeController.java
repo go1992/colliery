@@ -4,6 +4,7 @@ package com.yw.colliery.api.unsafe;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.yw.colliery.dto.ResultDTO;
+import com.yw.colliery.entity.depart.DepartmentEntity;
 import com.yw.colliery.entity.unsafe.UnsafeInfoEntity;
 import com.yw.colliery.entity.unsafe.UnsafePlanEntity;
 import com.yw.colliery.entity.user.UserRelationEntity;
@@ -11,16 +12,19 @@ import com.yw.colliery.sdk.aop.AuthModule;
 import com.yw.colliery.sdk.config.PageBean;
 import com.yw.colliery.sdk.constans.AuthConstant;
 import com.yw.colliery.sdk.utils.LoginSessionUtils;
+import com.yw.colliery.service.depart.impl.DepartmentServiceImpl;
 import com.yw.colliery.service.unsafe.UnsafePlanService;
 import com.yw.colliery.service.unsafe.UnsafeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 
 /**
@@ -34,6 +38,8 @@ public class UnsafeController implements ApplicationListener<ContextRefreshedEve
 
     @Autowired
     private UnsafeService unsafeService;
+    @Autowired
+    private DepartmentServiceImpl departmentService;
 
     private static final ConcurrentHashMap<String, String> COLUMN_NAME_MAP = new ConcurrentHashMap<>();
 
@@ -94,33 +100,29 @@ public class UnsafeController implements ApplicationListener<ContextRefreshedEve
 
     }
 
-    /**
-     * 获取某部门的隐患数据
-     *
-     * @param
-     * @return
-     */
-    @GetMapping("/get/depart/unsafeInfo")
-    @AuthModule(authId = {AuthConstant.Module.UNSAFE_MODULE_WATCH, AuthConstant.Module.UNSAFE_MODULE_SUPER})
-    public ResultDTO getUnsafeInfo() {
-        UserRelationEntity user = LoginSessionUtils.getUser();
-        if (user == null) {
-            return new ResultDTO(ResultDTO.FAILED, "登陆已过期，请重新登陆");
-        }
-        try {
-            ArrayList<UnsafeInfoEntity> unsafeInfoByDepartId = new ArrayList<>(unsafeService.getUnsafeInfoByDepartId(user.getSafetyUser().getDepartId()));
-//            ArrayList<UnsafeInfoEntity> unsafeInfoByDepartId = new ArrayList<>(unsafeService.getUnsafeInfoByDepartId(1));
-            if (unsafeInfoByDepartId.isEmpty()) {
-                return new ResultDTO(ResultDTO.SUCCESS, "未查询到隐患数据");
-            }
-            return new ResultDTO<>(unsafeInfoByDepartId, ResultDTO.SUCCESS, "获取未处理的隐患列表成功");
-        } catch (Exception e) {
-            log.error("根据部门id获取隐患信息异常", e);
-            return new ResultDTO(ResultDTO.SUCCESS, "获取隐患列表异常");
-        }
-
-
-    }
+//    /**
+//     * 获取某部门的隐患数据
+//     *
+//     * @param
+//     * @return
+//     */
+//    @GetMapping("/get/depart/unsafeInfo")
+//    @AuthModule(authId = {AuthConstant.Module.UNSAFE_MODULE_WATCH, AuthConstant.Module.UNSAFE_MODULE_SUPER})
+//    public ResultDTO getUnsafeInfo() {
+//        try {
+//            ArrayList<UnsafeInfoEntity> unsafeInfoByDepartId = new ArrayList<>(unsafeService.getUnsafeInfoByDepartId(user.getSafetyUser().getDepartId()));
+////            ArrayList<UnsafeInfoEntity> unsafeInfoByDepartId = new ArrayList<>(unsafeService.getUnsafeInfoByDepartId(1));
+//            if (unsafeInfoByDepartId.isEmpty()) {
+//                return new ResultDTO(ResultDTO.SUCCESS, "未查询到隐患数据");
+//            }
+//            return new ResultDTO<>(unsafeInfoByDepartId, ResultDTO.SUCCESS, "获取未处理的隐患列表成功");
+//        } catch (Exception e) {
+//            log.error("根据部门id获取隐患信息异常", e);
+//            return new ResultDTO(ResultDTO.SUCCESS, "获取隐患列表异常");
+//        }
+//
+//
+//    }
 
     /**
      * 获取某部门的隐患数据
@@ -143,6 +145,20 @@ public class UnsafeController implements ApplicationListener<ContextRefreshedEve
             if (unsafeInfoByUnsafeInfoEntity.getList().isEmpty()) {
                 return new ResultDTO(ResultDTO.SUCCESS, "未查询到隐患数据");
             }
+            //获取所有部门信息
+            List<DepartmentEntity> departs = departmentService.selectAll();
+            Map<Integer, List<DepartmentEntity>> collect = departs.stream().collect(Collectors.groupingBy(DepartmentEntity::getId));
+            unsafeInfoByUnsafeInfoEntity.getList().forEach(unsafe->{
+                //处理部门获取name
+                List<DepartmentEntity> dealDepartList = collect.get(unsafe.getDepartId());
+                List<DepartmentEntity> startDepartList = collect.get(unsafe.getStartDepartId());
+                if (!CollectionUtils.isEmpty(dealDepartList)){
+                    unsafe.setDepartName(dealDepartList.get(0).getDepartName());
+                }
+                if(!CollectionUtils.isEmpty(startDepartList)){
+                    unsafe.setStartDepartName(startDepartList.get(0).getDepartName());
+                }
+            });
             resultMap.put("total", unsafeInfoByUnsafeInfoEntity.getTotal());
             resultMap.put("rows", unsafeInfoByUnsafeInfoEntity.getList());
             return resultMap;
@@ -225,14 +241,10 @@ public class UnsafeController implements ApplicationListener<ContextRefreshedEve
     @PostMapping("/sign")
     public ResultDTO sign(@RequestParam("id") Long id) {
         try {
-            UserRelationEntity user = LoginSessionUtils.getUser();
-            if (user == null) {
-                return new ResultDTO(ResultDTO.FAILED, "登陆已过期，请重新登陆");
-            }
             UnsafeInfoEntity unsafeInfoEntity = new UnsafeInfoEntity();
             unsafeInfoEntity.setId(id);
             unsafeInfoEntity.setSignStatus("1");
-            unsafeInfoEntity.setModifyUser(user.getSafetyUser().getUsername());
+            unsafeInfoEntity.setModifyUser("system");
 //            unsafeInfoEntity.setModifyUser("xz");
             unsafeInfoEntity.setModifyDate(new Date());
             Integer integer = unsafeService.upateUnsafeInfo(unsafeInfoEntity);
@@ -256,10 +268,6 @@ public class UnsafeController implements ApplicationListener<ContextRefreshedEve
     @PostMapping("/delete")
     public ResultDTO delete(@RequestBody String data) {
         try {
-            UserRelationEntity user = LoginSessionUtils.getUser();
-            if (user == null) {
-                return new ResultDTO(ResultDTO.FAILED, "登陆已过期，请重新登陆");
-            }
             List<String> strings = JSON.parseArray(data, String.class);
             Integer integer = unsafeService.delete(strings);
             if (integer < 0) {
@@ -282,12 +290,8 @@ public class UnsafeController implements ApplicationListener<ContextRefreshedEve
     @PostMapping("/update")
     public ResultDTO submit(@RequestBody String data) {
         try {
-            UserRelationEntity user = LoginSessionUtils.getUser();
-            if (user == null) {
-                return new ResultDTO(ResultDTO.FAILED, "登陆已过期，请重新登陆");
-            }
             UnsafeInfoEntity unsafeInfoEntity = JSONObject.toJavaObject(JSON.parseObject(data), UnsafeInfoEntity.class);
-            unsafeInfoEntity.setModifyUser(user.getSafetyUser().getUsername());
+            unsafeInfoEntity.setModifyUser("system");
 //            unsafeInfoEntity.setModifyUser("xz");
             unsafeInfoEntity.setModifyDate(new Date());
             Integer integer = unsafeService.upateUnsafeInfo(unsafeInfoEntity);

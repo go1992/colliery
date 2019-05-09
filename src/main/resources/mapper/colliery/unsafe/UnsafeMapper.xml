@@ -3,6 +3,7 @@
 <mapper namespace="com.yw.colliery.mapper.unsafe.UnsafeMapper">
     <resultMap id="BaseResultMap" type="com.yw.colliery.entity.unsafe.UnsafeInfoEntity">
         <id column="id" property="id" jdbcType="INTEGER"/>
+        <id column="strat_depart_id" property="startDepartId" jdbcType="INTEGER"/>
         <result column="depart_id" property="departId" jdbcType="INTEGER"/>
         <result column="plan_name" property="planName" jdbcType="VARCHAR"/>
         <result column="location" property="location" jdbcType="VARCHAR"/>
@@ -36,6 +37,7 @@
     <sql id="Base_Column_List">
        id,
        depart_id,
+       strat_depart_id,
        location,
        plan_name,
        content,

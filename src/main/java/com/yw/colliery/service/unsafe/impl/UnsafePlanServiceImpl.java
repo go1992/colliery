@@ -42,4 +42,9 @@ public class UnsafePlanServiceImpl implements UnsafePlanService{
     public Integer deleteUnsafePlanInfo(List<String> planIdList) {
         return unsafePlanMapper.deleteById(planIdList);
     }
+
+    @Override
+    public List<String> getAllUsedPlan(List<String> planIdList) {
+        return unsafePlanMapper.selectUsedPlan(planIdList);
+    }
 }

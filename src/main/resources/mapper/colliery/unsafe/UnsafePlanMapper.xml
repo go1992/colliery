@@ -130,4 +130,19 @@
 
     </delete>
 
+    <select id="selectUsedPlan" resultMap="BaseResultMap" parameterType="com.yw.colliery.entity.unsafe.UnsafePlanEntity">
+        select
+        a.plan_name
+        from
+        colliery_unsafe_plan a,
+        colliery_unsafe_info b
+        WHERE
+        a.plan_name = b.plan_name
+        AND
+        a.plan_id
+        in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
 </mapper>
