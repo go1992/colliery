@@ -138,15 +138,32 @@
     </update>
     <update id="updateByPrimaryKey" parameterType="com.yw.colliery.entity.user.CollierySafetyUserEntity">
     update colliery_user
-      set
-          role_id = #{roleId,jdbcType=INTEGER},
-          depart_id = #{departId,jdbcType=INTEGER},
-          user_pwd = #{userPwd,jdbcType=VARCHAR},
-          user_name = #{userName,jdbcType=VARCHAR},
-          create_date = #{createDate,jdbcType=TIMESTAMP},
-          create_user = #{createUser,jdbcType=VARCHAR},
-          modify_date = #{modifyDate,jdbcType=TIMESTAMP},
-          modify_user = #{modifyUser,jdbcType=TIMESTAMP}
+        <set>
+            <if test="roleId != null">
+                role_id = #{roleId,jdbcType=INTEGER},
+            </if>
+            <if test="departId != null">
+                depart_id = #{departId,jdbcType=INTEGER},
+            </if>
+            <if test="userPwd != null">
+                user_pwd = #{userPwd,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createUser != null">
+                create_user = #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyDate != null">
+                modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyUser != null">
+                modify_user = #{modifyUser,jdbcType=TIMESTAMP},
+            </if>
+        </set>
     where
         1=1
         <if test="id != null">
@@ -172,8 +189,8 @@
             B.department_name as depart_name,
             C.role_name as role_name
         from colliery_user A
-          INNER JOIN colliery_department B on A.depart_id=B.id
-          INNER JOIN colliery_role C ON A.role_id=C.id
+          left JOIN colliery_department B on A.depart_id=B.id
+          left JOIN colliery_role C ON A.role_id=C.id
     </select>
 
     <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
@@ -184,8 +201,8 @@
             B.department_name as depart_name,
             C.role_name as role_name
         from colliery_user A
-            INNER JOIN colliery_department B on A.depart_id=B.id
-            INNER JOIN colliery_role C ON A.role_id=C.id
+            left JOIN colliery_department B on A.depart_id=B.id
+            left JOIN colliery_role C ON A.role_id=C.id
         where A.id = #{userId}
     </select>
 </mapper>
