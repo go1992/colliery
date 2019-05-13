@@ -72,20 +72,13 @@ public class UnsafePlanController implements ApplicationListener<ContextRefreshe
     @PostMapping("/get")
     public Object getAllUnsafeInfo(@RequestBody String data) {
         try {
-            log.info("data>>>>>"+data);
-
             UnsafePlanEntity unsafeInfoEntity = JSONObject.toJavaObject(JSON.parseObject(data), UnsafePlanEntity.class);
             //列名转换一下
             if(unsafeInfoEntity.getOrderName() != null){
                 unsafeInfoEntity.setOrderName(COLUMN_NAME_MAP.get(unsafeInfoEntity.getOrderName()));
             }
             PageBean unsafePlanInfo = unsafePlanService.getUnsafePlanInfo(unsafeInfoEntity, Optional.ofNullable(unsafeInfoEntity.getPageNum()).orElse(0),Optional.ofNullable(unsafeInfoEntity.getPageSize()).orElse(0));
-            log.info("pageNum>>>>>"+unsafeInfoEntity.getPageNum());
             HashMap<String, Object> resultMap = new HashMap<>();
-            if (unsafePlanInfo.getList().isEmpty()) {
-                return new ResultDTO(ResultDTO.FAILED, "未查询到隐患排查计划数据");
-            }
-
             resultMap.put("total",unsafePlanInfo.getTotal());
             resultMap.put("rows",unsafePlanInfo.getList());
             return resultMap;

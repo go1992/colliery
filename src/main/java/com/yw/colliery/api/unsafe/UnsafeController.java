@@ -142,9 +142,6 @@ public class UnsafeController implements ApplicationListener<ContextRefreshedEve
                     , Optional.ofNullable(unsafeInfoEntity.getPageNum()).orElse(0)
                     , Optional.ofNullable(unsafeInfoEntity.getPageSize()).orElse(0));
             HashMap<String, Object> resultMap = new HashMap<>();
-            if (unsafeInfoByUnsafeInfoEntity.getList().isEmpty()) {
-                return new ResultDTO(ResultDTO.SUCCESS, "未查询到隐患数据");
-            }
             //获取所有部门信息
             List<DepartmentEntity> departs = departmentService.selectAll();
             Map<Integer, List<DepartmentEntity>> collect = departs.stream().collect(Collectors.groupingBy(DepartmentEntity::getId));
@@ -159,6 +156,7 @@ public class UnsafeController implements ApplicationListener<ContextRefreshedEve
                     unsafe.setStartDepartName(startDepartList.get(0).getDepartName());
                 }
             });
+
             resultMap.put("total", unsafeInfoByUnsafeInfoEntity.getTotal());
             resultMap.put("rows", unsafeInfoByUnsafeInfoEntity.getList());
             return resultMap;
