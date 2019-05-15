@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * @description: 用户查询接口
- * @author: xuzhou-lhq
+ * @author: xuzhou
  * @create: 2019-04-25 14:04
  **/
 public interface CollierySafetyUserService extends UserDetailsService {

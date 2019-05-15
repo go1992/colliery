@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
 * @description: 验证成功处理
-* @author xuzhou-lhq
+* @author xuzhou
 * @date 2019/4/25
 */
 @Mapper

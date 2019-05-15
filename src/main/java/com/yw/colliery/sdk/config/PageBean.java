@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * @description:
- * @author: xuzhou-lhq
+ * @author: xuzhou
  * @create: 2019-05-05 15:24
  **/
 public class PageBean<T> implements Serializable {

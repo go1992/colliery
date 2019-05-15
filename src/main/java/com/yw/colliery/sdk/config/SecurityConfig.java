@@ -19,7 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 /**
  * @description: 安全框架配置
- * @author: xuzhou-lhq
+ * @author: xuzhou
  * @create: 2019-04-25 11:50
  **/
 @Configuration

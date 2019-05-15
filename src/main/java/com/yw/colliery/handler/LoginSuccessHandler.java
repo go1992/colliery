@@ -15,7 +15,7 @@ import java.io.PrintWriter;
 
 /**
  * @description: 验证成功处理
- * @author: xuzhou-lhq
+ * @author: xuzhou
  * @create: 2019-04-25 12:33
  **/
 @Component

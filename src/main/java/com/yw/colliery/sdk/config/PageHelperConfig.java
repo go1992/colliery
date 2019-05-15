@@ -8,7 +8,7 @@ import java.util.Properties;
 
 /**
  * @description:
- * @author: xuzhou-lhq
+ * @author: xuzhou
  * @create: 2019-05-05 15:23
  **/
 @Configuration

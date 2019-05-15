@@ -11,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @description: 验证码处理服务
- * @author: xuzhou-lhq
+ * @author: xuzhou
  * @create: 2019-04-28 16:45
  **/
 @Service
