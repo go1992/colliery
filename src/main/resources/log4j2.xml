@@ -81,7 +81,6 @@
             <appender-ref ref="WholeLog"/>
             <appender-ref ref="ErrorLog"/>-->
             <appender-ref ref="RollingLog"/>
-            <!--<appender-ref ref="SunShineLog"/>-->
         </root>
 
         <!-- 异步Appenders写日志-->
@@ -92,8 +91,8 @@
              <appender-ref ref="ErrorLog"/>
              <appender-ref ref="RollingLog"/>
          </Async>-->
-        <logger name="com.sinosig.slnb" level="info" includeLocation="true">
-            <appender-ref ref="SunShineLog"/>
+        <logger name="com.yw.colliery" level="info" includeLocation="true">
+            <appender-ref ref="RollingLog"/>
         </logger>
         <!-- 异步logger写日志,指定包路径-->
         <!--   <AsyncLogger name="com.ywserver" level="trace" includeLocation="true">
