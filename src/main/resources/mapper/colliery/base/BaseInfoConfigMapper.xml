@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yw.colliery.mapper.base.BaseInfoConfigMapper">
+    <resultMap id="BaseResultMap" type="com.yw.colliery.entity.base.BaseInfoConfigEntity">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="value" property="value" jdbcType="VARCHAR"/>
+        <result column="create_user" property="createUser" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP"/>
+        <result column="modify_user" property="modifyUser" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+       id, name, value, create_user, create_date, modify_date, modify_user
+    </sql>
+
+
+    <insert id="addConfig" parameterType="com.yw.colliery.entity.base.BaseInfoConfigEntity" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into colliery_base_config
+          (name, value,create_user,create_date,modify_date, modify_user)
+        values
+          (#{name,jdbcType=VARCHAR},
+           #{level,jdbcType=INTEGER},
+           #{createUser,jdbcType=VARCHAR},
+           #{createDate,jdbcType=TIMESTAMP},
+           #{modifyDate,jdbcType=TIMESTAMP},
+           #{modifyUser,jdbcType=VARCHAR})
+    </insert>
+
+    <update id="updateConfig" parameterType="com.yw.colliery.entity.base.BaseInfoConfigEntity">
+        update colliery_base_config
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="value != null">
+                value = #{value,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyUser != null">
+                modify_user = #{modifyUser,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyDate != null">
+                modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <delete id="deleteConfigByIds" parameterType="java.util.List">
+        delete
+        from colliery_base_config
+        where
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        colliery_base_config
+        where
+        1=1
+        <if test="id != null">
+            and id = #{id}
+        </if>
+        <if test="name != null">
+            AND name =#{name}
+        </if>
+        <if test="value != null">
+            AND value =#{value}
+        </if>>
+        <if test="orderName !=null">
+            ORDER BY ${orderName} ${order}
+        </if>
+    </select>
+</mapper>

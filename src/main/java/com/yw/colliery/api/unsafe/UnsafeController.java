@@ -140,9 +140,6 @@ public class UnsafeController implements ApplicationListener<ContextRefreshedEve
                     , Optional.ofNullable(unsafeInfoEntity.getPageNum()).orElse(0)
                     , Optional.ofNullable(unsafeInfoEntity.getPageSize()).orElse(0));
             HashMap<String, Object> resultMap = new HashMap<>();
-            if (unsafeInfoByUnsafeInfoEntity.getList().isEmpty()) {
-                return new ResultDTO(ResultDTO.SUCCESS, "未查询到隐患数据");
-            }
             resultMap.put("total", unsafeInfoByUnsafeInfoEntity.getTotal());
             resultMap.put("rows", unsafeInfoByUnsafeInfoEntity.getList());
             return resultMap;
