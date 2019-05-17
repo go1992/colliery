@@ -54,6 +54,8 @@
         delete
         from colliery_base_config
         where
+        id
+        in
         <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
             #{item}
         </foreach>

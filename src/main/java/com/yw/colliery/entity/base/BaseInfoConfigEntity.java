@@ -13,7 +13,6 @@ import java.util.Date;
  * @Description: 基础配置信息实体
  */
 @Data
-@AllArgsConstructor
 public class BaseInfoConfigEntity implements Serializable {
 
     private static final long serialVersionUID = -3509376166761115618L;
