@@ -17,7 +17,7 @@ public interface BaseInfoConfigService {
      * @param baseInfoConfigEntity
      * @return
      */
-    Integer saveBaseConfig(BaseInfoConfigEntity baseInfoConfigEntity);
+    Integer saveBaseConfig(List<BaseInfoConfigEntity> baseInfoConfigEntity);
 
     /**
      * 更新配置信息

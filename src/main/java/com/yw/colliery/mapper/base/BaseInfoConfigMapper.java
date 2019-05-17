@@ -15,7 +15,7 @@ public interface BaseInfoConfigMapper {
      * @param baseInfoConfigEntity
      * @return
      */
-    Integer addConfig(BaseInfoConfigEntity baseInfoConfigEntity);
+    Integer addConfig(List<BaseInfoConfigEntity> baseInfoConfigEntity);
 
 
     /**

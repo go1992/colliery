@@ -21,7 +21,7 @@ public class BaseInfoConfigServiceImpl implements BaseInfoConfigService {
     @Autowired
     private BaseInfoConfigMapper baseInfoConfigMapper;
     @Override
-    public Integer saveBaseConfig(BaseInfoConfigEntity baseInfoConfigEntity) {
+    public Integer saveBaseConfig(List<BaseInfoConfigEntity> baseInfoConfigEntity) {
         return baseInfoConfigMapper.addConfig(baseInfoConfigEntity);
     }
 

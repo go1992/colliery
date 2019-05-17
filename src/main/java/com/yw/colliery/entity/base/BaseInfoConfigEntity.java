@@ -18,11 +18,19 @@ public class BaseInfoConfigEntity implements Serializable {
 
     private static final long serialVersionUID = -3509376166761115618L;
 
-    private Long id;
+    private Integer id;
 
     private String name;
 
     private String value;
+
+    private Date createDate;
+
+    private String createUser;
+
+    private Date modifyDate;
+
+    private String modifyUser;
 
     /**
      * 页数
@@ -44,12 +52,4 @@ public class BaseInfoConfigEntity implements Serializable {
      */
     @JsonIgnore
     private String order;
-
-    private Date createDate;
-
-    private String createUser;
-
-    private Date modifyDate;
-
-    private String modifyUser;
 }

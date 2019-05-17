@@ -3,12 +3,13 @@ package com.yw.colliery.api.base;
 import java.util.Properties;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.google.code.kaptcha.util.Config;
 
-@Component
+@Configuration
 public class KaptchaConfig {
     @Bean
     public DefaultKaptcha getDefaultKaptcha() {

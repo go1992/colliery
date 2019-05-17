@@ -16,17 +16,19 @@
     </sql>
 
 
-    <insert id="addConfig" parameterType="com.yw.colliery.entity.base.BaseInfoConfigEntity" useGeneratedKeys="true"
+    <insert id="addConfig" parameterType="java.util.List" useGeneratedKeys="true"
             keyProperty="id">
         insert into colliery_base_config
           (name, value,create_user,create_date,modify_date, modify_user)
         values
-          (#{name,jdbcType=VARCHAR},
-           #{level,jdbcType=INTEGER},
-           #{createUser,jdbcType=VARCHAR},
-           #{createDate,jdbcType=TIMESTAMP},
-           #{modifyDate,jdbcType=TIMESTAMP},
-           #{modifyUser,jdbcType=VARCHAR})
+        <foreach item="item" index="index" collection="list" separator=",">
+           (#{item.name,jdbcType=VARCHAR},
+           #{item.value,jdbcType=VARCHAR},
+           #{item.createUser,jdbcType=VARCHAR},
+           #{item.createDate,jdbcType=TIMESTAMP},
+           #{item.modifyDate,jdbcType=TIMESTAMP},
+           #{item.modifyUser,jdbcType=VARCHAR})
+        </foreach>
     </insert>
 
     <update id="updateConfig" parameterType="com.yw.colliery.entity.base.BaseInfoConfigEntity">
@@ -58,7 +60,7 @@
     </delete>
 
 
-    <select id="selectAll" resultMap="BaseResultMap">
+    <select id="selectAll" resultMap="BaseResultMap" parameterType="com.yw.colliery.entity.base.BaseInfoConfigEntity">
         select
         <include refid="Base_Column_List"/>
         from
@@ -73,7 +75,7 @@
         </if>
         <if test="value != null">
             AND value =#{value}
-        </if>>
+        </if>
         <if test="orderName !=null">
             ORDER BY ${orderName} ${order}
         </if>

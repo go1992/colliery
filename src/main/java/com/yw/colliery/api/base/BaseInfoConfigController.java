@@ -8,6 +8,8 @@ import com.yw.colliery.sdk.config.PageBean;
 import com.yw.colliery.service.base.BaseInfoConfigService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,22 +26,22 @@ public class BaseInfoConfigController {
     private BaseInfoConfigService baseInfoConfigService;
 
     @RequestMapping("/save")
-    public ResultDTO save(String data){
+    public ResultDTO save(@RequestBody String data){
         try {
-            JSONObject jsonObject = JSONObject.parseObject(data);
-            BaseInfoConfigEntity object = JSON.toJavaObject(jsonObject, BaseInfoConfigEntity.class);
-            Integer result = baseInfoConfigService.saveBaseConfig(object);
+            List<BaseInfoConfigEntity> baseInfoConfigEntities = JSON.parseArray(data, BaseInfoConfigEntity.class);
+            Integer result = baseInfoConfigService.saveBaseConfig(baseInfoConfigEntities);
             if (result < 0) {
                 return new ResultDTO(ResultDTO.FAILED, "持久化配置信息失败");
             }
             return new ResultDTO(ResultDTO.SUCCESS, "持久化配置信息成功");
         } catch (Exception e) {
+            log.error("持久化配置信息异常",e);
             return new ResultDTO(ResultDTO.SUCCESS, "持久化配置信息异常");
         }
     }
 
     @RequestMapping("/delete")
-    public ResultDTO delete(String data){
+    public ResultDTO delete(@RequestBody String data){
         try {
             List<String> arrayLists = JSON.parseArray(data, String.class);
             Integer integer = baseInfoConfigService.deleteConfig(arrayLists);
@@ -53,7 +55,8 @@ public class BaseInfoConfigController {
     }
 
     @RequestMapping("/get")
-    public Object get(String data){
+    @Cacheable
+    public Object get(@RequestBody String data){
         try {
             BaseInfoConfigEntity baseInfoConfigEntity = JSONObject.toJavaObject(JSON.parseObject(data), BaseInfoConfigEntity.class);
 
@@ -71,7 +74,7 @@ public class BaseInfoConfigController {
     }
 
     @RequestMapping("/update")
-    public ResultDTO update(String data){
+    public ResultDTO update(@RequestBody String data){
         try {
             JSONObject jsonObject = JSONObject.parseObject(data);
             BaseInfoConfigEntity object = JSON.toJavaObject(jsonObject, BaseInfoConfigEntity.class);
@@ -81,6 +84,7 @@ public class BaseInfoConfigController {
             }
             return new ResultDTO(ResultDTO.SUCCESS, "更新化配置信息成功");
         } catch (Exception e) {
+            log.error("更新配置信息异常",e);
             return new ResultDTO(ResultDTO.SUCCESS, "更新配置信息异常");
         }
     }
