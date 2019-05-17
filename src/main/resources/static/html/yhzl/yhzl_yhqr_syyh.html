@@ -102,9 +102,9 @@
 
 	<body>
 		<form method="post" action="#" id="Form1" enctype="multipart/form-data">
-			<input type="hidden" id="RowId" value="1" />
+			<input type="hidden" id="RowId" />
 			<!--处理部门的ID-->
-			<input type="hidden" name="departId" value="1" />
+			<input type="hidden" id="departId" name="departId" />
 			<table id="Table1" border="1" cellspacing="0" cellpadding="5px">
 				<tr>
 					<td>检查时间：</td>
@@ -136,9 +136,7 @@
 			</table>
 			<div class="btn_tr" id="toolbar">
 				<div>
-					<button type="button" class="btn_bj" id="btn_bj"><i class="iconfont icon-bianji"></i>编辑选中项</button>
-					<button type="button" class="btn_del" id="btn_del"><i class="iconfont icon-shanchu"></i>删除选中项</button>
-					<button type="button" class="btn_bj" id="btn_qr"><i class="iconfont icon-shanchu"></i>隐患确认处理</button>
+					<button type="button" class="btn_bj" id="btn_qr"><i class="iconfont icon-bianji"></i>隐患确认处理</button>
 				</div>
 			</div>
 			<table id="Table2" border="1" cellspacing="0" cellpadding="5px">
@@ -157,21 +155,38 @@
 		<!--bootstrap-table插件汉化-->
 		<script type="text/javascript" src="js/bootstrap-table-zh-CN.min.js"></script>
 		<script>
+			//为ajax设置跨域带cookie
+			$.ajaxPrefilter(function(options, originalOptions, jqXHR) {
+				options.xhrFields = {
+					withCredentials: true
+				}
+			});
+			//从session得到部门id
+			$.ajax({
+				dataType: "json",
+				type: "get",
+				url: "http://47.103.35.95:8888/apiv1/session/get",
+				async: true,
+				success: function(data) {
+					$("#departId").val(data.safetyUser.departId);
+					$(function() {
+
+						//1.初始化Table
+						var oTable = new TableInit();
+						oTable.Init();
+
+						//2.初始化Button的点击事件
+						var oButtonInit = new ButtonInit();
+						oButtonInit.Init();
+
+					});
+				}
+			});
 			//清空表单
 			$("#btn_qk").click(function() {
 				$("#Form1")[0].reset();
 			});
-			$(function() {
 
-				//1.初始化Table
-				var oTable = new TableInit();
-				oTable.Init();
-
-				//2.初始化Button的点击事件
-				var oButtonInit = new ButtonInit();
-				oButtonInit.Init();
-
-			});
 			var host = "http://47.103.35.95:8888";
 			var UrlSelect = '/apiv1/unsafe/get/unsafeInfo/condition';
 			var UrlDelete = '/apiv1/unsafe/delete';
@@ -213,15 +228,15 @@
 						selectItemName: 'name',
 						smartDisplay: true, //设置为 true可以在分页和卡片视图快速切换
 						sidePagination: 'server', //设置在哪里进行分页，可选值为 ‘client’ 或者 ‘server’。设置 ‘server’时，必须设置 服务器数据地址（url）或者重写ajax方法
-						search: true, //是否启用搜索框
+						search: false, //是否启用搜索框
 						searchAlign: 'right', //指定 搜索框 水平方向的位置。’left’ or ‘right’
 						searchOnEnterKey: false, //设置为 true时，按回车触发搜索方法，否则自动触发搜索方法
 						strictSearch: false, //设置为 true启用 全匹配搜索，否则为模糊搜索
 						showHeader: true, //是否显示列头
 						showFooter: false, //是否显示列脚
-						showColumns: true, //是否显示 内容列下拉框
-						showRefresh: true, //是否显示 刷新按钮
-						showToggle: true, //是否显示 切换试图（table/card）按钮
+						showColumns: false, //是否显示 内容列下拉框
+						showRefresh: false, //是否显示 刷新按钮
+						showToggle: false, //是否显示 切换试图（table/card）按钮
 						showPaginationSwitch: true, //是否显示 数据条数选择框
 						buttonsAlign: 'right', //指定 按钮 水平方向的位置。’left’ or ‘right’
 						toolbarAlign: 'left', //指定 toolbar 水平方向的位置。’left’ or ‘right’
@@ -281,13 +296,13 @@
 								"sortable": "true"
 							},
 							{
-								"field": "departId",
-								"title": "隐患处理部门id",
+								"field": "departName",
+								"title": "隐患处理部门",
 								"sortable": "true"
 							},
 							{
-								"field": "startDepartId",
-								"title": "发起部门id",
+								"field": "startDepartName",
+								"title": "发起部门",
 								"sortable": "true"
 							},
 							{
@@ -349,7 +364,14 @@
 							{
 								"field": "signStatus",
 								"title": "签单状态",
-								"sortable": "true"
+								"sortable": "true",
+								"formatter": function(value, row, index) {
+									if(row['signStatus'] == "0") {
+										return '未签单';
+									} else if(row['signStatus'] == "1") {
+										return '已	签单';
+									} 
+								}
 							},
 							{
 								"field": "checkTime",
@@ -422,19 +444,6 @@
 						onLoadError: function() {
 							return "加载失败了";
 						},
-						onDblClickRow: function(row, $element) {
-							var id = row.id;
-							//							EditViewById(id, 'view');
-							$("#RowId").val(id);
-							layer.open({
-								type: 2,
-								title: '编辑',
-								maxmin: true,
-								shadeClose: true, //点击遮罩关闭层
-								area: ['1000px', '600px'],
-								content: 'html/yhzl/yhzl_yhlr_yhxx.html'
-							});
-						},
 					});
 				}
 				//得到查询的参数
@@ -467,54 +476,6 @@
 				$('#Table2').bootstrapTable('refresh', {
 					url: host + UrlSelect
 				});
-			});
-			//实现删除数据的方法
-			$("#btn_del").click(function() {
-				var message = confirm("是否确定删除数据？");
-				if(message == true) {
-					var ids = []; //得到用户选择的数据的ID
-					var rows = $('#Table2').bootstrapTable('getSelections');
-					for(var i = 0; i < rows.length; i++) {
-						//					ids += rows[i].planId + ',';
-						ids.push(rows[i].id);
-					}
-					$.ajax({
-						contentType: "application/json;charset=utf-8",
-						type: "post",
-						url: host + UrlDelete,
-						data: JSON.stringify(ids),
-						dataType: "json",
-						success: function(data) {
-							if(data.code == "success") {
-								alert("删除成功！");
-							}
-							$('#Table2').bootstrapTable('refresh', {
-								url: host + UrlSelect
-							});
-						}
-					});
-				}
-
-			});
-			//实现编辑数据的方法
-			$("#btn_bj").click(function() {
-				var rows = $('#Table2').bootstrapTable('getSelections');
-				if(rows.length == 1) {
-					id = rows[0].id;
-					$("#RowId").val(id);
-					layer.open({
-						type: 2,
-						title: '编辑',
-						maxmin: true,
-						shadeClose: true, //点击遮罩关闭层
-						area: ['1000px', '600px'],
-						content: 'html/yhzl/yhzl_yhlr_yhxx.html.html'
-					});
-				} else if(rows.length == 0) {
-					alert("请选择您要编辑的项！");
-				} else {
-					alert("编辑选项按钮仅能选择一项！");
-				}
 			});
 			//实现确认处理隐患的方法
 			$("#btn_qr").click(function() {

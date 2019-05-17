@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			.btn_tj {
+				border: 0px;
+				border-radius: 3px;
+				color: white;
+				width: 160px;
+				height: 30px;
+				font-size: 14px;
+				background-color: #30a5ff;
+				margin: 0 50px;
+			}
+			
+			.btn_tj:hover,
+			.btn_bj:hover {
+				cursor: pointer;
+				background-color: #428bca;
+			}
+			
+			.btn_tr {
+				position: relative;
+				display: -ms-inline-flexbox;
+				display: inline-flex;
+				vertical-align: middle;
+			}
+			
+			.btn_bj,
+			.btn_del {
+				border: 0px;
+				border-radius: 3px;
+				color: white;
+				width: 120px;
+				height: 30px;
+				font-size: 14px;
+				background-color: #30a5ff;
+				margin: 0 20px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<input type="hidden" id="RowId" />
+		<select id="sel_z" name="departId" style="margin: 4px;"></select>
+		<button type="button" class="btn_tj" id="btn_tj"><i class="iconfont icon-bianji"></i>确认分发隐患</button>
+		<script type="text/javascript" src="../../js/jquery-1.12.4.js"></script>
+		<script type="text/javascript" src="../../js/layer/layer.js"></script>
+		<!--<script type="text/javascript" src="http://127.0.0.1:8020/static/js/jquery-1.12.4.js"></script>
+		<script type="text/javascript" src="http://127.0.0.1:8020/static/js/layer/layer.js"></script>-->
+
+		<script>
+			//为ajax设置跨域带cookie
+			$.ajaxPrefilter(function(options, originalOptions, jqXHR) {
+				options.xhrFields = {
+					withCredentials: true
+				}
+			});
+			var host = "http://47.103.35.95:8888";
+			var Urlbm = '/department/select/all';
+			var Urlff = '/apiv1/unsafe/apply/distributed';
+			var UrlSelect = '/apiv1/unsafe/get/unsafeInfo/condition';
+			
+			var json2 = {
+				"pageNum": null,
+				"pageSize": null
+			};
+			$.ajax({
+				contentType: "application/json;charset=utf-8",
+				dataType: "json",
+				type: "post",
+				url: host + Urlbm,
+				async: true,
+				data: JSON.stringify(json2),
+				success: function(data) {
+					if(data.total > 0) {
+						var str;
+						for(var i = 0; i < data.rows.length; i++) {
+							str += "<option value='" + data.rows[i].id + "'>" + data.rows[i].departName + "</option>"
+						}
+						$("#sel_z").html(str);
+					} else {
+						alert(data.message);
+					}
+
+				},
+				error: function(request) {
+					alert("连接失败!")
+				}
+			});
+			var RowId = parent.$('#RowId').val();
+			$("#RowId").val(RowId);
+			//实现下方隐患到部门
+			$("#btn_tj").click(function() {
+				if(RowId != "" && RowId != undefined && RowId != 'undefined') {
+					$.ajax({
+						type: "post",
+						url: host + Urlff,
+						data: {
+							"id": $("#RowId").val(),
+							"departId": $("#sel_z").val()
+						},
+						dataType: "json",
+						success: function(data) {
+							if(data.code == "success") {
+								alert("分发成功！");
+							}
+							var index = parent.layer.getFrameIndex(window.name);
+							parent.layer.close(index);
+							if(parent) parent.$('#Table2').bootstrapTable('refresh', {
+								url: host + UrlSelect
+							});
+						}
+					});
+				} else {
+					alert("未获取到隐患信息！");
+				}
+			});
+		</script>
+	</body>
+
+</html>

@@ -88,7 +88,7 @@
 			<table id="Table1" border="1" cellspacing="0" cellpadding="5px">
 				<tr>
 					<td>排查单位：</td>
-					<td><input name="departName" /><br></td>
+					<td><select id="sel_z" name="departName" style="margin: 4px;"><br></td>
 					<td>排查类型：</td>
 					<td><input name="type" /><br></td>
 					<td></td>
@@ -123,6 +123,13 @@
 		<!--bootstrap-table插件汉化-->
 		<script type="text/javascript" src="js/bootstrap-table-zh-CN.min.js"></script>
 		<script>
+			//为ajax设置跨域带cookie
+			$.ajaxPrefilter(function(options, originalOptions, jqXHR) {
+				options.xhrFields = {
+					withCredentials: true
+				}
+			});
+			
 			//清空表单
 			$("#btn_qk").click(function() {
 				$("#Form1")[0].reset();
@@ -140,6 +147,35 @@
 			var host = "http://47.103.35.95:8888";
 			var UrlSelect = '/apiv1/unsafePlan/get';
 			var UrlDelete = '/apiv1/unsafePlan/delete';
+			var Urlbm = '/department/select/all';
+			//部门下拉框
+			var json2 = {
+				"pageNum": null,
+				"pageSize": null
+			};
+			$.ajax({
+				contentType: "application/json;charset=utf-8",
+				dataType: "json",
+				type: "post",
+				url: host + Urlbm,
+				async: true,
+				data: JSON.stringify(json2),
+				success: function(data) {
+					if(data.total > 0) {
+						var str="<option></option>";
+						for(var i = 0; i < data.rows.length; i++) {
+							str += "<option>" + data.rows[i].departName + "</option>"
+						}
+						$("#sel_z").html(str);
+					} else {
+						alert(data.message);
+					}
+
+				},
+				error: function(request) {
+					alert("连接失败!")
+				}
+			});
 			var TableInit = function() {
 				$('#Table2').bootstrapTable('destroy');
 				var oTableInit = new Object();
@@ -176,15 +212,15 @@
 						selectItemName: 'name',
 						smartDisplay: true, //设置为 true可以在分页和卡片视图快速切换
 						sidePagination: 'server', //设置在哪里进行分页，可选值为 ‘client’ 或者 ‘server’。设置 ‘server’时，必须设置 服务器数据地址（url）或者重写ajax方法
-						search: true, //是否启用搜索框
+						search: false, //是否启用搜索框
 						searchAlign: 'right', //指定 搜索框 水平方向的位置。’left’ or ‘right’
 						searchOnEnterKey: false, //设置为 true时，按回车触发搜索方法，否则自动触发搜索方法
 						strictSearch: false, //设置为 true启用 全匹配搜索，否则为模糊搜索
 						showHeader: true, //是否显示列头
 						showFooter: false, //是否显示列脚
-						showColumns: true, //是否显示 内容列下拉框
-						showRefresh: true, //是否显示 刷新按钮
-						showToggle: true, //是否显示 切换试图（table/card）按钮
+						showColumns: false, //是否显示 内容列下拉框
+						showRefresh: false, //是否显示 刷新按钮
+						showToggle: false, //是否显示 切换试图（table/card）按钮
 						showPaginationSwitch: true, //是否显示 数据条数选择框
 						buttonsAlign: 'right', //指定 按钮 水平方向的位置。’left’ or ‘right’
 						toolbarAlign: 'left', //指定 toolbar 水平方向的位置。’left’ or ‘right’
@@ -244,6 +280,15 @@
 							{
 								field: "content",
 								title: "排查内容",
+								sortable: "true"
+							},
+							{
+								field: "createUser",
+								title: "创建人",
+								sortable: "true"
+							}, {
+								field: "createDate",
+								title: "创建时间",
 								sortable: "true"
 							},
 
@@ -321,8 +366,8 @@
 								$('#Table2').bootstrapTable('refresh', {
 									url: host + UrlSelect
 								});
-							}else{
-								alert("删除失败！");
+							} else {
+								alert(data.message);
 							}
 
 						},

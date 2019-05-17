@@ -117,7 +117,7 @@
 
 				<tr>
 					<td>排查单位 ：</td>
-					<td colspan="3"><input id="jh_pcdw" name="departName" /> </td>
+					<td colspan="3"><select id="sel_z" name="departName" style="margin: 4px;"></select></td>
 
 					<td>排查类型 ：</td>
 					<td colspan="3"><input id="jh_pctype" name="type" /> </td>
@@ -127,7 +127,7 @@
 					<td>排查地点 ：</td>
 					<td colspan="3"><input id="jh_pcaddress" name="location" /> </td>
 					<td>排查内容 ：</td>
-					<td colspan="3"><textarea id="jh_nr" name="content" rows="6" cols="70" style="margin: 4px;"></textarea></td>
+					<td colspan="3"><textarea id="jh_nr" name="content" rows="6" cols="50" style="margin: 4px;"></textarea></td>
 				</tr>
 			</table>
 			<div class="btn_item">
@@ -135,19 +135,18 @@
 				<button id="btn_qk" type="button" class="btn_qk"><i class="iconfont icon-qingkong"></i>清空</button>
 			</div>
 		</form>
-		<script type="text/javascript" src="http://127.0.0.1:8020/信息管理系统/js/jquery-1.12.4.js"></script>
-		<script type="text/javascript" src="http://127.0.0.1:8020/信息管理系统/js/layer/layer.js"></script>
+		<script type="text/javascript" src="../../js/jquery-1.12.4.js"></script>
+		<script type="text/javascript" src="../../js/layer/layer.js"></script>
+		<!--<script type="text/javascript" src="http://127.0.0.1:8020/static/js/jquery-1.12.4.js"></script>
+		<script type="text/javascript" src="http://127.0.0.1:8020/static/js/layer/layer.js"></script>-->
 
 		<script>
-			//			//给排查时间赋值为当前日期
-			//			$(document).ready(function() {    
-			//				var time  = new Date();    
-			//				var day = ("0" + time.getDate()).slice(-2);    
-			//				var month = ("0" + (time.getMonth() + 1)).slice(-2);    
-			//				var today = time.getFullYear() + "-" + (month) + "-" + (day);    
-			//				$('#jh_pcdate').val(today);  
-			//			})
-
+			//为ajax设置跨域带cookie
+			$.ajaxPrefilter(function(options, originalOptions, jqXHR) {
+				options.xhrFields = {
+					withCredentials: true
+				}
+			});
 			//清空表单
 			$("#btn_qk").click(function() {
 				$("#Form1")[0].reset();
@@ -156,8 +155,38 @@
 			var UrlSelect = '/apiv1/unsafePlan/get';
 			var UrlInsert = '/apiv1/unsafePlan/save';
 			var UrlUpdate = '/apiv1/unsafePlan/update';
+			var Urlbm = '/department/select/all';
+			
 			var RowId = parent.$('#RowId').val();
 			$("#RowId").val(RowId);
+			//部门下拉框
+			var json2 = {
+				"pageNum": null,
+				"pageSize": null
+			};
+			$.ajax({
+				contentType: "application/json;charset=utf-8",
+				dataType: "json",
+				type: "post",
+				url: host + Urlbm,
+				async: true,
+				data: JSON.stringify(json2),
+				success: function(data) {
+					if(data.total > 0) {
+						var str;
+						for(var i = 0; i < data.rows.length; i++) {
+							str += "<option>" + data.rows[i].departName + "</option>"
+						}
+						$("#sel_z").html(str);
+					} else {
+						alert(data.message);
+					}
+
+				},
+				error: function(request) {
+					alert("连接失败!")
+				}
+			});
 			//实现添加数据或者修改数据，当有ID传入时调用修改接口，没有ID传入调用增加接口
 			$("#btn_tj").click(function() {
 				if(RowId != "" && RowId != undefined && RowId != 'undefined') {

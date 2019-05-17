@@ -5,25 +5,6 @@
 		<meta charset="UTF-8">
 		<title></title>
 		<link rel="stylesheet" href="js/layer/mobile/need/layer.css" />
-
-		<script>
-			    $(document).ready(function () {
-			        var time = new Date();
-			        var day = ("0" + time.getDate()).slice(-2);
-			        var month = ("0" + (time.getMonth() + 1)).slice(-2);
-			        var today = time.getFullYear() + "-" + (month) + "-" + (day);
-			        $('#starttime').val(today);
-			    })
-			</script>
-		<script>
-			    $(document).ready(function () {
-			        var time = new Date();
-			        var day = ("0" + time.getDate()).slice(-2);
-			        var month = ("0" + (time.getMonth() + 2)).slice(-2);
-			        var today = time.getFullYear() + "-" + (month) + "-" + (day);
-			        $('#endtime').val(today);
-			    })
-			</script>
 		<style>
 			#Table1,
 			#Table2 {
@@ -108,10 +89,10 @@
 				<tr>
 
 					<td>钻孔位置：</td>
-					<td><input id="input_zkwz" /><br></td>
+					<td><input id="input_zkwz" name="input_zkwz" /><br></td>
 
 					<td>排查日期：</td>
-					<td>起始日期：<input type="date" id="starttime" name="startTime" value="<%=date()%>" /><br>结束日期：<input type="date" id="endtime" name="endTime" /><br></td>
+					<td>起始日期：<input type="date" id="starttime" name="startTime" /><br>结束日期：<input type="date" id="endtime" name="endTime" /><br></td>
 					<td><button type="button" class="btn_tj" id="btn_sel"><i class="iconfont icon-chaxun"></i>查询</button></td>
 				</tr>
 			</table>
@@ -122,26 +103,7 @@
 				</div>
 			</div>
 			<table id="Table2" border="1" cellspacing="0" cellpadding="5px">
-				<!--<thead>
-				<tr>
-					<th><input id="check" onchange="dianji()" type="checkbox"></th>
-					<th>排查日期</th>
-					<th>开孔日期</th>
-					<th>位置</th>
-					<th>钻孔编号</th>
-					<th>水位情况</th>
-					<th>孔内状况</th>
-					<th>孔口情况</th>
-					<th>设计孔深</th>
-					<th>实际孔深</th>
-					<th>有无险情</th>
-					<th>记录人</th>
-					<th>审核人</th>
-				</tr>
-			</thead>
-			<tbody>
-
-			</tbody>-->
+				
 			</table>
 		</form>
 		<script type="text/javascript" src="js/jquery-1.12.4.js"></script>
@@ -157,11 +119,11 @@
 		<script type="text/javascript" src="js/bootstrap-table-zh-CN.min.js"></script>
 
 		<script>
-			//把钻孔位置下拉框复制给文本框
-			$(document).ready(function() {
-				$("#sel_zkwz").change(function() {
-					$("#input_zkwz").val($("#sel_zkwz").val());
-				});
+			//为ajax设置跨域带cookie
+			$.ajaxPrefilter(function(options, originalOptions, jqXHR) {
+				options.xhrFields = {
+					withCredentials: true
+				}
 			});
 			//清空表单
 			$("#btn_qk").click(function() {
@@ -345,12 +307,6 @@
 					temp["pageNum"]=params.pageNumber;//页码
 					temp["order"]=params.sortOrder;//排序的方式
 					temp["ordername"]=params.sortName;//排序的字段
-					temp["searchParam"]=params.searchText;//搜索值
-					temp["fields"]=getSearchFields();//要搜索的字段
-
-					temp['id'] = $("#input_zkwz").val()?$("#input_zkwz").val():'';
-					temp['startTime'] = $("#starttime").val()?$("#starttime").val():'';
-					temp['endTime'] = $("#endtime").val()?$("#endtime").val():'';
 					return temp;
 				};
 				return oTableInit;

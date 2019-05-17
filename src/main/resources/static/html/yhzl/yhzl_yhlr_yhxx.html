@@ -110,7 +110,7 @@
 			<!--所属煤矿 -->
 			<input type="hidden" id="coalMine" name="coalMine" />
 			<!--发起部门 -->
-			<input type="hidden" id="coalMine" name="coalMine" />
+			<input type="hidden" id="startDepartId" name="startDepartId" />
 			<table id="Table1" border="1" cellspacing="0" cellpadding="5px">
 				<tr>
 					<td>计划名称 ：</td>
@@ -206,10 +206,28 @@
 				<button id="btn_qk" type="button" class="btn_qk"><i class="iconfont icon-qingkong"></i>清空</button>
 			</div>
 		</form>
-		<script type="text/javascript" src="http://127.0.0.1:8020/信息管理系统/js/jquery-1.12.4.js"></script>
-		<script type="text/javascript" src="http://127.0.0.1:8020/信息管理系统/js/layer/layer.js"></script>
+		<script type="text/javascript" src="../../js/jquery-1.12.4.js"></script>
+		<script type="text/javascript" src="../../js/layer/layer.js"></script>
+		<!--<script type="text/javascript" src="http://127.0.0.1:8020/static/js/jquery-1.12.4.js"></script>
+		<script type="text/javascript" src="http://127.0.0.1:8020/static/js/layer/layer.js"></script>-->
 		<!--js-xlsx插件-->
 		<script>
+			//为ajax设置跨域带cookie
+			$.ajaxPrefilter(function(options, originalOptions, jqXHR) {
+				options.xhrFields = {
+					withCredentials: true
+				}
+			});
+			//从session得到部门id
+			$.ajax({
+				dataType: "json",
+				type: "get",
+				url: "http://47.103.35.95:8888/apiv1/session/get",
+				async: true,
+				success: function(data) {
+					$("#startDepartId").val(data.safetyUser.departId);
+				}
+			});
 			var host = "http://47.103.35.95:8888";
 			var UrlSelect = '/apiv1/unsafe/get/unsafeInfo/condition';
 			var UrlSelect_jh_name = '/apiv1/unsafePlan/get';
@@ -235,11 +253,16 @@
 				async: true,
 				data: JSON.stringify(json1),
 				success: function(data) {
-					var str;
-					for(var i = 0; i < data.rows.length; i++) {
-						str += "<option value='"+data.rows[i].planId+"'>" + data.rows[i].planName + "</option>"
+					if(data.total >0) {
+						var str;
+						for(var i = 0; i < data.rows.length; i++) {
+							str += "<option>" + data.rows[i].planName + "</option>"
+						}
+						$("#jhbh").html(str);
+					}else{
+						alert(data.message);
 					}
-					$("#jhbh").html(str);
+
 				},
 				error: function(request) {
 					alert("连接失败!")
