@@ -54,18 +54,16 @@ public class UserRelationServiceImpl implements UserRelationService {
             //创建用户时肯定是关联了角色和部门的，所以如下信息正常不会为空
             RoleEntity role = roleService.selectById(roleId);
             DepartmentEntity department = departmentService.selectById(departId);
-            if (role != null && department != null) {
+            List<AuthEntity> authList = null;
+            if (department != null) {
                 List<Integer> ids = Arrays.asList(department.getAuthIds().split(","))
                         .stream()
                         .map(item -> Integer.valueOf(item))
                         .collect(Collectors.toList());
 
-                List<AuthEntity> authList = authService.selectByLevelAndIds(role.getAuthLevel(), ids);
-
-                if (!CollectionUtils.isEmpty(authList)) {
-                    return new UserRelationEntity(user, authList);
-                }
+                authList = authService.selectByIds(ids);
             }
+            return new UserRelationEntity(user, authList, role);
         }
         return null;
     }

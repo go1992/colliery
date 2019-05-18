@@ -40,6 +40,7 @@ public class LogRecordAop {
             }
             return result;
         } catch (Throwable e) {
+            logger.error("请求类:{}, 请求方法:{}, 请求参数:{}, 发生异常！", clazz.getName(), method, params, e);
             throw e;
         }
     }

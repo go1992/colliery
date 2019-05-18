@@ -28,43 +28,43 @@ import java.util.Map;
 @Slf4j
 public class DdxxJbScdwController extends BaseController<DdxxJbScdwServiceImpl,DdxxJbScdw> {
     @Override
-    @AuthModule(authId = {AuthConstant.Module.DISPATCH_MODULE_SUPER,AuthConstant.Module.DISPATCH_MODULE_WATCH})
+    @AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE, level = AuthConstant.Level.LOW)
     public Object query(Map<String, Object> params, HttpServletRequest request) {
         return super.query(params, request);
     }
 
     @Override
-    @AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE_SUPER)
+    @AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE, level = AuthConstant.Level.HIGH)
     public Object save(DdxxJbScdw params, HttpServletRequest request) throws Exception {
         return super.save(params, request);
     }
 
     @Override
-    @AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE_SUPER)
+    @AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE, level = AuthConstant.Level.HIGH)
     public Object saveBatch(String params) {
         return super.saveBatch(params);
     }
 
     @Override
-    @AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE_SUPER)
+    @AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE, level = AuthConstant.Level.HIGH)
     public Object updateById(DdxxJbScdw params) {
         return super.updateById(params);
     }
 
     @Override
-    @AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE_SUPER)
+    @AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE, level = AuthConstant.Level.HIGH)
     public Object updateBatchById(String params) {
         return super.updateBatchById(params);
     }
 
     @Override
-    @AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE_SUPER)
+    @AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE, level = AuthConstant.Level.HIGH)
     public Object removeByIds(String params) {
         return super.removeByIds(params);
     }
 
     @Override
-    @AuthModule(authId = {AuthConstant.Module.DISPATCH_MODULE_SUPER,AuthConstant.Module.DISPATCH_MODULE_WATCH})
+    @AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE, level = AuthConstant.Level.LOW)
     public Object countBy(Map<String, Object> params, HttpServletRequest request) {
         return super.countBy(params, request);
     }

@@ -28,7 +28,7 @@ public class RoleController {
     private RoleService roleService;
 
     @PostMapping("/add")
-    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE_SUPER)
+    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE, level = AuthConstant.Level.HIGH)
     public ResultObject addRole(@RequestBody RoleEntity RoleEntity) {
         try {
             int result = roleService.addRole(RoleEntity);
@@ -39,7 +39,7 @@ public class RoleController {
     }
 
     @PostMapping("/update")
-    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE_SUPER)
+    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE, level = AuthConstant.Level.HIGH)
     public ResultObject updateRole(@RequestBody RoleEntity RoleEntity) {
         try {
             int result = roleService.updateRole(RoleEntity);
@@ -50,7 +50,7 @@ public class RoleController {
     }
 
     @PostMapping("/delete")
-    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE_SUPER)
+    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE, level = AuthConstant.Level.HIGH)
     public ResultObject deleteRole(@RequestBody String data) {
         try {
             List<Integer> roleIds = JSON.parseArray(data, Integer.class);
@@ -62,7 +62,7 @@ public class RoleController {
     }
 
     @GetMapping("/select/{roleId}")
-    @AuthModule(authId = {AuthConstant.Module.SYSTEM_MODULE_WATCH, AuthConstant.Module.SYSTEM_MODULE_WATCH})
+    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE, level = AuthConstant.Level.LOW)
     public ResultObject selectRoleById(@PathVariable Integer roleId) {
         try {
             RoleEntity RoleEntity = roleService.selectById(roleId);
@@ -73,7 +73,7 @@ public class RoleController {
     }
 
     @PostMapping("/select/all")
-    @AuthModule(authId = {AuthConstant.Module.SYSTEM_MODULE_WATCH, AuthConstant.Module.SYSTEM_MODULE_WATCH})
+    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE, level = AuthConstant.Level.LOW)
     public Object selectAll(@RequestBody PageParam param) {
         try {
             PageBean<RoleEntity> pageBean = roleService.selectByPage(param);

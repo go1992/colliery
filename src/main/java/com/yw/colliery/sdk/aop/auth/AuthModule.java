@@ -1,5 +1,7 @@
 package com.yw.colliery.sdk.aop.auth;
 
+import com.yw.colliery.sdk.constans.AuthConstant;
+
 import java.lang.annotation.*;
 
 /**
@@ -15,5 +17,10 @@ public @interface AuthModule {
      * 权限id
      * @return
      */
-    int[] authId();
+    int authId();
+
+    /**
+     * 权限等级
+     */
+    int level() default AuthConstant.Level.HIGH;
 }

@@ -3,6 +3,7 @@ package com.yw.colliery.sdk.helper;
 import com.yw.colliery.api.base.ESessionKey;
 import com.yw.colliery.entity.XtgnYhlb;
 import com.yw.colliery.entity.depart.DepartmentEntity;
+import com.yw.colliery.entity.role.RoleEntity;
 import com.yw.colliery.entity.user.UserRelationEntity;
 import com.yw.colliery.sdk.constans.LoginConstant;
 import com.yw.colliery.sdk.message.event.UpdateSessionEvent;
@@ -12,6 +13,7 @@ import com.yw.colliery.sdk.utils.SpringSessionUtils;
 import com.yw.colliery.service.depart.DepartEvent;
 import com.yw.colliery.service.depart.DepartmentService;
 import com.yw.colliery.service.role.RoleEvent;
+import com.yw.colliery.service.role.RoleService;
 import com.yw.colliery.service.user.UserRelationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -30,6 +32,8 @@ public class UserSessionHelper implements EventListener<UpdateSessionEvent>{
     private UserRelationService userRelationService;
     @Autowired
     private DepartmentService departmentService;
+    @Autowired
+    private RoleService roleService;
 
     /**
      * 保存用户关联信息到session

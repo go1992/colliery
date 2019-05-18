@@ -111,7 +111,7 @@ public class DcSwdzZkpcController extends BaseController<DcSwdzZkpcServiceImpl,D
 
 			})
 	@PostMapping("/queryzkpc")
-	@AuthModule(authId = {AuthConstant.Module.GEODETIC_MODULE_SUPER,AuthConstant.Module.GEODETIC_MODULE_WATCH})
+	@AuthModule(authId = AuthConstant.Module.GEODETIC_MODULE, level = AuthConstant.Level.HIGH)
 	public Object query(@ApiParam(hidden=true)@RequestParam Map<String,Object> params
 			, @ApiParam(hidden=true) HttpServletRequest request
 	) {
@@ -214,37 +214,37 @@ public class DcSwdzZkpcController extends BaseController<DcSwdzZkpcServiceImpl,D
 
 
 	@Override
-	@AuthModule(authId = AuthConstant.Module.GEODETIC_MODULE_SUPER)
+	@AuthModule(authId = AuthConstant.Module.GEODETIC_MODULE, level = AuthConstant.Level.HIGH)
 	public Object save(DcSwdzZkpc params, HttpServletRequest request) throws Exception {
 		return super.save(params, request);
 	}
 
 	@Override
-	@AuthModule(authId = AuthConstant.Module.GEODETIC_MODULE_SUPER)
+	@AuthModule(authId = AuthConstant.Module.GEODETIC_MODULE, level = AuthConstant.Level.HIGH)
 	public Object saveBatch(String params) {
 		return super.saveBatch(params);
 	}
 
 	@Override
-	@AuthModule(authId = AuthConstant.Module.GEODETIC_MODULE_SUPER)
+	@AuthModule(authId = AuthConstant.Module.GEODETIC_MODULE, level = AuthConstant.Level.HIGH)
 	public Object updateById(DcSwdzZkpc params) {
 		return super.updateById(params);
 	}
 
 	@Override
-	@AuthModule(authId = AuthConstant.Module.GEODETIC_MODULE_SUPER)
+	@AuthModule(authId = AuthConstant.Module.GEODETIC_MODULE, level = AuthConstant.Level.HIGH)
 	public Object updateBatchById(String params) {
 		return super.updateBatchById(params);
 	}
 
 	@Override
-	@AuthModule(authId = AuthConstant.Module.GEODETIC_MODULE_SUPER)
+	@AuthModule(authId = AuthConstant.Module.GEODETIC_MODULE, level = AuthConstant.Level.HIGH)
 	public Object removeByIds(String params) {
 		return super.removeByIds(params);
 	}
 
 	@Override
-	@AuthModule(authId = {AuthConstant.Module.GEODETIC_MODULE_SUPER,AuthConstant.Module.GEODETIC_MODULE_WATCH})
+	@AuthModule(authId = AuthConstant.Module.GEODETIC_MODULE, level = AuthConstant.Level.LOW)
 	public Object countBy(Map<String, Object> params, HttpServletRequest request) {
 		return super.countBy(params, request);
 	}

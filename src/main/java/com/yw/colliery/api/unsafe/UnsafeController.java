@@ -43,7 +43,7 @@ public class UnsafeController implements ApplicationListener<ContextRefreshedEve
      * @return
      */
     @PostMapping("/save")
-    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE_SUPER)
+    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE, level = AuthConstant.Level.HIGH)
     public ResultDTO input(@RequestBody String data) {
         try {
             UnsafeInfoEntity unsafeInfoEntity = JSONObject.toJavaObject(JSON.parseObject(data), UnsafeInfoEntity.class);
@@ -77,7 +77,7 @@ public class UnsafeController implements ApplicationListener<ContextRefreshedEve
      * @return
      */
     @GetMapping("/get/all/unsafeInfo")
-    @AuthModule(authId = {AuthConstant.Module.UNSAFE_MODULE_WATCH, AuthConstant.Module.UNSAFE_MODULE_SUPER})
+    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE, level = AuthConstant.Level.LOW)
     public Object getAllUnsafeInfo() {
         try {
             ArrayList<UnsafeInfoEntity> allUnsafeInfo = new ArrayList<>(unsafeService.getAllUnsafeInfo());
@@ -99,7 +99,7 @@ public class UnsafeController implements ApplicationListener<ContextRefreshedEve
      * @return
      */
     @GetMapping("/get/depart/unsafeInfo")
-    @AuthModule(authId = {AuthConstant.Module.UNSAFE_MODULE_WATCH, AuthConstant.Module.UNSAFE_MODULE_SUPER})
+    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE, level = AuthConstant.Level.LOW)
     public ResultDTO getUnsafeInfo() {
         UserRelationEntity user = LoginSessionUtils.getUser();
         if (user == null) {
@@ -127,6 +127,7 @@ public class UnsafeController implements ApplicationListener<ContextRefreshedEve
      * @return
      */
     @PostMapping("/get/unsafeInfo/condition")
+    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE, level = AuthConstant.Level.LOW)
     public Object getUnsafeInfoByCondition(@RequestBody String data) {
         try {
             UnsafeInfoEntity unsafeInfoEntity = JSONObject.toJavaObject(JSON.parseObject(data), UnsafeInfoEntity.class);
@@ -156,7 +157,7 @@ public class UnsafeController implements ApplicationListener<ContextRefreshedEve
      * @return
      */
     @PostMapping("/submit/unsafeInfo")
-    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE_SUPER)
+    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE, level = AuthConstant.Level.HIGH)
     public ResultDTO submit(@RequestParam("id") Long id) {
         try {
             UnsafeInfoEntity unsafeInfoEntity = new UnsafeInfoEntity();
@@ -184,7 +185,7 @@ public class UnsafeController implements ApplicationListener<ContextRefreshedEve
      * @return
      */
     @PostMapping("/apply/distributed")
-    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE_SUPER)
+    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE, level = AuthConstant.Level.HIGH)
     public ResultDTO distributed(@RequestParam("id") Long id, @RequestParam("departId") int departId) {
         try {
             UnsafeInfoEntity unsafeInfoEntity = new UnsafeInfoEntity();

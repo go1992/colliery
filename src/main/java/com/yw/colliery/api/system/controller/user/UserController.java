@@ -33,7 +33,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/add")
-    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE_SUPER)
+    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE, level = AuthConstant.Level.HIGH)
     public ResultObject addUser(@RequestBody UserRequest request) {
         CollierySafetyUserEntity entity = transfer(request);
         try {
@@ -45,7 +45,7 @@ public class UserController {
     }
 
     @PostMapping("/update")
-    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE_SUPER)
+    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE, level = AuthConstant.Level.HIGH)
     public ResultObject updateUser(@RequestBody UserRequest request) {
         CollierySafetyUserEntity entity = transfer(request);
         try {
@@ -57,7 +57,7 @@ public class UserController {
     }
 
     @PostMapping("/delete")
-    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE_SUPER)
+    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE, level = AuthConstant.Level.HIGH)
     public ResultObject deleteUser(@RequestBody String data) {
         try {
             List<Integer> userIds = JSON.parseArray(data, Integer.class);
@@ -69,7 +69,7 @@ public class UserController {
     }
 
     @GetMapping("/select/{userId}")
-    @AuthModule(authId = {AuthConstant.Module.SYSTEM_MODULE_WATCH, AuthConstant.Module.SYSTEM_MODULE_WATCH})
+    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE, level = AuthConstant.Level.LOW)
     public ResultObject selectUser(@PathVariable Integer userId) {
         try {
             CollierySafetyUserEntity result = collierySafetyUserService.selectyUserId(userId);
@@ -80,7 +80,7 @@ public class UserController {
     }
 
     @PostMapping("/select/all")
-    @AuthModule(authId = {AuthConstant.Module.SYSTEM_MODULE_WATCH, AuthConstant.Module.SYSTEM_MODULE_WATCH})
+    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE, level = AuthConstant.Level.LOW)
     public Object selectUserAll(@RequestBody PageParam param) {
         try {
             PageBean<CollierySafetyUserEntity> pageBean = collierySafetyUserService.selectByPage(param);

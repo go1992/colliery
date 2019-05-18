@@ -1,6 +1,7 @@
 package com.yw.colliery.entity.user;
 
 import com.yw.colliery.entity.auth.AuthEntity;
+import com.yw.colliery.entity.role.RoleEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,4 +24,6 @@ public class UserRelationEntity implements Serializable {
     private  CollierySafetyUserEntity safetyUser;
 
     private List<AuthEntity> authList;
+
+    private RoleEntity role;
 }

@@ -28,7 +28,7 @@ public class DepartmentController {
     private DepartmentService departmentService;
 
     @PostMapping("/add")
-    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE_SUPER)
+    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE, level = AuthConstant.Level.HIGH)
     public ResultObject addDepart(@RequestBody DepartRequest request) {
         try {
             int result = departmentService.addDepart(transfer(request));
@@ -39,7 +39,7 @@ public class DepartmentController {
     }
 
     @PostMapping("/update")
-    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE_SUPER)
+    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE, level = AuthConstant.Level.HIGH)
     public ResultObject updateDepart(@RequestBody DepartRequest request) {
         try {
             int result = departmentService.updateDepart(transfer(request));
@@ -50,7 +50,7 @@ public class DepartmentController {
     }
 
     @PostMapping("/delete")
-    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE_SUPER)
+    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE, level = AuthConstant.Level.HIGH)
     public ResultObject deleteDepart(@RequestBody String data) {
         try {
             List<Integer> departIds = JSON.parseArray(data, Integer.class);
@@ -62,7 +62,7 @@ public class DepartmentController {
     }
 
     @GetMapping("/select/{departId}")
-    @AuthModule(authId = {AuthConstant.Module.SYSTEM_MODULE_SUPER,AuthConstant.Module.SYSTEM_MODULE_WATCH})
+    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE, level = AuthConstant.Level.LOW)
     public ResultObject selectDepartById(@PathVariable Integer departId) {
         try {
             DepartmentEntity departmentEntity = departmentService.selectById(departId);
@@ -73,7 +73,7 @@ public class DepartmentController {
     }
 
     @PostMapping("/select/all")
-    @AuthModule(authId = {AuthConstant.Module.SYSTEM_MODULE_SUPER,AuthConstant.Module.SYSTEM_MODULE_WATCH})
+    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE, level = AuthConstant.Level.LOW)
     public Object selectAll(@RequestBody PageParam param) {
         try {
             PageBean<DepartmentEntity> pageBean = departmentService.selectByPage(param);

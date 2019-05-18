@@ -34,7 +34,7 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/add")
-    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE_SUPER)
+    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE, level = AuthConstant.Level.HIGH)
     public ResultObject addAuth(@RequestBody AuthEntity authEntity) {
         try {
             int result = authService.addAuth(authEntity);
@@ -45,7 +45,7 @@ public class AuthController {
     }
 
     @PostMapping("/update")
-    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE_SUPER)
+    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE, level = AuthConstant.Level.HIGH)
     public ResultObject updateAuth(@RequestBody AuthEntity authEntity) {
         try {
             int result = authService.updateAuth(authEntity);
@@ -56,7 +56,7 @@ public class AuthController {
     }
 
     @PostMapping("/delete")
-    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE_SUPER)
+    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE, level = AuthConstant.Level.HIGH)
     public ResultObject deleteAuth(@PathVariable String data) {
         try {
             List<Integer> authIds = JSON.parseArray(data, Integer.class);
@@ -68,7 +68,7 @@ public class AuthController {
     }
 
     @GetMapping("/select/{authId}")
-    @AuthModule(authId = {AuthConstant.Module.SYSTEM_MODULE_SUPER, AuthConstant.Module.SYSTEM_MODULE_WATCH})
+    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE, level = AuthConstant.Level.LOW)
     @LogRecord(level = LogLevel.INFO)
     public ResultObject selectAuthById(@PathVariable Integer authId) {
         try {
@@ -80,7 +80,8 @@ public class AuthController {
     }
 
     @PostMapping("/select/all")
-    @AuthModule(authId = {AuthConstant.Module.SYSTEM_MODULE_SUPER, AuthConstant.Module.SYSTEM_MODULE_WATCH})
+
+    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE, level = AuthConstant.Level.LOW)
     public Object selectAll(@RequestBody PageParam param) {
         try {
             PageBean<AuthEntity> pageBean = authService.selectByPage(param);
@@ -89,12 +90,12 @@ public class AuthController {
             return ResultObject.buildFailResponse("查询权限列表失败!");
         }
     }
-    private Logger logger = LoggerFactory.getLogger(AuthController.class);
+
+
     @GetMapping("/cover/{authId}")
     public ResultObject coverUserAuth(@PathVariable Integer authId) {
         try {
             UserRelationEntity userRelation = LoginSessionUtils.getUser();
-            logger.info(userRelation.toString() + "  authId=="+ authId);
             if (userRelation != null) {
                 List<AuthEntity> authList = userRelation.getAuthList();
                 boolean result = authList.stream().anyMatch(authEntity -> authEntity.getId() == authId);
