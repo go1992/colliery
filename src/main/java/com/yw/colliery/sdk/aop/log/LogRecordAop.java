@@ -32,10 +32,10 @@ public class LogRecordAop {
 
             switch (logRecord.level()) {
                 case INFO:
-                    logger.info("请求类:{}, 请求方法:{}, 请求参数:{}, 耗时:{}", clazz.getName(), method, params, watch.getTotalTimeSeconds());
+                    logger.info("请求类:{}, 请求方法:{}, 请求参数:{}, \n返回值:{}\n耗时:{}", clazz.getName(), method, params, result, watch.getTotalTimeSeconds());
                     break;
                 case DEBUG:
-                    logger.debug("请求类:{}, 请求方法:{}, 请求参数:{}, 耗时:{}", clazz.getName(), method, params, watch.getTotalTimeSeconds());
+                    logger.debug("请求类:{}, 请求方法:{}, 请求参数:{}, \n返回值:{}\n耗时:{}", clazz.getName(), method, params, result, watch.getTotalTimeSeconds());
                     break;
             }
             return result;

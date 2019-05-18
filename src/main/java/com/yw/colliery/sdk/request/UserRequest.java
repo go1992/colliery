@@ -24,7 +24,7 @@ public class UserRequest implements Serializable {
 
     private Integer departId;
 
-    private String userName;
+    private String name;
 
     private String userPwd;
 

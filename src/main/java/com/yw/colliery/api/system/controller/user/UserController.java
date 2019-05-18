@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.user.CollierySafetyUserEntity;
 import com.yw.colliery.sdk.aop.auth.AuthModule;
+import com.yw.colliery.sdk.aop.log.LogRecord;
 import com.yw.colliery.sdk.config.PageBean;
 import com.yw.colliery.sdk.config.PageParam;
 import com.yw.colliery.sdk.constans.AuthConstant;
@@ -34,6 +35,7 @@ public class UserController {
 
     @PostMapping("/add")
     @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE, level = AuthConstant.Level.HIGH)
+    @LogRecord
     public ResultObject addUser(@RequestBody UserRequest request) {
         CollierySafetyUserEntity entity = transfer(request);
         try {
@@ -46,6 +48,7 @@ public class UserController {
 
     @PostMapping("/update")
     @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE, level = AuthConstant.Level.HIGH)
+    @LogRecord
     public ResultObject updateUser(@RequestBody UserRequest request) {
         CollierySafetyUserEntity entity = transfer(request);
         try {
@@ -58,6 +61,7 @@ public class UserController {
 
     @PostMapping("/delete")
     @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE, level = AuthConstant.Level.HIGH)
+    @LogRecord
     public ResultObject deleteUser(@RequestBody String data) {
         try {
             List<Integer> userIds = JSON.parseArray(data, Integer.class);
@@ -70,6 +74,7 @@ public class UserController {
 
     @GetMapping("/select/{userId}")
     @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE, level = AuthConstant.Level.LOW)
+    @LogRecord
     public ResultObject selectUser(@PathVariable Integer userId) {
         try {
             CollierySafetyUserEntity result = collierySafetyUserService.selectyUserId(userId);
@@ -81,6 +86,7 @@ public class UserController {
 
     @PostMapping("/select/all")
     @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE, level = AuthConstant.Level.LOW)
+    @LogRecord
     public Object selectUserAll(@RequestBody PageParam param) {
         try {
             PageBean<CollierySafetyUserEntity> pageBean = collierySafetyUserService.selectByPage(param);
@@ -92,7 +98,7 @@ public class UserController {
 
     private CollierySafetyUserEntity transfer(UserRequest request) {
         CollierySafetyUserEntity entity = new CollierySafetyUserEntity();
-        entity.setUserName(request.getUserName());
+        entity.setName(request.getName());
         //这里做个控制，防止前端回传加密后的密码过来，更新了就坏事了
         entity.setUserPwd(request.getUserPwd() != null&&(request.getUserPwd().length() < 20) ? EncodeUtils.encode(request.getUserPwd()): null);
         entity.setId(request.getUserId());

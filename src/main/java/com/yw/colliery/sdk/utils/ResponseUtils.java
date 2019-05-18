@@ -48,5 +48,13 @@ public class ResponseUtils {
         public void setRows(List<T> rows) {
             this.rows = rows;
         }
+
+        @Override
+        public String toString() {
+            return "WrapResponse{" +
+                    "total=" + total +
+                    ", rows=" + rows +
+                    '}';
+        }
     }
 }
