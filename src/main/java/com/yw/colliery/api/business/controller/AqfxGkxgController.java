@@ -2,7 +2,7 @@ package com.yw.colliery.api.business.controller;
 
 
 import com.yw.colliery.entity.AqfxGkxg;
-import com.yw.colliery.sdk.aop.AuthModule;
+import com.yw.colliery.sdk.aop.auth.AuthModule;
 import com.yw.colliery.sdk.constans.AuthConstant;
 import org.springframework.web.bind.annotation.RequestMapping;
 import io.swagger.annotations.Api;
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.yw.colliery.api.base.BaseController;
 import com.yw.colliery.service.business.impl.AqfxGkxgServiceImpl;
-import com.yw.colliery.entity.AqfxGkxg;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;

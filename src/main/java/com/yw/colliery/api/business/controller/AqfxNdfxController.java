@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.Map;
 
 import com.yw.colliery.entity.AqfxNdfx;
-import com.yw.colliery.sdk.aop.AuthModule;
+import com.yw.colliery.sdk.aop.auth.AuthModule;
 import com.yw.colliery.sdk.constans.AuthConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +15,6 @@ import com.alibaba.fastjson.JSON;
 import com.yw.colliery.api.base.BaseController;
 import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.AqfxCsxg;
-import com.yw.colliery.entity.AqfxNdfx;
 import com.yw.colliery.service.business.IAqfxCsxgService;
 import com.yw.colliery.service.business.impl.AqfxNdfxServiceImpl;
 

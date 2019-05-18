@@ -13,7 +13,7 @@ import com.yw.colliery.api.base.EPage;
 import com.yw.colliery.api.base.ESessionKey;
 import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.*;
-import com.yw.colliery.sdk.aop.AuthModule;
+import com.yw.colliery.sdk.aop.auth.AuthModule;
 import com.yw.colliery.sdk.constans.AuthConstant;
 import com.yw.colliery.service.business.IXtgnQyfjService;
 import com.yw.colliery.service.business.MyService;
@@ -23,7 +23,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import lombok.extern.slf4j.Slf4j;
 import com.yw.colliery.api.base.BaseController;
-import com.yw.colliery.service.business.impl.DcSwdzZkpcServiceImpl;
 import com.yw.colliery.service.business.impl.DcSwdzZkpcServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;

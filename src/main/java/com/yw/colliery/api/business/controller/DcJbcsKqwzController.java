@@ -2,7 +2,7 @@ package com.yw.colliery.api.business.controller;
 
 
 import com.yw.colliery.entity.DcJbcsKqwz;
-import com.yw.colliery.sdk.aop.AuthModule;
+import com.yw.colliery.sdk.aop.auth.AuthModule;
 import com.yw.colliery.sdk.constans.AuthConstant;
 import org.springframework.web.bind.annotation.RequestMapping;
 import io.swagger.annotations.Api;
@@ -10,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
 import com.yw.colliery.api.base.BaseController;
 import com.yw.colliery.service.business.impl.DcJbcsKqwzServiceImpl;
-import com.yw.colliery.entity.DcJbcsKqwz;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;

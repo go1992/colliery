@@ -4,7 +4,9 @@ import com.alibaba.fastjson.JSON;
 import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.auth.AuthEntity;
 import com.yw.colliery.entity.user.UserRelationEntity;
-import com.yw.colliery.sdk.aop.AuthModule;
+import com.yw.colliery.sdk.aop.auth.AuthModule;
+import com.yw.colliery.sdk.aop.log.LogLevel;
+import com.yw.colliery.sdk.aop.log.LogRecord;
 import com.yw.colliery.sdk.config.PageBean;
 import com.yw.colliery.sdk.config.PageParam;
 import com.yw.colliery.sdk.constans.AuthConstant;
@@ -67,6 +69,7 @@ public class AuthController {
 
     @GetMapping("/select/{authId}")
     @AuthModule(authId = {AuthConstant.Module.SYSTEM_MODULE_SUPER, AuthConstant.Module.SYSTEM_MODULE_WATCH})
+    @LogRecord(level = LogLevel.INFO)
     public ResultObject selectAuthById(@PathVariable Integer authId) {
         try {
             AuthEntity authEntity = authService.selectById(authId);

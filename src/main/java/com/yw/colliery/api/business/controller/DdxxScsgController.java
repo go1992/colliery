@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.yw.colliery.entity.DdxxScsg;
-import com.yw.colliery.sdk.aop.AuthModule;
+import com.yw.colliery.sdk.aop.auth.AuthModule;
 import com.yw.colliery.sdk.constans.AuthConstant;
 import org.apache.commons.collections4.MapUtils;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,7 +27,6 @@ import com.yw.colliery.api.base.BaseController;
 import com.yw.colliery.api.base.EPage;
 import com.yw.colliery.api.base.ESessionKey;
 import com.yw.colliery.api.base.ResultObject;
-import com.yw.colliery.entity.DdxxScsg;
 import com.yw.colliery.service.business.impl.DdxxScsgServiceImpl;
 
 import io.swagger.annotations.Api;

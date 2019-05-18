@@ -1,4 +1,4 @@
-package com.yw.colliery.sdk.aop;
+package com.yw.colliery.sdk.aop.auth;
 
 import java.lang.annotation.*;
 

@@ -1,4 +1,4 @@
-package com.yw.colliery.sdk.aop;
+package com.yw.colliery.sdk.aop.auth;
 
 import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.auth.AuthEntity;
@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
  * @Description 模块认证aop
  * @Date 2019-04-29
  **/
-@Configuration
+//@Configuration
 @Aspect
 public class AuthModuleAop {
     @Autowired
