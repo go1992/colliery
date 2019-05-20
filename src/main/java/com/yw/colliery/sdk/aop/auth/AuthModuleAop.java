@@ -1,4 +1,4 @@
-package com.yw.colliery.sdk.aop;
+package com.yw.colliery.sdk.aop.auth;
 
 import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.auth.AuthEntity;
@@ -35,22 +35,20 @@ public class AuthModuleAop {
         //1.从session中获取用户
         UserRelationEntity userRelation = LoginSessionUtils.getUser();
         //2.查询权限信息
-        List<Integer> authIds = Arrays.asList(ArrayUtils.toObject(authModule.authId()));
         //3.判断用户模块权限
         if (CollectionUtils.isEmpty(userRelation.getAuthList())) {
             //4.返回模块认证异常
             return ResultObject.buildFailResponse(AuthConstant.Module.NO_MODULE_AUTH);
         } else {
-            //5.遍历检查模块权限
-            boolean success = userRelation.getAuthList().stream().anyMatch(auth -> authIds.contains(auth.getId()));
+            //5.检查模块权限
+            boolean success = (userRelation.getAuthList().stream().anyMatch(auth -> auth.getId().equals(authModule.authId())))
+                    && (userRelation.getRole().getAuthLevel() <= authModule.level());
             if (success) {
                 return point.proceed();
             } else {
-                //6.没有权限的话就去查询这些权限信息，方便返回给用户具体的信息
-                List<AuthEntity> authList = authService.selectByIds(authIds);
-                List<String> authNameList = authList.stream().map(auth -> auth.getName()).collect(Collectors.toList());
-                String message = StringUtils.join(authNameList, ",");
-                return ResultObject.buildFailResponse(String.format("您没有:%s", message));
+                //6.没有权限的话就去查询权限信息，方便返回给用户具体的信息
+                AuthEntity authEntity = authService.selectById(authModule.authId());
+                return ResultObject.buildFailResponse(String.format("您没有:%s模块权限!", authEntity.getName()));
             }
         }
     }

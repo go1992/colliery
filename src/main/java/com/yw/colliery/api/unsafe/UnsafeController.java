@@ -5,13 +5,11 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.yw.colliery.dto.ResultDTO;
 import com.yw.colliery.entity.unsafe.UnsafeInfoEntity;
-import com.yw.colliery.entity.unsafe.UnsafePlanEntity;
 import com.yw.colliery.entity.user.UserRelationEntity;
-import com.yw.colliery.sdk.aop.AuthModule;
+import com.yw.colliery.sdk.aop.auth.AuthModule;
 import com.yw.colliery.sdk.config.PageBean;
 import com.yw.colliery.sdk.constans.AuthConstant;
 import com.yw.colliery.sdk.utils.LoginSessionUtils;
-import com.yw.colliery.service.unsafe.UnsafePlanService;
 import com.yw.colliery.service.unsafe.UnsafeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +43,7 @@ public class UnsafeController implements ApplicationListener<ContextRefreshedEve
      * @return
      */
     @PostMapping("/save")
-    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE_SUPER)
+    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE, level = AuthConstant.Level.HIGH)
     public ResultDTO input(@RequestBody String data) {
         try {
             UnsafeInfoEntity unsafeInfoEntity = JSONObject.toJavaObject(JSON.parseObject(data), UnsafeInfoEntity.class);
@@ -79,7 +77,7 @@ public class UnsafeController implements ApplicationListener<ContextRefreshedEve
      * @return
      */
     @GetMapping("/get/all/unsafeInfo")
-    @AuthModule(authId = {AuthConstant.Module.UNSAFE_MODULE_WATCH, AuthConstant.Module.UNSAFE_MODULE_SUPER})
+    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE, level = AuthConstant.Level.LOW)
     public Object getAllUnsafeInfo() {
         try {
             ArrayList<UnsafeInfoEntity> allUnsafeInfo = new ArrayList<>(unsafeService.getAllUnsafeInfo());
@@ -101,7 +99,7 @@ public class UnsafeController implements ApplicationListener<ContextRefreshedEve
      * @return
      */
     @GetMapping("/get/depart/unsafeInfo")
-    @AuthModule(authId = {AuthConstant.Module.UNSAFE_MODULE_WATCH, AuthConstant.Module.UNSAFE_MODULE_SUPER})
+    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE, level = AuthConstant.Level.LOW)
     public ResultDTO getUnsafeInfo() {
         UserRelationEntity user = LoginSessionUtils.getUser();
         if (user == null) {
@@ -129,6 +127,7 @@ public class UnsafeController implements ApplicationListener<ContextRefreshedEve
      * @return
      */
     @PostMapping("/get/unsafeInfo/condition")
+    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE, level = AuthConstant.Level.LOW)
     public Object getUnsafeInfoByCondition(@RequestBody String data) {
         try {
             UnsafeInfoEntity unsafeInfoEntity = JSONObject.toJavaObject(JSON.parseObject(data), UnsafeInfoEntity.class);
@@ -158,7 +157,7 @@ public class UnsafeController implements ApplicationListener<ContextRefreshedEve
      * @return
      */
     @PostMapping("/submit/unsafeInfo")
-    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE_SUPER)
+    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE, level = AuthConstant.Level.HIGH)
     public ResultDTO submit(@RequestParam("id") Long id) {
         try {
             UnsafeInfoEntity unsafeInfoEntity = new UnsafeInfoEntity();
@@ -186,7 +185,7 @@ public class UnsafeController implements ApplicationListener<ContextRefreshedEve
      * @return
      */
     @PostMapping("/apply/distributed")
-    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE_SUPER)
+    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE, level = AuthConstant.Level.HIGH)
     public ResultDTO distributed(@RequestParam("id") Long id, @RequestParam("departId") int departId) {
         try {
             UnsafeInfoEntity unsafeInfoEntity = new UnsafeInfoEntity();

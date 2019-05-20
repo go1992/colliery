@@ -16,14 +16,14 @@ public class UserAuthControllerTest {
     @Test
     public void selectByUserId() {
         RestTemplate template = new RestTemplate();
-        ResponseEntity<ResultObject> response = template.getForEntity("http://47.103.35.95:8888/user-auth/select/id/1", ResultObject.class);
+        ResponseEntity<ResultObject> response = template.getForEntity("http://localhost:8888/user-auth/select/id/1", ResultObject.class);
         Assert.assertEquals(response.getBody().getStatus(), ResultObject.SUCCESS);
     }
 
     @Test
     public void selectByUserName() {
         RestTemplate template = new RestTemplate();
-        ResponseEntity<ResultObject> response = template.getForEntity("http://47.103.35.95:8888/userauth/select/name/test_user" , ResultObject.class);
+        ResponseEntity<ResultObject> response = template.getForEntity("http://localhost:8888/userauth/select/name/test_user" , ResultObject.class);
         Assert.assertEquals(response.getBody().getStatus(), ResultObject.SUCCESS);
     }
 }

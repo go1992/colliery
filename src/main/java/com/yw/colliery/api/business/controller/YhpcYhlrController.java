@@ -6,8 +6,7 @@ import com.yw.colliery.api.base.BaseController;
 import com.yw.colliery.api.base.ESessionKey;
 import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.YhpcYhlr;
-import com.yw.colliery.entity.YhpcYhlr;
-import com.yw.colliery.sdk.aop.AuthModule;
+import com.yw.colliery.sdk.aop.auth.AuthModule;
 import com.yw.colliery.sdk.constans.AuthConstant;
 import com.yw.colliery.service.business.impl.YhpcYhlrServiceImpl;
 import io.swagger.annotations.Api;
@@ -41,7 +40,7 @@ public class YhpcYhlrController extends BaseController<YhpcYhlrServiceImpl,YhpcY
 	
 	@ApiOperation(value = "决策统计",response=ResultObject.class)
 	@PostMapping("/countToPieChart")
-	@AuthModule(authId = {AuthConstant.Module.UNSAFE_MODULE_SUPER,AuthConstant.Module.UNSAFE_MODULE_WATCH})
+	@AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE, level = AuthConstant.Level.LOW)
 	public Object countBy(@ApiParam(hidden=true) @RequestParam Map<String,Object> params
 			, @ApiParam(hidden=true) HttpServletRequest request
 			) {
@@ -86,37 +85,37 @@ public class YhpcYhlrController extends BaseController<YhpcYhlrServiceImpl,YhpcY
 
 
 	@Override
-	@AuthModule(authId = {AuthConstant.Module.UNSAFE_MODULE_SUPER,AuthConstant.Module.UNSAFE_MODULE_WATCH})
+	@AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE, level = AuthConstant.Level.LOW)
 	public Object query(Map<String, Object> params, HttpServletRequest request) {
 		return super.query(params, request);
 	}
 
 	@Override
-	@AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE_SUPER)
+	@AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE, level = AuthConstant.Level.HIGH)
 	public Object save(YhpcYhlr params, HttpServletRequest request) throws Exception {
 		return super.save(params, request);
 	}
 
 	@Override
-	@AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE_SUPER)
+	@AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE, level = AuthConstant.Level.HIGH)
 	public Object saveBatch(String params) {
 		return super.saveBatch(params);
 	}
 
 	@Override
-	@AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE_SUPER)
+	@AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE, level = AuthConstant.Level.HIGH)
 	public Object updateById(YhpcYhlr params) {
 		return super.updateById(params);
 	}
 
 	@Override
-	@AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE_SUPER)
+	@AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE, level = AuthConstant.Level.HIGH)
 	public Object updateBatchById(String params) {
 		return super.updateBatchById(params);
 	}
 
 	@Override
-	@AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE_SUPER)
+	@AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE, level = AuthConstant.Level.HIGH)
 	public Object removeByIds(String params) {
 		return super.removeByIds(params);
 	}

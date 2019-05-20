@@ -2,7 +2,7 @@ package com.yw.colliery.api.business.controller;
 
 
 import com.yw.colliery.entity.YhpcYhlx;
-import com.yw.colliery.sdk.aop.AuthModule;
+import com.yw.colliery.sdk.aop.auth.AuthModule;
 import com.yw.colliery.sdk.constans.AuthConstant;
 import org.springframework.web.bind.annotation.RequestMapping;
 import io.swagger.annotations.Api;
@@ -10,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
 import com.yw.colliery.api.base.BaseController;
 import com.yw.colliery.service.business.impl.YhpcYhlxServiceImpl;
-import com.yw.colliery.entity.YhpcYhlx;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
@@ -29,43 +28,43 @@ import java.util.Map;
 @Slf4j
 public class YhpcYhlxController extends BaseController<YhpcYhlxServiceImpl,YhpcYhlx> {
     @Override
-    @AuthModule(authId = {AuthConstant.Module.UNSAFE_MODULE_SUPER,AuthConstant.Module.UNSAFE_MODULE_WATCH})
+    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE, level = AuthConstant.Level.LOW)
     public Object query(Map<String, Object> params, HttpServletRequest request) {
         return super.query(params, request);
     }
 
     @Override
-    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE_SUPER)
+    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE, level = AuthConstant.Level.HIGH)
     public Object save(YhpcYhlx params, HttpServletRequest request) throws Exception {
         return super.save(params, request);
     }
 
     @Override
-    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE_SUPER)
+    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE, level = AuthConstant.Level.HIGH)
     public Object saveBatch(String params) {
         return super.saveBatch(params);
     }
 
     @Override
-    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE_SUPER)
+    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE, level = AuthConstant.Level.HIGH)
     public Object updateById(YhpcYhlx params) {
         return super.updateById(params);
     }
 
     @Override
-    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE_SUPER)
+    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE, level = AuthConstant.Level.HIGH)
     public Object updateBatchById(String params) {
         return super.updateBatchById(params);
     }
 
     @Override
-    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE_SUPER)
+    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE, level = AuthConstant.Level.HIGH)
     public Object removeByIds(String params) {
         return super.removeByIds(params);
     }
 
     @Override
-    @AuthModule(authId = {AuthConstant.Module.UNSAFE_MODULE_SUPER,AuthConstant.Module.UNSAFE_MODULE_WATCH})
+    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE, level = AuthConstant.Level.LOW)
     public Object countBy(Map<String, Object> params, HttpServletRequest request) {
         return super.countBy(params, request);
     }

@@ -3,7 +3,7 @@ package com.yw.colliery.api.system.controller.depart;
 import com.alibaba.fastjson.JSON;
 import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.depart.DepartmentEntity;
-import com.yw.colliery.sdk.aop.AuthModule;
+import com.yw.colliery.sdk.aop.auth.AuthModule;
 import com.yw.colliery.sdk.config.PageBean;
 import com.yw.colliery.sdk.config.PageParam;
 import com.yw.colliery.sdk.constans.AuthConstant;
@@ -14,7 +14,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,7 +28,7 @@ public class DepartmentController {
     private DepartmentService departmentService;
 
     @PostMapping("/add")
-    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE_SUPER)
+    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE, level = AuthConstant.Level.HIGH)
     public ResultObject addDepart(@RequestBody DepartRequest request) {
         try {
             int result = departmentService.addDepart(transfer(request));
@@ -40,7 +39,7 @@ public class DepartmentController {
     }
 
     @PostMapping("/update")
-    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE_SUPER)
+    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE, level = AuthConstant.Level.HIGH)
     public ResultObject updateDepart(@RequestBody DepartRequest request) {
         try {
             int result = departmentService.updateDepart(transfer(request));
@@ -51,7 +50,7 @@ public class DepartmentController {
     }
 
     @PostMapping("/delete")
-    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE_SUPER)
+    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE, level = AuthConstant.Level.HIGH)
     public ResultObject deleteDepart(@RequestBody String data) {
         try {
             List<Integer> departIds = JSON.parseArray(data, Integer.class);
@@ -63,7 +62,7 @@ public class DepartmentController {
     }
 
     @GetMapping("/select/{departId}")
-    @AuthModule(authId = {AuthConstant.Module.SYSTEM_MODULE_SUPER,AuthConstant.Module.SYSTEM_MODULE_WATCH})
+    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE, level = AuthConstant.Level.LOW)
     public ResultObject selectDepartById(@PathVariable Integer departId) {
         try {
             DepartmentEntity departmentEntity = departmentService.selectById(departId);
@@ -74,7 +73,7 @@ public class DepartmentController {
     }
 
     @PostMapping("/select/all")
-    @AuthModule(authId = {AuthConstant.Module.SYSTEM_MODULE_SUPER,AuthConstant.Module.SYSTEM_MODULE_WATCH})
+    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE, level = AuthConstant.Level.LOW)
     public Object selectAll(@RequestBody PageParam param) {
         try {
             PageBean<DepartmentEntity> pageBean = departmentService.selectByPage(param);

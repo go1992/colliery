@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.Map;
 
 import com.yw.colliery.entity.AqfxNdfx;
-import com.yw.colliery.sdk.aop.AuthModule;
+import com.yw.colliery.sdk.aop.auth.AuthModule;
 import com.yw.colliery.sdk.constans.AuthConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +15,6 @@ import com.alibaba.fastjson.JSON;
 import com.yw.colliery.api.base.BaseController;
 import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.AqfxCsxg;
-import com.yw.colliery.entity.AqfxNdfx;
 import com.yw.colliery.service.business.IAqfxCsxgService;
 import com.yw.colliery.service.business.impl.AqfxNdfxServiceImpl;
 
@@ -44,7 +43,7 @@ public class AqfxNdfxController extends BaseController<AqfxNdfxServiceImpl,AqfxN
 	/*
 	 * 年度风险修改时同时插入措施修改记录
 	 */
-	@AuthModule(authId = AuthConstant.Module.SAFE_MODULE_SUPER)
+	@AuthModule(authId = AuthConstant.Module.SAFE_MODULE, level = AuthConstant.Level.HIGH)
 	public Object updateById(AqfxNdfx params) {
 		if(log.isDebugEnabled())log.debug("updateById参数:\n{}",JSON.toJSONString(params));
 		AqfxNdfx old = service.getById(params.getId());
@@ -60,38 +59,38 @@ public class AqfxNdfxController extends BaseController<AqfxNdfxServiceImpl,AqfxN
 	}
 
 	@Override
-	@AuthModule(authId = {AuthConstant.Module.SAFE_MODULE_SUPER,AuthConstant.Module.SAFE_MODULE_WATCH})
+	@AuthModule(authId = AuthConstant.Module.SAFE_MODULE, level = AuthConstant.Level.LOW)
 	public Object query(Map<String, Object> params, HttpServletRequest request) {
 		return super.query(params, request);
 	}
 
 	@Override
-	@AuthModule(authId = AuthConstant.Module.SAFE_MODULE_SUPER)
+	@AuthModule(authId = AuthConstant.Module.SAFE_MODULE, level = AuthConstant.Level.HIGH)
 	public Object save(AqfxNdfx params, HttpServletRequest request) throws Exception {
 		return super.save(params, request);
 	}
 
 	@Override
-	@AuthModule(authId = AuthConstant.Module.SAFE_MODULE_SUPER)
+	@AuthModule(authId = AuthConstant.Module.SAFE_MODULE, level = AuthConstant.Level.HIGH)
 	public Object saveBatch(String params) {
 		return super.saveBatch(params);
 	}
 
 
 	@Override
-	@AuthModule(authId = AuthConstant.Module.SAFE_MODULE_SUPER)
+	@AuthModule(authId = AuthConstant.Module.SAFE_MODULE, level = AuthConstant.Level.HIGH)
 	public Object updateBatchById(String params) {
 		return super.updateBatchById(params);
 	}
 
 	@Override
-	@AuthModule(authId = AuthConstant.Module.SAFE_MODULE_SUPER)
+	@AuthModule(authId = AuthConstant.Module.SAFE_MODULE, level = AuthConstant.Level.HIGH)
 	public Object removeByIds(String params) {
 		return super.removeByIds(params);
 	}
 
 	@Override
-	@AuthModule(authId = {AuthConstant.Module.SAFE_MODULE_SUPER,AuthConstant.Module.SAFE_MODULE_WATCH})
+	@AuthModule(authId = AuthConstant.Module.SAFE_MODULE, level = AuthConstant.Level.LOW)
 	public Object countBy(Map<String, Object> params, HttpServletRequest request) {
 		return super.countBy(params, request);
 	}
