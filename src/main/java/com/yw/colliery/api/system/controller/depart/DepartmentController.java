@@ -3,6 +3,9 @@ package com.yw.colliery.api.system.controller.depart;
 import com.alibaba.fastjson.JSON;
 import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.depart.DepartmentEntity;
+import com.yw.colliery.entity.role.RoleEntity;
+import com.yw.colliery.entity.user.CollierySafetyUserEntity;
+import com.yw.colliery.entity.user.UserEntity;
 import com.yw.colliery.sdk.aop.auth.AuthModule;
 import com.yw.colliery.sdk.config.PageBean;
 import com.yw.colliery.sdk.config.BaseParam;
@@ -10,11 +13,15 @@ import com.yw.colliery.sdk.constans.AuthConstant;
 import com.yw.colliery.sdk.request.DepartRequest;
 import com.yw.colliery.sdk.utils.ResponseUtils;
 import com.yw.colliery.service.depart.DepartmentService;
+import com.yw.colliery.service.user.CollierySafetyUserService;
+import com.yw.colliery.service.user.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @Author renzhiqiang
@@ -26,6 +33,8 @@ import java.util.List;
 public class DepartmentController {
     @Autowired
     private DepartmentService departmentService;
+    @Autowired
+    private CollierySafetyUserService userService;
 
     @PostMapping("/add")
     @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE, level = AuthConstant.Level.HIGH)
@@ -54,6 +63,14 @@ public class DepartmentController {
     public ResultObject deleteDepart(@RequestBody String data) {
         try {
             List<Integer> departIds = JSON.parseArray(data, Integer.class);
+            List<CollierySafetyUserEntity> userEntities = userService.selectAllUser();
+            Set<Integer> usedIdSet = userEntities.stream()
+                    .map(CollierySafetyUserEntity::getDepartId)
+                    .collect(Collectors.toSet());
+            boolean match = departIds.stream().anyMatch(integer -> usedIdSet.contains(integer));
+            if(match){
+                return ResultObject.buildFailResponse("包含已经使用的部门id，无法删除！");
+            }
             int result = departmentService.deleteDepartByIds(departIds);
             return ResultObject.buildSucessResponse(result);
         } catch (Exception e) {

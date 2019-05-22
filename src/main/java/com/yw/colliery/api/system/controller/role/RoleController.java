@@ -3,17 +3,23 @@ package com.yw.colliery.api.system.controller.role;
 import com.alibaba.fastjson.JSON;
 import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.role.RoleEntity;
+import com.yw.colliery.entity.user.CollierySafetyUserEntity;
+import com.yw.colliery.entity.user.UserEntity;
 import com.yw.colliery.sdk.aop.auth.AuthModule;
 import com.yw.colliery.sdk.config.PageBean;
 import com.yw.colliery.sdk.config.BaseParam;
 import com.yw.colliery.sdk.constans.AuthConstant;
 import com.yw.colliery.sdk.utils.ResponseUtils;
 import com.yw.colliery.service.role.RoleService;
+import com.yw.colliery.service.user.CollierySafetyUserService;
+import com.yw.colliery.service.user.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @Roleor renzhiqiang
@@ -26,6 +32,8 @@ import java.util.List;
 public class RoleController {
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private CollierySafetyUserService userService;
 
     @PostMapping("/add")
     @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE, level = AuthConstant.Level.HIGH)
@@ -54,9 +62,16 @@ public class RoleController {
     public ResultObject deleteRole(@RequestBody String data) {
         try {
             List<Integer> roleIds = JSON.parseArray(data, Integer.class);
+            List<CollierySafetyUserEntity> userEntities = userService.selectAllUser();
+            Set<Integer> collect = userEntities.stream().map(CollierySafetyUserEntity::getRoleId).collect(Collectors.toSet());
+            boolean match = roleIds.stream().anyMatch(integer -> collect.contains(integer));
+            if(match){
+                return ResultObject.buildFailResponse("包含已经使用的角色id，不能删除！");
+            }
             int result = roleService.deleteRoleByIds(roleIds);
             return ResultObject.buildSucessResponse(result);
         } catch (Exception e) {
+            log.error("删除角色异常",e);
             return ResultObject.buildFailResponse("删除角色失败!");
         }
     }
