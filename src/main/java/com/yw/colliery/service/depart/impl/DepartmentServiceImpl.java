@@ -6,7 +6,7 @@ import com.yw.colliery.entity.depart.DepartmentEntity;
 import com.yw.colliery.mapper.auth.AuthMapper;
 import com.yw.colliery.mapper.depart.DepartMapper;
 import com.yw.colliery.sdk.config.PageBean;
-import com.yw.colliery.sdk.config.PageParam;
+import com.yw.colliery.sdk.config.BaseParam;
 import com.yw.colliery.sdk.message.publisher.EventPublisher;
 import com.yw.colliery.service.depart.DepartEvent;
 import com.yw.colliery.service.depart.DepartmentService;
@@ -81,7 +81,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public PageBean<DepartmentEntity> selectByPage(PageParam param) {
+    public PageBean<DepartmentEntity> selectByPage(BaseParam param) {
         PageHelper.startPage(param.getPageNum(), param.getPageSize(), param.generateOderBy());
         List<DepartmentEntity> departs =  departMapper.selectAll();
         for (DepartmentEntity entity : departs) {

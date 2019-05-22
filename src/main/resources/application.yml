@@ -13,9 +13,9 @@ spring:
       filters: stat
       driver-class-name: com.mysql.jdbc.Driver
       #基本属性
-      url: jdbc:mysql://*:3306/coal_mine?characterEncoding=utf8&useSSL=true&useSSL=false&allowMultiQueries=true
-      username: *
-      password: *
+      url: jdbc:mysql://47.103.35.95:3306/coal_mine?characterEncoding=utf8&useSSL=true&useSSL=false&allowMultiQueries=true
+      username: root
+      password: root
       #配置初始化大小/最小/最大
       initial-size: 1
       min-idle: 1
@@ -41,9 +41,9 @@ spring:
     static-locations: classpath:/static/, classpath:/templates/
   redis:
     database: 0
-    host: *
-    port: *
-    password: 123
+    host: 47.103.35.95
+    port: 6379
+    password: Cqyw88928856
     jedis:
       pool:
         max-active: 8
@@ -60,5 +60,7 @@ logging:
 #存放mapper xml文件的位置
 mybatis-plus:
   mapper-locations: classpath:/mapper/colliery/*/*.xml
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 

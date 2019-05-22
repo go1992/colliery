@@ -6,7 +6,8 @@ import com.yw.colliery.entity.user.CollierySafetyUserEntity;
 import com.yw.colliery.sdk.aop.auth.AuthModule;
 import com.yw.colliery.sdk.aop.log.LogRecord;
 import com.yw.colliery.sdk.config.PageBean;
-import com.yw.colliery.sdk.config.PageParam;
+import com.yw.colliery.sdk.config.BaseParam;
+import com.yw.colliery.sdk.config.UserParam;
 import com.yw.colliery.sdk.constans.AuthConstant;
 import com.yw.colliery.sdk.request.UserRequest;
 import com.yw.colliery.sdk.utils.EncodeUtils;
@@ -87,7 +88,7 @@ public class UserController {
     @PostMapping("/select/all")
     @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE, level = AuthConstant.Level.LOW)
     @LogRecord
-    public Object selectUserAll(@RequestBody PageParam param) {
+    public Object selectUserAll(@RequestBody UserParam param) {
         try {
             PageBean<CollierySafetyUserEntity> pageBean = collierySafetyUserService.selectByPage(param);
             return ResponseUtils.wrapResponse(pageBean);

@@ -5,7 +5,7 @@ import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.role.RoleEntity;
 import com.yw.colliery.sdk.aop.auth.AuthModule;
 import com.yw.colliery.sdk.config.PageBean;
-import com.yw.colliery.sdk.config.PageParam;
+import com.yw.colliery.sdk.config.BaseParam;
 import com.yw.colliery.sdk.constans.AuthConstant;
 import com.yw.colliery.sdk.utils.ResponseUtils;
 import com.yw.colliery.service.role.RoleService;
@@ -74,7 +74,7 @@ public class RoleController {
 
     @PostMapping("/select/all")
     @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE, level = AuthConstant.Level.LOW)
-    public Object selectAll(@RequestBody PageParam param) {
+    public Object selectAll(@RequestBody BaseParam param) {
         try {
             PageBean<RoleEntity> pageBean = roleService.selectByPage(param);
             return ResponseUtils.wrapResponse(pageBean);

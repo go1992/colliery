@@ -16,7 +16,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class PageParam implements Serializable {
+public class BaseParam implements Serializable {
     private static final long serialVersionUID = 328578193509559912L;
     private int pageNum;
     private int pageSize;

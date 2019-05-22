@@ -2,6 +2,7 @@ package com.yw.colliery.mapper.user;
 
 
 import com.yw.colliery.entity.user.CollierySafetyUserEntity;
+import com.yw.colliery.sdk.config.UserParam;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -55,7 +56,7 @@ public interface CollierySafetyUserMapper {
      * 查询所有用户
      * @return
      */
-    List<CollierySafetyUserEntity> selectAllUser();
+    List<CollierySafetyUserEntity> selectAllUser(UserParam userParam);
 
     /**
      * 根据用户id查询

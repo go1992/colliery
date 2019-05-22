@@ -1,9 +1,8 @@
 package com.yw.colliery.service.depart;
 
 import com.yw.colliery.entity.depart.DepartmentEntity;
-import com.yw.colliery.entity.role.RoleEntity;
 import com.yw.colliery.sdk.config.PageBean;
-import com.yw.colliery.sdk.config.PageParam;
+import com.yw.colliery.sdk.config.BaseParam;
 
 import java.util.List;
 
@@ -51,7 +50,7 @@ public interface DepartmentService {
      * 分页查询部门
      * @return
      */
-    PageBean<DepartmentEntity> selectByPage(PageParam param);
+    PageBean<DepartmentEntity> selectByPage(BaseParam param);
 
     int deleteDepartByIds(List<Integer> departIds);
 }

@@ -4,7 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.yw.colliery.entity.role.RoleEntity;
 import com.yw.colliery.mapper.role.RoleMapper;
 import com.yw.colliery.sdk.config.PageBean;
-import com.yw.colliery.sdk.config.PageParam;
+import com.yw.colliery.sdk.config.BaseParam;
 import com.yw.colliery.sdk.message.publisher.EventPublisher;
 import com.yw.colliery.service.role.RoleEvent;
 import com.yw.colliery.service.role.RoleService;
@@ -55,7 +55,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public PageBean<RoleEntity> selectByPage(PageParam param) {
+    public PageBean<RoleEntity> selectByPage(BaseParam param) {
         PageHelper.startPage(param.getPageNum(), param.getPageSize(), param.generateOderBy());
         List<RoleEntity> roleEntityList = roleMapper.selectAll();
         return new PageBean(roleEntityList);
