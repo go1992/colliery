@@ -8,14 +8,12 @@ import com.yw.colliery.sdk.aop.auth.AuthModule;
 import com.yw.colliery.sdk.aop.log.LogLevel;
 import com.yw.colliery.sdk.aop.log.LogRecord;
 import com.yw.colliery.sdk.config.PageBean;
-import com.yw.colliery.sdk.config.PageParam;
+import com.yw.colliery.sdk.config.BaseParam;
 import com.yw.colliery.sdk.constans.AuthConstant;
 import com.yw.colliery.sdk.utils.LoginSessionUtils;
 import com.yw.colliery.sdk.utils.ResponseUtils;
 import com.yw.colliery.service.auth.AuthService;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -82,7 +80,7 @@ public class AuthController {
     @PostMapping("/select/all")
 
     @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE, level = AuthConstant.Level.LOW)
-    public Object selectAll(@RequestBody PageParam param) {
+    public Object selectAll(@RequestBody BaseParam param) {
         try {
             PageBean<AuthEntity> pageBean = authService.selectByPage(param);
             return ResponseUtils.wrapResponse(pageBean);

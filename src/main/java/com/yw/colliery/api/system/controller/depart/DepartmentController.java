@@ -5,7 +5,7 @@ import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.depart.DepartmentEntity;
 import com.yw.colliery.sdk.aop.auth.AuthModule;
 import com.yw.colliery.sdk.config.PageBean;
-import com.yw.colliery.sdk.config.PageParam;
+import com.yw.colliery.sdk.config.BaseParam;
 import com.yw.colliery.sdk.constans.AuthConstant;
 import com.yw.colliery.sdk.request.DepartRequest;
 import com.yw.colliery.sdk.utils.ResponseUtils;
@@ -74,7 +74,7 @@ public class DepartmentController {
 
     @PostMapping("/select/all")
     @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE, level = AuthConstant.Level.LOW)
-    public Object selectAll(@RequestBody PageParam param) {
+    public Object selectAll(@RequestBody BaseParam param) {
         try {
             PageBean<DepartmentEntity> pageBean = departmentService.selectByPage(param);
             return ResponseUtils.wrapResponse(pageBean);

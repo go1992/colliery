@@ -4,7 +4,8 @@ import com.github.pagehelper.PageHelper;
 import com.yw.colliery.entity.user.CollierySafetyUserEntity;
 import com.yw.colliery.mapper.user.CollierySafetyUserMapper;
 import com.yw.colliery.sdk.config.PageBean;
-import com.yw.colliery.sdk.config.PageParam;
+import com.yw.colliery.sdk.config.BaseParam;
+import com.yw.colliery.sdk.config.UserParam;
 import com.yw.colliery.sdk.message.publisher.EventPublisher;
 import com.yw.colliery.service.user.UserEvent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +64,7 @@ public class CollierySafetyUserServiceImpl implements CollierySafetyUserService{
 
     @Override
     public List<CollierySafetyUserEntity> selectAllUser() {
-        return collierySafetyUserMapper.selectAllUser();
+        return collierySafetyUserMapper.selectAllUser(new UserParam());
     }
 
     @Override
@@ -72,9 +73,9 @@ public class CollierySafetyUserServiceImpl implements CollierySafetyUserService{
     }
 
     @Override
-    public PageBean<CollierySafetyUserEntity> selectByPage(PageParam param) {
+    public PageBean<CollierySafetyUserEntity> selectByPage(UserParam param) {
         PageHelper.startPage(param.getPageNum(), param.getPageSize(), param.generateOderBy());
-        return new PageBean(collierySafetyUserMapper.selectAllUser());
+        return new PageBean(collierySafetyUserMapper.selectAllUser(param));
     }
 
     @Override

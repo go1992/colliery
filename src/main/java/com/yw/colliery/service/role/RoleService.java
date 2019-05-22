@@ -2,7 +2,7 @@ package com.yw.colliery.service.role;
 
 import com.yw.colliery.entity.role.RoleEntity;
 import com.yw.colliery.sdk.config.PageBean;
-import com.yw.colliery.sdk.config.PageParam;
+import com.yw.colliery.sdk.config.BaseParam;
 
 import java.util.List;
 
@@ -50,7 +50,7 @@ public interface RoleService {
      * 分页查询角色
      * @return
      */
-    PageBean<RoleEntity> selectByPage(PageParam param);
+    PageBean<RoleEntity> selectByPage(BaseParam param);
 
     int deleteRoleByIds(List<Integer> roleIds);
 }

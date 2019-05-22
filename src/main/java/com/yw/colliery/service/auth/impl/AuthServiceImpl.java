@@ -4,7 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.yw.colliery.entity.auth.AuthEntity;
 import com.yw.colliery.mapper.auth.AuthMapper;
 import com.yw.colliery.sdk.config.PageBean;
-import com.yw.colliery.sdk.config.PageParam;
+import com.yw.colliery.sdk.config.BaseParam;
 import com.yw.colliery.service.auth.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,7 +57,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public PageBean<AuthEntity> selectByPage(PageParam param) {
+    public PageBean<AuthEntity> selectByPage(BaseParam param) {
         PageHelper.startPage(param.getPageNum(), param.getPageSize(), param.generateOderBy());
         return new PageBean<>(authMapper.selectAll());
     }
