@@ -216,6 +216,9 @@ public class DcSwdzZkpcController extends BaseController<DcSwdzZkpcServiceImpl,D
 	@Override
 	@AuthModule(authId = AuthConstant.Module.GEODETIC_MODULE, level = AuthConstant.Level.HIGH)
 	public Object save(DcSwdzZkpc params, HttpServletRequest request) throws Exception {
+		HttpSession session = request.getSession();
+		List<String> deptsIds = (List<String>)session.getAttribute(ESessionKey.DeptsIds.key);
+		params.setSsmk(deptsIds.get(0));
 		return super.save(params, request);
 	}
 

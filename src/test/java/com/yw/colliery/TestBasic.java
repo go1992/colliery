@@ -196,7 +196,7 @@ public class TestBasic {
 	public void t1() {
 		DcSwdzZkpc obj = new DcSwdzZkpc();
 		obj.setId(12332123l);
-		obj.setZkwz(1232132);
+//		obj.setZkwz(1232132);
 		System.out.println(obj);
 		System.out.println(JSON.toJSONString(obj));
 	}
