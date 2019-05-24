@@ -59,7 +59,7 @@ public class DcSwdzZkpc implements Serializable {
 
 	@ApiModelProperty(value = "钻孔位置")
 	@TableField(condition = "")//将此字段表示为条件查询
-	private int zkwz;
+	private String zkwz;
 
 
 	@ApiModelProperty(value = "钻孔编号",example = "钻孔编号")
