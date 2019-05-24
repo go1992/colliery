@@ -120,12 +120,13 @@
 					<td colspan="3"><select id="sel_z" name="departName" style="margin: 4px;"></select></td>
 
 					<td>排查类型 ：</td>
-					<td colspan="3"><input id="jh_pctype" name="type" /> </td>
+					<td colspan="3">
+						<select id="jh_pctype" name="type" style="margin: 4px;"></select>
 				</tr>
 
 				<tr>
 					<td>排查地点 ：</td>
-					<td colspan="3"><input id="jh_pcaddress" name="location" /> </td>
+					<td colspan="3"><select id="jh_pcaddress" name="location" style="margin: 4px;"></select></td>
 					<td>排查内容 ：</td>
 					<td colspan="3"><textarea id="jh_nr" name="content" rows="6" cols="50" style="margin: 4px;"></textarea></td>
 				</tr>
@@ -145,6 +146,62 @@
 			$.ajaxPrefilter(function(options, originalOptions, jqXHR) {
 				options.xhrFields = {
 					withCredentials: true
+				}
+			});
+			var host1 = "http://47.103.35.95:8888";
+			var Url_jcxx = '/base/config/get';
+			var json2 = {
+				"name":'地点'
+			};
+			//地点下拉框
+			$.ajax({
+				contentType: "application/json;charset=utf-8",
+				dataType: "json",
+				type: "post",
+				url: host1 + Url_jcxx,
+				async: true,
+				data: JSON.stringify(json2),
+				success: function(data) {
+					if(data.total > 0) {
+						var str;
+						for(var i = 0; i < data.rows.length; i++) {
+							str += "<option>" + data.rows[i].value + "</option>"
+						}
+						$("#jh_pcaddress").html(str);
+					} else {
+						alert(data.message);
+					}
+
+				},
+				error: function(request) {
+					alert("连接失败!")
+				}
+			});
+			var json2 = {
+				"name":'排查类型'
+			};
+			//排查类型下拉框
+			$.ajax({
+				contentType: "application/json;charset=utf-8",
+				dataType: "json",
+				type: "post",
+				url: host1 + Url_jcxx,
+				async: true,
+				data: JSON.stringify(json2),
+				success: function(data) {
+					if(data.total > 0) {
+						var str;
+						for(var i = 0; i < data.rows.length; i++) {
+							str += "<option>" + data.rows[i].value + "</option>"
+						}
+						$("#jh_pctype").html(str);
+					} else {
+						alert(data.message);
+					}
+
+				},
+				error: function(request) {
+					alert("连接失败!")
 				}
 			});
 			//清空表单

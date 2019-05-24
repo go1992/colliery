@@ -4,25 +4,6 @@
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
-		
-		<script>
-			    $(document).ready(function () {
-			        var time = new Date();
-			        var day = ("0" + time.getDate()).slice(-2);
-			        var month = ("0" + (time.getMonth() + 1)).slice(-2);
-			        var today = time.getFullYear() + "-" + (month) + "-" + (day);
-			        $('#starttime').val(today);
-			    })
-			</script>
-		<script>
-			    $(document).ready(function () {
-			        var time = new Date();
-			        var day = ("0" + time.getDate()).slice(-2);
-			        var month = ("0" + (time.getMonth() + 2)).slice(-2);
-			        var today = time.getFullYear() + "-" + (month) + "-" + (day);
-			        $('#endtime').val(today);
-			    })
-			</script>
 		<style>
 			#Table1 {
 				width: 80%;
@@ -125,7 +106,7 @@
 
 	<body>
 		<form method="post" action="#" id="Form1" enctype="multipart/form-data">
-			
+
 			<table id="Table1" border="1" cellspacing="0" cellpadding="5px">
 				<tr>
 					<td>排查日期：</td>
@@ -133,7 +114,10 @@
 				</tr>
 				<tr>
 					<td>钻孔位置：</td>
-					<td><input id="input_zkwz" name="zkwz"/></td>
+					<td>
+						<select id="input_zkwz" name="zkwz" style="margin: 4px;"></select>
+						<!--<input id="input_zkwz" name="zkwz"/>-->
+					</td>
 					<td>开孔日期：</td>
 					<td><input type="date" id="endtime" name="kkrq" /> </td>
 				</tr>
@@ -157,9 +141,12 @@
 				</tr>
 				<tr>
 					<td>记录人：</td>
-					<td><input id="jl_people" name="jlr" /></td>
+					<td><input id="jl_people" name="jlr" disabled="disabled" /></td>
 					<td>审核人：</td>
-					<td><input id="sh_people" name="shhr" /> </td>
+					<td>
+						<select onchange="sel_user()" id="sel_z" name="departName" style="margin: 4px;"></select>
+						<select id="sh_people" name="shhr" style="margin: 4px;"></select>
+					</td>
 				</tr>
 				<tr>
 					<td>有无险情描述：</td>
@@ -171,11 +158,11 @@
 				<button id="btn_qk" type="button" class="btn_qk"><i class="iconfont icon-qingkong"></i>清空</button>
 			</div>
 		</form>
-		<!--<script type="text/javascript" src="../../js/jquery-1.12.4.js"></script>
+		<script type="text/javascript" src="../../js/jquery-1.12.4.js"></script>
 		<script type="text/javascript" src="../../js/Excel_dc/xlsx.core.min.js"></script>
-		<script type="text/javascript" src="../../glng/GLOBAL.js"></script>-->
-		<script type="text/javascript" src="http://127.0.0.1:8020/static/js/jquery-1.12.4.js"></script>
-		<script type="text/javascript" src="http://127.0.0.1:8020/static/js/layer/layer.js"></script>
+		<script type="text/javascript" src="../../glng/GLOBAL.js"></script>
+		<!--<script type="text/javascript" src="http://127.0.0.1:8020/static/js/jquery-1.12.4.js"></script>
+		<script type="text/javascript" src="http://127.0.0.1:8020/static/js/layer/layer.js"></script>-->
 		<!--js-xlsx插件-->
 		<script>
 			//为ajax设置跨域带cookie
@@ -188,12 +175,101 @@
 			var UrlSelect = '/dc-swdz-zkpc/queryzkpc';
 			var UrlInsert = '/dc-swdz-zkpc/save';
 			var UrlUpdate = '/dc-swdz-zkpc/updateById';
-			//把钻孔位置下拉框复制给文本框
-			$(document).ready(function() {
-				$("#sel_zkwz").change(function() {
-					$("#input_zkwz").val($("#sel_zkwz").val());
-				});
+			var Urlbm = '/department/select/all';
+			var UrlSelectUser = '/user/select/all';
+
+			var host1 = "http://47.103.35.95:8888";
+			var Url_jcxx = '/base/config/get';
+			var json2 = {
+				"name": '钻孔位置'
+			};
+			//钻孔位置下拉框
+			$.ajax({
+				contentType: "application/json;charset=utf-8",
+				dataType: "json",
+				type: "post",
+				url: host1 + Url_jcxx,
+				async: true,
+				data: JSON.stringify(json2),
+				success: function(data) {
+					if(data.total > 0) {
+						var str;
+						for(var i = 0; i < data.rows.length; i++) {
+							str += "<option>" + data.rows[i].value + "</option>"
+						}
+						$("#input_zkwz").html(str);
+					} else {
+						alert(data.message);
+					}
+
+				},
+				error: function(request) {
+					alert("连接失败!")
+				}
 			});
+			//部门下拉框
+			var json3 = {
+				"pageNum": null,
+				"pageSize": null
+			};
+			$.ajax({
+				contentType: "application/json;charset=utf-8",
+				dataType: "json",
+				type: "post",
+				url: host1 + Urlbm,
+				async: true,
+				data: JSON.stringify(json3),
+				success: function(data) {
+					if(data.total > 0) {
+						var str;
+						for(var i = 0; i < data.rows.length; i++) {
+							str += "<option value='"+data.rows[i].id+"'>" + data.rows[i].departName + "</option>"
+						}
+						$("#sel_z").html(str);
+					} else {
+						alert(data.message);
+					}
+
+				},
+				error: function(request) {
+					alert("连接失败!")
+				}
+			});
+
+			function sel_user() {
+				var json4 = {
+					"pageNum": null,
+					"pageSize": null,
+					"departId":$('#sel_z option:selected').val()
+				};
+				//用户下拉框
+				$.ajax({
+					contentType: "application/json;charset=utf-8",
+					dataType: "json",
+					type: "post",
+					url: host1 + UrlSelectUser,
+					async: true,
+					data: JSON.stringify(json4),
+					success: function(data) {
+						if(data.total > 0) {
+							var str;
+							for(var i = 0; i < data.rows.length; i++) {
+								str += "<option>" + data.rows[i].name + "</option>"
+							}
+							$("#sh_people").html(str);
+						} else {
+							alert(data.message);
+						}
+
+					},
+					error: function(request) {
+						alert("连接失败!")
+					}
+				});
+			}
+			sel_user();
+			var username = sessionStorage.getItem("MK_userName");
+			$("#jl_people").val(username);
 			//清空表单
 			$("#btn_qk").click(function() {
 				$("#Form1")[0].reset();
@@ -265,12 +341,12 @@
 				if(RowId != "" && RowId != undefined && RowId != 'undefined') {
 					$.ajax({
 						type: "post",
-						url: host + UrlUpdate+"?id="+RowId,
+						url: host + UrlUpdate + "?id=" + RowId,
 						data: $('#Form1').serialize(), // 你的formid
 						async: false,
 						success: function(data) {
 							alert("修改成功");
-							if(parent)parent.$('#Table2').bootstrapTable('refresh', {
+							if(parent) parent.$('#Table2').bootstrapTable('refresh', {
 								url: host + UrlSelect
 							});
 						},
@@ -296,7 +372,7 @@
 			})
 			$.fn.loadData = function(obj) {
 				var key, value, tagName, type, arr;
-//				this.reset();
+				//				this.reset();
 				for(var x in obj) {
 					if(obj.hasOwnProperty(x)) {
 						key = x;

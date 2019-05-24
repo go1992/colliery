@@ -139,7 +139,10 @@
 					<td>检查类型 ：</td>
 					<td colspan="3"><input id="jclx" name="checkType" /> </td>
 					<td>检查人 ：</td>
-					<td colspan="3"><input id="jcr" name="checkPerson" /> </td>
+					<td colspan="3">
+						<select onchange="sel_user1()" id="sel_z1" style="margin: 4px;"></select>
+						<select id="sh_people1" name="checkPerson" style="margin: 4px;"></select>
+					</td>
 				</tr>
 
 				<tr>
@@ -147,7 +150,9 @@
 					<td>检查时间 ：</td>
 					<td colspan="3"><input type="date" id="starttime" name="checkTime" /> </td>
 					<td>隐患地点 ：</td>
-					<td colspan="3"><input id="yhdd" name="location" /> </td>
+					<td colspan="3">
+						<select id="jh_pcaddress" name="location" style="margin: 4px;"></select>
+					</td>
 				</tr>
 				<tr>
 					<td>隐患级别 ：</td>
@@ -186,11 +191,14 @@
 									<option>一般</option>
 									<option>中等</option>
 									<option>重大</option>
-								</select>-->
-						<input id="sel_zkwz" name="dutyDepart" />
+							</select>-->
+						<select id="sel_z" name="dutyDepart" style="margin: 4px;"></select>
 					</td>
 					<td>责任人 ：</td>
-					<td colspan="3"><input id="zrr" name="dutyPerson" /> </td>
+					<td colspan="3">
+						<select onchange="sel_user2()" id="sel_z2"  style="margin: 4px;"></select>
+						<select id="sh_people2"  name="dutyPerson" style="margin: 4px;"></select>
+					</td>
 				</tr>
 
 				<tr>
@@ -218,6 +226,108 @@
 					withCredentials: true
 				}
 			});
+			var host = "http://47.103.35.95:8888";
+			var UrlSelect = '/apiv1/unsafe/get/unsafeInfo/condition';
+			var UrlSelect_jh_name = '/apiv1/unsafePlan/get';
+			var UrlInsert = '/apiv1/unsafe/save';
+			var UrlUpdate = '/apiv1/unsafe/update';
+			var Urlbm = '/department/select/all';
+			var Url_jcxx = '/base/config/get';
+			var UrlSelectUser = '/user/select/all';
+			var json2 = {
+				"name": '地点'
+			};
+			//地点下拉框
+			$.ajax({
+				contentType: "application/json;charset=utf-8",
+				dataType: "json",
+				type: "post",
+				url: host1 + Url_jcxx,
+				async: true,
+				data: JSON.stringify(json2),
+				success: function(data) {
+					if(data.total > 0) {
+						var str;
+						for(var i = 0; i < data.rows.length; i++) {
+							str += "<option>" + data.rows[i].value + "</option>"
+						}
+						$("#jh_pcaddress").html(str);
+					} else {
+						alert(data.message);
+					}
+
+				},
+				error: function(request) {
+					alert("连接失败!")
+				}
+			});
+			function sel_user1() {
+				var json4 = {
+					"pageNum": null,
+					"pageSize": null,
+					"departId":$('#sel_z1 option:selected').val()
+				};
+				//用户下拉框
+				$.ajax({
+					contentType: "application/json;charset=utf-8",
+					dataType: "json",
+					type: "post",
+					url: host + UrlSelectUser,
+					async: true,
+					data: JSON.stringify(json4),
+					success: function(data) {
+						if(data.total > 0) {
+							var str;
+							for(var i = 0; i < data.rows.length; i++) {
+								str += "<option>" + data.rows[i].name + "</option>"
+							}
+							console.log(data);
+							$("#sh_people1").html(str);
+						} else {
+							alert(data.message);
+						}
+
+					},
+					error: function(request) {
+						alert("连接失败!")
+					}
+				});
+			}
+			sel_user1();
+			function sel_user2() {
+				var json4 = {
+					"pageNum": null,
+					"pageSize": null,
+					"departId":$('#sel_z2 option:selected').val()
+				};
+				//用户下拉框
+				$.ajax({
+					contentType: "application/json;charset=utf-8",
+					dataType: "json",
+					type: "post",
+					url: host + UrlSelectUser,
+					async: true,
+					data: JSON.stringify(json4),
+					success: function(data) {
+						if(data.total > 0) {
+							var str;
+							for(var i = 0; i < data.rows.length; i++) {
+								str += "<option>" + data.rows[i].name + "</option>"
+							}
+							console.log(data);
+							$("#sh_people2").html(str);
+						} else {
+							alert(data.message);
+						}
+
+					},
+					error: function(request) {
+						alert("连接失败!")
+					}
+				});
+			}
+			sel_user2();
+			
 			//从session得到部门id
 			$.ajax({
 				dataType: "json",
@@ -228,12 +338,38 @@
 					$("#startDepartId").val(data.safetyUser.departId);
 				}
 			});
-			var host = "http://47.103.35.95:8888";
-			var UrlSelect = '/apiv1/unsafe/get/unsafeInfo/condition';
-			var UrlSelect_jh_name = '/apiv1/unsafePlan/get';
-			var UrlInsert = '/apiv1/unsafe/save';
-			var UrlUpdate = '/apiv1/unsafe/update';
+			
 
+			//部门下拉框
+			var json2 = {
+				"pageNum": null,
+				"pageSize": null
+			};
+			$.ajax({
+				contentType: "application/json;charset=utf-8",
+				dataType: "json",
+				type: "post",
+				url: host + Urlbm,
+				async: true,
+				data: JSON.stringify(json2),
+				success: function(data) {
+					if(data.total > 0) {
+						var str;
+						for(var i = 0; i < data.rows.length; i++) {
+							str += "<option value='"+data.rows[i].id+"'>" + data.rows[i].departName + "</option>"
+						}
+						$("#sel_z").html(str);
+						$("#sel_z1").html(str);
+						$("#sel_z2").html(str);
+					} else {
+						alert(data.message);
+					}
+
+				},
+				error: function(request) {
+					alert("连接失败!")
+				}
+			});
 			//计划名称下拉框
 			var json1 = {
 				"departName": null,
@@ -253,14 +389,14 @@
 				async: true,
 				data: JSON.stringify(json1),
 				success: function(data) {
-					if(data.total >0) {
+					if(data.total > 0) {
 						var str;
 						for(var i = 0; i < data.rows.length; i++) {
 							str += "<option>" + data.rows[i].planName + "</option>"
 						}
 						$("#jhbh").html(str);
-					}else{
-						alert(data.message);
+					} else {
+						alert("请先录入计划！");
 					}
 
 				},

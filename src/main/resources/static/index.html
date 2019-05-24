@@ -112,7 +112,6 @@
 		<link rel="stylesheet" href="css/bootstrap-table.min.css" />
 		<link rel="stylesheet" href="css/all.css" />
 		<link rel="stylesheet" href="css/font-awesome.min.css" />
-		<link rel="icon" href="img/bitbug_favicon.ico" type="image/x-icon">
 		<link rel="stylesheet" href="css/style.css">
 	</head>
 
@@ -120,7 +119,7 @@
 		<header>
 			<div class="company_title">
 
-				<span>信息管理系统</span>
+				<span>煤矿质量标准化管控平台</span>
 				<p class="dqzh">
 					<span id="showUserName">当前账户:李梅</span>
 					<a href="bigdatalogin.html">
@@ -134,8 +133,7 @@
 			<div class="l_menu">
 				<ul class="menu_ul">
 					<li class="eq_li" onclick="fc()">
-
-						<a id="eq_info" class="eq_info active">
+						<a class="eq_info active">
 							<span class="iconfont icon-caidan"></span> 系统设置
 							<span class="pull-right">
 							<em class="iconfont icon-arrow-right-copy"></em>
@@ -158,7 +156,7 @@
 								</ul>
 							</li>
 							<li class="eq_li">
-								<a id="eq_info" class="eq_info active">
+								<a class="eq_info active">
 									<span class="iconfont icon-caidan"></span>部门管理
 
 								</a>
@@ -195,10 +193,78 @@
 
 										</ul>
 									</li>
+								</ul>
 							</li>
-							</ul>
-					</li>
-					</ul>
+							<li class="eq_li">
+								<a class="eq_info active">
+									<span class="iconfont icon-caidan"></span>基础信息设置
+
+								</a>
+								<ul class="ul_ulhidden">
+									<li>
+										<a href="#" style="padding-left: 10px;">
+											<span class="iconfont icon-caidan"></span>地测防治水管理</a>
+										<ul class="ul_ulhidden">
+											<li>
+												<a style="padding-left: 10px;" href="#" onclick="LoadHtml(this,'html/xtsz/jcxx/xtsz_jcxx_zkwz.html')">
+													<span class="iconfont icon-jiantouarrow484"></span>钻孔位置维护</a>
+											</li>
+
+										</ul>
+									</li>
+									<li>
+										<a href="#" style="padding-left: 10px;">
+											<span class="iconfont icon-caidan"></span>安全风险管控</a>
+										<ul class="ul_ulhidden">
+											<li>
+												<a style="padding-left: 10px;" href="#" onclick="LoadHtml(this,'html/xtsz/jcxx/xtsz_jcxx_fxd.html')">
+													<span class="iconfont icon-jiantouarrow484"></span>风险点维护</a>
+											</li>
+											<li>
+												<a style="padding-left: 10px;" href="#" onclick="LoadHtml(this,'html/xtsz/jcxx/xtsz_jcxx_fxfl.html')">
+													<span class="iconfont icon-jiantouarrow484"></span>风险分类维护</a>
+											</li>
+											<li>
+												<a style="padding-left: 10px;" href="#" onclick="LoadHtml(this,'html/xtsz/jcxx/xtsz_jcxx_wz.html')">
+													<span class="iconfont icon-jiantouarrow484"></span>位置维护</a>
+											</li>
+											<li>
+												<a style="padding-left: 10px;" href="#" onclick="LoadHtml(this,'html/xtsz/jcxx/xtsz_jcxx_bc.html')">
+													<span class="iconfont icon-jiantouarrow484"></span>班次维护</a>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<a href="#" style="padding-left: 10px;">
+											<span class="iconfont icon-caidan"></span>调度信息管理</a>
+										<ul class="ul_ulhidden">
+											<li>
+												<a style="padding-left: 10px;" href="#" onclick="LoadHtml(this,'html/xtsz/jcxx/xtsz_jcxx_bc.html')">
+													<span class="iconfont icon-jiantouarrow484"></span>班次维护</a>
+											</li>
+											<li>
+												<a style="padding-left: 10px;" href="#" onclick="LoadHtml(this,'html/xtsz/jcxx/xtsz_jcxx_dd.html')">
+													<span class="iconfont icon-jiantouarrow484"></span>施工地点维护</a>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<a href="#" style="padding-left: 10px;">
+											<span class="iconfont icon-caidan"></span>隐患治理</a>
+										<ul class="ul_ulhidden">
+											<li>
+												<a style="padding-left: 10px;" href="#" onclick="LoadHtml(this,'html/xtsz/jcxx/xtsz_jcxx_dd.html')">
+													<span class="iconfont icon-jiantouarrow484"></span>地点维护</a>
+											</li>
+											<li>
+												<a style="padding-left: 10px;" href="#" onclick="LoadHtml(this,'html/xtsz/jcxx/xtsz_jcxx_pclx.html')">
+													<span class="iconfont icon-jiantouarrow484"></span>排查类型维护</a>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+						</ul>
 					</li>
 					<li class="eq_li" onclick="fc1()">
 						<a class="eq_info">
@@ -402,7 +468,7 @@
 					</ul>
 				</div>
 				<div class="eq_form">
-					
+					<img src="img/timg.jpg" width="100%" />
 
 				</div>
 
@@ -419,7 +485,7 @@
 		<script type="text/javascript" src="js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="js/layer/layer.js"></script>
 		<script type="text/javascript" src="js/echarts.min.js"></script>
-		<script type="text/javascript" src="js/jquery.form.js" ></script>
+		<script type="text/javascript" src="js/jquery.form.js"></script>
 		<script type="text/javascript" src="glng/GLOBAL.js"></script>
 		<script>
 			function destroySession() {
@@ -429,7 +495,7 @@
 					success: function() {}
 				});
 			};
-			
+
 			$.ajax({
 				dataType: "json",
 				type: "get",
@@ -518,7 +584,6 @@
 						$(".menu_ul>li>a,.ul_hidden>li>a,.ul_ulhidden>li>a").removeClass("active");
 					}
 					$(this).addClass("active");
-
 					$(this).next("ul").slideToggle();
 					$(this).parent("li").siblings().has("ul").children("ul").slideUp();
 					$(this).parent("li").siblings().find("em").removeClass("icon-jiantou-copy-copy");

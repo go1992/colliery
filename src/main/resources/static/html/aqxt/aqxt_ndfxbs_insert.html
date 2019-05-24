@@ -5,24 +5,7 @@
 		<meta charset="UTF-8">
 		<title></title>
 		<link rel="stylesheet" href="js/layer/mobile/need/layer.css" />
-		<script>
-			    $(document).ready(function () {
-			        var time = new Date();
-			        var day = ("0" + time.getDate()).slice(-2);
-			        var month = ("0" + (time.getMonth() + 1)).slice(-2);
-			        var today = time.getFullYear() + "-" + (month) + "-" + (day);
-			        $('#starttime').val(today);
-			    })
-			</script>
-		<script>
-			    $(document).ready(function () {
-			        var time = new Date();
-			        var day = ("0" + time.getDate()).slice(-2);
-			        var month = ("0" + (time.getMonth() + 2)).slice(-2);
-			        var today = time.getFullYear() + "-" + (month) + "-" + (day);
-			        $('#endtime').val(today);
-			    })
-			</script>
+	
 		<style>
 			#Table1 {
 				width: 80%;
@@ -126,60 +109,60 @@
 
 	<body>
 		<form method="post" action="#" id="Form1" enctype="multipart/form-data">
-			<div class="xiazaiAnddr">
+			<!--<div class="xiazaiAnddr">
 				<button id="btn_jczl_download" type="button" class="btn_xiazai"><i class="iconfont icon-Group-"></i>下载Excel模板</button>&nbsp;&nbsp;
 				<span class="file_item">
 					<input id="input_file1" style="height: 28px;border:1px solid gainsboro;border-radius:2px ;" />
 					<button id="btn_xzwj" type="button" class="btn_sc"><i class="iconfont icon-choose1"></i>选择文件导入</button>	
 					<input name="fileName" type="file" id="input_file" accept=".xls" />
 				</span>
-			</div>
+			</div>-->
 			<table id="Table1" border="1" cellspacing="0" cellpadding="5px">
 				<tr>
 					<td>风险点：</td>
-					<td colspan="3">
-						<select id="sel_zkwz" style="margin: 4px;">
-							<option>请选择或手工输入</option>
-							<option>1</option>
+					<td>
+						<select id="sel_fxd" name="fxd" style="margin: 4px;">
 						</select>
 					</td>
-					
-				</tr>
-				<tr>
 					<td>责任单位：</td>
-					<td colspan="3"><input id="zk_number" /><select id="sel_zkwz" name="zrdw" style="margin: 4px;">
+					<td><select id="sel_zrdw" name="zrdw" style="margin: 4px;">
 						</select></td>
 				</tr>
+			
 				<tr>
 					<td>风险等级：</td>
-					<td><select id="sel_zkwz" name="fxdj" style="margin: 4px;">
+					<td><select name="fxdj" style="margin: 4px;">
 							<option>一般</option>
 							<option>中等</option>
 							<option>重大</option>
 						</select></td>
 					<td>风险分类：</td>
-					<td><select id="sel_zkwz" name="fxfl" style="margin: 4px;">
+					<td><select id="sel_fxfl" name="fxfl" style="margin: 4px;">
 						</select> </td>
 				</tr>
 				<tr>
 					<td>限制人数：</td>
-					<td><input id="sejks" name="xzrs"/>（重大风险必填）</td>
+					<td><input name="xzrs"/>（重大风险必填）</td>
 					<td>辨识时间：</td>
 					<td><input type="date" id="starttime" name="pcrq"/> </td>
 				</tr>
 				<tr>
 					<td>风险描述：</td>
-					<td colspan="3"><textarea id="ywxq_describe" name="fxms" rows="6" cols="70" style="margin: 4px;"></textarea></td>
+					<td colspan="3"><textarea  name="fxms" rows="6" cols="70" style="margin: 4px;"></textarea></td>
 				</tr>
 				<tr>
 					<td>管控措施：</td>
-					<td colspan="3"><textarea id="ywxq_describe" name="gkcs" rows="6" cols="70" style="margin: 4px;"></textarea></td>
+					<td colspan="3"><textarea  name="gkcs" rows="6" cols="70" style="margin: 4px;"></textarea></td>
 				</tr>
 				<tr>
 					<td>主要负责人：</td>
-					<td><input id="sejks" name="zyfz"/>(重大风险必填)</td>
+					<td>
+						<select onchange="sel_user()" id="sel_z"  style="margin: 4px;"></select>
+						<select id="sh_people"  name="zyfzr" style="margin: 4px;"></select>(重大风险必填)</td>
 					<td>分管负责人：</td>
-					<td><input id="shijks"/ name="fgfzr">(重大风险，较大风险必须填) </td>
+					<td>
+						<select onchange="sel_user1()" id="sel_z1"  style="margin: 4px;"></select>
+						<select id="sh_people1"  name="fgfzr" style="margin: 4px;"></select>(重大风险，较大风险必须填)</td>
 				</tr>
 			</table>
 			<div class="btn_item">
@@ -190,18 +173,172 @@
 		<script type="text/javascript" src="../../js/jquery-1.12.4.js"></script>
 		<script type="text/javascript" src="../../js/Excel_dc/xlsx.core.min.js"></script>
 		<script type="text/javascript" src="../../glng/GLOBAL.js"></script>
+		<!--<script type="text/javascript" src="http://127.0.0.1:8020/static/js/jquery-1.12.4.js"></script>
+		<script type="text/javascript" src="http://127.0.0.1:8020/static/js/layer/layer.js"></script>-->
 		<!--js-xlsx插件-->
 		<script>
+			//为ajax设置跨域带cookie
+			$.ajaxPrefilter(function(options, originalOptions, jqXHR) {
+				options.xhrFields = {
+					withCredentials: true
+				}
+			});
 			var host = HOST;
 			var UrlSelect = '/aqfx-ndfx/query';
 			var UrlInsert = '/aqfx-ndfx/save';
 			var UrlUpdate = '/aqfx-ndfx/updateById';
-			//把钻孔位置下拉框复制给文本框
-			$(document).ready(function() {
-				$("#sel_zkwz").change(function() {
-					$("#input_zkwz").val($("#sel_zkwz").val());
-				});
+			var host1 = "http://47.103.35.95:8888";
+			var Url_jcxx = '/base/config/get';
+			var Urlbm = '/department/select/all';
+			var UrlSelectUser = '/user/select/all';
+			var json2 = {
+				"name": '风险点'
+			};
+			//风险点下拉框
+			$.ajax({
+				contentType: "application/json;charset=utf-8",
+				dataType: "json",
+				type: "post",
+				url: host1 + Url_jcxx,
+				async: true,
+				data: JSON.stringify(json2),
+				success: function(data) {
+					if(data.total > 0) {
+						var str;
+						for(var i = 0; i < data.rows.length; i++) {
+							str += "<option>" + data.rows[i].value + "</option>"
+						}
+						$("#sel_fxd").html(str);
+					} else {
+						alert(data.message);
+					}
+
+				},
+				error: function(request) {
+					alert("连接失败!")
+				}
 			});
+			//部门下拉框
+			var json3 = {
+				"pageNum": null,
+				"pageSize": null
+			};
+			$.ajax({
+				contentType: "application/json;charset=utf-8",
+				dataType: "json",
+				type: "post",
+				url: host1 + Urlbm,
+				async: true,
+				data: JSON.stringify(json3),
+				success: function(data) {
+					if(data.total > 0) {
+						var str;
+						for(var i = 0; i < data.rows.length; i++) {
+							str += "<option value='"+data.rows[i].id+"'>" + data.rows[i].departName + "</option>"
+						}
+						$("#sel_zrdw").html(str);
+						$("#sel_z").html(str);
+						$("#sel_z1").html(str);
+					} else {
+						alert(data.message);
+					}
+
+				},
+				error: function(request) {
+					alert("连接失败!")
+				}
+			});
+			//风险分类下拉框
+			var json4 = {
+				"name": '风险分类'
+			};
+			$.ajax({
+				contentType: "application/json;charset=utf-8",
+				dataType: "json",
+				type: "post",
+				url: host1 + Url_jcxx,
+				async: true,
+				data: JSON.stringify(json4),
+				success: function(data) {
+					if(data.total > 0) {
+						var str;
+						for(var i = 0; i < data.rows.length; i++) {
+							str += "<option>" + data.rows[i].value + "</option>"
+						}
+						$("#sel_fxfl").html(str);
+					} else {
+						alert(data.message);
+					}
+
+				},
+				error: function(request) {
+					alert("连接失败!")
+				}
+			});
+			function sel_user() {
+				var json4 = {
+					"pageNum": null,
+					"pageSize": null,
+					"departId":$('#sel_z option:selected').val()
+				};
+				//用户下拉框
+				$.ajax({
+					contentType: "application/json;charset=utf-8",
+					dataType: "json",
+					type: "post",
+					url: host1 + UrlSelectUser,
+					async: true,
+					data: JSON.stringify(json4),
+					success: function(data) {
+						if(data.total > 0) {
+							var str;
+							for(var i = 0; i < data.rows.length; i++) {
+								str += "<option>" + data.rows[i].name + "</option>"
+							}
+							$("#sh_people").html(str);
+						} else {
+							alert(data.message);
+						}
+
+					},
+					error: function(request) {
+						alert("连接失败!")
+					}
+				});
+			}
+			sel_user();
+			function sel_user1() {
+				var json4 = {
+					"pageNum": null,
+					"pageSize": null,
+					"departId":$('#sel_z1 option:selected').val()
+				};
+				//用户下拉框
+				$.ajax({
+					contentType: "application/json;charset=utf-8",
+					dataType: "json",
+					type: "post",
+					url: host1 + UrlSelectUser,
+					async: true,
+					data: JSON.stringify(json4),
+					success: function(data) {
+						if(data.total > 0) {
+							var str;
+							for(var i = 0; i < data.rows.length; i++) {
+								str += "<option>" + data.rows[i].name + "</option>"
+							}
+							$("#sh_people1").html(str);
+						} else {
+							alert(data.message);
+						}
+
+					},
+					error: function(request) {
+						alert("连接失败!")
+					}
+				});
+			}
+			sel_user1();
 			//清空表单
 			$("#btn_qk").click(function() {
 				$("#Form1")[0].reset();

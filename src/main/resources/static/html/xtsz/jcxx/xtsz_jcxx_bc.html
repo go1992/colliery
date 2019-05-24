@@ -17,24 +17,24 @@
 				font-size: 14px;
 				color: #30a5ff;
 			}
-
+			
 			#Table2 {
 				text-align: center;
 			}
-
+			
 			#Table1 tr td:nth-of-type(1) {
 				text-align: right;
 			}
-
+			
 			#Table1 tr td:nth-of-type(3) {
 				text-align: right;
 			}
-
+			
 			#Table1 input {
 				padding: 2px;
 				margin: 4px;
 			}
-
+			
 			.btn_tj {
 				border: 0px;
 				border-radius: 3px;
@@ -45,20 +45,20 @@
 				background-color: #30a5ff;
 				margin: 0 50px;
 			}
-
+			
 			.btn_tj:hover,
 			.btn_bj:hover {
 				cursor: pointer;
 				background-color: #428bca;
 			}
-
+			
 			.btn_tr {
 				position: relative;
 				display: -ms-inline-flexbox;
 				display: inline-flex;
 				vertical-align: middle;
 			}
-
+			
 			.btn_bj,
 			.btn_del {
 				border: 0px;
@@ -70,11 +70,11 @@
 				background-color: #30a5ff;
 				margin: 0 20px;
 			}
-
+			
 			.btn_del {
 				background-color: #dc3545;
 			}
-
+			
 			.btn_del:hover {
 				cursor: pointer;
 				background-color: #c82333;
@@ -84,16 +84,12 @@
 
 	<body>
 		<form method="post" action="#" id="Form1" enctype="multipart/form-data">
-		<input type="hidden" id="RowId" />
+			<input type="hidden" id="RowId" />
 			<table id="Table1" border="1" cellspacing="0" cellpadding="5px">
 				<tr>
-
-					<td>钻孔位置：</td>
-					<td><input id="input_zkwz" name="input_zkwz" /><br></td>
-
-					<td>排查日期：</td>
-					<td>起始日期：<input type="date" id="starttime" name="startTime" /><br>结束日期：<input type="date" id="endtime" name="endTime" /><br></td>
-					<td><button type="button" class="btn_tj" id="btn_sel"><i class="iconfont icon-chaxun"></i>查询</button></td>
+					<input id="tagName" type="hidden" value="班次" />
+					<td>班次：<input id="tagValue" /><button type="button" class="btn_tj" id="btn_sel"><i class="iconfont icon-tijiao"></i>新增</button> </td>
+					<td>班次ID:<input id="tagId" />值:<input id="tagValue1" /><button type="button" class="btn_tj" id="btn_up"><i class="iconfont icon-tijiao"></i>更新</button></td>
 				</tr>
 			</table>
 			<div class="btn_tr" id="toolbar">
@@ -103,7 +99,7 @@
 				</div>
 			</div>
 			<table id="Table2" border="1" cellspacing="0" cellpadding="5px">
-				
+
 			</table>
 		</form>
 		<script type="text/javascript" src="js/jquery-1.12.4.js"></script>
@@ -117,7 +113,6 @@
 		<script type="text/javascript" src="js/tableExport.min.js"></script>
 		<!--bootstrap-table插件汉化-->
 		<script type="text/javascript" src="js/bootstrap-table-zh-CN.min.js"></script>
-
 		<script>
 			//为ajax设置跨域带cookie
 			$.ajaxPrefilter(function(options, originalOptions, jqXHR) {
@@ -125,6 +120,10 @@
 					withCredentials: true
 				}
 			});
+			//清空表单
+			$("#btn_qk").click(function() {
+				$("#Form1")[0].reset();
+			})
 			$(function() {
 
 				//1.初始化Table
@@ -136,9 +135,11 @@
 				oButtonInit.Init();
 
 			});
-			var host = HOST;
-			var UrlSelect = '/dc-swdz-zkpc/queryzkpc';
-			var UrlDelete = '/dc-swdz-zkpc/removeByIds';
+			var host = "http://47.103.35.95:8888";
+			var UrlInsert = '/base/config/save';
+			var UrlSelect = '/base/config/get';
+			var UrlDelete = '/base/config/delete';
+			var UrlUpdate = '/base/config/update';
 			var TableInit = function() {
 				$('#Table2').bootstrapTable('destroy');
 				var oTableInit = new Object();
@@ -147,7 +148,7 @@
 					$('#Table2').bootstrapTable({
 						method: 'post',
 						toolbar: '#toolbar', //工具按钮用哪个容器
-						contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+						//						contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 						url: host + UrlSelect,
 						dataType: 'json',
 						undefinedText: '-', //当数据为 undefined 时显示的字符
@@ -203,9 +204,9 @@
 						showExport: true, //是否显示导出
 						exportDataType: "basic", //basic', 'all', 'selected'.
 						exportOptions: {
-							ignoreColumn: [0, 0], //忽略某一列的索引
-							fileName: '导出数据', //文件名称设置
-							worksheetName: 'sheet1', //表格工作区名称
+							ignoreColumn: [0, 0], //忽略某一列的索引  
+							fileName: '导出数据', //文件名称设置  
+							worksheetName: 'sheet1', //表格工作区名称  
 							tableName: '导出数据',
 						},
 						columns: [{
@@ -213,69 +214,15 @@
 							},
 							{
 								field: "id",
-								title: "数据编号",
+								title: "id",
 								sortable: "true"
 							},
 							{
-								field: "pcrq",
-								title: "排查日期",
+								field: "value",
+								title: "值",
 								sortable: "true"
 							},
-							{
-								field: "kkrq",
-								title: "开孔日期",
-								sortable: "true"
-							},
-							{
-								field: "zkwz",
-								title: "位置",
-								sortable: "true"
-							},
-							{
-								field: "zkbh",
-								title: "钻孔编号",
-								sortable: "true"
-							},
-							{
-								field: "swqk",
-								title: "水位情况",
-								sortable: "true"
-							},
-							{
-								field: "knzk",
-								title: "孔内状况",
-								sortable: "true"
-							},
-							{
-								field: "kkqk",
-								title: "孔口情况",
-								sortable: "true"
-							},
-							{
-								field: "sjks",
-								title: "设计孔深",
-								sortable: "true"
-							},
-							{
-								field: "shijks",
-								title: "实际孔深",
-								sortable: "true"
-							},
-							{
-								field: "ywxq",
-								title: "有无险情",
-								sortable: "true"
-							},
-							{
-								field: "jlr",
-								title: "记录人",
-								sortable: "true"
-							},
-							{
-								field: "shhr",
-								title: "审核人",
-								sortable: "true"
-							}
+
 						],
 						onLoadSuccess: function() {},
 						onLoadError: function() {
@@ -283,26 +230,22 @@
 						},
 						onDblClickRow: function(row, $element) {
 							var id = row.id;
-							//							EditViewById(id, 'view');
-							$("#RowId").val(id);
-							layer.open({
-								type: 2,
-								title: '编辑',
-								maxmin: true,
-								shadeClose: true, //点击遮罩关闭层
-								area: ['1000px', '600px'],
-								content: 'html/dcxt/dcxt_swdzzkpc_insert.html'
-							});
+							var Value = row.value;
+							$("#tagId").val(id);
+							$("#tagValue1").val(Value);
+
 						},
 					});
 				}
 				//得到查询的参数
 				oTableInit.queryParams = function(params) {
-					var temp = $("#Form1").serializeJsonObject();//获取自定义查询条件
-					temp["pageSize"]=params.pageSize;//页面大小
-					temp["pageNum"]=params.pageNumber;//页码
-					temp["order"]=params.sortOrder;//排序的方式
-					temp["ordername"]=params.sortName;//排序的字段
+					var temp = $("#Form1").serializeJsonObject(); //获取自定义查询条件
+					temp["pageSize"] = params.pageSize; //页面大小
+					temp["pageNum"] = params.pageNumber; //页码
+					temp["order"] = params.sortOrder; //排序的方式
+					temp["ordername"] = params.sortName; //排序的字段
+					temp["name"] = $("#tagName").val();
+
 					return temp;
 				};
 				return oTableInit;
@@ -319,69 +262,100 @@
 				};
 				return oInit;
 			};
-			//查询数据
+			//提交数据
 			$("#btn_sel").click(function() {
-				$('#Table2').bootstrapTable('refreshOptions',{pageNumber:1});
-				$('#Table2').bootstrapTable('refresh', {
-					url: host + UrlSelect
-				});
+				var tag = [{
+					"name": $("#tagName").val(),
+					"value": $("#tagValue").val()
+				}];
+				$.ajax({
+					contentType: "application/json;charset=utf-8",
+					dataType: "json",
+					type: "post",
+					url: host + UrlInsert,
+					data: JSON.stringify(tag),
+					async: true,
+					success: function(data) {
+						if(data.code == "success") {
+							alert("提交成功!");
+							$('#Table2').bootstrapTable('refresh', {
+								url: host + UrlSelect
+							});
+						} else {
+							alert("提交失败!");
+						}
+					},
+					error: function(request) {
+						alert("连接失败");
+					}
+				})
+			});
+			//更新数据
+			$("#btn_up").click(function() {
+				var tag = {
+					"id": $("#tagId").val(),
+					"name": $("#tagName").val(),
+					"value": $("#tagValue1").val()
+				};
+				$.ajax({
+					contentType: "application/json;charset=utf-8",
+					dataType: "json",
+					type: "post",
+					url: host + UrlUpdate,
+					data: JSON.stringify(tag),
+					async: true,
+					success: function(data) {
+						if(data.code == "success") {
+							alert("提交成功!");
+							$('#Table2').bootstrapTable('refresh', {
+								url: host + UrlSelect
+							});
+						} else {
+							alert("提交失败!");
+						}
+					},
+					error: function(request) {
+						alert("连接失败");
+					}
+				})
 			});
 			//实现删除数据的方法
 			$("#btn_del").click(function() {
-				var ids = ""; //得到用户选择的数据的ID
-				var rows = $('#Table2').bootstrapTable('getSelections');
-				for(var i = 0; i < rows.length; i++) {
-					ids += rows[i].id + ',';
-				}
-				ids = ids.substring(0, ids.length - 1);
-				//				alert(ids);
-				$.ajax({
-					type: "post",
-					url: host + UrlDelete,
-					data: {
-						params: ids
-					},
-					dataType: "json",
-					success: function(json) {
-						alert("删除成功！");
-						$('#Table2').bootstrapTable('refresh', {
-							url: host + UrlSelect
-						});
+				var message = confirm("是否确定删除数据？");
+				if(message == true) {
+					var ids = []; //得到用户选择的数据的ID
+					var rows = $('#Table2').bootstrapTable('getSelections');
+					for(var i = 0; i < rows.length; i++) {
+						ids.push(rows[i].id);
 					}
-				});
+					$.ajax({
+						contentType: "application/json;charset=utf-8",
+						type: "post",
+						url: host + UrlDelete,
+						data: JSON.stringify(ids),
+						dataType: "json",
+						success: function(data) {
+							if(data.status == "success") {
+								alert("删除成功！");
+							}
+							$('#Table2').bootstrapTable('refresh', {
+								url: host + UrlSelect
+							});
+						}
+					});
+				}
+
 			})
 			//实现编辑数据的方法
 			$("#btn_bj").click(function() {
 				var rows = $('#Table2').bootstrapTable('getSelections');
 				if(rows.length == 1) {
 					id = rows[0].id;
-					$("#RowId").val(id);
-					layer.open({
-						type: 2,
-						title: '编辑',
-						maxmin: true,
-						shadeClose: true, //点击遮罩关闭层
-						area: ['1000px', '600px'],
-						content: 'html/dcxt/dcxt_swdzzkpc_insert.html'
-					});
-				}else if(rows.length==0){
-					alert("请选择您要编辑的项！");
-				}else{
-					alert("编辑选项按钮仅能选择一项！");
+					Value = rows[0].value;
+					$("#tagId").val(id);
+					$("#tagValue1").val(Value);
 				}
 			});
-			//得到当前显示字段，以逗号隔开拼接字符串
-			function getSearchFields() {
-				var fields = "";
-				for(var i = 1; i < $("#Table2 th").length; i++) {
-					var str = $("#Table2 th").eq(i).attr("data-field");
-					//					alert($("#Table2 th").eq(i).attr("data-field"));
-					fields += str + ",";
-				}
-				//				alert(fields);
-				return fields;
-			}
-
 			//自定义函数处理queryParams的批量增加
 			$.fn.serializeJsonObject = function() {
 				var json = {};
@@ -393,7 +367,7 @@
 						}
 						json[this.name].push();
 					} else {
-						json[this.name] = this.value || '';
+						json[this.name] = this.value || null;
 					}
 				});
 				delete json.name;
