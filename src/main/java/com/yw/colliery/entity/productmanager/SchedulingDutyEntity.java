@@ -1,9 +1,11 @@
 package com.yw.colliery.entity.productmanager;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -26,10 +28,14 @@ public class SchedulingDutyEntity implements Serializable{
     /**
      * 日期
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date date;
     /**
      * 交接时间
      */
+    @DateTimeFormat(pattern = "hh:ss:mmm")
+    @JsonFormat(pattern = "hh:ss:mm", timezone = "GMT+8")
     private Date handoverDate;
 
     /**
