@@ -2,6 +2,10 @@ package com.yw.colliery.mapper;
 
 import com.yw.colliery.entity.AqfxNdfx;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -12,5 +16,9 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @since 2019-03-06
  */
 public interface AqfxNdfxMapper extends BaseMapper<AqfxNdfx> {
+    List<AqfxNdfx> countByParams(@Param("startTime")Date startTime, @Param("endTime") Date endTime, @Param("unSafeType") String unSafeType,
+                                 @Param("unSafeLevel")  String unSafeLevel);
 
+    List<AqfxNdfx> countBySepcialParams(@Param("queryTime")String queryTime, @Param("unSafeType") String unSafeType,
+                                 @Param("unSafeLevel")  String unSafeLevel);
 }
