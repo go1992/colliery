@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 
 /**
@@ -73,6 +74,16 @@ public class SafetyInfoController implements ApplicationListener<ContextRefreshe
             PageBean<SafetyInfoEntity> unsafeInfoByUnsafeInfoEntity = safetyInfoService.getByCondition(safetyInfoEntity
                     , Optional.ofNullable(safetyInfoEntity.getPageNum()).orElse(0)
                     , Optional.ofNullable(safetyInfoEntity.getPageSize()).orElse(0));
+            List<SafetyInfoEntity> list = unsafeInfoByUnsafeInfoEntity.getList();
+//            list.stream().map(SafetyInfoEntity::getOutput).map(Double::valueOf).mapToDouble(num->num).sum();
+            String sumOutPut = list.stream().collect(Collectors.summingDouble(entity -> Double.valueOf(entity.getOutput()))).toString();
+            String sumDiggingLength = list.stream().collect(Collectors.summingDouble(entity -> Double.valueOf(entity.getDiggingLength()))).toString();
+            String sumMaintenanceLength = list.stream().collect(Collectors.summingDouble(entity -> Double.valueOf(entity.getMaintenanceLength()))).toString();
+            list.forEach(r->{
+                r.setDailyOutput(sumOutPut);
+                r.setDailyDiggingLength(sumDiggingLength);
+                r.setDailyMaintenanceLength(sumMaintenanceLength);
+            });
             HashMap<String, Object> resultMap = new HashMap<>();
             resultMap.put("total", unsafeInfoByUnsafeInfoEntity.getTotal());
             resultMap.put("rows", unsafeInfoByUnsafeInfoEntity.getList());

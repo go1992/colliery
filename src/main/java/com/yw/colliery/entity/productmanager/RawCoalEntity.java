@@ -25,7 +25,7 @@ public class RawCoalEntity implements Serializable{
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
-    private String date;
+    private Date date;
 
     /**
      * 入井人数

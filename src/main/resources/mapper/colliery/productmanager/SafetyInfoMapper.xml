@@ -5,6 +5,7 @@
     <resultMap id="BaseResultMap" type="com.yw.colliery.entity.productmanager.SafetyInfoEntity">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="shift" property="shift" jdbcType="VARCHAR"/>
+        <result column="date" property="date" jdbcType="TIMESTAMP"/>
         <result column="duty_manager" property="dutyManager" jdbcType="VARCHAR"/>
         <result column="mine_manager" property="mineManager" jdbcType="VARCHAR"/>
         <result column="scheduling_operater" property="schedulingOperater" jdbcType="VARCHAR"/>
@@ -25,6 +26,7 @@
 
     <sql id="Base_Column_List">
         id,
+        date,
         shift,
         duty_manager,
         mine_manager,
@@ -50,6 +52,7 @@
         insert into colliery_safety_info
           (
             shift,
+            date,
             duty_manager,
             mine_manager,
             scheduling_operater,
@@ -70,6 +73,7 @@
         values
           (
            #{shift,jdbcType=VARCHAR},
+           #{date,jdbcType=TIMESTAMP},
            #{dutyManager,jdbcType=VARCHAR},
            #{mineManager,jdbcType=VARCHAR},
            #{schedulingOperater,jdbcType=VARCHAR},
@@ -94,6 +98,9 @@
         <set>
             <if test="shift != null">
                 shift = #{shift,jdbcType=VARCHAR},
+            </if>
+            <if test="date != null">
+                date = #{date,jdbcType=TIMESTAMP},
             </if>
             <if test="dutyManager != null">
                 duty_manager= #{dutyManager,jdbcType=INTEGER},
@@ -159,6 +166,9 @@
         </if>
         <if test="shift != null">
             AND shift = #{shift}
+        </if>
+        <if test="date!= null">
+            AND date = #{date}
         </if>
         <if test="dutyManager != null">
             AND duty_manager= #{dutyManager}

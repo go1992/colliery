@@ -45,8 +45,8 @@ public class HandOverEntity implements Serializable{
     /**
      * 交接时间
      */
-    @DateTimeFormat(pattern = "hh:ss:mmm")
-    @JsonFormat(pattern = "hh:ss:mm", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:ss:mmm")
+    @JsonFormat(pattern = "yyyy-MM-dd hh:ss:mm", timezone = "GMT+8")
     private Date handoverDate;
 
     /**
