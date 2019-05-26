@@ -55,6 +55,7 @@ public class AqfxNdfxServiceImpl extends ServiceImpl<AqfxNdfxMapper, AqfxNdfx> i
                 unsafeLevelVo.setCount(count);
                 levelVos.add(unsafeLevelVo);
             }
+            unsafeTypeVo.setLevelVos(levelVos);
             unsafeTypeVos.add(unsafeTypeVo);
 
         }
