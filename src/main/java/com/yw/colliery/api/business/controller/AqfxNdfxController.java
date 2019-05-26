@@ -2,12 +2,21 @@ package com.yw.colliery.api.business.controller;
 
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import com.yw.colliery.entity.AqfxNdfx;
 import com.yw.colliery.sdk.aop.auth.AuthModule;
 import com.yw.colliery.sdk.constans.AuthConstant;
+import com.yw.colliery.sdk.request.YearUnsafeRequest;
+import com.yw.colliery.sdk.response.YearUnsafeResponse;
+import com.yw.colliery.sdk.response.vo.UnsafeLevelVo;
+import com.yw.colliery.sdk.response.vo.UnsafeTypeVo;
+import com.yw.colliery.service.business.IAqfxNdfxService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -39,6 +48,8 @@ public class AqfxNdfxController extends BaseController<AqfxNdfxServiceImpl,AqfxN
 
 	@Autowired
 	private IAqfxCsxgService iAqfxCsxgService;
+	@Autowired
+	private IAqfxNdfxService iAqfxNdfxService;
 	
 	/*
 	 * 年度风险修改时同时插入措施修改记录
@@ -94,5 +105,19 @@ public class AqfxNdfxController extends BaseController<AqfxNdfxServiceImpl,AqfxN
 	public Object countBy(Map<String, Object> params, HttpServletRequest request) {
 		return super.countBy(params, request);
 	}
-	
+
+	@PostMapping("/statis")
+	@AuthModule(authId = AuthConstant.Module.SAFE_MODULE, level = AuthConstant.Level.LOW)
+	public ResultObject statis(@RequestBody YearUnsafeRequest request) {
+		List<UnsafeTypeVo> unsafeTypeVos = iAqfxNdfxService.statisUnsafeTypes(request);
+		List<UnsafeLevelVo> unsafeLevelVos = iAqfxNdfxService.statisUnsafeLevel(request);
+		YearUnsafeResponse response = new YearUnsafeResponse(unsafeTypeVos, unsafeLevelVos);
+
+		if (unsafeTypeVos != null && unsafeLevelVos != null) {
+			return ResultObject.buildSucessResponse(response);
+		} else {
+			return ResultObject.buildFailResponse("没有查到年度风险统计数据");
+		}
+	}
+
 }

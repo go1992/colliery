@@ -1,5 +1,9 @@
 package com.yw.colliery.sdk.utils;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * @Author: ignore1992
  * @Description: 日期工具类
@@ -26,6 +30,82 @@ public final class DateUtils {
         } else {
             return true;
         }
+    }
+
+    public static Date getMonthStartTime(String dataFormat) {
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-mm");
+            Date date = format.parse(dataFormat);
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            // 设置为1号,当前日期既为本月第一天
+            cal.set(Calendar.DAY_OF_MONTH, 1);
+            cal.set(Calendar.HOUR, 0);
+            cal.set(Calendar.MINUTE, 0);
+            cal.set(Calendar.SECOND, 0);
+            return cal.getTime();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static Date getMonthEndTime(String dataFormat) {
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-mm");
+            Date date = format.parse(dataFormat);
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            // 设置为1号,当前日期既为本月第一天
+            cal.set(Calendar.DAY_OF_MONTH, 1);
+            cal.set(Calendar.HOUR, 0);
+            cal.set(Calendar.MINUTE, 0);
+            cal.set(Calendar.SECOND, 0);
+            //向后推一个月
+            cal.roll(Calendar.MONTH, -1);
+            return cal.getTime();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static Date getYearStartTime(String dataFormat) {
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy");
+            Date date = format.parse(dataFormat);
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            // 设置为1号,当前日期既为本月第一天
+            cal.set(Calendar.DAY_OF_YEAR, 1);
+            cal.set(Calendar.HOUR, 0);
+            cal.set(Calendar.MINUTE, 0);
+            cal.set(Calendar.SECOND, 0);
+            return cal.getTime();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static Date getYearEndTime(String dataFormat) {
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy");
+            Date date = format.parse(dataFormat);
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            // 设置为1号,当前日期既为本月第一天
+            cal.set(Calendar.DAY_OF_YEAR, 1);
+            cal.set(Calendar.HOUR, 0);
+            cal.set(Calendar.MINUTE, 0);
+            cal.set(Calendar.SECOND, 0);
+            //向后推一个月
+            cal.roll(Calendar.YEAR, -1);
+            return cal.getTime();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }
