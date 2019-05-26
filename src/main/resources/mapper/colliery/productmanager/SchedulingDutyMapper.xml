@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yw.colliery.mapper.productmanager.SchedulingDutyMapper">
+
+    <resultMap id="BaseResultMap" type="com.yw.colliery.entity.productmanager.SchedulingDutyEntity">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="shift" property="shift" jdbcType="VARCHAR"/>
+        <result column="dispatcher" property="dispatcher" jdbcType="VARCHAR"/>
+        <result column="date" property="date" jdbcType="TIMESTAMP"/>
+        <result column="handover_date" property="handoverDate" jdbcType="TIMESTAMP"/>
+        <result column="class_leader" property="classLeader" jdbcType="VARCHAR"/>
+        <result column="mine_peoples" property="minePeoples" jdbcType="VARCHAR"/>
+        <result column="tunneling_team" property="tunnelingTeam" jdbcType="VARCHAR"/>
+        <result column="machine_team" property="machineTeam" jdbcType="VARCHAR"/>
+        <result column="manager" property="manager" jdbcType="VARCHAR"/>
+        <result column="coal_mining_face" property="coalMiningFace" jdbcType="VARCHAR"/>
+        <result column="tunneling_face" property="tunnelingFace" jdbcType="VARCHAR"/>
+        <result column="output" property="output" jdbcType="VARCHAR"/>
+        <result column="digging_length" property="diggingLength" jdbcType="VARCHAR"/>
+        <result column="maintenance_length" property="maintenanceLength" jdbcType="VARCHAR"/>
+        <result column="remark1" property="remark1" jdbcType="VARCHAR"/>
+        <result column="remark2" property="remark2" jdbcType="VARCHAR"/>
+        <result column="remark3" property="remark3" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,
+        shift,
+        dispatcher,
+        date,
+        handover_date,
+        class_leader,
+        mine_peoples,
+        tunneling_team,
+        machine_team,
+        manager,
+        coal_mining_face,
+        tunneling_face,
+        output,
+        digging_length,
+        maintenance_length,
+        remark1,
+        remark2,
+        remark3
+    </sql>
+
+
+    <insert id="insertSchedulingDuty" parameterType="com.yw.colliery.entity.productmanager.SchedulingDutyEntity" keyProperty="id">
+        insert into colliery_schedule_duty
+          (
+            shift,
+            dispatcher,
+            date,
+            handover_date,
+            class_leader,
+            mine_peoples,
+            tunneling_team,
+            machine_team,
+            manager,
+            coal_mining_face,
+            tunneling_face,
+            output,
+            digging_length,
+            maintenance_length,
+            remark1,
+            remark2,
+            remark3
+           )
+        values
+          (
+           #{shift,jdbcType=VARCHAR},
+           #{dispatcher,jdbcType=VARCHAR},
+           #{date,jdbcType=TIMESTAMP},
+           #{handoverDate,jdbcType=TIMESTAMP},
+           #{classLeader,jdbcType=VARCHAR},
+           #{minePeoples,jdbcType=VARCHAR},
+           #{tunnelingTeam,jdbcType=VARCHAR},
+           #{machineTeam,jdbcType=VARCHAR},
+           #{manager,jdbcType=VARCHAR},
+           #{coalMiningFace,jdbcType=VARCHAR},
+           #{tunnelingFace,jdbcType=VARCHAR},
+           #{output,jdbcType=VARCHAR},
+           #{diggingLength,jdbcType=VARCHAR},
+           #{maintenanceLength,jdbcType=VARCHAR},
+           #{remark1,jdbcType=VARCHAR},
+           #{remark2,jdbcType=VARCHAR},
+           #{remark3,jdbcType=VARCHAR}
+           )
+    </insert>
+
+    <update id="updateSchedulingDuty" parameterType="com.yw.colliery.entity.productmanager.SchedulingDutyEntity">
+        update colliery_schedule_duty
+        <set>
+            <if test="shift != null">
+                shift = #{shift,jdbcType=VARCHAR},
+            </if>
+            <if test="dispatcher != null">
+                dispatcher = #{dispatcher,jdbcType=VARCHAR},
+            </if>
+            <if test="date != null">
+                date = #{date,jdbcType=TIMESTAMP},
+            </if>
+            <if test="minePeoples != null">
+                mine_peoples= #{minePeoples,jdbcType=INTEGER},
+            </if>
+            <if test="handoverDate != null">
+                handover_date= #{handoverDate,jdbcType=VARCHAR},
+            </if>
+            <if test="classLeader != null">
+                class_leader= #{classLeader,jdbcType=VARCHAR},
+            </if>
+            <if test="tunnelingTeam != null">
+                tunneling_team= #{tunnelingTeam,jdbcType=TIMESTAMP},
+            </if>
+            <if test="manager != null">
+                manager = #{manager,jdbcType=VARCHAR},
+            </if>
+            <if test="coalMiningFace != null">
+                coal_mining_face = #{coalMiningFace,jdbcType=VARCHAR},
+            </if>
+            <if test="tunnelingFace != null">
+                tunneling_face = #{tunnelingFace,jdbcType=VARCHAR},
+            </if>
+            <if test="output != null">
+                output = #{output,jdbcType=VARCHAR},
+            </if>
+            <if test="diggingLength != null">
+                digging_length = #{diggingLength,jdbcType=VARCHAR},
+            </if>
+            <if test="maintenanceLength != null">
+                maintenance_length = #{maintenanceLength,jdbcType=VARCHAR},
+            </if>
+            <if test="remark1 != null">
+                remark1 = #{remark1,jdbcType=VARCHAR},
+            </if>
+            <if test="remark2 != null">
+                remark2 = #{remark2,jdbcType=VARCHAR},
+            </if>
+            <if test="remark3 != null">
+                remark3 = #{remark3,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+
+    <select id="selectBySchedulingDuty" resultMap="BaseResultMap" parameterType="com.yw.colliery.entity.productmanager.SchedulingDutyEntity">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from colliery_schedule_duty
+        WHERE
+        1=1
+        <if test="id != null">
+            AND id = #{id}
+        </if>
+        <if test="shift != null">
+            AND shift = #{shift,jdbcType=VARCHAR}
+        </if>
+        <if test="dispatcher != null">
+            AND dispatcher = #{dispatcher,jdbcType=VARCHAR}
+        </if>
+        <if test="date != null">
+            AND date = #{date,jdbcType=TIMESTAMP},
+        </if>
+        <if test="minePeoples != null">
+            AND mine_peoples= #{minePeoples,jdbcType=VARCHAR}
+        </if>
+        <if test="handoverDate != null">
+            AND handover_date= #{handoverDate,jdbcType=VARCHAR}
+        </if>
+        <if test="classLeader != null">
+            AND class_leader= #{classLeader,jdbcType=VARCHAR}
+        </if>
+        <if test="tunnelingTeam != null">
+            AND tunneling_team= #{tunnelingTeam,jdbcType=TIMESTAMP}
+        </if>
+        <if test="manager != null">
+            AND manager = #{manager,jdbcType=VARCHAR}
+        </if>
+        <if test="coalMiningFace != null">
+            AND coal_mining_face = #{coalMiningFace,jdbcType=VARCHAR}
+        </if>
+        <if test="tunnelingFace != null">
+            AND tunneling_face = #{tunnelingFace,jdbcType=VARCHAR}
+        </if>
+        <if test="output != null">
+            AND output = #{output,jdbcType=VARCHAR}
+        </if>
+        <if test="diggingLength != null">
+            AND digging_length = #{diggingLength,jdbcType=VARCHAR}
+        </if>
+        <if test="maintenanceLength != null">
+            AND maintenance_length = #{maintenanceLength,jdbcType=VARCHAR}
+        </if>
+        <if test="remark1 != null">
+            AND remark1 = #{remark1,jdbcType=VARCHAR}
+        </if>
+        <if test="remark2 != null">
+            AND remark2 = #{remark2,jdbcType=VARCHAR}
+        </if>
+        <if test="remark3 != null">
+            AND remark3 = #{remark3,jdbcType=VARCHAR}
+        </if>
+        <if test="orderName !=null">
+            ORDER BY ${orderName} ${order}
+        </if>
+    </select>
+
+    <delete id="deleteById" parameterType="java.util.List">
+        DELETE FROM
+        colliery_schedule_duty
+        WHERE
+        id
+        in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+
+    </delete>
+
+
+</mapper>
