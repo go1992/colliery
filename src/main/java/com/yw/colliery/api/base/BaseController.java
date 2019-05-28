@@ -16,9 +16,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.collections4.MapUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.alibaba.fastjson.JSON;
@@ -125,7 +127,17 @@ public abstract class BaseController<S extends ServiceImpl<?, T>,T>{
 		if(checkNotNull(startTime,endTime)) {
 			qw.between("pcrq", startTime, endTime);
 		}
-		
+
+		String dateType = MapUtils.getString(params, "datetype",null);
+		if (StringUtils.isNotEmpty(dateType)) {
+			qw.eq("datetype", dateType);
+		}
+
+		String id = MapUtils.getString(params, "id",null);
+		if (StringUtils.isNotEmpty(id)) {
+			qw.eq("id", Long.valueOf(id));
+		}
+
 		//排序
 		String order = MapUtils.getString(params, "order",null);
 		String orderKey = MapUtils.getString(params, "ordername",null);
@@ -204,7 +216,7 @@ public abstract class BaseController<S extends ServiceImpl<?, T>,T>{
 		map.put("rows", iPage.getRecords());
 		return map;
 	}
-	
+
 	/*
 	 * 新增
 	 */
