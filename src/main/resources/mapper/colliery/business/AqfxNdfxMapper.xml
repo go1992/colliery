@@ -19,40 +19,21 @@
         <result column="zyfzr" property="zyfzr" jdbcType="VARCHAR"/>
         <result column="fgfzr" property="fgfzr" jdbcType="VARCHAR"/>
         <result column="fxlx" property="fxlx" jdbcType="VARCHAR"/>
+        <result column="datetype" property="datetype" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-       id,pcrq,ssmk,ylzda,ylzdb,ylzdc,fxd,dtwzdd,zrdw,fxdj,fxfl,xzrs,fxms,gkcs,zyfzr,fgfzr,fxlx
+       id,pcrq,ssmk,ylzda,ylzdb,ylzdc,fxd,dtwzdd,zrdw,fxdj,fxfl,xzrs,fxms,gkcs,zyfzr,fgfzr,fxlx,datetype
     </sql>
 
-    <select id="countByParams" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from aqfx_ndfx
-        where
-        1=1
-        <if test="startTime != null">
-            AND pcrq &gt;=  #{startTime,jdbcType=TIMESTAMP}
-        </if>
-        <if test="endTime != null">
-            AND pcrq &lt;=  #{endTime,jdbcType=TIMESTAMP}
-        </if>
-        <if test="unSafeType != null">
-            AND fxfl=#{unSafeType,jdbcType=VARCHAR}
-        </if>
-        <if test="unSafeLevel != null">
-            AND fxdj=#{unSafeLevel,jdbcType=VARCHAR}
-        </if>
-    </select>
-
-    <select id="countBySepcialParams" resultMap="BaseResultMap">
+    <select id="selectByParams" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from aqfx_ndfx
         where
         1=1
         <if test="queryTime != null">
-            AND pcrq like  CONCAT(#{queryTime},'%')
+            AND datetype=#{datetype}
         </if>
         <if test="unSafeType != null">
             AND  fxfl=#{unSafeType,jdbcType=VARCHAR}

@@ -18,6 +18,8 @@ import java.util.List;
  * @since 2019-03-06
  */
 public interface IAqfxNdfxService extends IService<AqfxNdfx> {
+
+
     List<UnsafeTypeVo> statisUnsafeTypes(YearUnsafeRequest request);
 
     List<UnsafeLevelVo> statisUnsafeLevel(YearUnsafeRequest request);

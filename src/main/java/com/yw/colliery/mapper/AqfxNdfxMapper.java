@@ -16,9 +16,7 @@ import java.util.List;
  * @since 2019-03-06
  */
 public interface AqfxNdfxMapper extends BaseMapper<AqfxNdfx> {
-    List<AqfxNdfx> countByParams(@Param("startTime")Date startTime, @Param("endTime") Date endTime, @Param("unSafeType") String unSafeType,
-                                 @Param("unSafeLevel")  String unSafeLevel);
 
-    List<AqfxNdfx> countBySepcialParams(@Param("queryTime")String queryTime, @Param("unSafeType") String unSafeType,
+    List<AqfxNdfx> selectByParams(@Param("datetype")String datetype, @Param("unSafeType") String unSafeType,
                                  @Param("unSafeLevel")  String unSafeLevel);
 }

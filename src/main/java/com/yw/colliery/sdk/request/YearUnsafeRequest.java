@@ -15,7 +15,7 @@ import java.util.Date;
 @ToString
 public class YearUnsafeRequest implements Serializable {
     private static final long serialVersionUID = -1279435170491623731L;
-    private String queryTime;
+    private String datetype;
 
     private Date startTime;
 

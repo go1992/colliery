@@ -102,5 +102,6 @@ public class AqfxNdfx implements Serializable {
 	@ApiModelProperty(value = "类型(年度风险,专项风险)",example = "类型(年度风险,专项风险)")
 	private String fxlx;
 
-
+	@ApiModelProperty(value = "辨识时间类型",example = "2019(年度风险) 2019-05(月度风险)")
+	private String datetype;
 }

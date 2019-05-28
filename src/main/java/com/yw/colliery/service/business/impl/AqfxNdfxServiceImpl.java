@@ -31,7 +31,7 @@ public class AqfxNdfxServiceImpl extends ServiceImpl<AqfxNdfxMapper, AqfxNdfx> i
 
     @Override
     public List<UnsafeTypeVo> statisUnsafeTypes(YearUnsafeRequest request) {
-        List<AqfxNdfx> aqfxNdfxes = aqfxNdfxMapper.countBySepcialParams(request.getQueryTime(), request.getFxfl(), request.getFxdj());
+        List<AqfxNdfx> aqfxNdfxes = aqfxNdfxMapper.selectByParams(request.getDatetype(), request.getFxfl(), request.getFxdj());
 
         if (CollectionUtils.isEmpty(aqfxNdfxes)) {
             return null;
@@ -64,7 +64,7 @@ public class AqfxNdfxServiceImpl extends ServiceImpl<AqfxNdfxMapper, AqfxNdfx> i
 
     @Override
     public List<UnsafeLevelVo> statisUnsafeLevel(YearUnsafeRequest request) {
-        List<AqfxNdfx> aqfxNdfxes = aqfxNdfxMapper.countBySepcialParams(request.getQueryTime(), request.getFxfl(), request.getFxdj());
+        List<AqfxNdfx> aqfxNdfxes = aqfxNdfxMapper.selectByParams(request.getDatetype(), request.getFxfl(), request.getFxdj());
 
         if (CollectionUtils.isEmpty(aqfxNdfxes)) {
             return null;
