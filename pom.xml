@@ -270,9 +270,9 @@
     <!-- 多环境配置方案 -->
     <profiles>
         <profile>
-            <id>dev</id>
+            <id>kh</id>
             <properties>
-                <profileActive>dev</profileActive>
+                <profileActive>kh</profileActive>
             </properties>
             <activation>
                 <!-- 默认情况下使用dev开发配置 如 打包时不包含 -p 参数-->
@@ -281,9 +281,9 @@
         </profile>
         <!-- 打包命令package -P test -->
         <profile>
-            <id>test</id>
+            <id>yx</id>
             <properties>
-                <profileActive>test</profileActive>
+                <profileActive>yx</profileActive>
             </properties>
         </profile>
         <!-- 打包命令package -P prod -->
