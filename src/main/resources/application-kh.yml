@@ -2,8 +2,8 @@ server:
   port: 8887
 
 spring:
-    profiles:
-        active: kh
+  profiles:
+    active: kh
   thymeleaf:
     cache: false
   datasource:

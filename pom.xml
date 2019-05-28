@@ -259,10 +259,18 @@
                 <!-- 开启过滤替换功能-->
                 <filtering>true</filtering>
                 <includes>
+                    <include>static/</include>
                     <!-- 项目打包完成的包中只包含当前环境文件 -->
                     <include>application.yml</include>
                     <include>application-${profileActive}.yml</include>
                 </includes>
+            </resource>
+            <resource>
+                <directory>src/main/webapp</directory>
+                <includes>
+                    <include>**/*.*</include>
+                </includes>
+                <filtering>true</filtering>
             </resource>
         </resources>
     </build>

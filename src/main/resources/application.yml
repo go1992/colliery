@@ -2,8 +2,8 @@ server:
   port: 7777
 
 spring:
-    profiles:
-        active:  @profileActive@
+  profiles:
+    active:  @profileActive@
   thymeleaf:
     cache: false
   datasource:
