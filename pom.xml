@@ -259,7 +259,7 @@
                 <!-- 开启过滤替换功能-->
                 <filtering>true</filtering>
                 <includes>
-                    <include>static/</include>
+                    <include>mapper/**/*.*</include>
                     <!-- 项目打包完成的包中只包含当前环境文件 -->
                     <include>application.yml</include>
                     <include>application-${profileActive}.yml</include>
