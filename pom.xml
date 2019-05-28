@@ -251,7 +251,49 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
+        <!-- 打包后文件名称：项目名-环境-版本 -->
+        <finalName>${project.artifactId}-${profileActive}-${project.version}</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <!-- 开启过滤替换功能-->
+                <filtering>true</filtering>
+                <includes>
+                    <!-- 项目打包完成的包中只包含当前环境文件 -->
+                    <include>application.yml</include>
+                    <include>application-${profileActive}.yml</include>
+                </includes>
+            </resource>
+        </resources>
     </build>
+
+    <!-- 多环境配置方案 -->
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <profileActive>dev</profileActive>
+            </properties>
+            <activation>
+                <!-- 默认情况下使用dev开发配置 如 打包时不包含 -p 参数-->
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <!-- 打包命令package -P test -->
+        <profile>
+            <id>test</id>
+            <properties>
+                <profileActive>test</profileActive>
+            </properties>
+        </profile>
+        <!-- 打包命令package -P prod -->
+        <profile>
+            <id>prod</id>
+            <properties>
+                <profileActive>prod</profileActive>
+            </properties>
+        </profile>
+    </profiles>
 
     <packaging>jar</packaging>
 
