@@ -1,11 +1,10 @@
 package com.yw.colliery.api.business.controller;
 
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-
+import com.alibaba.fastjson.JSON;
+import com.yw.colliery.api.base.BaseController;
+import com.yw.colliery.api.base.ResultObject;
+import com.yw.colliery.entity.AqfxCsxg;
 import com.yw.colliery.entity.AqfxNdfx;
 import com.yw.colliery.sdk.aop.auth.AuthModule;
 import com.yw.colliery.sdk.constans.AuthConstant;
@@ -13,24 +12,18 @@ import com.yw.colliery.sdk.request.YearUnsafeRequest;
 import com.yw.colliery.sdk.response.YearUnsafeResponse;
 import com.yw.colliery.sdk.response.vo.UnsafeLevelVo;
 import com.yw.colliery.sdk.response.vo.UnsafeTypeVo;
-import com.yw.colliery.service.business.IAqfxNdfxService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.alibaba.fastjson.JSON;
-import com.yw.colliery.api.base.BaseController;
-import com.yw.colliery.api.base.ResultObject;
-import com.yw.colliery.entity.AqfxCsxg;
 import com.yw.colliery.service.business.IAqfxCsxgService;
+import com.yw.colliery.service.business.IAqfxNdfxService;
 import com.yw.colliery.service.business.impl.AqfxNdfxServiceImpl;
-
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -71,9 +64,9 @@ public class AqfxNdfxController extends BaseController<AqfxNdfxServiceImpl,AqfxN
 
 	@Override
 	@AuthModule(authId = AuthConstant.Module.SAFE_MODULE, level = AuthConstant.Level.LOW)
-	public Object query(Map<String, Object> params, HttpServletRequest request) {
-		return super.query(params, request);
-	}
+	public Object queryData(@RequestParam Map<String, Object> params) {
+        return super.queryData(params);
+    }
 
 	@Override
 	@AuthModule(authId = AuthConstant.Module.SAFE_MODULE, level = AuthConstant.Level.HIGH)

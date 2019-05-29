@@ -1,15 +1,16 @@
 package com.yw.colliery.api.business.controller;
 
 
+import com.yw.colliery.api.base.BaseController;
 import com.yw.colliery.entity.XtgnYhqx;
 import com.yw.colliery.sdk.aop.auth.AuthModule;
 import com.yw.colliery.sdk.constans.AuthConstant;
-import org.springframework.web.bind.annotation.RequestMapping;
+import com.yw.colliery.service.business.impl.XtgnYhqxServiceImpl;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.yw.colliery.api.base.BaseController;
-import com.yw.colliery.service.business.impl.XtgnYhqxServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
@@ -29,8 +30,8 @@ import java.util.Map;
 public class XtgnYhqxController extends BaseController<XtgnYhqxServiceImpl,XtgnYhqx> {
     @Override
     @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE, level = AuthConstant.Level.LOW)
-    public Object query(Map<String, Object> params, HttpServletRequest request) {
-        return super.query(params, request);
+    public Object queryData(@RequestParam Map<String, Object> params) {
+        return super.queryData(params);
     }
 
     @Override

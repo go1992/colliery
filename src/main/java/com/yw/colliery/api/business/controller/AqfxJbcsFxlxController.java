@@ -7,6 +7,7 @@ import com.yw.colliery.sdk.constans.AuthConstant;
 import org.springframework.web.bind.annotation.RequestMapping;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.yw.colliery.api.base.BaseController;
 import com.yw.colliery.service.business.impl.AqfxJbcsFxlxServiceImpl;
@@ -30,8 +31,8 @@ public class AqfxJbcsFxlxController extends BaseController<AqfxJbcsFxlxServiceIm
 
     @Override
     @AuthModule(authId = AuthConstant.Module.SAFE_MODULE, level = AuthConstant.Level.LOW)
-    public Object query(Map<String, Object> params, HttpServletRequest request) {
-        return super.query(params, request);
+    public Object queryData(@RequestParam Map<String, Object> params) {
+        return super.queryData(params);
     }
 
     @Override
