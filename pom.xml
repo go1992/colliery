@@ -251,7 +251,57 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
+        <!-- 打包后文件名称：项目名-环境-版本 -->
+        <finalName>${project.artifactId}-${profileActive}-${project.version}</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <!-- 开启过滤替换功能-->
+                <filtering>true</filtering>
+                <includes>
+                    <include>mapper/**/*.*</include>
+                    <!-- 项目打包完成的包中只包含当前环境文件 -->
+                    <include>application.yml</include>
+                    <include>application-${profileActive}.yml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/webapp</directory>
+                <includes>
+                    <include>**/*.*</include>
+                </includes>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
     </build>
+
+    <!-- 多环境配置方案 -->
+    <profiles>
+        <profile>
+            <id>kh</id>
+            <properties>
+                <profileActive>kh</profileActive>
+            </properties>
+            <activation>
+                <!-- 默认情况下使用dev开发配置 如 打包时不包含 -p 参数-->
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <!-- 打包命令package -P test -->
+        <profile>
+            <id>yx</id>
+            <properties>
+                <profileActive>yx</profileActive>
+            </properties>
+        </profile>
+        <!-- 打包命令package -P prod -->
+        <profile>
+            <id>xz</id>
+            <properties>
+                <profileActive>xz</profileActive>
+            </properties>
+        </profile>
+    </profiles>
 
     <packaging>jar</packaging>
 

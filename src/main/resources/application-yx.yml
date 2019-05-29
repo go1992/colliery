@@ -1,13 +1,13 @@
 server:
-  port: 7777
+  port: 8888
 
 spring:
   profiles:
-    active:  @profileActive@
+    active: yx
   thymeleaf:
     cache: false
   datasource:
-    name: coal_mine
+    name: coal_mine_yx
     type: com.alibaba.druid.pool.DruidDataSource
     #druid相关配置
     druid:
@@ -15,7 +15,7 @@ spring:
       filters: stat
       driver-class-name: com.mysql.jdbc.Driver
       #基本属性
-      url: jdbc:mysql://47.103.35.95:3306/coal_mine?characterEncoding=utf8&useSSL=true&useSSL=false&allowMultiQueries=true
+      url: jdbc:mysql://47.103.35.95:3306/coal_mine_yx?characterEncoding=utf8&useSSL=true&useSSL=false&allowMultiQueries=true
       username: root
       password: root
       #配置初始化大小/最小/最大
