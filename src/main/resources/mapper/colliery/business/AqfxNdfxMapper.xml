@@ -32,7 +32,7 @@
         from aqfx_ndfx
         where
         1=1
-        <if test="queryTime != null">
+        <if test="datetype != null">
             AND datetype=#{datetype}
         </if>
         <if test="unSafeType != null">
