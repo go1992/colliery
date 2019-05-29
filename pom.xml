@@ -296,9 +296,9 @@
         </profile>
         <!-- 打包命令package -P prod -->
         <profile>
-            <id>prod</id>
+            <id>xz</id>
             <properties>
-                <profileActive>prod</profileActive>
+                <profileActive>xz</profileActive>
             </properties>
         </profile>
     </profiles>

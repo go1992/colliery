@@ -3,7 +3,7 @@ server:
 
 spring:
   profiles:
-    active: test1
+    active: xz
   thymeleaf:
     cache: false
   datasource:
