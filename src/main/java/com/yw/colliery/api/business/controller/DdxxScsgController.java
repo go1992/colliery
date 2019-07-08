@@ -1,24 +1,6 @@
 package com.yw.colliery.api.business.controller;
 
 
-import static com.yw.colliery.api.base.MyUtil.checkNotNull;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import com.yw.colliery.entity.DdxxScsg;
-import com.yw.colliery.sdk.aop.auth.AuthModule;
-import com.yw.colliery.sdk.constans.AuthConstant;
-import org.apache.commons.collections4.MapUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -27,14 +9,25 @@ import com.yw.colliery.api.base.BaseController;
 import com.yw.colliery.api.base.EPage;
 import com.yw.colliery.api.base.ESessionKey;
 import com.yw.colliery.api.base.ResultObject;
+import com.yw.colliery.entity.DdxxScsg;
+import com.yw.colliery.sdk.aop.auth.AuthModule;
+import com.yw.colliery.sdk.constans.AuthConstant;
 import com.yw.colliery.service.business.impl.DdxxScsgServiceImpl;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.MapUtils;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static com.yw.colliery.api.base.MyUtil.checkNotNull;
 /**
  * <p>
  * 调度信息管理-生产安全事故处理追踪 前端控制器
@@ -162,9 +155,9 @@ public class DdxxScsgController extends BaseController<DdxxScsgServiceImpl,DdxxS
 
 	@Override
 	@AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE, level = AuthConstant.Level.LOW)
-	public Object query(Map<String, Object> params, HttpServletRequest request) {
-		return super.query(params, request);
-	}
+	public Object queryData(@RequestParam Map<String, Object> params) {
+        return super.queryData(params);
+    }
 
 	@Override
 	@AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE, level = AuthConstant.Level.HIGH)

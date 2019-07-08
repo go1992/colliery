@@ -1,7 +1,9 @@
 server:
-  port: 8888
+  port: 7777
 
 spring:
+  profiles:
+    active:  @profileActive@
   thymeleaf:
     cache: false
   datasource:
@@ -39,20 +41,20 @@ spring:
       max-request-size: 100MB
   resources:
     static-locations: classpath:/static/, classpath:/templates/
-  redis:
-    database: 0
-    host: 47.103.35.95
-    port: 6379
-    password: Cqyw88928856
-    jedis:
-      pool:
-        max-active: 8
-        max-wait: -1
-        max-idle: 5
-        min-idle: 0
-    timeout: 10000
-  session:
-    store-type: redis
+#  redis:
+#    database: 0
+#    host: 47.103.35.95
+#    port: 6379
+#    password: Cqyw88928856
+#    jedis:
+#      pool:
+#        max-active: 8
+#        max-wait: -1
+#        max-idle: 5
+#        min-idle: 0
+#    timeout: 10000
+#  session:
+#    store-type: redis
 
 logging:
     level:

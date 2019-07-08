@@ -1,44 +1,32 @@
 package com.yw.colliery.api.base;
-import static com.yw.colliery.api.base.MyUtil.checkNotNull;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.ParameterizedType;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import org.apache.commons.collections4.MapUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.yw.colliery.entity.PxglSjlb;
-import com.yw.colliery.entity.ScglScjh;
-import com.yw.colliery.entity.ScglSjcl;
-import com.yw.colliery.entity.XtgnQyfj;
-import com.yw.colliery.entity.XtgnYhlb;
+import com.yw.colliery.entity.*;
+import com.yw.colliery.sdk.utils.SpringSessionUtils;
 import com.yw.colliery.service.business.IXtgnQyfjService;
 import com.yw.colliery.service.business.MyService;
-
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.MapUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
+import java.util.*;
+
+import static com.yw.colliery.api.base.MyUtil.checkNotNull;
 
 @Slf4j
 public abstract class BaseController<S extends ServiceImpl<?, T>,T>{
@@ -67,51 +55,11 @@ public abstract class BaseController<S extends ServiceImpl<?, T>,T>{
 	/*
 	 * 查询
 	 */
-	@SuppressWarnings("unchecked")//告诉编译器忽略 unchecked 警告信息
-	@ApiOperation(value = "查询数据",notes="查询",response=ResultObject.class) //
-	@ApiImplicitParams
-	({
-		@ApiImplicitParam(
-				value="日期选择-开始时间",name="startTime",dataType="String"
-				,paramType="query",required=false,defaultValue="2000-1-1"
-				//,allowMultiple=true //是否为数组
-				)
-		,@ApiImplicitParam(value="日期选择-结束时间",name="endTime",dataType="String"
-				,paramType="query",required=false,defaultValue="2030-1-31")
-		//分页
-		,@ApiImplicitParam(
-				value="当前页编号",name="pageNum",dataType="int"
-				,paramType="query",required=false,defaultValue="1"
-				//,allowMultiple=true //是否为数组
-				)
-		,@ApiImplicitParam(value="每页数据条数",name="pageSize",dataType="int"
-				,paramType="query",required=false,defaultValue="10")
-		//排序
-		,@ApiImplicitParam(
-				value="排序方式 asc desc",name="order",dataType="String"
-				,paramType="query",required=false,defaultValue="asc"
-				//,allowMultiple=true //是否为数组
-				)
-		,@ApiImplicitParam(value="排序字段",name="ordername",dataType="String"
-				,paramType="query",required=false,defaultValue="id")
-		//搜索
-		,@ApiImplicitParam(
-				value="模糊查询 like匹配 需要搜索的字段(字符串形式 逗号隔开  ['name','age','time'].join(',')"
-						+ " -> 'name,age,time')",name="fields",dataType="String"
-				,paramType="query",required=false,defaultValue="id"
-				//,allowMultiple=true //是否为数组
-				)
-		,@ApiImplicitParam(value="搜索框内的值",name="searchParam",dataType="String"
-				,paramType="query",required=false,defaultValue="1")
-		
-	})
 	@PostMapping("/query")
-	public Object query(@ApiParam(hidden=true)@RequestParam Map<String,Object> params
-			, @ApiParam(hidden=true) HttpServletRequest request
+	public Object queryData(@RequestParam Map<String,Object> params
 			) {
-		
 		if(log.isDebugEnabled())log.debug("query参数:\n{}",JSON.toJSONString(params));
-		HttpSession session = request.getSession();
+		HttpSession session = SpringSessionUtils.getRequest().getSession();
 		//分页
 		String isPage = MapUtils.getString(params, "isPage",null);
 		int pageNum = MapUtils.getIntValue(params, EPage.PageNum.key,EPage.PageNum.value);
@@ -125,7 +73,17 @@ public abstract class BaseController<S extends ServiceImpl<?, T>,T>{
 		if(checkNotNull(startTime,endTime)) {
 			qw.between("pcrq", startTime, endTime);
 		}
-		
+
+		String dateType = MapUtils.getString(params, "datetype",null);
+		if (StringUtils.isNotEmpty(dateType)) {
+			qw.eq("datetype", dateType);
+		}
+
+		String id = MapUtils.getString(params, "id",null);
+		if (StringUtils.isNotEmpty(id)) {
+			qw.eq("id", Long.valueOf(id));
+		}
+
 		//排序
 		String order = MapUtils.getString(params, "order",null);
 		String orderKey = MapUtils.getString(params, "ordername",null);
@@ -204,7 +162,7 @@ public abstract class BaseController<S extends ServiceImpl<?, T>,T>{
 		map.put("rows", iPage.getRecords());
 		return map;
 	}
-	
+
 	/*
 	 * 新增
 	 */

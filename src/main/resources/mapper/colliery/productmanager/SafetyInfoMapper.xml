@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yw.colliery.mapper.productmanager.SafetyInfoMapper">
+
+    <resultMap id="BaseResultMap" type="com.yw.colliery.entity.productmanager.SafetyInfoEntity">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="shift" property="shift" jdbcType="VARCHAR"/>
+        <result column="date" property="date" jdbcType="TIMESTAMP"/>
+        <result column="duty_manager" property="dutyManager" jdbcType="VARCHAR"/>
+        <result column="mine_manager" property="mineManager" jdbcType="VARCHAR"/>
+        <result column="scheduling_operater" property="schedulingOperater" jdbcType="VARCHAR"/>
+        <result column="monitor_operater" property="monitorOperater" jdbcType="VARCHAR"/>
+        <result column="output" property="output" jdbcType="VARCHAR"/>
+        <result column="mine_peoples" property="minePeoples" jdbcType="VARCHAR"/>
+        <result column="working_condition" property="workingCondition" jdbcType="VARCHAR"/>
+        <result column="mining_advancement_condition" property="miningAdvancementCondition" jdbcType="VARCHAR"/>
+        <result column="digging_length" property="diggingLength" jdbcType="VARCHAR"/>
+        <result column="maintenance_length" property="maintenanceLength" jdbcType="VARCHAR"/>
+        <result column="daily_output" property="dailyOutput" jdbcType="VARCHAR"/>
+        <result column="daily_digging_length" property="dailyDiggingLength" jdbcType="VARCHAR"/>
+        <result column="daily_maintenance_length" property="dailyMaintenanceLength" jdbcType="VARCHAR"/>
+        <result column="sign" property="sign" jdbcType="VARCHAR"/>
+        <result column="create_user" property="createUser" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,
+        date,
+        shift,
+        duty_manager,
+        mine_manager,
+        scheduling_operater,
+        monitor_operater,
+        output,
+        mine_peoples,
+        working_condition,
+        mining_advancement_condition,
+        digging_length,
+        maintenance_length,
+        daily_output,
+        daily_digging_length,
+        daily_maintenance_length,
+        create_user,
+        create_date,
+        sign
+
+    </sql>
+
+
+    <insert id="insertSafetyInfo" parameterType="com.yw.colliery.entity.productmanager.SafetyInfoEntity" keyProperty="id">
+        insert into colliery_safety_info
+          (
+            shift,
+            date,
+            duty_manager,
+            mine_manager,
+            scheduling_operater,
+            monitor_operater,
+            output,
+            mine_peoples,
+            working_condition,
+            mining_advancement_condition,
+            digging_length,
+            maintenance_length,
+            daily_output,
+            daily_digging_length,
+            daily_maintenance_length,
+            create_user,
+            create_date,
+            sign
+           )
+        values
+          (
+           #{shift,jdbcType=VARCHAR},
+           #{date,jdbcType=TIMESTAMP},
+           #{dutyManager,jdbcType=VARCHAR},
+           #{mineManager,jdbcType=VARCHAR},
+           #{schedulingOperater,jdbcType=VARCHAR},
+           #{monitorOperater,jdbcType=VARCHAR},
+           #{output,jdbcType=VARCHAR},
+           #{minePeoples,jdbcType=VARCHAR},
+           #{workingCondition,jdbcType=VARCHAR},
+           #{miningAdvancementCondition,jdbcType=VARCHAR},
+           #{diggingLength,jdbcType=VARCHAR},
+           #{maintenanceLength,jdbcType=VARCHAR},
+           #{dailyOutput,jdbcType=VARCHAR},
+           #{dailyDiggingLength,jdbcType=VARCHAR},
+           #{dailyMaintenanceLength,jdbcType=VARCHAR},
+           #{createUser,jdbcType=VARCHAR},
+           #{createDate,jdbcType=TIMESTAMP},
+           #{sign,jdbcType=VARCHAR}
+           )
+    </insert>
+
+    <update id="updateSafetyInfo" parameterType="com.yw.colliery.entity.productmanager.SafetyInfoEntity">
+        update colliery_safety_info
+        <set>
+            <if test="shift != null">
+                shift = #{shift,jdbcType=VARCHAR},
+            </if>
+            <if test="date != null">
+                date = #{date,jdbcType=TIMESTAMP},
+            </if>
+            <if test="dutyManager != null">
+                duty_manager= #{dutyManager,jdbcType=INTEGER},
+            </if>
+            <if test="mineManager != null">
+                mine_manager= #{mineManager,jdbcType=VARCHAR},
+            </if>
+            <if test="schedulingOperater != null">
+                scheduling_operater = #{schedulingOperater,jdbcType=VARCHAR},
+            </if>
+            <if test="monitorOperater != null">
+                monitor_operater = #{monitorOperater,jdbcType=VARCHAR},
+            </if>
+            <if test="minePeoples != null">
+                mine_peoples = #{minePeoples,jdbcType=VARCHAR},
+            </if>
+            <if test="output != null">
+                output = #{output,jdbcType=VARCHAR},
+            </if>
+            <if test="workingCondition != null">
+                working_condition = #{workingCondition,jdbcType=VARCHAR},
+            </if>
+            <if test="miningAdvancementCondition != null">
+                mining_advancement_condition = #{miningAdvancementCondition,jdbcType=VARCHAR},
+            </if>
+            <if test="diggingLength != null">
+                digging_length = #{diggingLength,jdbcType=VARCHAR},
+            </if>
+            <if test="maintenanceLength != null">
+                maintenance_length = #{maintenanceLength,jdbcType=VARCHAR},
+            </if>
+            <if test="dailyOutput != null">
+                daily_output = #{dailyOutput,jdbcType=VARCHAR},
+            </if>
+            <if test="dailyDiggingLength != null">
+                daily_digging_length = #{dailyDiggingLength,jdbcType=VARCHAR},
+            </if>
+            <if test="dailyMaintenanceLength != null">
+                daily_maintenance_length = #{dailyMaintenanceLength,jdbcType=VARCHAR},
+            </if>
+            <if test="createUser != null">
+                create_user = #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="sign != null">
+                sign = #{sign,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+
+    <select id="selectBySafetyInfo" resultMap="BaseResultMap" parameterType="com.yw.colliery.entity.productmanager.SafetyInfoEntity">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from colliery_safety_info
+        WHERE
+        1=1
+        <if test="id != null">
+            AND id = #{id}
+        </if>
+        <if test="shift != null">
+            AND shift = #{shift}
+        </if>
+        <if test="date!= null">
+            AND date = #{date}
+        </if>
+        <if test="dutyManager != null">
+            AND duty_manager= #{dutyManager}
+        </if>
+        <if test="mineManager != null">
+            AND mine_manager= #{mineManager}
+        </if>
+        <if test="schedulingOperater != null">
+            AND scheduling_operater = #{schedulingOperater}
+        </if>
+        <if test="monitorOperater != null">
+            AND monitor_operater = #{monitorOperater}
+        </if>
+        <if test="minePeoples != null">
+            AND mine_peoples = #{minePeoples}
+        </if>
+        <if test="output != null">
+            AND output = #{output}
+        </if>
+        <if test="workingCondition != null">
+            AND working_condition = #{workingCondition}
+        </if>
+        <if test="miningAdvancementCondition != null">
+            AND mining_advancement_condition = #{miningAdvancementCondition}
+        </if>
+        <if test="diggingLength != null">
+            AND digging_length = #{diggingLength}
+        </if>
+        <if test="maintenanceLength != null">
+            AND maintenance_length = #{maintenanceLength}
+        </if>
+        <if test="dailyOutput != null">
+            AND daily_output = #{dailyOutput}
+        </if>
+        <if test="dailyDiggingLength != null">
+            AND daily_digging_length = #{dailyDiggingLength}
+        </if>
+        <if test="dailyMaintenanceLength != null">
+            AND daily_maintenance_length = #{dailyMaintenanceLength}
+        </if>
+        <if test="createUser != null">
+            AND create_user = #{createUser}
+        </if>
+        <if test="createDate != null">
+            AND create_date = #{createDate}
+        </if>
+        <if test="sign != null">
+            AND sign = #{sign}
+        </if>
+        <if test="orderName !=null">
+            ORDER BY ${orderName} ${order}
+        </if>
+    </select>
+
+    <delete id="deleteById" parameterType="java.util.List">
+        DELETE FROM
+        colliery_safety_info
+        WHERE
+        id
+        in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+
+    </delete>
+
+
+</mapper>
