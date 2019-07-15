@@ -4,27 +4,10 @@
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
-		<script>
-			$(document).ready(function() {    
-				var time  = new Date();    
-				var day = ("0" + time.getDate()).slice(-2);    
-				var month = ("0" + (time.getMonth() + 1)).slice(-2);    
-				var today = time.getFullYear() + "-" + (month) + "-" + (day);    
-				$('#starttime').val(today);  
-			})
-		</script>
-		<script>
-			$(document).ready(function() {    
-				var time  = new Date();    
-				var day = ("0" + time.getDate()).slice(-2);    
-				var month = ("0" + (time.getMonth() + 2)).slice(-2);    
-				var today = time.getFullYear() + "-" + (month) + "-" + (day);    
-				$('#endtime').val(today);  
-			})
-		</script>
+			
 		<style>
 			#Table1 {
-				width: 80%;
+				width: 98%;
 				margin: auto;
 				margin-top: 20px;
 				/*padding: 10px 0px 0px 50px;*/
@@ -135,53 +118,52 @@
 			<table id="Table1" border="1" cellspacing="0" cellpadding="5px">
 				<tr>
 					<td>日期：</td>
-					<td><input type="date" id="starttime" /></td>
+					<td><input name="pcrq" type="date" id="starttime" /></td>
 				</tr>
 				<tr>
 					<td>位置：</td>
 					<td>
-						<select id="sel_wz" style="margin: 4px;">
+						<select id="weizhi" name="weizhi" style="margin: 4px;">
 						</select>
 					</td>
 				</tr>
 				<tr>
 					<td>带班领导：</td>
-					<td>
-						<select onchange="sel_user()" id="sel_z" style="margin: 4px;"></select>
-						<select id="sh_people" name="zyfzr" style="margin: 4px;"></select>
-					</td>
+					<td><input name="dbld" id="dbld" readonly="readonly" />
+						<select onchange="sel_user1()" id="sel_z1" style="margin: 4px;"></select>
+						<select onchange="sel_fzUser1()" id="sh_people1" style="margin: 4px;"></select>
 					</td>
 				</tr>
+				
 				<tr>
 					<td>对接人员：</td>
-					<td>
-						<select onchange="sel_user1()" id="sel_z1" style="margin: 4px;"></select>
-						<select id="sh_people1" name="zyfzr" style="margin: 4px;"></select>
+					<td><input name="djry" id="djry" readonly="readonly" />
+						<select onchange="sel_user()" id="sel_z" style="margin: 4px;"></select>
+						<select onchange="sel_fzUser()" id="sh_people" style="margin: 4px;"></select>
 					</td>
-
 				</tr>
 				<tr>
 					<td>入井时间：</td>
-					<td><input type="date" />升井时间<input type="date" /> </td>
+					<td><input name="rjsj" type="date" />升井时间<input name="sjsj" type="date" /> </td>
 				</tr>
 				<tr>
 					<td>班次：</td>
 					<td>
-						<select id="sel_bc" style="margin: 4px;">
+						<select name="banci" id="banci" style="margin: 4px;">
 						</select>
 					</td>
 				</tr>
 				<tr>
 					<td>行走路线：</td>
-					<td><input id="sejks" /></td>
+					<td><input name="xzlx" id="sejks" /></td>
 				</tr>
 				<tr>
 					<td>LED 内容：</td>
-					<td colspan="3"><textarea id="ywxq_describe" rows="6" cols="70" style="margin: 4px;"></textarea></td>
+					<td colspan="3"><textarea name="lednr" id="ywxq_describe" rows="6" cols="70" style="margin: 4px;"></textarea></td>
 				</tr>
 				<tr>
 					<td>跟踪重大安全风险管控措施落实及整改情况：</td>
-					<td colspan="3"><textarea id="ywxq_describe" rows="6" cols="70" style="margin: 4px;"></textarea></td>
+					<td colspan="3"><textarea name="zdfxgkzg" id="ywxq_describe" rows="6" cols="70" style="margin: 4px;"></textarea></td>
 				</tr>
 
 			</table>
@@ -193,22 +175,14 @@
 		<script type="text/javascript" src="../../js/jquery-1.12.4.js"></script>
 		<script type="text/javascript" src="../../js/Excel_dc/xlsx.core.min.js"></script>
 		<script type="text/javascript" src="../../glng/GLOBAL.js"></script>
-		<!--<script type="text/javascript" src="http://127.0.0.1:8020/static/js/jquery-1.12.4.js"></script>
-		<script type="text/javascript" src="http://127.0.0.1:8020/static/js/layer/layer.js"></script>-->
-		<!--js-xlsx插件-->
+		<script type="text/javascript" src="../../glng/PZ_IP.js"></script>
 		<script>
-			//为ajax设置跨域带cookie
-			$.ajaxPrefilter(function(options, originalOptions, jqXHR) {
-				options.xhrFields = {
-					withCredentials: true
-				}
-			});
 			var host = HOST;
 			var UrlSelect = '/aqfx-ldgz/query';
 			var UrlInsert = '/aqfx-ldgz/save';
 			var UrlUpdate = '/aqfx-ldgz/updateById';
 			var Urlbm = '/department/select/all';
-			var host1 = "http://47.103.35.95:8888";
+			var host1 = ip;
 			var Url_jcxx = '/base/config/get';
 			var UrlSelectUser = '/user/select/all';
 			var json2 = {
@@ -220,7 +194,7 @@
 				dataType: "json",
 				type: "post",
 				url: host1 + Url_jcxx,
-				async: true,
+				async: false,
 				data: JSON.stringify(json2),
 				success: function(data) {
 					if(data.total > 0) {
@@ -228,9 +202,7 @@
 						for(var i = 0; i < data.rows.length; i++) {
 							str += "<option>" + data.rows[i].value + "</option>"
 						}
-						$("#sel_bc").html(str);
-					} else {
-						alert(data.message);
+						$("#banci").html(str);
 					}
 
 				},
@@ -247,7 +219,7 @@
 				dataType: "json",
 				type: "post",
 				url: host1 + Url_jcxx,
-				async: true,
+				async: false,
 				data: JSON.stringify(json2),
 				success: function(data) {
 					if(data.total > 0) {
@@ -255,9 +227,7 @@
 						for(var i = 0; i < data.rows.length; i++) {
 							str += "<option>" + data.rows[i].value + "</option>"
 						}
-						$("#sel_wz").html(str);
-					} else {
-						alert(data.message);
+						$("#weizhi").html(str);
 					}
 
 				},
@@ -265,6 +235,12 @@
 					alert("连接失败!")
 				}
 			});
+			function sel_fzUser() {
+				$("#djry").val($('#sh_people option:selected').val());
+			}
+			function sel_fzUser1() {
+				$("#dbld").val($('#sh_people1 option:selected').val());
+			}
 			//部门下拉框
 			var json3 = {
 				"pageNum": null,
@@ -275,7 +251,7 @@
 				dataType: "json",
 				type: "post",
 				url: host1 + Urlbm,
-				async: true,
+				async: false,
 				data: JSON.stringify(json3),
 				success: function(data) {
 					if(data.total > 0) {
@@ -283,7 +259,6 @@
 						for(var i = 0; i < data.rows.length; i++) {
 							str += "<option value='" + data.rows[i].id + "'>" + data.rows[i].departName + "</option>"
 						}
-						$("#sel_zrdw").html(str);
 						$("#sel_z").html(str);
 						$("#sel_z1").html(str);
 					} else {
@@ -295,29 +270,35 @@
 					alert("连接失败!")
 				}
 			});
+
+			
+
+			//部门改变事件
 			function sel_user() {
 				var json4 = {
 					"pageNum": null,
 					"pageSize": null,
-					"departId":$('#sel_z option:selected').val()
+					"departId": $('#sel_z option:selected').val()
 				};
 				//用户下拉框
 				$.ajax({
 					contentType: "application/json;charset=utf-8",
 					dataType: "json",
 					type: "post",
-					url: host1 + UrlSelectUser,
-					async: true,
+					url: host1 + '/user/select/all',
+					async: false,
 					data: JSON.stringify(json4),
 					success: function(data) {
 						if(data.total > 0) {
-							var str;
+							var str = "";
 							for(var i = 0; i < data.rows.length; i++) {
-								str += "<option>" + data.rows[i].name + "</option>"
+								str += "<option>" + data.rows[i].name + "</option>";
 							}
+							$("#djry").val(data.rows[0].name);
 							$("#sh_people").html(str);
 						} else {
-							alert(data.message);
+							$("#djry").val("");
+							$("#sh_people").html("");
 						}
 
 					},
@@ -327,29 +308,32 @@
 				});
 			}
 			sel_user();
+			//部门改变事件
 			function sel_user1() {
 				var json4 = {
 					"pageNum": null,
 					"pageSize": null,
-					"departId":$('#sel_z1 option:selected').val()
+					"departId": $('#sel_z1 option:selected').val()
 				};
 				//用户下拉框
 				$.ajax({
 					contentType: "application/json;charset=utf-8",
 					dataType: "json",
 					type: "post",
-					url: host1 + UrlSelectUser,
-					async: true,
+					url: host1 + '/user/select/all',
+					async: false,
 					data: JSON.stringify(json4),
 					success: function(data) {
 						if(data.total > 0) {
-							var str;
+							var str = "";
 							for(var i = 0; i < data.rows.length; i++) {
-								str += "<option>" + data.rows[i].name + "</option>"
+								str += "<option>" + data.rows[i].name + "</option>";
 							}
+							$("#dbld").val(data.rows[0].name);
 							$("#sh_people1").html(str);
 						} else {
-							alert(data.message);
+							$("#dbld").val("");
+							$("#sh_people1").html("");
 						}
 
 					},
@@ -364,65 +348,7 @@
 				$("#Form1")[0].reset();
 			})
 
-			$("#btn_dr").click(function() {
-				$("input[name=csv]").csv2arr(function(res) {
-					console.log(res);
-
-				});
-			});
-
-			$(document).ready(function() {
-				$("#input_file").change(function() {
-					$("#input_file1").val($("#input_file").val());
-				});
-			});
-			//Excel导入到form表单
-			$('#input_file').change(function(e) {
-				var files = e.target.files;
-
-				var fileReader = new FileReader();
-				fileReader.onload = function(ev) {
-					try {
-						var data = ev.target.result,
-							workbook = XLSX.read(data, {
-								type: 'binary'
-							}), // 以二进制流方式读取得到整份excel表格对象
-							persons = []; // 存储获取到的数据
-					} catch(e) {
-						console.log('文件类型不正确');
-						return;
-					}
-
-					// 表格的表格范围，可用于判断表头是否数量是否正确
-					var fromTo = '';
-					// 遍历每张表读取
-					for(var sheet in workbook.Sheets) {
-						if(workbook.Sheets.hasOwnProperty(sheet)) {
-							fromTo = workbook.Sheets[sheet]['!ref'];
-							console.log(fromTo);
-							persons = persons.concat(XLSX.utils.sheet_to_json(workbook.Sheets[sheet]));
-							break; // 如果只取第一张表，就取消注释这行
-						}
-					}
-
-					console.log(persons);
-					$("#pc_time").val(persons[0].企业名称);
-					$("#input_zkwz").val(persons[0].企业编码);
-					$("#kk_time").val(persons[0].重大危险源名称);
-					$("#zk_number").val(persons[0].重大危险源管理);
-					$("#swqk").val(persons[0].重大危险源类型);
-					$("#swqk").val(persons[0].重大危险源编码);
-					$("#knzk").val(persons[0].是否备案);
-					$("#kkqk").val(persons[0].备案编号);
-					$("#sejks").val(persons[0].备案日期);
-					$("#sejks").val(persons[0].填报日期);
-					$("#sejks").val(persons[0].填报人姓名);
-					$("#sejks").val(persons[0].填报人电话);
-				};
-
-				// 以二进制方式打开文件
-				fileReader.readAsBinaryString(files[0]);
-			});
+			
 			var RowId = parent.$('#RowId').val();
 			//实现添加数据或者修改数据
 			$("#btn_tj").click(function() {
@@ -434,6 +360,8 @@
 						async: false,
 						success: function(data) {
 							alert("修改成功");
+							var index = parent.layer.getFrameIndex(window.name);
+							parent.layer.close(index);
 							if(parent) parent.$('#Table2').bootstrapTable('refresh', {
 								url: host + UrlSelect
 							});
@@ -450,6 +378,11 @@
 						async: false,
 						success: function(data) {
 							alert("提交成功");
+							var index = parent.layer.getFrameIndex(window.name);
+							parent.layer.close(index);
+							if(parent) parent.$('#Table2').bootstrapTable('refresh', {
+								url: host + UrlSelect
+							});
 						},
 						error: function(request) {
 							alert("提交失败");
@@ -491,20 +424,22 @@
 					}
 				}
 			}
-			$.ajax({
-				dataType: "json",
-				type: "post",
-				url: host + UrlSelect + '?id=' + RowId,
-				async: false,
-				complete: UN_LODIN_OUT_FUNC,
-				success: function(data) {
-					//					SetFromValues($("#Form1"), data.rows[0]);
-					$("#Form1").loadData(data.rows[0]);
-				},
-				error: function(request) {
+			if(RowId != "" && RowId != undefined && RowId != 'undefined') {
+				$.ajax({
+					dataType: "json",
+					type: "post",
+					url: host + UrlSelect + '?id=' + RowId,
+					async: false,
+					//				complete: UN_LODIN_OUT_FUNC,
+					success: function(data) {
+						//					SetFromValues($("#Form1"), data.rows[0]);
+						$("#Form1").loadData(data.rows[0]);
+					},
+					error: function(request) {
 
-				}
-			});
+					}
+				});
+			}
 		</script>
 	</body>
 

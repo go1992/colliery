@@ -6,7 +6,7 @@
 		<title></title>
 		<style>
 			#Table1 {
-				width: 80%;
+				width: 98%;
 				margin: auto;
 				margin-top: 20px;
 				/*padding: 10px 0px 0px 50px;*/
@@ -121,7 +121,7 @@
                 </tr>
                 <tr>
 					<td>创建者：</td>
-					<td slspan="3"><input  name="createUser" rows="3"/> </td>
+					<td slspan="3"><input id="createUser"  name="createUser" rows="3" readonly="readonly"/> </td>
 				</tr>
 
 				
@@ -131,26 +131,19 @@
 				<button id="btn_qk" type="button" class="btn_qk"><i class="iconfont icon-qingkong"></i>清空</button>
 			</div>
 		</form>
+		
 			<script type="text/javascript" src="../../../js/jquery-1.12.4.js"></script>
 		<script type="text/javascript" src="../../../js/layer/layer.js"></script>
-		<!--<script type="text/javascript" src="http://127.0.0.1:8020/static/js/jquery-1.12.4.js"></script>
-		<script type="text/javascript" src="http://127.0.0.1:8020/static/js/layer/layer.js"></script>-->
+		<script type="text/javascript" src="../../../glng/PZ_IP.js" ></script>
 		<script>
-			//为ajax设置跨域带cookie
-			$.ajaxPrefilter(function(options, originalOptions, jqXHR) {
-				options.xhrFields = {
-					withCredentials: true
-				}
-			});
+			//默认当前用户为创建者
+			var username = sessionStorage.getItem("MK_userName");
+			$("#createUser").val(username);
 			//清空表单
 			$("#btn_qk").click(function() {
 				$("#Form1")[0].reset();
 			})
-			var host = "http://47.103.35.95:8888";
-			var UrlSelect = '/role/select/all';
-			var Urlid = '/role/select/';
-			var UrlInsert = '/role/add';
-			var UrlUpdate = '/role/update';
+			var host = ip;//ip地址
 			var RowId = parent.$('#RowId').val();
 			
 			$("#RowId").val(RowId);
@@ -161,23 +154,23 @@
 						contentType: "application/json;charset=utf-8",
 						dataType: "json",
 						type: "post",
-						url: host + UrlUpdate,
+						url: host + '/role/update',
 						data: JSON.stringify($('#Form1').serializeJson()), // 你的formid
 						async: true,
 						success: function(data) {
 							if(data.status == "success") {
-								alert("提交成功!");
+								alert("修改成功!");
 								var index = parent.layer.getFrameIndex(window.name);
 								parent.layer.close(index);
 								if(parent) parent.$('#Table2').bootstrapTable('refresh', {
-									url: host + UrlSelect
+									url: host + '/role/select/all'
 								});
 							} else {
-								alert("提交失败!");
+								alert("修改失败!");
 							}
 						},
 						error: function(request) {
-							alert("连接失败");
+							alert("连接失败！");
 						}
 					})
 
@@ -186,12 +179,17 @@
 						contentType: "application/json;charset=utf-8",
 						dataType: "json",
 						type: "post",
-						url: host + UrlInsert,
+						url: host + '/role/add',
 						data: JSON.stringify($('#Form1').serializeJson()), // 你的formid
 						async: true,
 						success: function(data) {
 							if(data.status == "success") {
 								alert("提交成功!");
+								var index = parent.layer.getFrameIndex(window.name);
+								parent.layer.close(index);
+								if(parent) parent.$('#Table2').bootstrapTable('refresh', {
+									url: host + '/role/select/all'
+								});
 							} else {
 								alert("提交失败!");
 							}
@@ -209,7 +207,7 @@
 //					contentType: "application/json;charset=utf-8",
 					dataType: "json",
 					type: "get",
-					url: host + Urlid + RowId,
+					url: host + '/role/select/' + RowId,
 					async: true,
 					
 					success: function(data) {

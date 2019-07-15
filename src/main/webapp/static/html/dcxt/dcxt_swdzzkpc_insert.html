@@ -141,11 +141,12 @@
 				</tr>
 				<tr>
 					<td>记录人：</td>
-					<td><input id="jl_people" name="jlr" disabled="disabled" /></td>
+					<td><input id="jl_people" name="jlr" readonly="readonly" /></td>
 					<td>审核人：</td>
 					<td>
+						<input id="shhr" name="shhr" readonly="readonly" /><br />
 						<select onchange="sel_user()" id="sel_z" name="departName" style="margin: 4px;"></select>
-						<select id="sh_people" name="shhr" style="margin: 4px;"></select>
+						<select onchange="sel_fzUser()" id="sh_people" style="margin: 4px;"></select>
 					</td>
 				</tr>
 				<tr>
@@ -161,25 +162,10 @@
 		<script type="text/javascript" src="../../js/jquery-1.12.4.js"></script>
 		<script type="text/javascript" src="../../js/Excel_dc/xlsx.core.min.js"></script>
 		<script type="text/javascript" src="../../glng/GLOBAL.js"></script>
-		<!--<script type="text/javascript" src="http://127.0.0.1:8020/static/js/jquery-1.12.4.js"></script>
-		<script type="text/javascript" src="http://127.0.0.1:8020/static/js/layer/layer.js"></script>-->
-		<!--js-xlsx插件-->
+		<script type="text/javascript" src="../../glng/PZ_IP.js"></script>
 		<script>
-			//为ajax设置跨域带cookie
-			$.ajaxPrefilter(function(options, originalOptions, jqXHR) {
-				options.xhrFields = {
-					withCredentials: true
-				}
-			});
 			var host = HOST;
-			var UrlSelect = '/dc-swdz-zkpc/queryzkpc';
-			var UrlInsert = '/dc-swdz-zkpc/save';
-			var UrlUpdate = '/dc-swdz-zkpc/updateById';
-			var Urlbm = '/department/select/all';
-			var UrlSelectUser = '/user/select/all';
-
-			var host1 = "http://47.103.35.95:8888";
-			var Url_jcxx = '/base/config/get';
+			var host1 = ip;
 			var json2 = {
 				"name": '钻孔位置'
 			};
@@ -188,18 +174,16 @@
 				contentType: "application/json;charset=utf-8",
 				dataType: "json",
 				type: "post",
-				url: host1 + Url_jcxx,
-				async: true,
+				url: host1 + '/base/config/get',
+				async: false,
 				data: JSON.stringify(json2),
 				success: function(data) {
 					if(data.total > 0) {
-						var str;
+						var str = "";
 						for(var i = 0; i < data.rows.length; i++) {
-							str += "<option>" + data.rows[i].value + "</option>"
+							str += "<option>" + data.rows[i].value + "</option>";
 						}
 						$("#input_zkwz").html(str);
-					} else {
-						alert(data.message);
 					}
 
 				},
@@ -207,6 +191,11 @@
 					alert("连接失败!")
 				}
 			});
+
+			//改变用户赋值
+			function sel_fzUser() {
+				$("#shhr").val($('#sh_people option:selected').val());
+			}
 			//部门下拉框
 			var json3 = {
 				"pageNum": null,
@@ -216,18 +205,16 @@
 				contentType: "application/json;charset=utf-8",
 				dataType: "json",
 				type: "post",
-				url: host1 + Urlbm,
-				async: true,
+				url: host1 + '/department/select/all',
+				async: false,
 				data: JSON.stringify(json3),
 				success: function(data) {
 					if(data.total > 0) {
-						var str;
+						var str = "";
 						for(var i = 0; i < data.rows.length; i++) {
-							str += "<option value='"+data.rows[i].id+"'>" + data.rows[i].departName + "</option>"
+							str += "<option value='" + data.rows[i].id + "'>" + data.rows[i].departName + "</option>";
 						}
 						$("#sel_z").html(str);
-					} else {
-						alert(data.message);
 					}
 
 				},
@@ -235,30 +222,32 @@
 					alert("连接失败!")
 				}
 			});
-
+			//部门改变事件
 			function sel_user() {
 				var json4 = {
 					"pageNum": null,
 					"pageSize": null,
-					"departId":$('#sel_z option:selected').val()
+					"departId": $('#sel_z option:selected').val()
 				};
 				//用户下拉框
 				$.ajax({
 					contentType: "application/json;charset=utf-8",
 					dataType: "json",
 					type: "post",
-					url: host1 + UrlSelectUser,
-					async: true,
+					url: host1 + '/user/select/all',
+					async: false,
 					data: JSON.stringify(json4),
 					success: function(data) {
 						if(data.total > 0) {
-							var str;
+							var str = "";
 							for(var i = 0; i < data.rows.length; i++) {
-								str += "<option>" + data.rows[i].name + "</option>"
+								str += "<option>" + data.rows[i].name + "</option>";
 							}
+							$("#shhr").val(data.rows[0].name);
 							$("#sh_people").html(str);
 						} else {
-							alert(data.message);
+							$("#shhr").val("");
+							$("#sh_people").html("");
 						}
 
 					},
@@ -275,93 +264,40 @@
 				$("#Form1")[0].reset();
 			})
 
-			$("#btn_dr").click(function() {
-				$("input[name=csv]").csv2arr(function(res) {
-					console.log(res);
-
-				});
-			});
-
-			$(document).ready(function() {
-				$("#input_file").change(function() {
-					$("#input_file1").val($("#input_file").val());
-				});
-			});
-			//Excel导入到form表单
-			$('#input_file').change(function(e) {
-				var files = e.target.files;
-
-				var fileReader = new FileReader();
-				fileReader.onload = function(ev) {
-					try {
-						var data = ev.target.result,
-							workbook = XLSX.read(data, {
-								type: 'binary'
-							}), // 以二进制流方式读取得到整份excel表格对象
-							persons = []; // 存储获取到的数据
-					} catch(e) {
-						console.log('文件类型不正确');
-						return;
-					}
-
-					// 表格的表格范围，可用于判断表头是否数量是否正确
-					var fromTo = '';
-					// 遍历每张表读取
-					for(var sheet in workbook.Sheets) {
-						if(workbook.Sheets.hasOwnProperty(sheet)) {
-							fromTo = workbook.Sheets[sheet]['!ref'];
-							console.log(fromTo);
-							persons = persons.concat(XLSX.utils.sheet_to_json(workbook.Sheets[sheet]));
-							break; // 如果只取第一张表，就取消注释这行
-						}
-					}
-
-					console.log(persons);
-					$("#pc_time").val(persons[0].排查日期);
-					$("#input_zkwz").val(persons[0].钻孔位置);
-					$("#kk_time").val(persons[0].开孔日期);
-					$("#zk_number").val(persons[0].钻孔编号);
-					$("#swqk").val(persons[0].水位情况);
-					$("#knzk").val(persons[0].孔内状况);
-					$("#kkqk").val(persons[0].孔口情况);
-					$("#sejks").val(persons[0].设计孔深);
-					$("#shijks").val(persons[0].实际孔深);
-					$("#jl_people").val(persons[0].记录人);
-					$("#sh_people").val(persons[0].审核人);
-					$("#ywxq_describe").val(persons[0].有无险情描述);
-
-				};
-
-				// 以二进制方式打开文件
-				fileReader.readAsBinaryString(files[0]);
-			});
 			var RowId = parent.$('#RowId').val();
 			//实现添加数据或者修改数据
 			$("#btn_tj").click(function() {
 				if(RowId != "" && RowId != undefined && RowId != 'undefined') {
 					$.ajax({
 						type: "post",
-						url: host + UrlUpdate + "?id=" + RowId,
+						url: host + '/dc-swdz-zkpc/updateById' + "?id=" + RowId,
 						data: $('#Form1').serialize(), // 你的formid
 						async: false,
 						success: function(data) {
-							alert("修改成功");
+							alert("修改成功!");
+							var index = parent.layer.getFrameIndex(window.name);
+							parent.layer.close(index);
 							if(parent) parent.$('#Table2').bootstrapTable('refresh', {
-								url: host + UrlSelect
+								url: host + '/dc-swdz-zkpc/queryzkpc'
 							});
 						},
 						error: function(request) {
-							alert("修改失败");
+							alert("修改失败!");
 						}
 					});
 				} else {
 					$.ajax({
 						type: "post",
-						url: host + UrlInsert,
+						url: host + '/dc-swdz-zkpc/save',
 						data: $('#Form1').serialize(), // 你的formid
 						async: false,
 						success: function(data) {
 							alert("提交成功");
+							var index = parent.layer.getFrameIndex(window.name);
+							parent.layer.close(index);
+							if(parent) parent.$('#Table2').bootstrapTable('refresh', {
+								url: host + '/dc-swdz-zkpc/queryzkpc'
+							});
 						},
 						error: function(request) {
 							alert("提交失败");
@@ -370,6 +306,23 @@
 				}
 
 			})
+			if(RowId != "" && RowId != undefined && RowId != 'undefined') {
+				$.ajax({
+					dataType: "json",
+					type: "post",
+					url: host + '/dc-swdz-zkpc/queryzkpc' + '?id=' + RowId,
+					async: true,
+					//				complete: UN_LODIN_OUT_FUNC,
+					success: function(data) {
+						//					SetFromValues($("#Form1"), data.rows[0]);
+						$("#Form1").loadData(data.rows[0]);
+					},
+					error: function(request) {
+
+					}
+				});
+			}
+
 			$.fn.loadData = function(obj) {
 				var key, value, tagName, type, arr;
 				//				this.reset();
@@ -403,20 +356,6 @@
 					}
 				}
 			}
-			$.ajax({
-				dataType: "json",
-				type: "post",
-				url: host + UrlSelect + '?id=' + RowId,
-				async: false,
-				complete: UN_LODIN_OUT_FUNC,
-				success: function(data) {
-					//					SetFromValues($("#Form1"), data.rows[0]);
-					$("#Form1").loadData(data.rows[0]);
-				},
-				error: function(request) {
-
-				}
-			});
 		</script>
 	</body>
 

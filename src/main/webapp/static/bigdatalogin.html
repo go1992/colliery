@@ -5,7 +5,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta charset="UTF-8">
 		<meta name="renderer" content="webkit">
-		<title>信息管理系统</title>
+		<title>安全生产标准化</title>
 		<link rel="stylesheet" type="text/css" href="css/style2.0.css" />
 		<style type="text/css">
 			ul li {
@@ -49,7 +49,7 @@
 				padding: 10px;
 			}
 			
-			.tyg-div-form form input[type="text"] {
+			.tyg-div-form form input[type="text"] ,.tyg-div-form form input[type="password"]{
 				width: 270px;
 				height: 30px;
 				margin: 25px 10px 0px 0px;
@@ -81,7 +81,7 @@
 			}
 		</style>
 
-		<body>
+		<body onkeydown="keyLogin();">
 			<div class="tyg-div">
 				<ul>
 					<li>让</li>
@@ -107,7 +107,7 @@
 			</div>
 			<div id="contPar" class="contPar">
 				<div id="page1" style="z-index:1;">
-					<div class="title0">煤矿质量标准化管控平台</div>
+					<div class="title0">安全生产标准化</div>
 					<div class="title1">安全、生产、经营、决策</div>
 					<div class="imgGroug">
 						<ul>
@@ -123,12 +123,12 @@
 				<div class="tyg-div-form">
 					<form method="post" action="#" id="Form1" enctype="multipart/form-data">
 						<h2>登录</h2>
-						<p class="tyg-p">欢迎访问 综合管控平台</p>
+						<p class="tyg-p">欢迎访问 安全生产标准化</p>
 						<div style="margin:5px 0px;">
 							<input id="username" name="username" type="text" placeholder="请输入账号..." />
 						</div>
 						<div style="margin:5px 0px;">
-							<input id="password" name="password" type="text" placeholder="请输入密码..." />
+							<input id="password" name="password" type="password" placeholder="请输入密码..." />
 						</div>
 						<div style="margin:5px 0px;">
 							<input id="captchar" name="captcha" type="text" style="width:150px;" placeholder="请输入验证码..." />
@@ -142,8 +142,9 @@
 
 			<script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
 			<script type="text/javascript" src="js/com.js"></script>
+			<script type="text/javascript" src="glng/PZ_IP.js" ></script>
 			<script type="text/javascript">
-				var host = "http://47.103.35.95:8888";
+				var host = ip;
 				var Urllogin = '/colliery/login';
 				getPic();
 				$("#loginButton").click(function() {
@@ -214,6 +215,10 @@
 						error: function(xmlHttpRequest, statusText, errorThrown) {}
 					});
 				};
+				function keyLogin() {
+					if(event.keyCode == 13) //回车键的键值为13
+						document.getElementById("loginButton").click(); //调用登录按钮的登录事件
+				}
 			</script>
 			<!--<script type="text/javascript" src="./glng/GLOBAL.js"></script>-->
 			<!--<script type="text/javascript" src="./glng/login.js"></script>-->

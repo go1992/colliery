@@ -144,10 +144,11 @@
 					<td><button id="btn_pc_download" type="button" class="btn_xiazai"><i class="iconfont icon-Group-"></i>下载选择文件</button>&nbsp;&nbsp;<button id="btn_pc_del" type="button" class="btn_del"><i class="iconfont icon-shanchu"></i>删除选择文件</button></td>
 				</tr>
 			</table>
-			<input type="hidden" name="MKname" value="上兴隆煤矿" />
+			<input type="hidden" name="MKname" value="煤矿上传文件" />
 			<input type="hidden" name="XTname" value="地测信息管理系统" />
 			<input type="hidden" name="XTCDname" value="储量管理" />
 		</form>
+		<script type="text/javascript" src="js/jquery.form.js"></script>
 		<script>
 			$(document).ready(function() {
 				$('#Form1').attr('action',HOST.replace('apiv1','')+'fileUpload');
@@ -155,7 +156,7 @@
 					$("#input_file1").val($("#input_file").val());
 				});
 			});
-			var MKname = "上兴隆煤矿";
+			var MKname = "煤矿上传文件";
 			var XTname = "地测信息管理系统";
 			var XTCDname = "储量管理";
 			//上传文件到服务器

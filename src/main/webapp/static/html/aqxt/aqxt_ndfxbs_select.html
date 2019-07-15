@@ -29,6 +29,9 @@
 			#Table1 tr td:nth-of-type(3) {
 				text-align: right;
 			}
+			#Table1 tr td:nth-of-type(5) {
+				text-align: right;
+			}
 			
 			#Table1 input {
 				padding: 2px;
@@ -84,46 +87,57 @@
 
 	<body>
 		<form method="post" action="#" id="Form1" enctype="multipart/form-data">
+			<input type="hidden" id="RowId" />
 			<table id="Table1" border="1" cellspacing="0" cellpadding="5px">
 				<tr>
-					<td>责任单位：</td>
 					<td>
-						<select id="sel_zkwz" style="margin: 4px;">
-							<option>不限</option>
-						</select>
+						风险点：
 					</td>
-					<td>风险分类：</td>
 					<td>
-						<select id="sel_zkwz" style="margin: 4px;">
-							<option>不限</option>
-						</select>
+						<select id="sel_fxd" name="fxd" style="margin: 4px;"></select>
 					</td>
-					<td>风险等级：</td>
 					<td>
-						<select id="sel_zkwz" style="margin: 4px;">
-							<option>不限</option>
+						辨识时间：
+					</td>
+					<td>
+						
+						<select id="datetype" name="datetype" type="date" style="margin-left: 4px;"></select>年
+					</td>
+					<td>
+						责任单位：
+					</td>
+					<td>
+						<select id="sel_zrdw" name="zrdw" style="margin: 4px;"></select>
+					</td>
+
+				</tr>
+				<tr>
+					<td>
+						风险等级：
+					</td>
+					<td>
+						<select name="fxdj" style="margin: 4px;">
+							<option></option>
+							<option>低</option>
 							<option>一般</option>
-							<option>中等</option>
+							<option>较大</option>
 							<option>重大</option>
 						</select>
 					</td>
-				</tr>
-				<tr>
-					<td>风险地点：</td>
 					<td>
-						<select id="sel_zkwz" style="margin: 4px;">
-							<option>请选择或手工输入</option>
-							<option>1</option>
-						</select>
+						风险分类：
 					</td>
-					<td>辨识日期：</td>
-					<td>起始日期：<input type="date" id="starttime"/><br>结束日期：<input type="date" id="endtime" /><br></td>
-					<td></td>
-					<td><button type="button" class="btn_tj" id="btn_sel"><i class="iconfont icon-chaxun"></i>查询</button></td>
+					<td>
+						<select id="sel_fxfl" name="fxfl" style="margin: 4px;"></select>
+					</td>
+					<td colspan="2"><button type="button" class="btn_tj" id="btn_sel"><i class="iconfont icon-chaxun"></i>查询</button></td>
+					
 				</tr>
+				
 			</table>
 			<div class="btn_tr" id="toolbar">
 				<div>
+					<button type="button" class="btn_bj" id="btn_add"><i class="iconfont icon-bianji"></i>新增</button>
 					<button type="button" class="btn_bj" id="btn_bj"><i class="iconfont icon-bianji"></i>编辑选中项</button>
 					<button type="button" class="btn_del" id="btn_del"><i class="iconfont icon-shanchu"></i>删除选中项</button>
 				</div>
@@ -142,11 +156,92 @@
 		<script type="text/javascript" src="js/tableExport.min.js"></script>
 		<!--bootstrap-table插件汉化-->
 		<script type="text/javascript" src="js/bootstrap-table-zh-CN.min.js"></script>
+		<script type="text/javascript" src="glng/PZ_IP.js"></script>
 		<script>
-			//为ajax设置跨域带cookie
-			$.ajaxPrefilter(function(options, originalOptions, jqXHR) {
-				options.xhrFields = {
-					withCredentials: true
+			//设置年份的选择 
+			var myDate = new Date();
+			var startYear = myDate.getFullYear() - 50; //起始年份 
+			var endYear = myDate.getFullYear() + 50; //结束年份 
+			var str = "<option></option>";
+			for(var i = startYear; i <= endYear; i++) {
+				str += "<option>" + i + "</option>";
+			}
+			$("#datetype").html(str);
+			var host = HOST;
+			var host1=ip;
+			//风险点下拉框
+			var json2 = {
+				"name": '风险点'
+			};
+			$.ajax({
+				contentType: "application/json;charset=utf-8",
+				dataType: "json",
+				type: "post",
+				url: host1 + '/base/config/get',
+				async: false,
+				data: JSON.stringify(json2),
+				success: function(data) {
+					if(data.total > 0) {
+						var str = "<option></option>";
+						for(var i = 0; i < data.rows.length; i++) {
+							str += "<option>" + data.rows[i].value + "</option>";
+						}
+						$("#sel_fxd").html(str);
+					}
+				},
+				error: function(request) {
+					alert("连接失败!")
+				}
+			});
+			//部门下拉框
+			var json3 = {
+				"pageNum": null,
+				"pageSize": null
+			};
+			$.ajax({
+				contentType: "application/json;charset=utf-8",
+				dataType: "json",
+				type: "post",
+				url: host1 + '/department/select/all',
+				async: false,
+				data: JSON.stringify(json3),
+				success: function(data) {
+					if(data.total > 0) {
+						var str1="<option ></option>";
+						for(var i = 0; i < data.rows.length; i++) {
+							str1 += "<option >" + data.rows[i].departName + "</option>";
+						}
+						$("#sel_zrdw").html(str1);
+					}
+
+				},
+				error: function(request) {
+					alert("连接失败!")
+				}
+			});
+				//风险分类下拉框
+			var json4 = {
+				"name": '风险分类'
+			};
+			$.ajax({
+				contentType: "application/json;charset=utf-8",
+				dataType: "json",
+				type: "post",
+				url: host1 + '/base/config/get',
+				async: false,
+				data: JSON.stringify(json4),
+				success: function(data) {
+					if(data.total > 0) {
+						var str="<option></option>";
+						for(var i = 0; i < data.rows.length; i++) {
+							str += "<option>" + data.rows[i].value + "</option>"
+						}
+						$("#sel_fxfl").html(str);
+					}
+
+				},
+				error: function(request) {
+					alert("连接失败!")
 				}
 			});
 			$(function() {
@@ -160,7 +255,6 @@
 				oButtonInit.Init();
 
 			});
-			var host = HOST;
 			var UrlSelect = '/aqfx-ndfx/query';
 			var UrlDelete = '/aqfx-ndfx/removeByIds';
 			var TableInit = function() {
@@ -232,8 +326,41 @@
 							worksheetName: 'sheet1', //表格工作区名称  
 							tableName: '导出数据',
 						},
+						rowStyle: function(row, index) {
+							if(row['fxdj'] == "低") {
+								return {
+									css: {
+										"background-color": "#0C0"
+									}
+								};
+							} else if(row['fxdj'] == "一般") {
+								return {
+									css: {
+										"background-color": "#FF0"
+									}
+								};
+							} else if(row['fxdj'] == "较大") {
+								return {
+									css: {
+										"background-color": "#F60"
+									}
+								};
+							} else if(row['fxdj'] == "重大") {
+								return {
+									css: {
+										"background-color": "red"
+									}
+								};
+							}
+
+						},
 						columns: [{
 								checkbox: true
+							},
+							{
+								field: "id",
+								title: "ID",
+								sortable: "true"
 							},
 							{
 								field: "fxd",
@@ -241,13 +368,8 @@
 								sortable: "true"
 							},
 							{
-								field: "pcrq",
+								field: "datetype",
 								title: "辨识时间",
-								sortable: "true"
-							},
-							{
-								field: "dtwzdd",
-								title: "地址定位定点",
 								sortable: "true"
 							},
 							{
@@ -290,7 +412,7 @@
 								title: "分管负责人",
 								sortable: "true"
 							},
-							
+
 						],
 						onLoadSuccess: function() {},
 						onLoadError: function() {
@@ -305,7 +427,7 @@
 								title: '编辑',
 								maxmin: true,
 								shadeClose: true, //点击遮罩关闭层
-								area: ['1000px', '600px'],
+								area: ['1200px', '600px'],
 								content: 'html/aqxt/aqxt_ndfxbs_insert.html'
 							});
 						},
@@ -313,17 +435,11 @@
 				}
 				//得到查询的参数
 				oTableInit.queryParams = function(params) {
-					var temp = $("#Form1").serializeJsonObject();//获取自定义查询条件
-					temp["pageSize"]=params.pageSize;//页面大小
-					temp["pageNum"]=params.pageNumber;//页码
-					temp["order"]=params.sortOrder;//排序的方式
-					temp["ordername"]=params.sortName;//排序的字段
-					temp["searchParam"]=params.searchText;//搜索值
-					temp["fields"]=getSearchFields();//要搜索的字段
-
-					temp['id'] = $("#input_zkwz").val()?$("#input_zkwz").val():'';
-					temp['startTime'] = $("#starttime").val()?$("#starttime").val():'';
-					temp['endTime'] = $("#endtime").val()?$("#endtime").val():'';					
+					var temp = $("#Form1").serializeJsonObject(); //获取自定义查询条件
+					temp["pageSize"] = params.pageSize; //页面大小
+					temp["pageNum"] = params.pageNumber; //页码
+					temp["order"] = params.sortOrder; //排序的方式
+					temp["ordername"] = params.sortName; //排序的字段				
 					return temp;
 				};
 				return oTableInit;
@@ -342,7 +458,9 @@
 			};
 			//查询数据
 			$("#btn_sel").click(function() {
-				$('#Table2').bootstrapTable('refreshOptions',{pageNumber:1});
+				$('#Table2').bootstrapTable('refreshOptions', {
+					pageNumber: 1
+				});
 				$('#Table2').bootstrapTable('refresh', {
 					url: host + UrlSelect
 				});
@@ -382,14 +500,27 @@
 						title: '编辑',
 						maxmin: true,
 						shadeClose: true, //点击遮罩关闭层
-						area: ['1000px', '600px'],
+						area: ['1200px', '600px'],
 						content: 'html/aqxt/aqxt_ndfxbs_insert.html'
 					});
-				}else if(rows.length==0){
+				} else if(rows.length == 0) {
 					alert("请选择您要编辑的项！");
-				}else{
+				} else {
 					alert("编辑选项按钮仅能选择一项！");
 				}
+			});
+			//新增
+			$("#btn_add").click(function() {
+				$("#RowId").val("");
+				layer.open({
+					type: 2,
+					title: '新增',
+					maxmin: true,
+					shadeClose: true, //点击遮罩关闭层
+					area: ['1200px', '600px'],
+					content: 'html/aqxt/aqxt_ndfxbs_insert.html'
+				});
+
 			});
 			//得到当前显示字段，以逗号隔开拼接字符串
 			function getSearchFields() {

@@ -112,5 +112,4 @@ public class AqfxNdfxController extends BaseController<AqfxNdfxServiceImpl,AqfxN
 			return ResultObject.buildFailResponse("没有查到年度风险统计数据");
 		}
 	}
-
 }

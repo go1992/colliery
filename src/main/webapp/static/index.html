@@ -14,10 +14,9 @@
 				font-size: 14px;
 				color: #30a5ff;
 			}
-			
-			#Table1 tr td:nth-of-type(1) {
+			/*#Table1 tr td:nth-of-type(1) {
 				text-align: right;
-			}
+			}*/
 			
 			#Table1 tr td:nth-of-type(3) {
 				text-align: right;
@@ -106,7 +105,7 @@
 			}
 		</style>
 		<meta name="renderer" content="webkit">
-		<title>信息管理系统</title>
+		<title>安全生产标准化</title>
 		<link rel="stylesheet" href="fonts/iconfont.css" />
 		<link rel="stylesheet" href="css/bootstrap.min.css" />
 		<link rel="stylesheet" href="css/bootstrap-table.min.css" />
@@ -119,7 +118,7 @@
 		<header>
 			<div class="company_title">
 
-				<span>煤矿质量标准化管控平台</span>
+				<span>安全生产标准化</span>
 				<p class="dqzh">
 					<span id="showUserName">当前账户:李梅</span>
 					<a href="bigdatalogin.html">
@@ -141,59 +140,16 @@
 						</a>
 						<ul class="ul_hidden a">
 							<li>
-								<a href="#"><span class="iconfont icon-caidan"></span>用户管理</a>
-								<ul class="ul_ulhidden">
-
-									<li>
-										<a href="#" onclick="LoadHtml(this,'html/xtsz/yhgl/xtsz_yhgl_insert.html')">
-											<span class="iconfont icon-jiantouarrow484"></span>用户管理录入</a>
-									</li>
-									<li>
-										<a href="#" onclick="LoadHtml(this,'html/xtsz/yhgl/xtsz_yhgl_select.html')">
-											<span class="iconfont icon-jiantouarrow484"></span>用户管理维护</a>
-									</li>
-
-								</ul>
+								<a href="#" onclick="LoadHtml(this,'html/xtsz/yhgl/xtsz_yhgl_select.html')">
+									<span class="iconfont icon-jiantouarrow484"></span>用户管理</a>
 							</li>
-							<li class="eq_li">
-								<a class="eq_info active">
-									<span class="iconfont icon-caidan"></span>部门管理
-
-								</a>
-								<ul class="ul_ulhidden">
-									<li>
-										<a href="#" style="padding-left: 10px;">
-											<span class="iconfont icon-caidan"></span>部门管理</a>
-										<ul class="ul_ulhidden">
-
-											<li>
-												<a style="padding-left: 10px;" href="#" onclick="LoadHtml(this,'html/xtsz/bmgl/xtsz_bmgl_insert.html')">
-													<span class="iconfont icon-jiantouarrow484"></span>部门管理录入</a>
-											</li>
-											<li>
-												<a style="padding-left: 10px;" href="#" onclick="LoadHtml(this,'html/xtsz/bmgl/xtsz_bmgl_select.html')">
-													<span class="iconfont icon-jiantouarrow484"></span>部门管理维护</a>
-											</li>
-
-										</ul>
-									</li>
-									<li>
-										<a href="#" style="padding-left: 10px;">
-											<span class="iconfont icon-caidan"></span>角色管理</a>
-										<ul class="ul_ulhidden">
-
-											<li>
-												<a style="padding-left: 10px;" href="#" onclick="LoadHtml(this,'html/xtsz/jsgl/xtsz_jsgl_insert.html')">
-													<span class="iconfont icon-jiantouarrow484"></span>角色管理录入</a>
-											</li>
-											<li>
-												<a style="padding-left: 10px;" href="#" onclick="LoadHtml(this,'html/xtsz/jsgl/xtsz_jsgl_select.html')">
-													<span class="iconfont icon-jiantouarrow484"></span>角色管理维护</a>
-											</li>
-
-										</ul>
-									</li>
-								</ul>
+							<li>
+								<a href="#" onclick="LoadHtml(this,'html/xtsz/bmgl/xtsz_bmgl_select.html')">
+									<span class="iconfont icon-jiantouarrow484"></span>部门管理</a>
+							</li>
+							<li>
+								<a href="#" onclick="LoadHtml(this,'html/xtsz/jsgl/xtsz_jsgl_select.html')">
+									<span class="iconfont icon-jiantouarrow484"></span>角色管理</a>
 							</li>
 							<li class="eq_li">
 								<a class="eq_info active">
@@ -243,8 +199,16 @@
 													<span class="iconfont icon-jiantouarrow484"></span>班次维护</a>
 											</li>
 											<li>
+												<a style="padding-left: 10px;" href="#" onclick="LoadHtml(this,'html/xtsz/jcxx/xtsz_jcxx_sgd.html')">
+													<span class="iconfont icon-jiantouarrow484"></span>巷道维护</a>
+											</li>
+											<li>
+												<a style="padding-left: 10px;" href="#" onclick="LoadHtml(this,'html/xtsz/jcxx/xtsz_jcxx_hdmc.html')">
+													<span class="iconfont icon-jiantouarrow484"></span>施工队维护</a>
+											</li>
+											<li>
 												<a style="padding-left: 10px;" href="#" onclick="LoadHtml(this,'html/xtsz/jcxx/xtsz_jcxx_dd.html')">
-													<span class="iconfont icon-jiantouarrow484"></span>施工地点维护</a>
+													<span class="iconfont icon-jiantouarrow484"></span>地点维护</a>
 											</li>
 										</ul>
 									</li>
@@ -253,19 +217,27 @@
 											<span class="iconfont icon-caidan"></span>隐患治理</a>
 										<ul class="ul_ulhidden">
 											<li>
-												<a style="padding-left: 10px;" href="#" onclick="LoadHtml(this,'html/xtsz/jcxx/xtsz_jcxx_dd.html')">
-													<span class="iconfont icon-jiantouarrow484"></span>地点维护</a>
+												<a style="padding-left: 10px;" href="#" onclick="LoadHtml(this,'html/xtsz/jcxx/xtsz_jcxx_pcdd.html')">
+													<span class="iconfont icon-jiantouarrow484"></span>排查地点维护</a>
 											</li>
 											<li>
 												<a style="padding-left: 10px;" href="#" onclick="LoadHtml(this,'html/xtsz/jcxx/xtsz_jcxx_pclx.html')">
 													<span class="iconfont icon-jiantouarrow484"></span>排查类型维护</a>
 											</li>
+											<li>
+												<a style="padding-left: 10px;" href="#" onclick="LoadHtml(this,'html/xtsz/jcxx/xtsz_jcxx_jclx.html')">
+													<span class="iconfont icon-jiantouarrow484"></span>检查类型维护</a>
+											</li>
+											<li>
+												<a style="padding-left: 10px;" href="#" onclick="LoadHtml(this,'html/xtsz/jcxx/xtsz_jcxx_yhlx.html')">
+													<span class="iconfont icon-jiantouarrow484"></span>隐患类型维护</a>
+											</li>
 										</ul>
 									</li>
 								</ul>
 							</li>
+
 						</ul>
-					</li>
 					<li class="eq_li" onclick="fc1()">
 						<a class="eq_info">
 
@@ -289,11 +261,6 @@
 								<a href="#" onclick="LoadHtml(this,'html/dcxt/dcxt_clgl.html')">
 									<span class="iconfont icon-jiantouarrow484 icon1"></span>储量管理</a>
 							</li>
-
-							<li>
-								<a href="#" onclick="LoadHtml(this,'html/dcxt/dcxt_swdzzkpc_insert.html')">
-									<span class="iconfont icon-jiantouarrow484"></span>钻孔排查录入</a>
-							</li>
 							<li>
 								<a href="#" onclick="LoadHtml(this,'html/dcxt/dcxt_swdzzkpc_select.html')">
 									<span class="iconfont icon-jiantouarrow484"></span>排查信息维护</a>
@@ -307,6 +274,23 @@
 						</a>
 						<ul class="ul_hidden c">
 							<li>
+								<a href="#" onclick="LoadHtml(this,'html/aqxt/aqxt_ndfxbs_select.html')"><span class="iconfont icon-jiantouarrow484"></span>年度风险辨识</a>
+							</li>
+							<li>
+								<a href="#" onclick="LoadHtml(this,'html/aqxt/aqxt_ydfxbs_select.html')"><span class="iconfont icon-jiantouarrow484"></span>月度风险辨识</a>
+							</li>
+							<li>
+								<a href="#" onclick="LoadHtml(this,'html/aqxt/aqxt_gkxgfx.html')"><span class="iconfont icon-jiantouarrow484"></span>管控效果分析</a>
+							</li>
+							<!--<li>
+								<a href="#" onclick="LoadHtml(this,'html/aqxt/aqxt_ldgzjc_insert.html')"><span class="iconfont icon-jiantouarrow484"></span>领导跟踪检查</a>
+							</li>-->
+							<li>
+								<a href="#" onclick="LoadHtml(this,'html/aqxt/aqxt_ldgzjc_select.html')"><span class="iconfont icon-jiantouarrow484"></span>领导跟踪检查</a>
+							</li>
+						</ul>
+						<!--<ul class="ul_hidden c">
+							<li>
 								<a href="#"><span class="iconfont icon-caidan"></span>年度风险辨识</a>
 								<ul class="ul_ulhidden">
 									<li>
@@ -315,9 +299,6 @@
 									<li>
 										<a href="#" onclick="LoadHtml(this,'html/aqxt/aqxt_ndfxbs_select.html')"><span class="iconfont icon-jiantouarrow484"></span>年度风险库维护</a>
 									</li>
-									<!--<li>
-										<a href="#" onclick="LoadHtml(this,'html/aqxt/aqxt_ndfxbs_ndfxbb.html')"><span class="iconfont icon-jiantouarrow484"></span>年度风险报表</a>
-									</li>-->
 								</ul>
 							</li>
 							<li>
@@ -329,9 +310,6 @@
 									<li>
 										<a href="#" onclick="LoadHtml(this,'html/aqxt/aqxt_zxfxbs_select.html')"><span class="iconfont icon-jiantouarrow484"></span>专项辨识维护</a>
 									</li>
-									<!--<li>
-										<a href="#" onclick="LoadHtml(this,'html/aqxt/aqxt_zxfxbs_zxbsfxbb.html')"><span class="iconfont icon-jiantouarrow484"></span>专项辨识风险报表</a>
-									</li>-->
 								</ul>
 							</li>
 							<li>
@@ -354,16 +332,9 @@
 									<li>
 										<a href="#" onclick="LoadHtml(this,'html/aqxt/aqxt_ldgzjc_cxxggzjl.html')"><span class="iconfont icon-jiantouarrow484"></span>查询修改跟踪记录</a>
 									</li>
-									<!--<li>
-										<a href="#" onclick="LoadHtml(this,'html/aqxt/aqxt_ldgzjc_jltjjbb.html')"><span class="iconfont icon-jiantouarrow484"></span>记录统计及报表</a>
-									</li>-->
-									<!--<li>
-										<a href="#" onclick="LoadHtml(this,'html/aqxt/aqxt_ldgzjc_LEDnrbb.html')"><span class="iconfont icon-jiantouarrow484"></span>LED内容报表</a>
-									</li>-->
 								</ul>
 							</li>
-
-						</ul>
+						</ul>-->
 					</li>
 					<li class="eq_li" onclick="fc3()">
 						<a class="eq_info">
@@ -373,22 +344,29 @@
 					</span>
 						</a>
 						<ul class="ul_hidden d">
-
 							<li>
-								<a href="#" onclick="LoadHtml(this,'html/ddxxgl/ddxt_aqscddbb_insert.html')">
-									<span class="iconfont icon-jiantouarrow484"></span>录入安全生产信息</a>
+								<a href="#" onclick="LoadHtml(this,'html/ddxxgl/ddxt_aqxxrbb_select.html')">
+									<span class="iconfont icon-jiantouarrow484"></span>安全信息日报表</a>
 							</li>
 							<li>
-								<a href="#" onclick="LoadHtml(this,'html/ddxxgl/ddxt_aqscddbb_select.html')">
-									<span class="iconfont icon-jiantouarrow484"></span>安全生产信息维护</a>
+								<a href="#" onclick="LoadHtml(this,'html/ddxxgl/ddxt_ymcltz_select.html')">
+									<span class="iconfont icon-jiantouarrow484"></span>原煤产量台账</a>
 							</li>
 							<li>
-								<a href="#" onclick="LoadHtml(this,'html/ddxxgl/ddxt_aqscddbb_selectsh.html')">
-									<span class="iconfont icon-jiantouarrow484"></span>生产情况领导审核</a>
+								<a href="#" onclick="LoadHtml(this,'html/ddxxgl/ddxt_zdgcjdb_select.html')">
+									<span class="iconfont icon-jiantouarrow484"></span>重点工程进度表</a>
 							</li>
 							<li>
-								<a href="#" onclick="LoadHtml(this,'html/ddxxgl/aqsgzz.html')">
-									<span class="iconfont icon-jiantouarrow484"></span>安全生产事故跟踪</a>
+								<a href="#" onclick="LoadHtml(this,'html/ddxxgl/ddxt_ddyjjbjl_select.html')">
+									<span class="iconfont icon-jiantouarrow484"></span>调度员交接班记录</a>
+							</li>
+							<li>
+								<a href="#" onclick="LoadHtml(this,'html/ddxxgl/ddxt_ddyrjjl_select.html')">
+									<span class="iconfont icon-jiantouarrow484"></span>调度员入井记录</a>
+							</li>
+							<li>
+								<a href="#" onclick="LoadHtml(this,'html/ddxxgl/ddxt_ddzbjl_select.html')">
+									<span class="iconfont icon-jiantouarrow484"></span>调度值班记录</a>
 							</li>
 
 						</ul>
@@ -406,16 +384,8 @@
 									<span class="iconfont icon-caidan"></span>隐患录入</a>
 								<ul class="ul_ulhidden" style="">
 									<li>
-										<a href="#" onclick="LoadHtml(this,'html/yhzl/yhzl_yhlr_yhjh.html')">
-											<span class="iconfont icon-jiantouarrow484"></span>隐患计划录入</a>
-									</li>
-									<li>
 										<a href="#" onclick="LoadHtml(this,'html/yhzl/yhzl_yhlr_yhjhwh.html')">
 											<span class="iconfont icon-jiantouarrow484"></span>隐患计划维护</a>
-									</li>
-									<li>
-										<a href="#" onclick="LoadHtml(this,'html/yhzl/yhzl_yhlr_yhxx.html')">
-											<span class="iconfont icon-jiantouarrow484"></span>隐患信息录入</a>
 									</li>
 									<li>
 										<a href="#" onclick="LoadHtml(this,'html/yhzl/yhzl_yhlr_yhxxwh.html')">
@@ -487,11 +457,14 @@
 		<script type="text/javascript" src="js/echarts.min.js"></script>
 		<script type="text/javascript" src="js/jquery.form.js"></script>
 		<script type="text/javascript" src="glng/GLOBAL.js"></script>
+		<script type="text/javascript" src="glng/PZ_IP.js"></script>
 		<script>
+			var host = ip;
+
 			function destroySession() {
 				$.ajax({
 					type: "get",
-					url: "http://47.103.35.95:8888/apiv1/session/destroy",
+					url: host + "/apiv1/session/destroy",
 					success: function() {}
 				});
 			};
@@ -499,7 +472,7 @@
 			$.ajax({
 				dataType: "json",
 				type: "get",
-				url: "http://47.103.35.95:8888/apiv1/session/get",
+				url: host + "/apiv1/session/get",
 				async: true,
 				success: function(data) {
 					console.log(data);
@@ -511,71 +484,6 @@
 				var userName = sessionStorage.getItem("MK_userName");
 				$("#showUserName").text('当前账户:' + userName);
 			}
-			//权限设置
-			function fc() {
-				$.ajax({
-					type: "get",
-					url: "http://47.103.35.95:8888/auth/cover/1",
-					success: function(data) {
-						if(data.result == false) {
-							$(".a").remove();
-							alert('你没有该模块的查看权限')
-						}
-					}
-				});
-			};
-
-			function fc1() {
-				$.ajax({
-					type: "get",
-					url: "http://47.103.35.95:8888/auth/cover/2",
-					success: function(data) {
-						if(data.result == false) {
-							$(".b").remove();
-							alert('你没有该模块的查看权限')
-						}
-					}
-				});
-			};
-
-			function fc2() {
-				$.ajax({
-					type: "get",
-					url: "http://47.103.35.95:8888/auth/cover/3",
-					success: function(data) {
-						if(data.result == false) {
-							$(".c").remove();
-							alert('你没有该模块的查看权限')
-						}
-					}
-				});
-			};
-
-			function fc3() {
-				$.ajax({
-					type: "get",
-					url: "http://47.103.35.95:8888/auth/cover/4",
-					success: function(data) {
-						if(data.result == false) {
-							$(".d").remove();
-							alert('你没有该模块的查看权限')
-						}
-					}
-				});
-			};
-
-			function fc4() {
-				$.ajax({
-					type: "get",
-					url: "http://47.103.35.95:8888/auth/cover/5",
-					success: function(data) {
-						if(data.result == false) {
-							$(".e").remove();
-							alert('你没有该模块的查看权限')
-						}
-					}
-				});
-			};
 		</script>
 		<script>
 			$(function() {

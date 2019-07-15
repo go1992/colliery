@@ -48,7 +48,6 @@ public class FileUploadController {
     @ResponseBody 
     public ResultObject fileUpload( @ApiParam(hidden=true) HttpServletRequest request
     		,@ApiParam(value="上传的文件",required=true) MultipartFile file
-    		
     		) throws Exception{
 //    	String MKname = request.getParameter("MKname");//获取煤矿名称
     	String XTname = request.getParameter("XTname");//煤矿系统名称

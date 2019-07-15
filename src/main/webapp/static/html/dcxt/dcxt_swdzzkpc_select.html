@@ -17,24 +17,24 @@
 				font-size: 14px;
 				color: #30a5ff;
 			}
-
+			
 			#Table2 {
 				text-align: center;
 			}
-
+			
 			#Table1 tr td:nth-of-type(1) {
 				text-align: right;
 			}
-
+			
 			#Table1 tr td:nth-of-type(3) {
 				text-align: right;
 			}
-
+			
 			#Table1 input {
 				padding: 2px;
 				margin: 4px;
 			}
-
+			
 			.btn_tj {
 				border: 0px;
 				border-radius: 3px;
@@ -45,20 +45,20 @@
 				background-color: #30a5ff;
 				margin: 0 50px;
 			}
-
+			
 			.btn_tj:hover,
 			.btn_bj:hover {
 				cursor: pointer;
 				background-color: #428bca;
 			}
-
+			
 			.btn_tr {
 				position: relative;
 				display: -ms-inline-flexbox;
 				display: inline-flex;
 				vertical-align: middle;
 			}
-
+			
 			.btn_bj,
 			.btn_del {
 				border: 0px;
@@ -70,11 +70,11 @@
 				background-color: #30a5ff;
 				margin: 0 20px;
 			}
-
+			
 			.btn_del {
 				background-color: #dc3545;
 			}
-
+			
 			.btn_del:hover {
 				cursor: pointer;
 				background-color: #c82333;
@@ -84,12 +84,14 @@
 
 	<body>
 		<form method="post" action="#" id="Form1" enctype="multipart/form-data">
-		<input type="hidden" id="RowId" />
+			<input type="hidden" id="RowId" />
 			<table id="Table1" border="1" cellspacing="0" cellpadding="5px">
 				<tr>
 
 					<td>钻孔位置：</td>
-					<td><input id="input_zkwz" name="input_zkwz" /><br></td>
+					<td>
+						<select id="input_zkwz" name="input_zkwz" style="margin-left: 4px;"></select>
+					</td>
 
 					<td>排查日期：</td>
 					<td>起始日期：<input type="date" id="starttime" name="startTime" /><br>结束日期：<input type="date" id="endtime" name="endTime" /><br></td>
@@ -98,12 +100,13 @@
 			</table>
 			<div class="btn_tr" id="toolbar">
 				<div>
+					<button type="button" class="btn_bj" id="btn_add"><i class="iconfont icon-bianji"></i>新增</button>
 					<button type="button" class="btn_bj" id="btn_bj"><i class="iconfont icon-bianji"></i>编辑选中项</button>
 					<button type="button" class="btn_del" id="btn_del"><i class="iconfont icon-shanchu"></i>删除选中项</button>
 				</div>
 			</div>
 			<table id="Table2" border="1" cellspacing="0" cellpadding="5px">
-				
+
 			</table>
 		</form>
 		<script type="text/javascript" src="js/jquery-1.12.4.js"></script>
@@ -117,12 +120,33 @@
 		<script type="text/javascript" src="js/tableExport.min.js"></script>
 		<!--bootstrap-table插件汉化-->
 		<script type="text/javascript" src="js/bootstrap-table-zh-CN.min.js"></script>
-
+		<script type="text/javascript" src="glng/PZ_IP.js"></script>
 		<script>
-			//为ajax设置跨域带cookie
-			$.ajaxPrefilter(function(options, originalOptions, jqXHR) {
-				options.xhrFields = {
-					withCredentials: true
+			var host = HOST;
+			var host1 = ip;
+			var json2 = {
+				"name": '钻孔位置'
+			};
+			//钻孔位置下拉框
+			$.ajax({
+				contentType: "application/json;charset=utf-8",
+				dataType: "json",
+				type: "post",
+				url: host1 + '/base/config/get',
+				async: false,
+				data: JSON.stringify(json2),
+				success: function(data) {
+					if(data.total > 0) {
+						var str = "<option></option>";
+						for(var i = 0; i < data.rows.length; i++) {
+							str += "<option>" + data.rows[i].value + "</option>";
+						}
+						$("#input_zkwz").html(str);
+					}
+
+				},
+				error: function(request) {
+					alert("连接失败!")
 				}
 			});
 			$(function() {
@@ -136,9 +160,7 @@
 				oButtonInit.Init();
 
 			});
-			var host = HOST;
-			var UrlSelect = '/dc-swdz-zkpc/queryzkpc';
-			var UrlDelete = '/dc-swdz-zkpc/removeByIds';
+
 			var TableInit = function() {
 				$('#Table2').bootstrapTable('destroy');
 				var oTableInit = new Object();
@@ -148,7 +170,7 @@
 						method: 'post',
 						toolbar: '#toolbar', //工具按钮用哪个容器
 						contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-						url: host + UrlSelect,
+						url: host + '/dc-swdz-zkpc/queryzkpc',
 						dataType: 'json',
 						undefinedText: '-', //当数据为 undefined 时显示的字符
 						striped: true, //是否显示行间隔色
@@ -298,11 +320,11 @@
 				}
 				//得到查询的参数
 				oTableInit.queryParams = function(params) {
-					var temp = $("#Form1").serializeJsonObject();//获取自定义查询条件
-					temp["pageSize"]=params.pageSize;//页面大小
-					temp["pageNum"]=params.pageNumber;//页码
-					temp["order"]=params.sortOrder;//排序的方式
-					temp["ordername"]=params.sortName;//排序的字段
+					var temp = $("#Form1").serializeJsonObject(); //获取自定义查询条件
+					temp["pageSize"] = params.pageSize; //页面大小
+					temp["pageNum"] = params.pageNumber; //页码
+					temp["order"] = params.sortOrder; //排序的方式
+					temp["ordername"] = params.sortName; //排序的字段
 					return temp;
 				};
 				return oTableInit;
@@ -321,34 +343,40 @@
 			};
 			//查询数据
 			$("#btn_sel").click(function() {
-				$('#Table2').bootstrapTable('refreshOptions',{pageNumber:1});
+				$('#Table2').bootstrapTable('refreshOptions', {
+					pageNumber: 1
+				});
 				$('#Table2').bootstrapTable('refresh', {
-					url: host + UrlSelect
+					url: host + '/dc-swdz-zkpc/queryzkpc'
 				});
 			});
 			//实现删除数据的方法
 			$("#btn_del").click(function() {
-				var ids = ""; //得到用户选择的数据的ID
-				var rows = $('#Table2').bootstrapTable('getSelections');
-				for(var i = 0; i < rows.length; i++) {
-					ids += rows[i].id + ',';
-				}
-				ids = ids.substring(0, ids.length - 1);
-				//				alert(ids);
-				$.ajax({
-					type: "post",
-					url: host + UrlDelete,
-					data: {
-						params: ids
-					},
-					dataType: "json",
-					success: function(json) {
-						alert("删除成功！");
-						$('#Table2').bootstrapTable('refresh', {
-							url: host + UrlSelect
-						});
+				var message = confirm("是否确定删除数据？");
+				if(message == true) {
+					var ids = ""; //得到用户选择的数据的ID
+					var rows = $('#Table2').bootstrapTable('getSelections');
+					for(var i = 0; i < rows.length; i++) {
+						ids += rows[i].id + ',';
 					}
-				});
+					ids = ids.substring(0, ids.length - 1);
+					//				alert(ids);
+					$.ajax({
+						type: "post",
+						url: host + '/dc-swdz-zkpc/removeByIds',
+						data: {
+							params: ids
+						},
+						dataType: "json",
+						success: function(json) {
+							alert("删除成功！");
+							$('#Table2').bootstrapTable('refresh', {
+								url: host + '/dc-swdz-zkpc/queryzkpc'
+							});
+						}
+					});
+				}
+
 			})
 			//实现编辑数据的方法
 			$("#btn_bj").click(function() {
@@ -364,11 +392,24 @@
 						area: ['1000px', '600px'],
 						content: 'html/dcxt/dcxt_swdzzkpc_insert.html'
 					});
-				}else if(rows.length==0){
+				} else if(rows.length == 0) {
 					alert("请选择您要编辑的项！");
-				}else{
+				} else {
 					alert("编辑选项按钮仅能选择一项！");
 				}
+			});
+			//新增
+			$("#btn_add").click(function() {
+				$("#RowId").val("");
+				layer.open({
+					type: 2,
+					title: '新增',
+					maxmin: true,
+					shadeClose: true, //点击遮罩关闭层
+					area: ['1000px', '600px'],
+					content: 'html/dcxt/dcxt_swdzzkpc_insert.html'
+				});
+
 			});
 			//得到当前显示字段，以逗号隔开拼接字符串
 			function getSearchFields() {

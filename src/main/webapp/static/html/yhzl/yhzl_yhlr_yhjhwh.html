@@ -88,14 +88,14 @@
 			<table id="Table1" border="1" cellspacing="0" cellpadding="5px">
 				<tr>
 					<td>排查单位：</td>
-					<td><select id="sel_z" name="departName" style="margin: 4px;"><br></td>
+					<td><select id="sel_z" name="departName" style="margin: 4px;"></select><br></td>
 					<td>排查类型：</td>
-					<td><input name="type" /><br></td>
+					<td><select id="sel_type" name="type" style="margin: 4px;"></select><br></td>
 					<td></td>
 				</tr>
 				<tr>
 					<td>排查地点：</td>
-					<td><input name="location" /><br></td>
+					<td><select id="sel_location" name="location" style="margin: 4px;"></select><br></td>
 					<td>填报日期：</td>
 					<td>起始日期：<input type="date" id="starttime" name="startTime" /><br>结束日期：<input type="date" id="endtime" name="endTime" /><br></td>
 					<td><button type="button" class="btn_tj" id="btn_sel"><i class="iconfont icon-chaxun"></i>查询</button></td>
@@ -103,6 +103,7 @@
 			</table>
 			<div class="btn_tr" id="toolbar">
 				<div>
+					<button type="button" class="btn_bj" id="btn_add"><i class="iconfont icon-bianji"></i>新增</button>
 					<button type="button" class="btn_bj" id="btn_bj"><i class="iconfont icon-bianji"></i>编辑选中项</button>
 					<button type="button" class="btn_del" id="btn_del"><i class="iconfont icon-shanchu"></i>删除选中项</button>
 				</div>
@@ -122,18 +123,9 @@
 		<script type="text/javascript" src="js/tableExport.min.js"></script>
 		<!--bootstrap-table插件汉化-->
 		<script type="text/javascript" src="js/bootstrap-table-zh-CN.min.js"></script>
+		<script type="text/javascript" src="glng/PZ_IP.js" ></script>
 		<script>
-			//为ajax设置跨域带cookie
-			$.ajaxPrefilter(function(options, originalOptions, jqXHR) {
-				options.xhrFields = {
-					withCredentials: true
-				}
-			});
-			
-			//清空表单
-			$("#btn_qk").click(function() {
-				$("#Form1")[0].reset();
-			});
+			var host = ip;//ip地址
 			$(function() {
 				//1.初始化Table
 				var oTable = new TableInit();
@@ -144,10 +136,7 @@
 				oButtonInit.Init();
 
 			});
-			var host = "http://47.103.35.95:8888";
-			var UrlSelect = '/apiv1/unsafePlan/get';
-			var UrlDelete = '/apiv1/unsafePlan/delete';
-			var Urlbm = '/department/select/all';
+			
 			//部门下拉框
 			var json2 = {
 				"pageNum": null,
@@ -157,7 +146,7 @@
 				contentType: "application/json;charset=utf-8",
 				dataType: "json",
 				type: "post",
-				url: host + Urlbm,
+				url: host + '/department/select/all',
 				async: true,
 				data: JSON.stringify(json2),
 				success: function(data) {
@@ -167,9 +156,57 @@
 							str += "<option>" + data.rows[i].departName + "</option>"
 						}
 						$("#sel_z").html(str);
-					} else {
-						alert(data.message);
 					}
+
+				},
+				error: function(request) {
+					alert("连接失败!")
+				}
+			});
+			//排查类型下拉框
+			var json3 = {
+				"name":'排查类型'
+			};
+			$.ajax({
+				contentType: "application/json;charset=utf-8",
+				dataType: "json",
+				type: "post",
+				url: host + '/base/config/get',
+				async: false,
+				data: JSON.stringify(json3),
+				success: function(data) {
+					if(data.total > 0) {
+						var str="<option></option>";
+						for(var i = 0; i < data.rows.length; i++) {
+							str += "<option>" + data.rows[i].value + "</option>"
+						}
+						$("#sel_type").html(str);
+					}
+
+				},
+				error: function(request) {
+					alert("连接失败!")
+				}
+			});
+			//排查地点下拉框
+			var json4 = {
+				"name":'排查地点'
+			};
+			$.ajax({
+				contentType: "application/json;charset=utf-8",
+				dataType: "json",
+				type: "post",
+				url: host + '/base/config/get',
+				async: false,
+				data: JSON.stringify(json4),
+				success: function(data) {
+					if(data.total > 0) {
+						var str="<option></option>";
+						for(var i = 0; i < data.rows.length; i++) {
+							str += "<option>" + data.rows[i].value + "</option>"
+						}
+						$("#sel_location").html(str);
+					} 
 
 				},
 				error: function(request) {
@@ -185,7 +222,7 @@
 						method: 'post',
 						toolbar: '#toolbar', //工具按钮用哪个容器
 						//						contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-						url: host + UrlSelect,
+						url: host + '/apiv1/unsafePlan/get',
 						dataType: 'json',
 						undefinedText: '-', //当数据为 undefined 时显示的字符
 						striped: true, //是否显示行间隔色
@@ -306,7 +343,7 @@
 								title: '编辑',
 								maxmin: true,
 								shadeClose: true, //点击遮罩关闭层
-								area: ['1000px', '600px'],
+								area: ['1000px', '400px'],
 								content: 'html/yhzl/yhzl_yhlr_yhjh.html'
 							});
 						},
@@ -341,7 +378,7 @@
 			//查询数据
 			$("#btn_sel").click(function() {
 				$('#Table2').bootstrapTable('refresh', {
-					url: host + UrlSelect
+					url: host + '/apiv1/unsafePlan/get'
 				});
 			});
 			//实现删除数据的方法
@@ -357,14 +394,14 @@
 					$.ajax({
 						contentType: "application/json;charset=utf-8",
 						type: "post",
-						url: host + UrlDelete,
+						url: host + '/apiv1/unsafePlan/delete',
 						data: JSON.stringify(ids),
 						dataType: "json",
 						success: function(data) {
 							if(data.code == "success") {
 								alert("删除成功！");
 								$('#Table2').bootstrapTable('refresh', {
-									url: host + UrlSelect
+									url: host + '/apiv1/unsafePlan/get'
 								});
 							} else {
 								alert(data.message);
@@ -389,7 +426,7 @@
 						title: '编辑',
 						maxmin: true,
 						shadeClose: true, //点击遮罩关闭层
-						area: ['1000px', '600px'],
+						area: ['1000px', '400px'],
 						content: 'html/yhzl/yhzl_yhlr_yhjh.html'
 					});
 				} else if(rows.length == 0) {
@@ -398,6 +435,19 @@
 					alert("编辑选项按钮仅能选择一项！");
 				}
 			});
+			//新增
+			$("#btn_add").click(function() {
+				$("#RowId").val("");
+					layer.open({
+						type: 2,
+						title: '新增',
+						maxmin: true,
+						shadeClose: true, //点击遮罩关闭层
+						area: ['1000px', '400px'],
+						content: 'html/yhzl/yhzl_yhlr_yhjh.html'
+					});
+			
+			});			
 			//得到当前显示字段，以逗号隔开拼接字符串
 			function getSearchFields() {
 				var fields = "";

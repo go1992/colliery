@@ -121,8 +121,7 @@
 				<tr>
 					<td>风险点：</td>
 					<td>
-						<select id="sel_fxd" name="fxd" style="margin: 4px;">
-						</select>
+						<select id="sel_fxd" name="fxd" style="margin: 4px;"></select>
 					</td>
 					<td>责任单位：</td>
 					<td><select id="sel_zrdw" name="zrdw" style="margin: 4px;">
@@ -132,8 +131,9 @@
 				<tr>
 					<td>风险等级：</td>
 					<td><select name="fxdj" style="margin: 4px;">
+							<option>低</option>
 							<option>一般</option>
-							<option>中等</option>
+							<option>较大</option>
 							<option>重大</option>
 						</select></td>
 					<td>风险分类：</td>
@@ -157,8 +157,9 @@
 				<tr>
 					<td>主要负责人：</td>
 					<td>
+						<input id="zyfzr"  name="zyfzr" readonly="readonly" />(重大风险必填)
 						<select onchange="sel_user()" id="sel_z"  style="margin: 4px;"></select>
-						<select id="sh_people"  name="zyfzr" style="margin: 4px;"></select>(重大风险必填)</td>
+						<select onchange="sel_fzUser()" id="sh_people"  style="margin: 4px;"></select></td>
 					<td>分管负责人：</td>
 					<td>
 						<select onchange="sel_user1()" id="sel_z1"  style="margin: 4px;"></select>
@@ -170,49 +171,36 @@
 				<button id="btn_qk" type="button" class="btn_qk"><i class="iconfont icon-qingkong"></i>清空</button>
 			</div>
 		</form>
-		<script type="text/javascript" src="../../js/jquery-1.12.4.js"></script>
+		<!--<script type="text/javascript" src="../../js/jquery-1.12.4.js"></script>
 		<script type="text/javascript" src="../../js/Excel_dc/xlsx.core.min.js"></script>
-		<script type="text/javascript" src="../../glng/GLOBAL.js"></script>
-		<!--<script type="text/javascript" src="http://127.0.0.1:8020/static/js/jquery-1.12.4.js"></script>
-		<script type="text/javascript" src="http://127.0.0.1:8020/static/js/layer/layer.js"></script>-->
+		<script type="text/javascript" src="../../glng/GLOBAL.js"></script>-->
+		<script type="text/javascript" src="http://127.0.0.1:8020/static/js/jquery-1.12.4.js"></script>
+		<script type="text/javascript" src="http://127.0.0.1:8020/static/js/layer/layer.js"></script>
+		<script type="text/javascript" src="http://127.0.0.1:8020/static/glng/GLOBAL.js"></script>
+		<script type="text/javascript" src="http://127.0.0.1:8020/static/glng/PZ_IP.js" ></script>
 		<!--js-xlsx插件-->
 		<script>
-			//为ajax设置跨域带cookie
-			$.ajaxPrefilter(function(options, originalOptions, jqXHR) {
-				options.xhrFields = {
-					withCredentials: true
-				}
-			});
 			var host = HOST;
-			var UrlSelect = '/aqfx-ndfx/query';
-			var UrlInsert = '/aqfx-ndfx/save';
-			var UrlUpdate = '/aqfx-ndfx/updateById';
-			var host1 = "http://47.103.35.95:8888";
-			var Url_jcxx = '/base/config/get';
-			var Urlbm = '/department/select/all';
-			var UrlSelectUser = '/user/select/all';
+			var host1 = ip;
+			//风险点下拉框
 			var json2 = {
 				"name": '风险点'
 			};
-			//风险点下拉框
 			$.ajax({
 				contentType: "application/json;charset=utf-8",
 				dataType: "json",
 				type: "post",
-				url: host1 + Url_jcxx,
-				async: true,
+				url: host1 + '/base/config/get',
+				async: false,
 				data: JSON.stringify(json2),
 				success: function(data) {
 					if(data.total > 0) {
-						var str;
+						var str="";
 						for(var i = 0; i < data.rows.length; i++) {
-							str += "<option>" + data.rows[i].value + "</option>"
+							str += "<option>" + data.rows[i].value + "</option>";
 						}
 						$("#sel_fxd").html(str);
-					} else {
-						alert(data.message);
-					}
-
+					} 
 				},
 				error: function(request) {
 					alert("连接失败!")
@@ -227,20 +215,18 @@
 				contentType: "application/json;charset=utf-8",
 				dataType: "json",
 				type: "post",
-				url: host1 + Urlbm,
-				async: true,
+				url: host1 + '/department/select/all',
+				async: false,
 				data: JSON.stringify(json3),
 				success: function(data) {
 					if(data.total > 0) {
-						var str;
+						var str="";
 						for(var i = 0; i < data.rows.length; i++) {
-							str += "<option value='"+data.rows[i].id+"'>" + data.rows[i].departName + "</option>"
+							str += "<option value='"+data.rows[i].id+"'>" + data.rows[i].departName + "</option>";
 						}
 						$("#sel_zrdw").html(str);
 						$("#sel_z").html(str);
 						$("#sel_z1").html(str);
-					} else {
-						alert(data.message);
 					}
 
 				},
@@ -256,8 +242,8 @@
 				contentType: "application/json;charset=utf-8",
 				dataType: "json",
 				type: "post",
-				url: host1 + Url_jcxx,
-				async: true,
+				url: host1 + '/base/config/get',
+				async: false,
 				data: JSON.stringify(json4),
 				success: function(data) {
 					if(data.total > 0) {
@@ -266,8 +252,6 @@
 							str += "<option>" + data.rows[i].value + "</option>"
 						}
 						$("#sel_fxfl").html(str);
-					} else {
-						alert(data.message);
 					}
 
 				},
@@ -286,8 +270,8 @@
 					contentType: "application/json;charset=utf-8",
 					dataType: "json",
 					type: "post",
-					url: host1 + UrlSelectUser,
-					async: true,
+					url: host1 + '/user/select/all',
+					async: false,
 					data: JSON.stringify(json4),
 					success: function(data) {
 						if(data.total > 0) {
@@ -295,9 +279,13 @@
 							for(var i = 0; i < data.rows.length; i++) {
 								str += "<option>" + data.rows[i].name + "</option>"
 							}
+							
+							$("#zyfzr").val(data.rows[0].name);	
+							
 							$("#sh_people").html(str);
-						} else {
-							alert(data.message);
+						}else{
+							$("#zyfzr").val("");	
+							$("#sh_people").html("");
 						}
 
 					},
@@ -307,6 +295,10 @@
 				});
 			}
 			sel_user();
+			//改变用户赋值
+			function sel_fzUser(){
+				$("#zyfzr").val($('#sh_people option:selected').val());
+			}
 			function sel_user1() {
 				var json4 = {
 					"pageNum": null,
@@ -318,7 +310,7 @@
 					contentType: "application/json;charset=utf-8",
 					dataType: "json",
 					type: "post",
-					url: host1 + UrlSelectUser,
+					url: host1 + '/user/select/all',
 					async: true,
 					data: JSON.stringify(json4),
 					success: function(data) {
@@ -409,13 +401,13 @@
 				if(RowId != "" && RowId != undefined && RowId != 'undefined') {
 					$.ajax({
 						type: "post",
-						url: host + UrlUpdate+"?id="+RowId,
+						url: host + '/aqfx-ndfx/updateById'+"?id="+RowId,
 						data: $('#Form1').serialize(), // 你的formid
 						async: false,
 						success: function(data) {
 							alert("修改成功");
 							if(parent)parent.$('#Table2').bootstrapTable('refresh', {
-								url: host + UrlSelect
+								url: host + '/aqfx-ndfx/query'
 							});
 						},
 						error: function(request) {
@@ -425,7 +417,7 @@
 				} else {
 					$.ajax({
 						type: "post",
-						url: host + UrlInsert,
+						url: host + '/aqfx-ndfx/save',
 						data: $('#Form1').serialize(), // 你的formid
 						async: false,
 						success: function(data) {
@@ -474,7 +466,7 @@
 			$.ajax({
 				dataType: "json",
 				type: "post",
-				url: host + UrlSelect + '?id=' + RowId,
+				url: host + '/aqfx-ndfx/query' + '?id=' + RowId,
 				async: false,
 				complete: UN_LODIN_OUT_FUNC,
 				success: function(data) {

@@ -6,7 +6,7 @@
 		<title></title>
 		<style>
 			#Table1 {
-				width: 80%;
+				width: 98%;
 				margin: auto;
 				margin-top: 20px;
 				/*padding: 10px 0px 0px 50px;*/
@@ -108,7 +108,7 @@
 		<form method="post" action="#" id="Form1" enctype="multipart/form-data">
 			<input type="hidden" id="RowId" name="id" />
 			<!--所属煤矿 -->
-			<input type="hidden" id="coalMine" name="coalMine" />
+			<!--<input type="hidden" id="coalMine" name="coalMine" />-->
 			<!--发起部门 -->
 			<input type="hidden" id="startDepartId" name="startDepartId" />
 			<table id="Table1" border="1" cellspacing="0" cellpadding="5px">
@@ -137,21 +137,21 @@
 				<tr>
 
 					<td>检查类型 ：</td>
-					<td colspan="3"><input id="jclx" name="checkType" /> </td>
+					<td colspan="3"><select id="checkType" name="checkType" style="margin-left: 4px;"></select></td>
 					<td>检查人 ：</td>
 					<td colspan="3">
+						<input id="checkPerson" name="checkPerson"/><br />
 						<select onchange="sel_user1()" id="sel_z1" style="margin: 4px;"></select>
-						<select id="sh_people1" name="checkPerson" style="margin: 4px;"></select>
+						<select onchange="sel_fzUser1()" id="sh_people1"  style="margin: 4px;"></select>
 					</td>
 				</tr>
 
 				<tr>
-
 					<td>检查时间 ：</td>
 					<td colspan="3"><input type="date" id="starttime" name="checkTime" /> </td>
 					<td>隐患地点 ：</td>
 					<td colspan="3">
-						<select id="jh_pcaddress" name="location" style="margin: 4px;"></select>
+						<select id="location" name="location" style="margin-left: 4px;"></select>
 					</td>
 				</tr>
 				<tr>
@@ -166,12 +166,7 @@
 
 					<td>隐患类型 ：</td>
 					<td colspan="3">
-						<!--<select id="sel_zkwz" name="type" style="margin: 4px;">
-									<option>一般</option>
-									<option>中等</option>
-									<option>重大</option>
-								</select>-->
-						<input name="type" />
+						<select id="type" name="type" style="margin-left: 4px;"></select>
 					</td>
 				</tr>
 
@@ -196,8 +191,9 @@
 					</td>
 					<td>责任人 ：</td>
 					<td colspan="3">
-						<select onchange="sel_user2()" id="sel_z2"  style="margin: 4px;"></select>
-						<select id="sh_people2"  name="dutyPerson" style="margin: 4px;"></select>
+						<input id="dutyPerson" name="dutyPerson"/><br />
+						<select onchange="sel_user2()" id="sel_z2" style="margin: 4px;"></select>
+						<select onchange="sel_fzUser2()" id="sh_people2"  style="margin: 4px;"></select>
 					</td>
 				</tr>
 
@@ -216,34 +212,24 @@
 		</form>
 		<script type="text/javascript" src="../../js/jquery-1.12.4.js"></script>
 		<script type="text/javascript" src="../../js/layer/layer.js"></script>
-		<!--<script type="text/javascript" src="http://127.0.0.1:8020/static/js/jquery-1.12.4.js"></script>
-		<script type="text/javascript" src="http://127.0.0.1:8020/static/js/layer/layer.js"></script>-->
-		<!--js-xlsx插件-->
+		<script type="text/javascript" src="../../glng/PZ_IP.js" ></script>
 		<script>
-			//为ajax设置跨域带cookie
-			$.ajaxPrefilter(function(options, originalOptions, jqXHR) {
-				options.xhrFields = {
-					withCredentials: true
-				}
-			});
-			var host = "http://47.103.35.95:8888";
-			var UrlSelect = '/apiv1/unsafe/get/unsafeInfo/condition';
-			var UrlSelect_jh_name = '/apiv1/unsafePlan/get';
-			var UrlInsert = '/apiv1/unsafe/save';
-			var UrlUpdate = '/apiv1/unsafe/update';
-			var Urlbm = '/department/select/all';
-			var Url_jcxx = '/base/config/get';
-			var UrlSelectUser = '/user/select/all';
+			
+			var host = ip;
+			//清空表单
+			$("#btn_qk").click(function() {
+				$("#Form1")[0].reset();
+			})
+			//隐患类型下拉框
 			var json2 = {
-				"name": '地点'
+				"name":'隐患类型'
 			};
-			//地点下拉框
 			$.ajax({
 				contentType: "application/json;charset=utf-8",
 				dataType: "json",
 				type: "post",
-				url: host1 + Url_jcxx,
-				async: true,
+				url: host + '/base/config/get',
+				async: false,
 				data: JSON.stringify(json2),
 				success: function(data) {
 					if(data.total > 0) {
@@ -251,119 +237,58 @@
 						for(var i = 0; i < data.rows.length; i++) {
 							str += "<option>" + data.rows[i].value + "</option>"
 						}
-						$("#jh_pcaddress").html(str);
-					} else {
-						alert(data.message);
-					}
+						$("#type").html(str);
+					} 
 
 				},
 				error: function(request) {
 					alert("连接失败!")
 				}
 			});
-			function sel_user1() {
-				var json4 = {
-					"pageNum": null,
-					"pageSize": null,
-					"departId":$('#sel_z1 option:selected').val()
-				};
-				//用户下拉框
-				$.ajax({
-					contentType: "application/json;charset=utf-8",
-					dataType: "json",
-					type: "post",
-					url: host + UrlSelectUser,
-					async: true,
-					data: JSON.stringify(json4),
-					success: function(data) {
-						if(data.total > 0) {
-							var str;
-							for(var i = 0; i < data.rows.length; i++) {
-								str += "<option>" + data.rows[i].name + "</option>"
-							}
-							console.log(data);
-							$("#sh_people1").html(str);
-						} else {
-							alert(data.message);
-						}
-
-					},
-					error: function(request) {
-						alert("连接失败!")
-					}
-				});
-			}
-			sel_user1();
-			function sel_user2() {
-				var json4 = {
-					"pageNum": null,
-					"pageSize": null,
-					"departId":$('#sel_z2 option:selected').val()
-				};
-				//用户下拉框
-				$.ajax({
-					contentType: "application/json;charset=utf-8",
-					dataType: "json",
-					type: "post",
-					url: host + UrlSelectUser,
-					async: true,
-					data: JSON.stringify(json4),
-					success: function(data) {
-						if(data.total > 0) {
-							var str;
-							for(var i = 0; i < data.rows.length; i++) {
-								str += "<option>" + data.rows[i].name + "</option>"
-							}
-							console.log(data);
-							$("#sh_people2").html(str);
-						} else {
-							alert(data.message);
-						}
-
-					},
-					error: function(request) {
-						alert("连接失败!")
-					}
-				});
-			}
-			sel_user2();
-			
-			//从session得到部门id
-			$.ajax({
-				dataType: "json",
-				type: "get",
-				url: "http://47.103.35.95:8888/apiv1/session/get",
-				async: true,
-				success: function(data) {
-					$("#startDepartId").val(data.safetyUser.departId);
-				}
-			});
-			
-
-			//部门下拉框
+			//检查类型下拉框
 			var json2 = {
-				"pageNum": null,
-				"pageSize": null
+				"name":'检查类型'
 			};
 			$.ajax({
 				contentType: "application/json;charset=utf-8",
 				dataType: "json",
 				type: "post",
-				url: host + Urlbm,
-				async: true,
+				url: host + '/base/config/get',
+				async: false,
 				data: JSON.stringify(json2),
 				success: function(data) {
 					if(data.total > 0) {
 						var str;
 						for(var i = 0; i < data.rows.length; i++) {
-							str += "<option value='"+data.rows[i].id+"'>" + data.rows[i].departName + "</option>"
+							str += "<option>" + data.rows[i].value + "</option>"
 						}
-						$("#sel_z").html(str);
-						$("#sel_z1").html(str);
-						$("#sel_z2").html(str);
-					} else {
-						alert(data.message);
-					}
+						$("#checkType").html(str);
+					} 
+
+				},
+				error: function(request) {
+					alert("连接失败!")
+				}
+			});
+			//排查地点下拉框
+			var json2 = {
+				"name":'排查地点'
+			};
+			$.ajax({
+				contentType: "application/json;charset=utf-8",
+				dataType: "json",
+				type: "post",
+				url: host + '/base/config/get',
+				async: false,
+				data: JSON.stringify(json2),
+				success: function(data) {
+					if(data.total > 0) {
+						var str;
+						for(var i = 0; i < data.rows.length; i++) {
+							str += "<option>" + data.rows[i].value + "</option>"
+						}
+						$("#location").html(str);
+					} 
 
 				},
 				error: function(request) {
@@ -385,8 +310,8 @@
 				contentType: "application/json;charset=utf-8",
 				dataType: "json",
 				type: "post",
-				url: host + UrlSelect_jh_name,
-				async: true,
+				url: host + '/apiv1/unsafePlan/get',
+				async: false,
 				data: JSON.stringify(json1),
 				success: function(data) {
 					if(data.total > 0) {
@@ -404,10 +329,129 @@
 					alert("连接失败!")
 				}
 			});
-			//清空表单
-			$("#btn_qk").click(function() {
-				$("#Form1")[0].reset();
-			})
+			//部门下拉框
+			var json2 = {
+				"pageNum": null,
+				"pageSize": null
+			};
+			$.ajax({
+				contentType: "application/json;charset=utf-8",
+				dataType: "json",
+				type: "post",
+				url: host + '/department/select/all',
+				async: false,
+				data: JSON.stringify(json2),
+				success: function(data) {
+					if(data.total > 0) {
+						var str;
+						for(var i = 0; i < data.rows.length; i++) {
+							str += "<option value='"+data.rows[i].id+"'>" + data.rows[i].departName + "</option>"
+						}
+						$("#sel_z").html(str);
+						$("#sel_z1").html(str);
+						$("#sel_z2").html(str);
+					} else {
+						alert(data.message);
+					}
+
+				},
+				error: function(request) {
+					alert("连接失败!")
+				}
+			});
+			function sel_fzUser1(){
+				$("#checkPerson").val($('#sh_people1 option:selected').val());
+			}
+			function sel_fzUser2(){
+				$("#dutyPerson").val($('#sh_people2 option:selected').val());
+			}
+			function sel_user1() {
+				var json4 = {
+					"pageNum": null,
+					"pageSize": null,
+					"departId":$('#sel_z1 option:selected').val()
+				};
+				//用户下拉框
+				$.ajax({
+					contentType: "application/json;charset=utf-8",
+					dataType: "json",
+					type: "post",
+					url: host + '/user/select/all',
+					async: false,
+					data: JSON.stringify(json4),
+					success: function(data) {
+						if(data.total > 0) {
+							var str;
+							for(var i = 0; i < data.rows.length; i++) {
+								str += "<option>" + data.rows[i].name + "</option>"
+							}
+							console.log(data);
+							$("#checkPerson").val(data.rows[0].name);	
+							$("#sh_people1").html(str);
+						} else {
+							$("#checkPerson").val("");		
+							$("#sh_people1").html("");
+						}
+
+					},
+					error: function(request) {
+						alert("连接失败!")
+					}
+				});
+			}
+			sel_user1();
+			function sel_user2() {
+				var json4 = {
+					"pageNum": null,
+					"pageSize": null,
+					"departId":$('#sel_z2 option:selected').val()
+				};
+				//用户下拉框
+				$.ajax({
+					contentType: "application/json;charset=utf-8",
+					dataType: "json",
+					type: "post",
+					url: host + '/user/select/all',
+					async: false,
+					data: JSON.stringify(json4),
+					success: function(data) {
+						if(data.total > 0) {
+							var str;
+							for(var i = 0; i < data.rows.length; i++) {
+								str += "<option>" + data.rows[i].name + "</option>"
+							}
+							console.log(data);
+							$("#dutyPerson").val(data.rows[0].name);	
+							$("#sh_people2").html(str);
+						} else {
+							$("#dutyPerson").val("");
+							$("#sh_people2").html("");
+
+						}
+
+					},
+					error: function(request) {
+						alert("连接失败!")
+					}
+				});
+			}
+			sel_user2();
+			
+			//从session得到部门id
+			$.ajax({
+				dataType: "json",
+				type: "get",
+				url: ip+'/apiv1/session/get',
+				async: true,
+				success: function(data) {
+					$("#startDepartId").val(data.safetyUser.departId);
+				}
+			});
+			
+
+			
+			
+			
 			var RowId = parent.$('#RowId').val();
 			$("#RowId").val(RowId);
 			//实现添加数据或者修改数据
@@ -417,7 +461,7 @@
 						contentType: "application/json;charset=utf-8",
 						dataType: "json",
 						type: "post",
-						url: host + UrlUpdate,
+						url: host + '/apiv1/unsafe/update',
 						data: JSON.stringify($('#Form1').serializeJson()), // 你的formid
 						async: true,
 						success: function(data) {
@@ -426,7 +470,7 @@
 								var index = parent.layer.getFrameIndex(window.name);
 								parent.layer.close(index);
 								if(parent) parent.$('#Table2').bootstrapTable('refresh', {
-									url: host + UrlSelect
+									url: host + '/apiv1/unsafe/get/unsafeInfo/condition'
 								});
 							} else {
 								alert("修改失败!");
@@ -441,12 +485,17 @@
 						contentType: "application/json;charset=utf-8",
 						dataType: "json",
 						type: "post",
-						url: host + UrlInsert,
+						url: host + '/apiv1/unsafe/save',
 						data: JSON.stringify($('#Form1').serializeJson()), // 你的formid
 						async: true,
 						success: function(data) {
 							if(data.code == "success") {
 								alert("提交成功!");
+								var index = parent.layer.getFrameIndex(window.name);
+								parent.layer.close(index);
+								if(parent) parent.$('#Table2').bootstrapTable('refresh', {
+									url: host + '/apiv1/unsafe/get/unsafeInfo/condition'
+								});
 							} else {
 								alert("提交失败!");
 							}
@@ -466,7 +515,7 @@
 					contentType: "application/json;charset=utf-8",
 					dataType: "json",
 					type: "post",
-					url: host + UrlSelect,
+					url: host + '/apiv1/unsafe/get/unsafeInfo/condition',
 					async: true,
 					data: JSON.stringify(json1),
 					success: function(data) {

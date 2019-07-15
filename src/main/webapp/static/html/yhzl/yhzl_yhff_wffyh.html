@@ -155,13 +155,8 @@
 		<script type="text/javascript" src="js/tableExport.min.js"></script>
 		<!--bootstrap-table插件汉化-->
 		<script type="text/javascript" src="js/bootstrap-table-zh-CN.min.js"></script>
+		<script type="text/javascript" src="glng/PZ_IP.js" ></script>
 		<script>
-			//为ajax设置跨域带cookie
-			$.ajaxPrefilter(function(options, originalOptions, jqXHR) {
-				options.xhrFields = {
-					withCredentials: true
-				}
-			});
 			//清空表单
 			$("#btn_qk").click(function() {
 				$("#Form1")[0].reset();
@@ -177,7 +172,7 @@
 				oButtonInit.Init();
 
 			});
-			var host = "http://47.103.35.95:8888";
+			var host = ip;
 			var UrlSelect = '/apiv1/unsafe/get/unsafeInfo/condition';
 			var UrlDelete = '/apiv1/unsafe/delete';
 			var Urlff= '/apiv1/unsafe/apply/distributed';

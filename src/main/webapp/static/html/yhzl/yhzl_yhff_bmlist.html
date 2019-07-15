@@ -49,17 +49,9 @@
 		<button type="button" class="btn_tj" id="btn_tj"><i class="iconfont icon-bianji"></i>确认分发隐患</button>
 		<script type="text/javascript" src="../../js/jquery-1.12.4.js"></script>
 		<script type="text/javascript" src="../../js/layer/layer.js"></script>
-		<!--<script type="text/javascript" src="http://127.0.0.1:8020/static/js/jquery-1.12.4.js"></script>
-		<script type="text/javascript" src="http://127.0.0.1:8020/static/js/layer/layer.js"></script>-->
-
+		<script type="text/javascript" src="../../glng/PZ_IP.js" ></script>
 		<script>
-			//为ajax设置跨域带cookie
-			$.ajaxPrefilter(function(options, originalOptions, jqXHR) {
-				options.xhrFields = {
-					withCredentials: true
-				}
-			});
-			var host = "http://47.103.35.95:8888";
+			var host = ip;
 			var Urlbm = '/department/select/all';
 			var Urlff = '/apiv1/unsafe/apply/distributed';
 			var UrlSelect = '/apiv1/unsafe/get/unsafeInfo/condition';

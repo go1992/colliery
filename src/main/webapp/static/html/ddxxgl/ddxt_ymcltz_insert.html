@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			#Table1 {
+				width: 80%;
+				margin: auto;
+				margin-top: 20px;
+				/*padding: 10px 0px 0px 50px;*/
+				/*text-align: center;*/
+				border: 1px solid #30a5ff;
+				font-size: 14px;
+				color: #30a5ff;
+			}
+			
+			#Table1 tr td:nth-of-type(1) {
+				text-align: right;
+			}
+			
+			#Table1 tr td:nth-of-type(3) {
+				text-align: right;
+			}
+			#Table1 tr td:nth-of-type(5) {
+    text-align: right;
+}
+			#Table1 input {
+				/*width: 50%;*/
+				/*height: 20px;*/
+				padding: 2px;
+				margin: 4px;
+			}
+			
+			.btn_item {
+				width: 80%;
+				margin: auto;
+				margin-top: 20px;
+				text-align: center;
+			}
+			
+			.btn_tj,
+			.btn_qk {
+				border: 0px;
+				border-radius: 3px;
+				color: white;
+				width: 80px;
+				height: 30px;
+				font-size: 14px;
+				background-color: #30a5ff;
+				margin: 0 50px;
+			}
+			
+			.btn_tj:hover,
+			.btn_qk:hover {
+				cursor: pointer;
+				background-color: #428bca;
+			}
+			
+			.btn_xiazai {
+				border: 0px;
+				border-radius: 3px;
+				color: white;
+				width: 120px;
+				height: 30px;
+				font-size: 14px;
+				background-color: #30a5ff;
+			}
+			
+			.btn_sc {
+				border: 0px;
+				border-radius: 3px;
+				color: white;
+				width: 120px;
+				height: 30px;
+				font-size: 14px;
+				background-color: #30a5ff;
+			}
+			
+			.btn_xiazai:hover,
+			.btn_sc:hover {
+				cursor: pointer;
+				background-color: #428bca;
+			}
+			
+			.xiazaiAnddr {
+				width: 80%;
+				height: auto;
+				margin: auto;
+				/*margin-left: 20px;*/
+				margin-top: 20px;
+			}
+			
+			.file_item {
+				position: relative;
+			}
+			
+			#input_file {
+				width: 300px;
+				height: 30px;
+				position: absolute;
+				right: 0;
+				opacity: 0;
+			}
+		</style>
+	</head>
+
+	<body>
+		<form method="post" action="#" id="Form1" enctype="multipart/form-data">
+			<input type="hidden" id="RowId" name="id" />
+			<table id="Table1" border="1" cellspacing="0" cellpadding="5px">
+				<tr>
+					<td>日期：</td>
+					<td><input name="date" type="date" /> </td>
+				</tr>
+				<tr>
+					<td>入井人数（人）：</td>
+					<td><input name="minePeoples"  /> </td>
+				</tr>
+				<tr>
+					<td>产量（吨）：</td>
+					<td><input name="output"  /> </td>
+				</tr>
+				<tr>
+					<td>备注：</td>
+					<td><textarea name="remarks" rows="4" cols="70" style="margin-left: 4px;"></textarea> </td>
+				</tr>
+			</table>
+			<div class="btn_item">
+				<button type="button" class="btn_tj" id="btn_tj"><i class="iconfont icon-tijiao"></i>提交</button>
+				<button id="btn_qk" type="button" class="btn_qk"><i class="iconfont icon-qingkong"></i>清空</button>
+			</div>
+		</form>
+		<script type="text/javascript" src="../../js/jquery-1.12.4.js"></script>
+		<script type="text/javascript" src="../../js/layer/layer.js"></script>
+		<script type="text/javascript" src="../../glng/PZ_IP.js" ></script>
+
+
+		<script>
+			//清空表单
+			$("#btn_qk").click(function() {
+				$("#Form1")[0].reset();
+			})
+			var host = ip; //ip地址
+
+			//排查单位下拉框
+			
+			//得到查询页面传入的id
+			var RowId = parent.$('#RowId').val();
+			$("#RowId").val(RowId);
+			//实现添加数据或者修改数据，当有ID传入时调用修改接口，没有ID传入调用增加接口
+			$("#btn_tj").click(function() {
+				if(RowId != "" && RowId != undefined && RowId != 'undefined') {
+
+					$.ajax({
+						contentType: "application/json;charset=utf-8",
+						dataType: "json",
+						type: "post",
+						url: host + '/apiv1/raw/coal/update',
+						data: JSON.stringify($('#Form1').serializeJson()), // 你的formid
+						async: true,
+						success: function(data) {
+							if(data.code == "success") {
+								alert("修改成功!");
+								var index = parent.layer.getFrameIndex(window.name);
+								parent.layer.close(index);
+								if(parent) parent.$('#Table2').bootstrapTable('refresh', {
+									url: host + '/apiv1/raw/coal/get'
+								});
+							} else {
+								alert("修改失败!");
+							}
+						},
+						error: function(request) {
+							alert("连接失败!");
+						}
+					})
+
+				} else {
+					$.ajax({
+						contentType: "application/json;charset=utf-8",
+						dataType: "json",
+						type: "post",
+						url: host + '/apiv1/raw/coal/save',
+						data: JSON.stringify($('#Form1').serializeJson()), // 你的formid
+						async: true,
+						success: function(data) {
+							if(data.code == "success") {
+								alert("提交成功!");
+								var index = parent.layer.getFrameIndex(window.name);
+								parent.layer.close(index);
+								if(parent) parent.$('#Table2').bootstrapTable('refresh', {
+									url: host + '/apiv1/raw/coal/get'
+								});
+							} else {
+								alert("提交失败!");
+							}
+						},
+						error: function(request) {
+							alert("连接失败!");
+						}
+					})
+				}
+
+			});
+			//根据点击表格某行，得到ID，查询出信息，调用loadData方法，把信息显示到form表单中
+			if(RowId != "" && RowId != undefined && RowId != 'undefined') {
+				var json1 = {
+					"id": RowId
+				};
+				$.ajax({
+					contentType: "application/json;charset=utf-8",
+					dataType: "json",
+					type: "post",
+					url: host + '/apiv1/raw/coal/get',
+					async: true,
+					data: JSON.stringify(json1),
+					success: function(data) {
+						$("#Form1").loadData(data.rows[0]);
+					},
+					error: function(request) {
+						alert("连接失败!")
+					}
+				});
+			}
+			//将josn对象赋值给form
+			$.fn.loadData = function(obj) {
+				var key, value, tagName, type, arr;
+				//				this.reset();
+				for(var x in obj) {
+					if(obj.hasOwnProperty(x)) {
+						key = x;
+						value = obj[x];
+						this.find("[name='" + key + "'],[name='" + key + "[]']").each(function() {
+							tagName = $(this)[0].tagName.toUpperCase();
+							type = $(this).attr('type');
+							if(tagName == 'INPUT') {
+								if(type == 'radio') {
+									if($(this).val() == value) {
+										$(this).attr('checked', true);
+									}
+								} else if(type == 'checkbox') {
+									arr = value.split(',');
+									for(var i = 0; i < arr.length; i++) {
+										if($(this).val() == arr[i]) {
+											$(this).attr('checked', true);
+											break;
+										}
+									}
+								} else {
+									$(this).val(value);
+								}
+							} else if(tagName == 'SELECT' || tagName == 'TEXTAREA') {
+								$(this).val(value);
+							}
+						});
+					}
+				}
+			};
+			//把form表单的数据序列化为json对象
+			(function(window, $) {
+				$.fn.serializeJson = function() {
+					var serializeObj = {};
+					var array = this.serializeArray();
+					var str = this.serialize();
+					$(array).each(
+						function() {
+							if(serializeObj[this.name]) {
+								if($.isArray(serializeObj[this.name])) {
+									serializeObj[this.name].push(this.value);
+								} else {
+									serializeObj[this.name] = [
+										serializeObj[this.name], this.value
+									];
+								}
+							} else {
+								serializeObj[this.name] = this.value;
+							}
+						});
+					return serializeObj;
+				};
+			})(window, jQuery);
+		</script>
+	</body>
+
+</html>

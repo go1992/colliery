@@ -98,31 +98,12 @@
 			</table>
 			<div class="btn_tr" id="toolbar">
 				<div>
+					<button type="button" class="btn_bj" id="btn_add"><i class="iconfont icon-bianji"></i>新增</button>
 					<button type="button" class="btn_bj" id="btn_bj"><i class="iconfont icon-bianji"></i>编辑选中项</button>
 					<button type="button" class="btn_del" id="btn_del"><i class="iconfont icon-shanchu"></i>删除选中项</button>
 				</div>
 			</div>
 			<table id="Table2" border="1" cellspacing="0" cellpadding="5px">
-				<!--<thead>
-				<tr>
-					<th><input id="check" onchange="dianji()" type="checkbox"></th>
-					<th></th>
-					<th>开孔日期</th>
-					<th>位置</th>
-					<th>钻孔编号</th>
-					<th>水位情况</th>
-					<th>孔内状况</th>
-					<th>孔口情况</th>
-					<th>设计孔深</th>
-					<th>实际孔深</th>
-					<th>有无险情</th>
-					<th>记录人</th>
-					<th>审核人</th>
-				</tr>
-			</thead>
-			<tbody>
-
-			</tbody>-->
 			</table>
 		</form>
 		<script type="text/javascript" src="js/jquery-1.12.4.js"></script>
@@ -136,17 +117,9 @@
 		<script type="text/javascript" src="js/tableExport.min.js"></script>
 		<!--bootstrap-table插件汉化-->
 		<script type="text/javascript" src="js/bootstrap-table-zh-CN.min.js"></script>
+		<script type="text/javascript" src="glng/PZ_IP.js" ></script>
 		<script>
-				//为ajax设置跨域带cookie
-			$.ajaxPrefilter(function(options, originalOptions, jqXHR) {
-				options.xhrFields = {
-					withCredentials: true
-				}
-			});
-			//清空表单
-			$("#btn_qk").click(function() {
-				$("#Form1")[0].reset();
-			})
+			var host = ip;//ip地址
 			$(function() {
 
 				//1.初始化Table
@@ -158,9 +131,6 @@
 				oButtonInit.Init();
 
 			});
-			var host = "http://47.103.35.95:8888";
-			var UrlSelect = '/department/select/all';
-			var UrlDelete = '/department/delete';
 			var TableInit = function() {
 				$('#Table2').bootstrapTable('destroy');
 				var oTableInit = new Object();
@@ -170,7 +140,7 @@
 						method: 'post',
 						toolbar: '#toolbar', //工具按钮用哪个容器
 //						contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-						url: host + UrlSelect,
+						url: host + '/department/select/all',
 						dataType: 'json',
 						undefinedText: '-', //当数据为 undefined 时显示的字符
 						striped: true, //是否显示行间隔色
@@ -243,11 +213,11 @@
 								title: "部门名称",
 								sortable: "true"
 							},
-							{
-								field: "coalMine",
-								title: "所属煤矿",
-								sortable: "true"
-							},
+//							{
+//								field: "coalMine",
+//								title: "所属煤矿",
+//								sortable: "true"
+//							},
 							{
 								field: "authIds",
 								title: "权限列表",
@@ -273,7 +243,7 @@
 								title: '编辑',
 								maxmin: true,
 								shadeClose: true, //点击遮罩关闭层
-								area: ['1000px', '600px'],
+								area: ['800px', '400px'],
 								content: 'html/xtsz/bmgl/xtsz_bmgl_insert.html'
 							});
 						},
@@ -309,7 +279,7 @@
 			$("#btn_sel").click(function() {
 				$('#Table2').bootstrapTable('refreshOptions',{pageNumber:1});
 				$('#Table2').bootstrapTable('refresh', {
-					url: host + UrlSelect
+					url: host + '/department/select/all'
 				});
 			});
 			//实现删除数据的方法
@@ -325,15 +295,17 @@
 				$.ajax({
 						contentType: "application/json;charset=utf-8",
 						type: "post",
-						url: host + UrlDelete,
+						url: host + '/department/delete',
 						data: JSON.stringify(ids),
 						dataType: "json",
 						success: function(data) {
 							if(data.status == "success") {
 								alert("删除成功！");
+							}else if(data.status == "failed"){
+								alert(data.message);
 							}
 							$('#Table2').bootstrapTable('refresh', {
-								url: host + UrlSelect
+								url: host + '/department/select/all'
 							});
 						}
 					});
@@ -351,8 +323,8 @@
 						title: '编辑',
 						maxmin: true,
 						shadeClose: true, //点击遮罩关闭层
-						area: ['1000px', '600px'],
-						content: 'html/xtsz/xtsz_bmgl_insert.html'
+						area: ['800px', '400px'],
+						content: 'html/xtsz/bmgl/xtsz_bmgl_insert.html'
 					});
 				}else if(rows.length==0){
 					alert("请选择您要编辑的项！");
@@ -360,6 +332,19 @@
 					alert("编辑选项按钮仅能选择一项！");
 				}
 			});
+			//新增
+			$("#btn_add").click(function() {
+				$("#RowId").val("");
+					layer.open({
+						type: 2,
+						title: '新增',
+						maxmin: true,
+						shadeClose: true, //点击遮罩关闭层
+						area: ['800px', '400px'],
+						content: 'html/xtsz/bmgl/xtsz_bmgl_insert.html'
+					});
+			
+			});			
 			//得到当前显示字段，以逗号隔开拼接字符串
 			function getSearchFields() {
 				var fields = "";

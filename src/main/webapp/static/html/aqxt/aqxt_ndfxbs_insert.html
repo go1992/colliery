@@ -4,11 +4,9 @@
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
-		<link rel="stylesheet" href="js/layer/mobile/need/layer.css" />
-	
 		<style>
 			#Table1 {
-				width: 80%;
+				width: 98%;
 				margin: auto;
 				margin-top: 20px;
 				/*padding: 10px 0px 0px 50px;*/
@@ -104,65 +102,71 @@
 				opacity: 0;
 			}
 		</style>
-	
+
 	</head>
 
 	<body>
 		<form method="post" action="#" id="Form1" enctype="multipart/form-data">
-			<!--<div class="xiazaiAnddr">
-				<button id="btn_jczl_download" type="button" class="btn_xiazai"><i class="iconfont icon-Group-"></i>下载Excel模板</button>&nbsp;&nbsp;
-				<span class="file_item">
-					<input id="input_file1" style="height: 28px;border:1px solid gainsboro;border-radius:2px ;" />
-					<button id="btn_xzwj" type="button" class="btn_sc"><i class="iconfont icon-choose1"></i>选择文件导入</button>	
-					<input name="fileName" type="file" id="input_file" accept=".xls" />
-				</span>
-			</div>-->
 			<table id="Table1" border="1" cellspacing="0" cellpadding="5px">
 				<tr>
 					<td>风险点：</td>
 					<td>
-						<select id="sel_fxd" name="fxd" style="margin: 4px;">
-						</select>
+						<select id="sel_fxd" name="fxd" style="margin: 4px;"></select>
 					</td>
 					<td>责任单位：</td>
-					<td><select id="sel_zrdw" name="zrdw" style="margin: 4px;">
-						</select></td>
+					<td>
+						<select id="sel_zrdw" name="zrdw" style="margin: 4px;">
+						</select>
+					</td>
 				</tr>
-			
+
 				<tr>
 					<td>风险等级：</td>
-					<td><select name="fxdj" style="margin: 4px;">
+					<td>
+						<select name="fxdj" style="margin: 4px;">
+							<option>低</option>
 							<option>一般</option>
-							<option>中等</option>
+							<option>较大</option>
 							<option>重大</option>
-						</select></td>
+						</select>
+					</td>
 					<td>风险分类：</td>
-					<td><select id="sel_fxfl" name="fxfl" style="margin: 4px;">
-						</select> </td>
+					<td>
+						<select id="sel_fxfl" name="fxfl" style="margin: 4px;">
+						</select>
+					</td>
 				</tr>
 				<tr>
 					<td>限制人数：</td>
-					<td><input name="xzrs"/>（重大风险必填）</td>
+					<td><input name="xzrs" />（重大风险必填）</td>
 					<td>辨识时间：</td>
-					<td><input type="date" id="starttime" name="pcrq"/> </td>
+					<td>
+						<!--<input name="datetype" type="hidden" value="年" />-->
+						<select id="datetype" name="datetype" type="date" style="margin-left: 4px;"></select>年
+						<!--<input name="pcrq" type="date" />-->
+					</td>
 				</tr>
 				<tr>
 					<td>风险描述：</td>
-					<td colspan="3"><textarea  name="fxms" rows="6" cols="70" style="margin: 4px;"></textarea></td>
+					<td colspan="3"><textarea name="fxms" rows="6" cols="70" style="margin: 4px;"></textarea></td>
 				</tr>
 				<tr>
 					<td>管控措施：</td>
-					<td colspan="3"><textarea  name="gkcs" rows="6" cols="70" style="margin: 4px;"></textarea></td>
+					<td colspan="3"><textarea name="gkcs" rows="6" cols="70" style="margin: 4px;"></textarea></td>
 				</tr>
 				<tr>
 					<td>主要负责人：</td>
 					<td>
-						<select onchange="sel_user()" id="sel_z"  style="margin: 4px;"></select>
-						<select id="sh_people"  name="zyfzr" style="margin: 4px;"></select>(重大风险必填)</td>
+						<input id="zyfzr" name="zyfzr" readonly="readonly" />(重大风险必填)<br />
+						<select onchange="sel_user()" id="sel_z" style="margin: 4px;"></select>
+						<select onchange="sel_fzUser()" id="sh_people" style="margin: 4px;"></select>
+					</td>
 					<td>分管负责人：</td>
 					<td>
-						<select onchange="sel_user1()" id="sel_z1"  style="margin: 4px;"></select>
-						<select id="sh_people1"  name="fgfzr" style="margin: 4px;"></select>(重大风险，较大风险必须填)</td>
+						<input id="fgfzr" name="fgfzr" readonly="readonly" />(重大风险，较大风险必须填)<br />
+						<select onchange="sel_user1()" id="sel_z1" style="margin: 4px;"></select>
+						<select onchange="sel_fzUser1()" id="sh_people1" style="margin: 4px;"></select>
+					</td>
 				</tr>
 			</table>
 			<div class="btn_item">
@@ -173,51 +177,47 @@
 		<script type="text/javascript" src="../../js/jquery-1.12.4.js"></script>
 		<script type="text/javascript" src="../../js/Excel_dc/xlsx.core.min.js"></script>
 		<script type="text/javascript" src="../../glng/GLOBAL.js"></script>
-		<!--<script type="text/javascript" src="http://127.0.0.1:8020/static/js/jquery-1.12.4.js"></script>
-		<script type="text/javascript" src="http://127.0.0.1:8020/static/js/layer/layer.js"></script>-->
-		<!--js-xlsx插件-->
+		<script type="text/javascript" src="../../glng/PZ_IP.js"></script>
 		<script>
-			//为ajax设置跨域带cookie
-			$.ajaxPrefilter(function(options, originalOptions, jqXHR) {
-				options.xhrFields = {
-					withCredentials: true
-				}
-			});
+			//设置年份的选择 
+			var myDate = new Date();
+			var startYear = myDate.getFullYear() - 50; //起始年份 
+			var endYear = myDate.getFullYear() + 50; //结束年份 
+			var str = "";
+			for(var i = startYear; i <= endYear; i++) {
+				str += "<option>" + i + "</option>";
+			}
+			$("#datetype").html(str);
+			//			$("#datetype").find("option[value='2019']").attr("selected", true);
+			$("#datetype option:contains('2019')").attr("selected", true);
 			var host = HOST;
-			var UrlSelect = '/aqfx-ndfx/query';
-			var UrlInsert = '/aqfx-ndfx/save';
-			var UrlUpdate = '/aqfx-ndfx/updateById';
-			var host1 = "http://47.103.35.95:8888";
-			var Url_jcxx = '/base/config/get';
-			var Urlbm = '/department/select/all';
-			var UrlSelectUser = '/user/select/all';
+			var host1 = ip;
+
+			//风险点下拉框
 			var json2 = {
 				"name": '风险点'
 			};
-			//风险点下拉框
 			$.ajax({
 				contentType: "application/json;charset=utf-8",
 				dataType: "json",
 				type: "post",
-				url: host1 + Url_jcxx,
-				async: true,
+				url: host1 + '/base/config/get',
+				async: false,
 				data: JSON.stringify(json2),
 				success: function(data) {
 					if(data.total > 0) {
-						var str;
+						var str = "";
 						for(var i = 0; i < data.rows.length; i++) {
-							str += "<option>" + data.rows[i].value + "</option>"
+							str += "<option>" + data.rows[i].value + "</option>";
 						}
 						$("#sel_fxd").html(str);
-					} else {
-						alert(data.message);
 					}
-
 				},
 				error: function(request) {
 					alert("连接失败!")
 				}
 			});
+
 			//部门下拉框
 			var json3 = {
 				"pageNum": null,
@@ -227,20 +227,20 @@
 				contentType: "application/json;charset=utf-8",
 				dataType: "json",
 				type: "post",
-				url: host1 + Urlbm,
-				async: true,
+				url: host1 + '/department/select/all',
+				async: false,
 				data: JSON.stringify(json3),
 				success: function(data) {
 					if(data.total > 0) {
-						var str;
+						var str = "";
+						var str1="";
 						for(var i = 0; i < data.rows.length; i++) {
-							str += "<option value='"+data.rows[i].id+"'>" + data.rows[i].departName + "</option>"
+							str += "<option value='" + data.rows[i].id + "'>" + data.rows[i].departName + "</option>";
+							str1 += "<option >" + data.rows[i].departName + "</option>";
 						}
-						$("#sel_zrdw").html(str);
+						$("#sel_zrdw").html(str1);
 						$("#sel_z").html(str);
 						$("#sel_z1").html(str);
-					} else {
-						alert(data.message);
 					}
 
 				},
@@ -256,8 +256,8 @@
 				contentType: "application/json;charset=utf-8",
 				dataType: "json",
 				type: "post",
-				url: host1 + Url_jcxx,
-				async: true,
+				url: host1 + '/base/config/get',
+				async: false,
 				data: JSON.stringify(json4),
 				success: function(data) {
 					if(data.total > 0) {
@@ -266,8 +266,6 @@
 							str += "<option>" + data.rows[i].value + "</option>"
 						}
 						$("#sel_fxfl").html(str);
-					} else {
-						alert(data.message);
 					}
 
 				},
@@ -275,19 +273,20 @@
 					alert("连接失败!")
 				}
 			});
+
 			function sel_user() {
 				var json4 = {
 					"pageNum": null,
 					"pageSize": null,
-					"departId":$('#sel_z option:selected').val()
+					"departId": $('#sel_z option:selected').val()
 				};
 				//用户下拉框
 				$.ajax({
 					contentType: "application/json;charset=utf-8",
 					dataType: "json",
 					type: "post",
-					url: host1 + UrlSelectUser,
-					async: true,
+					url: host1 + '/user/select/all',
+					async: false,
 					data: JSON.stringify(json4),
 					success: function(data) {
 						if(data.total > 0) {
@@ -295,9 +294,13 @@
 							for(var i = 0; i < data.rows.length; i++) {
 								str += "<option>" + data.rows[i].name + "</option>"
 							}
+
+							$("#zyfzr").val(data.rows[0].name);
+
 							$("#sh_people").html(str);
 						} else {
-							alert(data.message);
+							$("#zyfzr").val("");
+							$("#sh_people").html("");
 						}
 
 					},
@@ -307,18 +310,27 @@
 				});
 			}
 			sel_user();
+			//改变用户赋值
+			function sel_fzUser() {
+				$("#zyfzr").val($('#sh_people option:selected').val());
+			}
+			//改变用户赋值
+			function sel_fzUser1() {
+				$("#fgfzr").val($('#sh_people1 option:selected').val());
+			}
+
 			function sel_user1() {
 				var json4 = {
 					"pageNum": null,
 					"pageSize": null,
-					"departId":$('#sel_z1 option:selected').val()
+					"departId": $('#sel_z1 option:selected').val()
 				};
 				//用户下拉框
 				$.ajax({
 					contentType: "application/json;charset=utf-8",
 					dataType: "json",
 					type: "post",
-					url: host1 + UrlSelectUser,
+					url: host1 + '/user/select/all',
 					async: true,
 					data: JSON.stringify(json4),
 					success: function(data) {
@@ -327,9 +339,11 @@
 							for(var i = 0; i < data.rows.length; i++) {
 								str += "<option>" + data.rows[i].name + "</option>"
 							}
+							$("#fgfzr").val(data.rows[0].name);
 							$("#sh_people1").html(str);
 						} else {
-							alert(data.message);
+							$("#fgfzr").val("");
+							$("#sh_people1").html("");
 						}
 
 					},
@@ -356,66 +370,23 @@
 					$("#input_file1").val($("#input_file").val());
 				});
 			});
-			//Excel导入到form表单
-			$('#input_file').change(function(e) {
-				var files = e.target.files;
 
-				var fileReader = new FileReader();
-				fileReader.onload = function(ev) {
-					try {
-						var data = ev.target.result,
-							workbook = XLSX.read(data, {
-								type: 'binary'
-							}), // 以二进制流方式读取得到整份excel表格对象
-							persons = []; // 存储获取到的数据
-					} catch(e) {
-						console.log('文件类型不正确');
-						return;
-					}
-
-					// 表格的表格范围，可用于判断表头是否数量是否正确
-					var fromTo = '';
-					// 遍历每张表读取
-					for(var sheet in workbook.Sheets) {
-						if(workbook.Sheets.hasOwnProperty(sheet)) {
-							fromTo = workbook.Sheets[sheet]['!ref'];
-							console.log(fromTo);
-							persons = persons.concat(XLSX.utils.sheet_to_json(workbook.Sheets[sheet]));
-							break; // 如果只取第一张表，就取消注释这行
-						}
-					}
-
-					console.log(persons);
-					$("#pc_time").val(persons[0].企业名称);
-					$("#input_zkwz").val(persons[0].企业编码);
-					$("#kk_time").val(persons[0].重大危险源名称);
-					$("#zk_number").val(persons[0].重大危险源管理);
-					$("#swqk").val(persons[0].重大危险源类型);
-					$("#swqk").val(persons[0].重大危险源编码);
-					$("#knzk").val(persons[0].是否备案);
-					$("#kkqk").val(persons[0].备案编号);
-					$("#sejks").val(persons[0].备案日期);
-					$("#sejks").val(persons[0].填报日期);
-					$("#sejks").val(persons[0].填报人姓名);
-					$("#sejks").val(persons[0].填报人电话);
-				};
-
-				// 以二进制方式打开文件
-				fileReader.readAsBinaryString(files[0]);
-			});
 			var RowId = parent.$('#RowId').val();
+			//			alert(RowId);
 			//实现添加数据或者修改数据
 			$("#btn_tj").click(function() {
 				if(RowId != "" && RowId != undefined && RowId != 'undefined') {
 					$.ajax({
 						type: "post",
-						url: host + UrlUpdate+"?id="+RowId,
+						url: host + '/aqfx-ndfx/updateById' + "?id=" + RowId,
 						data: $('#Form1').serialize(), // 你的formid
 						async: false,
 						success: function(data) {
 							alert("修改成功");
-							if(parent)parent.$('#Table2').bootstrapTable('refresh', {
-								url: host + UrlSelect
+							var index = parent.layer.getFrameIndex(window.name);
+							parent.layer.close(index);
+							if(parent) parent.$('#Table2').bootstrapTable('refresh', {
+								url: host + '/aqfx-ndfx/query'
 							});
 						},
 						error: function(request) {
@@ -425,22 +396,33 @@
 				} else {
 					$.ajax({
 						type: "post",
-						url: host + UrlInsert,
+						url: host + '/aqfx-ndfx/save',
 						data: $('#Form1').serialize(), // 你的formid
 						async: false,
 						success: function(data) {
-							alert("提交成功");
+							if(data.status == "success") {
+								alert("提交成功");
+								var index = parent.layer.getFrameIndex(window.name);
+								parent.layer.close(index);
+								if(parent) parent.$('#Table2').bootstrapTable('refresh', {
+									url: host + '/aqfx-ndfx/query'
+								});
+							} else {
+								alert("提交失败!");
+							}
+
 						},
 						error: function(request) {
-							alert("提交失败");
+							alert("连接失败！");
 						}
 					});
 				}
 
 			})
+
 			$.fn.loadData = function(obj) {
 				var key, value, tagName, type, arr;
-//				this.reset();
+				//				this.reset();
 				for(var x in obj) {
 					if(obj.hasOwnProperty(x)) {
 						key = x;
@@ -471,20 +453,23 @@
 					}
 				}
 			}
-			$.ajax({
-				dataType: "json",
-				type: "post",
-				url: host + UrlSelect + '?id=' + RowId,
-				async: false,
-				complete: UN_LODIN_OUT_FUNC,
-				success: function(data) {
-					//					SetFromValues($("#Form1"), data.rows[0]);
-					$("#Form1").loadData(data.rows[0]);
-				},
-				error: function(request) {
+			//根据点击表格某行，得到ID，查询出信息，调用loadData方法，把信息显示到form表单中
+			if(RowId != "" && RowId != undefined && RowId != 'undefined') {
+				$.ajax({
+					dataType: "json",
+					type: "post",
+					url: host + '/aqfx-ndfx/query' + '?id=' + RowId,
+					async: false,
+					//					complete: UN_LODIN_OUT_FUNC,
+					success: function(data) {
+						//					SetFromValues($("#Form1"), data.rows[0]);
+						$("#Form1").loadData(data.rows[0]);
+					},
+					error: function(request) {
 
-				}
-			});
+					}
+				});
+			}
 		</script>
 	</body>
 

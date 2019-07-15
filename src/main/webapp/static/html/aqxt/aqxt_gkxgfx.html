@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			.top {
+				width: 100%;
+				height: 350px;
+				background: white;
+			}
+			
+			.btn_tj {
+				border: 0px;
+				border-radius: 3px;
+				color: white;
+				width: 80px;
+				height: 30px;
+				font-size: 14px;
+				background-color: #30a5ff;
+				margin: 0 50px;
+			}
+			
+			.btn_tj:hover,
+			.btn_bj:hover {
+				cursor: pointer;
+				background-color: #428bca;
+			}
+		</style>
+	</head>
+
+	<body>
+		<p style="margin: 5px;">
+			<span>年：<select id="datetype" class="year"></select></span><button type="button" class="btn_tj" id="btn_sel"><i class="iconfont icon-chaxun"></i>查询</button>
+		</p>
+		<div class="top">
+			<div id="main1" style="width: 30%;height: 100%;float: left;"></div>
+			<div id="main" style="width: 60%;height: 100%;float: left;"></div>
+		</div>
+		<p style="margin: 5px;">
+			<input id="datetype2" name="datetype" type="hidden" />
+			<span>年：<select id="year" class="year"></select></span>月：<select id="month"></select></span><button type="button" class="btn_tj" id="btn_sel1"><i class="iconfont icon-chaxun"></i>查询</button>
+		</p>
+		<div class="top">
+			<div id="main3" style="width: 30%;height: 100%;float: left;"></div>
+			<div id="main2" style="width: 60%;height: 100%;float: left;"></div>
+		</div>
+
+		<script type="text/javascript" src="js/jquery-1.12.4.js"></script>
+		<script type="text/javascript" src="js/echarts.min.js"></script>
+		<script type="text/javascript" src="glng/PZ_IP.js"></script>
+		<script>
+			//设置年份的选择 
+			var myDate = new Date();
+			var startYear = myDate.getFullYear() - 50; //起始年份 
+			var endYear = myDate.getFullYear() + 50; //结束年份 
+			var str = "";
+			for(var i = startYear; i <= endYear; i++) {
+				str += "<option>" + i + "</option>";
+			}
+			$(".year").html(str);
+			$(".year option:contains('2019')").attr("selected", true);
+			 var month="";
+			 for(var i=1;i<=12;i++){
+			 	if(i<10){
+			 		i="0"+i;
+			 	}
+			 	month += "<option>" + i + "</option>";
+			 }
+			$("#month").html(month);
+			//查询数据
+			$("#btn_sel").click(function() {
+				var fxdj1 = 0,
+					fxdj2 = 0,
+					fxdj3 = 0,
+					fxdj4 = 0;
+				var fxfl = [];
+				var fxfl_zd = [];
+				var fxfl_jd = [];
+				var fxfl_yb = [];
+				var fxfl_d = [];
+				$.ajax({
+					contentType: "application/json;charset=utf-8",
+					dataType: "json",
+					type: "post",
+					url: "http://47.103.35.95:8887/apiv1/aqfx-ndfx/statis",
+					data: JSON.stringify({
+						"datetype": $("#datetype option:selected").text(),
+					}),
+					async: false,
+					success: function(data) {
+						if(data != null && data != "") {
+							if(data.status != "failed") {
+								for(var i = 0; i < data.result.levelVos.length; i++) {
+									if(data.result.levelVos[i].fxdj == "低") {
+										fxdj4 = data.result.levelVos[i].count;
+									} else if(data.result.levelVos[i].fxdj == "一般") {
+										fxdj3 = data.result.levelVos[i].count;
+									} else if(data.result.levelVos[i].fxdj == "较大") {
+										fxdj2 = data.result.levelVos[i].count;
+									} else if(data.result.levelVos[i].fxdj == "重大") {
+										fxdj1 = data.result.levelVos[i].count;
+									}
+								}
+								for(var i = 0; i < data.result.typeVos.length; i++) {
+									fxfl.push(data.result.typeVos[i].fxfl);
+									for(var j = 0; j < 4; j++) {
+										if(data.result.typeVos[i].levelVos[j].fxdj == "重大") {
+											fxfl_zd.push(data.result.typeVos[i].levelVos[j].count);
+										} else if(data.result.typeVos[i].levelVos[j].fxdj == "较大") {
+											fxfl_jd.push(data.result.typeVos[i].levelVos[j].count);
+										} else if(data.result.typeVos[i].levelVos[j].fxdj == "一般") {
+											fxfl_yb.push(data.result.typeVos[i].levelVos[j].count);
+										} else if(data.result.typeVos[i].levelVos[j].fxdj == "低") {
+											fxfl_d.push(data.result.typeVos[i].levelVos[j].count);
+										}
+									}
+
+								}
+
+							} else {
+								alert("暂无数据！")
+							}
+
+						}
+
+					},
+					error: function() {
+						alert("连接失败！");
+					}
+				});
+				var myChart = echarts.init(document.getElementById('main'));
+				var myChart1 = echarts.init(document.getElementById('main1'));
+				myChart.clear();
+				myChart1.clear();
+
+				option = {
+					title: {
+						text: '风险分类柱状图',
+						top: 20
+					},
+					tooltip: {
+						trigger: 'axis',
+						axisPointer: {
+							type: 'shadow',
+							label: {
+								backgroundColor: '#6a7985'
+							}
+						}
+					},
+					legend: {
+						data: ['低', '一般', '较大', '重大']
+					},
+					grid: {
+						left: '3%',
+						right: '4%',
+						bottom: '3%',
+						containLabel: true
+					},
+					xAxis: {
+						type: 'category',
+						data: fxfl
+					},
+					yAxis: {
+						type: 'value'
+					},
+					series: [{
+							name: '低',
+							type: 'bar',
+							data: fxfl_d,
+							itemStyle: {
+									color: '#0C0'
+							}
+						},
+						{
+							name: '一般',
+							type: 'bar',
+							data: fxfl_yb,
+							itemStyle: {
+									color: '#FF0'
+							}
+						},
+						{
+							name: '较大',
+							type: 'bar',
+							data: fxfl_jd,
+							itemStyle: {
+									color: '#F60'
+							}
+						},
+						{
+							name: '重大',
+							type: 'bar',
+							data: fxfl_zd,
+							itemStyle: {
+									color: 'red'
+							}
+						}
+					]
+				};
+				option1 = {
+
+					title: {
+						text: '风险等级占比图',
+						left: 'center',
+						top: 20
+					},
+
+					tooltip: {
+						trigger: 'item',
+						formatter: "{a} <br/>{b} : {c} ({d}%)"
+					},
+					legend: {
+						bottom: 10,
+						left: 'center',
+						data: ['低', '一般', '较大', '重大']
+					},
+					series: [{
+						type: 'pie',
+						radius: '55%',
+						center: ['50%', '50%'],
+						name: '电量',
+						data: [{
+							value: fxdj4,
+							name: '低',
+							itemStyle: {
+									color: '#0C0'
+							}
+						}, {
+							value: fxdj3,
+							name: '一般',
+							itemStyle: {
+									color: '#FF0'
+							}
+						}, {
+							value: fxdj2,
+							name: '较大',
+							itemStyle: {
+									color: '#F60'
+							}
+						}, {
+							value: fxdj1,
+							name: '重大',
+							itemStyle: {
+									color: 'red'
+							}
+						}],
+						label: {
+
+							normal: {
+								formatter: '{b}: {@2012} ({d}%)',
+							}
+						},
+						labelLine: {
+							normal: {
+								lineStyle: {
+									color: 'red'
+								},
+								smooth: 0.2,
+								length: 10,
+								length2: 20
+							}
+						},
+
+						animationType: 'scale',
+						animationEasing: 'elasticOut',
+						animationDelay: function(idx) {
+							return Math.random() * 200;
+						}
+					}]
+				};
+				myChart.setOption(option);
+				myChart1.setOption(option1);
+
+			});
+		</script>
+		<script>
+			//查询数据
+			$("#btn_sel1").click(function() {
+				var str=$("#year").val()+"-"+$("#month").val();
+				$("#datetype2").val(str);
+				
+				var fxdj1 = 0,
+					fxdj2 = 0,
+					fxdj3 = 0,
+					fxdj4 = 0;
+				var fxfl = [];
+				var fxfl_zd = [];
+				var fxfl_jd = [];
+				var fxfl_yb = [];
+				var fxfl_d = [];
+				$.ajax({
+					contentType: "application/json;charset=utf-8",
+					dataType: "json",
+					type: "post",
+					url: "http://47.103.35.95:8887/apiv1/aqfx-ndfx/statis",
+					data: JSON.stringify({
+						"datetype": $("#datetype2").val(),
+					}),
+					async: false,
+					success: function(data) {
+						if(data != null && data != "") {
+							if(data.status != "failed") {
+								for(var i = 0; i < data.result.levelVos.length; i++) {
+									if(data.result.levelVos[i].fxdj == "低") {
+										fxdj4 = data.result.levelVos[i].count;
+									} else if(data.result.levelVos[i].fxdj == "一般") {
+										fxdj3 = data.result.levelVos[i].count;
+									} else if(data.result.levelVos[i].fxdj == "较大") {
+										fxdj2 = data.result.levelVos[i].count;
+									} else if(data.result.levelVos[i].fxdj == "重大") {
+										fxdj1 = data.result.levelVos[i].count;
+									}
+								}
+								for(var i = 0; i < data.result.typeVos.length; i++) {
+									fxfl.push(data.result.typeVos[i].fxfl);
+									for(var j = 0; j < 4; j++) {
+										if(data.result.typeVos[i].levelVos[j].fxdj == "重大") {
+											fxfl_zd.push(data.result.typeVos[i].levelVos[j].count);
+										} else if(data.result.typeVos[i].levelVos[j].fxdj == "较大") {
+											fxfl_jd.push(data.result.typeVos[i].levelVos[j].count);
+										} else if(data.result.typeVos[i].levelVos[j].fxdj == "一般") {
+											fxfl_yb.push(data.result.typeVos[i].levelVos[j].count);
+										} else if(data.result.typeVos[i].levelVos[j].fxdj == "低") {
+											fxfl_d.push(data.result.typeVos[i].levelVos[j].count);
+										}
+									}
+
+								}
+
+							} else {
+								alert("暂无数据！")
+							}
+
+						}
+
+					},
+					error: function() {
+						alert("连接失败！");
+					}
+				});
+				var myChart = echarts.init(document.getElementById('main2'));
+				var myChart1 = echarts.init(document.getElementById('main3'));
+				myChart.clear();
+				myChart1.clear();
+
+				option = {
+					title: {
+						text: '风险分类柱状图',
+						top: 20
+					},
+					tooltip: {
+						trigger: 'axis',
+						axisPointer: {
+							type: 'shadow',
+							label: {
+								backgroundColor: '#6a7985'
+							}
+						}
+					},
+					legend: {
+						data: ['低', '一般', '较大', '重大']
+					},
+					grid: {
+						left: '3%',
+						right: '4%',
+						bottom: '3%',
+						containLabel: true
+					},
+					xAxis: {
+						type: 'category',
+						data: fxfl
+					},
+					yAxis: {
+						type: 'value'
+					},
+					series: [{
+							name: '低',
+							type: 'bar',
+							data: fxfl_d,
+							itemStyle: {
+									color: '#0C0'
+							}
+						},
+						{
+							name: '一般',
+							type: 'bar',
+							data: fxfl_yb,
+							itemStyle: {
+									color: '#FF0'
+							}
+						},
+						{
+							name: '较大',
+							type: 'bar',
+							data: fxfl_jd,
+							itemStyle: {
+									color: '#F60'
+							}
+						},
+						{
+							name: '重大',
+							type: 'bar',
+							data: fxfl_zd,
+							itemStyle: {
+									color: 'red'
+							}
+						}
+					]
+				};
+				option1 = {
+
+					title: {
+						text: '风险等级占比图',
+						left: 'center',
+						top: 20
+					},
+
+					tooltip: {
+						trigger: 'item',
+						formatter: "{a} <br/>{b} : {c} ({d}%)"
+					},
+					legend: {
+						bottom: 10,
+						left: 'center',
+						data: ['低', '一般', '较大', '重大']
+					},
+					series: [{
+						type: 'pie',
+						radius: '55%',
+						center: ['50%', '50%'],
+						name: '电量',
+						data: [{
+							value: fxdj4,
+							name: '低',
+							itemStyle: {
+									color: '#0C0'
+							}
+						}, {
+							value: fxdj3,
+							name: '一般',
+							itemStyle: {
+									color: '#FF0'
+							}
+						}, {
+							value: fxdj2,
+							name: '较大',
+							itemStyle: {
+									color: '#F60'
+							}
+						}, {
+							value: fxdj1,
+							name: '重大',
+							itemStyle: {
+									color: 'red'
+							}
+						}],
+						label: {
+
+							normal: {
+								formatter: '{b}: {@2012} ({d}%)',
+							}
+						},
+						labelLine: {
+							normal: {
+								lineStyle: {
+									color: 'red'
+								},
+								smooth: 0.2,
+								length: 10,
+								length2: 20
+							}
+						},
+
+						animationType: 'scale',
+						animationEasing: 'elasticOut',
+						animationDelay: function(idx) {
+							return Math.random() * 200;
+						}
+					}]
+				};
+				myChart.setOption(option);
+				myChart1.setOption(option1);
+
+			});
+		</script>
+
+	</body>
+
+</html>

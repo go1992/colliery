@@ -6,7 +6,7 @@
 		<title></title>
 		<style>
 			#Table1 {
-				width: 80%;
+				width: 98%;
 				margin: auto;
 				margin-top: 20px;
 				/*padding: 10px 0px 0px 50px;*/
@@ -113,10 +113,10 @@
 					<td>部门名称：</td>
 					<td colspan="3"><input id="ssqymc" name="departName" /> </td>
 				</tr>
-				<tr>
+				<!--<tr>
 					<td>所属煤矿：</td>
 					<td colspan="3"><input name="coalMine" /> </td>
-				</tr>
+				</tr>-->
 				<tr>
 					<td>权限列表：</td>
 					<td>
@@ -141,7 +141,7 @@
 				</tr>
 				<tr>
 					<td>创建者：</td>
-					<td colspan="3"><input name="createUser" /> </td>
+					<td colspan="3"><input id="createUser" name="createUser" readonly="readonly" /> </td>
 				</tr>
 			</table>
 			<div class="btn_item">
@@ -151,35 +151,16 @@
 		</form>
 		<script type="text/javascript" src="../../../js/jquery-1.12.4.js"></script>
 		<script type="text/javascript" src="../../../js/layer/layer.js"></script>
-		<!--<script type="text/javascript" src="http://127.0.0.1:8020/static/js/jquery-1.12.4.js"></script>
-		<script type="text/javascript" src="http://127.0.0.1:8020/static/js/layer/layer.js"></script>-->
+		<script type="text/javascript" src="../../../glng/PZ_IP.js" ></script>
 		<script>
-			//为ajax设置跨域带cookie
-			$.ajaxPrefilter(function(options, originalOptions, jqXHR) {
-				options.xhrFields = {
-					withCredentials: true
-				}
-			});
-//			function fun() {
-//				var select = document.getElementById("sel_zkwz");
-//				var ng=[];
-//				for(i = 0; i < select.length; i++) {
-//					if(select.options[i].selected) {
-//						ng.push(select[i].value);
-//					}
-//				}
-//			}
-		</script>
-		<!--js-xlsx插件-->
-		<script>
+			//默认当前用户为创建者
+			var username = sessionStorage.getItem("MK_userName");
+			$("#createUser").val(username);
+			//清空表单
 			$("#btn_qk").click(function() {
 				$("#Form1")[0].reset();
 			})
-			var host = "http://47.103.35.95:8888";
-			var UrlSelect = '/department/select/all';
-			var Urlid = '/department/select/';
-			var UrlInsert = '/department/add';
-			var UrlUpdate = '/department/update';
+			var host = ip;//ip地址
 			var RowId = parent.$('#RowId').val();
 			$("#RowId").val(RowId);
 			//实现添加数据或者修改数据，当有ID传入时调用修改接口，没有ID传入调用增加接口
@@ -190,19 +171,19 @@
 						contentType: "application/json;charset=utf-8",
 						dataType: "json",
 						type: "post",
-						url: host + UrlUpdate,
+						url: host + '/department/update',
 						data: JSON.stringify($('#Form1').serializeJson()), // 你的formid
 						async: true,
 						success: function(data) {
 							if(data.status == "success") {
-								alert("提交成功!");
+								alert("修改成功!");
 								var index = parent.layer.getFrameIndex(window.name);
 								parent.layer.close(index);
 								if(parent) parent.$('#Table2').bootstrapTable('refresh', {
-									url: host + UrlSelect
+									url: host + '/department/select/all'
 								});
 							} else {
-								alert("提交失败!");
+								alert("修改失败!");
 							}
 						},
 						error: function(request) {
@@ -215,12 +196,17 @@
 						contentType: "application/json;charset=utf-8",
 						dataType: "json",
 						type: "post",
-						url: host + UrlInsert,
+						url: host + '/department/add',
 						data: JSON.stringify($('#Form1').serializeJson()), // 你的formid
 						async: true,
 						success: function(data) {
 							if(data.status == "success") {
 								alert("提交成功!");
+								var index = parent.layer.getFrameIndex(window.name);
+								parent.layer.close(index);
+								if(parent) parent.$('#Table2').bootstrapTable('refresh', {
+									url: host + '/department/select/all'
+								});
 							} else {
 								alert("提交失败!");
 							}
@@ -238,9 +224,8 @@
 					//					contentType: "application/json;charset=utf-8",
 					dataType: "json",
 					type: "get",
-					url: host + Urlid + RowId,
+					url: host + '/department/select/' + RowId,
 					async: true,
-
 					success: function(data) {
 						$("#Form1").loadData(data.result);
 					},

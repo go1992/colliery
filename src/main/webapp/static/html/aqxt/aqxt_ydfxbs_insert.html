@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			#Table1 {
+				width: 98%;
+				margin: auto;
+				margin-top: 20px;
+				/*padding: 10px 0px 0px 50px;*/
+				/*text-align: center;*/
+				border: 1px solid #30a5ff;
+				font-size: 14px;
+				color: #30a5ff;
+			}
+			
+			#Table1 tr td:nth-of-type(1) {
+				text-align: right;
+			}
+			
+			#Table1 tr td:nth-of-type(3) {
+				text-align: right;
+			}
+			
+			#Table1 input {
+				/*width: 50%;*/
+				/*height: 20px;*/
+				padding: 2px;
+				margin: 4px;
+			}
+			
+			.btn_item {
+				width: 80%;
+				margin: auto;
+				margin-top: 20px;
+				text-align: center;
+			}
+			
+			.btn_tj,
+			.btn_qk {
+				border: 0px;
+				border-radius: 3px;
+				color: white;
+				width: 80px;
+				height: 30px;
+				font-size: 14px;
+				background-color: #30a5ff;
+				margin: 0 50px;
+			}
+			
+			.btn_tj:hover,
+			.btn_qk:hover {
+				cursor: pointer;
+				background-color: #428bca;
+			}
+			
+			.btn_xiazai {
+				border: 0px;
+				border-radius: 3px;
+				color: white;
+				width: 120px;
+				height: 30px;
+				font-size: 14px;
+				background-color: #30a5ff;
+			}
+			
+			.btn_sc {
+				border: 0px;
+				border-radius: 3px;
+				color: white;
+				width: 120px;
+				height: 30px;
+				font-size: 14px;
+				background-color: #30a5ff;
+			}
+			
+			.btn_xiazai:hover,
+			.btn_sc:hover {
+				cursor: pointer;
+				background-color: #428bca;
+			}
+			
+			.xiazaiAnddr {
+				width: 80%;
+				height: auto;
+				margin: auto;
+				/*margin-left: 20px;*/
+				margin-top: 20px;
+			}
+			
+			.file_item {
+				position: relative;
+			}
+			
+			#input_file {
+				width: 300px;
+				height: 30px;
+				position: absolute;
+				right: 0;
+				opacity: 0;
+			}
+		</style>
+
+	</head>
+
+	<body>
+		<form method="post" action="#" id="Form1" enctype="multipart/form-data">
+			<table id="Table1" border="1" cellspacing="0" cellpadding="5px">
+				<tr>
+					<td>风险点：</td>
+					<td>
+						<select id="sel_fxd" name="fxd" style="margin: 4px;"></select>
+					</td>
+					<td>责任单位：</td>
+					<td>
+						<select id="sel_zrdw" name="zrdw" style="margin: 4px;">
+						</select>
+					</td>
+				</tr>
+
+				<tr>
+					<td>风险等级：</td>
+					<td>
+						<select name="fxdj" style="margin: 4px;">
+							<option>低</option>
+							<option>一般</option>
+							<option>较大</option>
+							<option>重大</option>
+						</select>
+					</td>
+					<td>风险分类：</td>
+					<td>
+						<select id="sel_fxfl" name="fxfl" style="margin: 4px;">
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>限制人数：</td>
+					<td><input name="xzrs" />（重大风险必填）</td>
+					<td>辨识时间：</td>
+					<td>
+						<input id="datetype" name="datetype" type="hidden" />
+						
+						<!--<input name="datetype" type="hidden" value="年" />-->
+						<select id="year" style="margin-left: 4px;"></select>年
+						<!--<input name="pcrq" type="date" />-->
+						
+						<select id="month" style="margin-left: 4px;"></select>月
+						
+					</td>
+				</tr>
+				<tr>
+					<td>风险描述：</td>
+					<td colspan="3"><textarea name="fxms" rows="6" cols="70" style="margin: 4px;"></textarea></td>
+				</tr>
+				<tr>
+					<td>管控措施：</td>
+					<td colspan="3"><textarea name="gkcs" rows="6" cols="70" style="margin: 4px;"></textarea></td>
+				</tr>
+				<tr>
+					<td>主要负责人：</td>
+					<td>
+						<input id="zyfzr" name="zyfzr" readonly="readonly" />(重大风险必填)<br />
+						<select onchange="sel_user()" id="sel_z" style="margin: 4px;"></select>
+						<select onchange="sel_fzUser()" id="sh_people" style="margin: 4px;"></select>
+					</td>
+					<td>分管负责人：</td>
+					<td>
+						<input id="fgfzr" name="fgfzr" readonly="readonly" />(重大风险，较大风险必须填)<br />
+						<select onchange="sel_user1()" id="sel_z1" style="margin: 4px;"></select>
+						<select onchange="sel_fzUser1()" id="sh_people1" style="margin: 4px;"></select>
+					</td>
+				</tr>
+			</table>
+			<div class="btn_item">
+				<button type="button" class="btn_tj" id="btn_tj"><i class="iconfont icon-tijiao"></i>提交</button>
+				<button id="btn_qk" type="button" class="btn_qk"><i class="iconfont icon-qingkong"></i>清空</button>
+			</div>
+		</form>
+		<script type="text/javascript" src="../../js/jquery-1.12.4.js"></script>
+		<script type="text/javascript" src="../../js/Excel_dc/xlsx.core.min.js"></script>
+		<script type="text/javascript" src="../../glng/GLOBAL.js"></script>
+		<script type="text/javascript" src="../../glng/PZ_IP.js"></script>
+		<script>
+			//设置年份的选择 
+			var myDate = new Date();
+			var startYear = myDate.getFullYear() - 50; //起始年份 
+			var endYear = myDate.getFullYear() + 50; //结束年份 
+			var str = "";
+			for(var i = startYear; i <= endYear; i++) {
+				str += "<option>" + i + "</option>";
+			}
+			$("#year").html(str);
+//			$("#datetype").find("option[value='2019']").attr("selected", true);
+			 $("#year option:contains('2019')").attr("selected", true); 
+			 var month="";
+			 for(var i=1;i<=12;i++){
+			 	if(i<10){
+			 		i="0"+i;
+			 	}
+			 	month += "<option>" + i + "</option>";
+			 }
+			$("#month").html(month);
+			 
+			var host = HOST;
+			var host1 = ip;
+
+			//风险点下拉框
+			var json2 = {
+				"name": '风险点'
+			};
+			$.ajax({
+				contentType: "application/json;charset=utf-8",
+				dataType: "json",
+				type: "post",
+				url: host1 + '/base/config/get',
+				async: false,
+				data: JSON.stringify(json2),
+				success: function(data) {
+					if(data.total > 0) {
+						var str = "";
+						for(var i = 0; i < data.rows.length; i++) {
+							str += "<option>" + data.rows[i].value + "</option>";
+						}
+						$("#sel_fxd").html(str);
+					}
+				},
+				error: function(request) {
+					alert("连接失败!")
+				}
+			});
+
+			//部门下拉框
+			var json3 = {
+				"pageNum": null,
+				"pageSize": null
+			};
+			$.ajax({
+				contentType: "application/json;charset=utf-8",
+				dataType: "json",
+				type: "post",
+				url: host1 + '/department/select/all',
+				async: false,
+				data: JSON.stringify(json3),
+				success: function(data) {
+					if(data.total > 0) {
+						var str = "";
+						for(var i = 0; i < data.rows.length; i++) {
+							str += "<option value='" + data.rows[i].id + "'>" + data.rows[i].departName + "</option>";
+						}
+						$("#sel_zrdw").html(str);
+						$("#sel_z").html(str);
+						$("#sel_z1").html(str);
+					}
+
+				},
+				error: function(request) {
+					alert("连接失败!")
+				}
+			});
+			//风险分类下拉框
+			var json4 = {
+				"name": '风险分类'
+			};
+			$.ajax({
+				contentType: "application/json;charset=utf-8",
+				dataType: "json",
+				type: "post",
+				url: host1 + '/base/config/get',
+				async: false,
+				data: JSON.stringify(json4),
+				success: function(data) {
+					if(data.total > 0) {
+						var str;
+						for(var i = 0; i < data.rows.length; i++) {
+							str += "<option>" + data.rows[i].value + "</option>"
+						}
+						$("#sel_fxfl").html(str);
+					}
+
+				},
+				error: function(request) {
+					alert("连接失败!")
+				}
+			});
+
+			function sel_user() {
+				var json4 = {
+					"pageNum": null,
+					"pageSize": null,
+					"departId": $('#sel_z option:selected').val()
+				};
+				//用户下拉框
+				$.ajax({
+					contentType: "application/json;charset=utf-8",
+					dataType: "json",
+					type: "post",
+					url: host1 + '/user/select/all',
+					async: false,
+					data: JSON.stringify(json4),
+					success: function(data) {
+						if(data.total > 0) {
+							var str;
+							for(var i = 0; i < data.rows.length; i++) {
+								str += "<option>" + data.rows[i].name + "</option>"
+							}
+
+							$("#zyfzr").val(data.rows[0].name);
+
+							$("#sh_people").html(str);
+						} else {
+							$("#zyfzr").val("");
+							$("#sh_people").html("");
+						}
+
+					},
+					error: function(request) {
+						alert("连接失败!")
+					}
+				});
+			}
+			sel_user();
+			//改变用户赋值
+			function sel_fzUser() {
+				$("#zyfzr").val($('#sh_people option:selected').val());
+			}
+			//改变用户赋值
+			function sel_fzUser1() {
+				$("#fgfzr").val($('#sh_people1 option:selected').val());
+			}
+
+			function sel_user1() {
+				var json4 = {
+					"pageNum": null,
+					"pageSize": null,
+					"departId": $('#sel_z1 option:selected').val()
+				};
+				//用户下拉框
+				$.ajax({
+					contentType: "application/json;charset=utf-8",
+					dataType: "json",
+					type: "post",
+					url: host1 + '/user/select/all',
+					async: true,
+					data: JSON.stringify(json4),
+					success: function(data) {
+						if(data.total > 0) {
+							var str;
+							for(var i = 0; i < data.rows.length; i++) {
+								str += "<option>" + data.rows[i].name + "</option>"
+							}
+							$("#fgfzr").val(data.rows[0].name);
+							$("#sh_people1").html(str);
+						} else {
+							$("#fgfzr").val("");
+							$("#sh_people1").html("");
+						}
+
+					},
+					error: function(request) {
+						alert("连接失败!")
+					}
+				});
+			}
+			sel_user1();
+			//清空表单
+			$("#btn_qk").click(function() {
+				$("#Form1")[0].reset();
+			})
+
+			$("#btn_dr").click(function() {
+				$("input[name=csv]").csv2arr(function(res) {
+					console.log(res);
+
+				});
+			});
+
+			$(document).ready(function() {
+				$("#input_file").change(function() {
+					$("#input_file1").val($("#input_file").val());
+				});
+			});
+
+			var RowId = parent.$('#RowId').val();
+//			alert(RowId);
+			//实现添加数据或者修改数据
+			$("#btn_tj").click(function() {
+				if(RowId != "" && RowId != undefined && RowId != 'undefined') {
+					$.ajax({
+						type: "post",
+						url: host + '/aqfx-ndfx/updateById' + "?id=" + RowId,
+						data: $('#Form1').serialize(), // 你的formid
+						async: false,
+						success: function(data) {
+							alert("修改成功");
+							if(parent) parent.$('#Table2').bootstrapTable('refresh', {
+								url: host + '/aqfx-ndfx/query'
+							});
+						},
+						error: function(request) {
+							alert("修改失败");
+						}
+					});
+				} else {
+					var str=$("#year").val()+"-"+$("#month").val();
+					$("#datetype").val(str);
+					$.ajax({
+						type: "post",
+						url: host + '/aqfx-ndfx/save',
+						data: $('#Form1').serialize(), // 你的formid
+						async: false,
+						success: function(data) {
+							if(data.status == "success") {
+								alert("提交成功");
+								var index = parent.layer.getFrameIndex(window.name);
+								parent.layer.close(index);
+								if(parent) parent.$('#Table2').bootstrapTable('refresh', {
+									url: host + '/aqfx-ndfx/query'
+								});
+							} else {
+								alert("提交失败!");
+							}
+
+						},
+						error: function(request) {
+							alert("连接失败！");
+						}
+					});
+				}
+
+			})
+
+			$.fn.loadData = function(obj) {
+				var key, value, tagName, type, arr;
+				//				this.reset();
+				for(var x in obj) {
+					if(obj.hasOwnProperty(x)) {
+						key = x;
+						value = obj[x];
+						this.find("[name='" + key + "'],[name='" + key + "[]']").each(function() {
+							tagName = $(this)[0].tagName.toUpperCase();
+							type = $(this).attr('type');
+							if(tagName == 'INPUT') {
+								if(type == 'radio') {
+									if($(this).val() == value) {
+										$(this).attr('checked', true);
+									}
+								} else if(type == 'checkbox') {
+									arr = value.split(',');
+									for(var i = 0; i < arr.length; i++) {
+										if($(this).val() == arr[i]) {
+											$(this).attr('checked', true);
+											break;
+										}
+									}
+								} else {
+									$(this).val(value);
+								}
+							} else if(tagName == 'SELECT' || tagName == 'TEXTAREA') {
+								$(this).val(value);
+							}
+						});
+					}
+				}
+			}
+			//根据点击表格某行，得到ID，查询出信息，调用loadData方法，把信息显示到form表单中
+			if(RowId != "" && RowId != undefined && RowId != 'undefined') {
+				$.ajax({
+					dataType: "json",
+					type: "post",
+					url: host + '/aqfx-ndfx/query' + '?id=' + RowId,
+					async: false,
+					//					complete: UN_LODIN_OUT_FUNC,
+					success: function(data) {
+						//					SetFromValues($("#Form1"), data.rows[0]);
+						$("#Form1").loadData(data.rows[0]);
+					},
+					error: function(request) {
+
+					}
+				});
+			}
+		</script>
+	</body>
+
+</html>

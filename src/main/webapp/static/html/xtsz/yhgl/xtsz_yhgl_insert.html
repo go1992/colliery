@@ -6,7 +6,7 @@
 		<title></title>
 		<style>
 			#Table1 {
-				width: 80%;
+				width: 98%;
 				margin: auto;
 				margin-top: 20px;
 				/*padding: 10px 0px 0px 50px;*/
@@ -130,7 +130,7 @@
 				</tr>
 				<tr>
 					<td>创建者：</td>
-					<td slspan="3"><input name="createUser" /> </td>
+					<td slspan="3"><input id="createUser" name="createUser" readonly="readonly" /> </td>
 				</tr>
 
 				
@@ -140,28 +140,19 @@
 				<button id="btn_qk" type="button" class="btn_qk"><i class="iconfont icon-qingkong"></i>清空</button>
 			</div>
 		</form>
-		<script type="text/javascript" src="../../../js/jquery-1.8.0.min.js"></script>
+		<script type="text/javascript" src="../../../js/jquery-1.12.4.js"></script>
 		<script type="text/javascript" src="../../../js/layer/layer.js"></script>
-		<!--<script type="text/javascript" src="http://127.0.0.1:8020/static/js/jquery-1.12.4.js"></script>
-		<script type="text/javascript" src="http://127.0.0.1:8020/static/js/layer/layer.js"></script>-->
+		<script type="text/javascript" src="../../../glng/PZ_IP.js" ></script>
 		<script>
-			//为ajax设置跨域带cookie
-			$.ajaxPrefilter(function(options, originalOptions, jqXHR) {
-				options.xhrFields = {
-					withCredentials: true
-				}
-			});
+			//默认当前用户为创建者
+			var username = sessionStorage.getItem("MK_userName");
+			$("#createUser").val(username);
 			//清空表单
 			$("#btn_qk").click(function() {
 				$("#Form1")[0].reset();
 			})
-			var host = "http://47.103.35.95:8888";
-			var UrlSelect = '/user/select/all';
-			var Urllb = '/role/select/all';
-			var Urlbm = '/department/select/all';
-			var Urlid = '/user/select/';
-			var UrlInsert = '/user/add';
-			var UrlUpdate = '/user/update';
+			var host = ip;//ip地址
+			//加载角色下拉框
 			var json1 = {
 				"pageNum": null,
 				"pageSize": null
@@ -170,18 +161,16 @@
 				contentType: "application/json;charset=utf-8",
 				dataType: "json",
 				type: "post",
-				url: host + Urllb,
-				async: true,
+				url: host + '/role/select/all',
+				async: false,
 				data: JSON.stringify(json1),
 				success: function(data) {
 					if(data.total >0) {
-						var str;
+						var str="";
 						for(var i = 0; i < data.rows.length; i++) {
-							str += "<option value='"+data.rows[i].id+"'>" + data.rows[i].roleName + "</option>"
+							str += "<option value='"+data.rows[i].id+"'>" + data.rows[i].roleName + "</option>";
 						}
 						$("#sel_zkwz").html(str);	
-					}else{
-						alert(data.message);
 					}
 					
 				},
@@ -189,6 +178,7 @@
 					alert("连接失败!")
 				}
 			});
+			//加载部门下拉框
 			var json2 = {
 				"pageNum": null,
 				"pageSize": null
@@ -197,18 +187,16 @@
 				contentType: "application/json;charset=utf-8",
 				dataType: "json",
 				type: "post",
-				url: host + Urlbm,
-				async: true,
+				url: host + '/department/select/all',
+				async: false,
 				data: JSON.stringify(json2),
 				success: function(data) {
 					if(data.total >0) {
-						var str;
+						var str="";
 						for(var i = 0; i < data.rows.length; i++) {
-							str += "<option value='"+data.rows[i].id+"'>" + data.rows[i].departName + "</option>"
+							str += "<option value='"+data.rows[i].id+"'>" + data.rows[i].departName + "</option>";
 						}
 						$("#sel_z").html(str);
-					}else{
-						alert(data.message);
 					}
 					
 				},
@@ -226,7 +214,7 @@
 						contentType: "application/json;charset=utf-8",
 						dataType: "json",
 						type: "post",
-						url: host + UrlUpdate,
+						url: host + '/user/update',
 						data: JSON.stringify($('#Form1').serializeJson()), // 你的formid
 						async: true,
 						success: function(data) {
@@ -235,7 +223,7 @@
 								var index = parent.layer.getFrameIndex(window.name);
 								parent.layer.close(index);
 								if(parent) parent.$('#Table2').bootstrapTable('refresh', {
-									url: host + UrlSelect
+									url: host + '/user/select/all'
 								});
 							} else {
 								alert("修改失败!");
@@ -251,12 +239,17 @@
 						contentType: "application/json;charset=utf-8",
 						dataType: "json",
 						type: "post",
-						url: host + UrlInsert,
+						url: host + '/user/add',
 						data: JSON.stringify($('#Form1').serializeJson()), // 你的formid
 						async: true,
 						success: function(data) {
 							if(data.status == "success") {
 								alert("提交成功!");
+								var index = parent.layer.getFrameIndex(window.name);
+								parent.layer.close(index);
+								if(parent) parent.$('#Table2').bootstrapTable('refresh', {
+									url: host + '/user/select/all'
+								});
 							} else {
 								alert("提交失败!");
 							}
@@ -274,7 +267,7 @@
 //					contentType: "application/json;charset=utf-8",
 					dataType: "json",
 					type: "get",
-					url: host + Urlid + RowId,
+					url: host + '/user/select/' + RowId,
 					async: true,
 					
 					success: function(data) {

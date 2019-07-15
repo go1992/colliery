@@ -84,10 +84,10 @@
 
 	<body>
 		<form method="post" action="#" id="Form1" enctype="multipart/form-data">
-		<input type="hidden" id="RowId" name="id"/>
+			<input type="hidden" id="RowId" name="id" />
 			<table id="Table1" border="1" cellspacing="0" cellpadding="5px">
 				<tr>
-				
+
 					<td>用户id：</td>
 					<td><input id="id" /><br></td>
 					<td><button type="button" class="btn_tj" id="btn_sel"><i class="iconfont icon-chaxun"></i>查询</button></td>
@@ -95,31 +95,13 @@
 			</table>
 			<div class="btn_tr" id="toolbar">
 				<div>
+					<button type="button" class="btn_bj" id="btn_add"><i class="iconfont icon-bianji"></i>新增</button>
 					<button type="button" class="btn_bj" id="btn_bj"><i class="iconfont icon-bianji"></i>编辑选中项</button>
 					<button type="button" class="btn_del" id="btn_del"><i class="iconfont icon-shanchu"></i>删除选中项</button>
 				</div>
 			</div>
 			<table id="Table2" border="1" cellspacing="0" cellpadding="5px">
-				<!--<thead>
-				<tr>
-					<th><input id="check" onchange="dianji()" type="checkbox"></th>
-					<th></th>
-					<th>开孔日期</th>
-					<th>位置</th>
-					<th>钻孔编号</th>
-					<th>水位情况</th>
-					<th>孔内状况</th>
-					<th>孔口情况</th>
-					<th>设计孔深</th>
-					<th>实际孔深</th>
-					<th>有无险情</th>
-					<th>记录人</th>
-					<th>审核人</th>
-				</tr>
-			</thead>
-			<tbody>
 
-			</tbody>-->
 			</table>
 		</form>
 		<script type="text/javascript" src="js/jquery-1.12.4.js"></script>
@@ -133,17 +115,10 @@
 		<script type="text/javascript" src="js/tableExport.min.js"></script>
 		<!--bootstrap-table插件汉化-->
 		<script type="text/javascript" src="js/bootstrap-table-zh-CN.min.js"></script>
+		<script type="text/javascript" src="glng/PZ_IP.js" ></script>
 		<script>
-			//为ajax设置跨域带cookie
-			$.ajaxPrefilter(function(options, originalOptions, jqXHR) {
-				options.xhrFields = {
-					withCredentials: true
-				}
-			});
-			//清空表单
-			$("#btn_qk").click(function() {
-				$("#Form1")[0].reset();
-			})
+			
+			var host = ip;//ip地址
 			$(function() {
 				//1.初始化Table
 				var oTable = new TableInit();
@@ -154,9 +129,6 @@
 				oButtonInit.Init();
 
 			});
-			var host = "http://47.103.35.95:8888";
-			var UrlSelect = '/user/select/all';
-			var UrlDelete = '/user/delete';
 			var TableInit = function() {
 				$('#Table2').bootstrapTable('destroy');
 				var oTableInit = new Object();
@@ -165,9 +137,9 @@
 					$('#Table2').bootstrapTable({
 						method: 'post',
 						toolbar: '#toolbar', //工具按钮用哪个容器
-//						contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-						url: host + UrlSelect,
-						
+						//						contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+						url: host + '/user/select/all',
+
 						dataType: 'json',
 						undefinedText: '-', //当数据为 undefined 时显示的字符
 						striped: true, //是否显示行间隔色
@@ -236,6 +208,11 @@
 								sortable: "true"
 							},
 							{
+								field: "userPwd",
+								title: "用户密码",
+								sortable: "true",
+								visible: false
+							}, {
 								field: "roleName",
 								title: "角色",
 								sortable: "true"
@@ -245,16 +222,11 @@
 								title: "部门",
 								sortable: "true"
 							},
+
 							{
 								field: "name",
 								title: "用户名",
 								sortable: "true"
-							},
-							{
-								field: "userPwd",
-								title: "用户密码",
-								sortable: "true",
-								visible: false
 							},
 							{
 								field: "createUser",
@@ -275,7 +247,7 @@
 								title: '编辑',
 								maxmin: true,
 								shadeClose: true, //点击遮罩关闭层
-								area: ['1000px', '600px'],
+								area: ['800px', '400px'],
 								content: 'html/xtsz/yhgl/xtsz_yhgl_insert.html'
 							});
 						},
@@ -283,14 +255,12 @@
 				}
 				//得到查询的参数
 				oTableInit.queryParams = function(params) {
-					var temp = $("#Form1").serializeJsonObject();//获取自定义查询条件
-					temp["pageSize"]=params.pageSize;//页面大小
-					temp["pageNum"]=params.pageNumber;//页码
-					temp["order"]=params.sortOrder;//排序的方式
-					temp["ordername"]=params.sortName;//排序的字段
-					temp["searchParam"]=params.searchText;//搜索值
-					temp["fields"]=getSearchFields();//要搜索的字段
-					
+					var temp = $("#Form1").serializeJsonObject(); //获取自定义查询条件
+					temp["pageSize"] = params.pageSize; //页面大小
+					temp["pageNum"] = params.pageNumber; //页码
+					temp["order"] = params.sortOrder; //排序的方式
+					temp["ordername"] = params.sortName; //排序的字段
+
 					return temp;
 				};
 				return oTableInit;
@@ -309,13 +279,16 @@
 			};
 			//查询数据
 			$("#btn_sel").click(function() {
-				$('#Table2').bootstrapTable('refreshOptions',{pageNumber:1});
+				$('#Table2').bootstrapTable('refreshOptions', {
+					pageNumber: 1
+				});
 				$('#Table2').bootstrapTable('refresh', {
-					url: host + UrlSelect
+					url: host + '/user/select/all'
 				});
 			});
 			//实现删除数据的方法
-			$("#btn_del").click(function() {var message = confirm("是否确定删除数据？");
+			$("#btn_del").click(function() {
+				var message = confirm("是否确定删除数据？");
 				if(message == true) {
 					var ids = []; //得到用户选择的数据的ID
 					var rows = $('#Table2').bootstrapTable('getSelections');
@@ -323,11 +296,11 @@
 						//					ids += rows[i].planId + ',';
 						ids.push(rows[i].id);
 					}
-				//				alert(ids);
-				$.ajax({
+					//				alert(ids);
+					$.ajax({
 						contentType: "application/json;charset=utf-8",
 						type: "post",
-						url: host + UrlDelete,
+						url: host + '/user/delete',
 						data: JSON.stringify(ids),
 						dataType: "json",
 						success: function(data) {
@@ -335,7 +308,7 @@
 								alert("删除成功！");
 							}
 							$('#Table2').bootstrapTable('refresh', {
-								url: host + UrlSelect
+								url: host + '/user/select/all'
 							});
 						}
 					});
@@ -353,14 +326,27 @@
 						title: '编辑',
 						maxmin: true,
 						shadeClose: true, //点击遮罩关闭层
-						area: ['1000px', '600px'],
+						area: ['800px', '400px'],
 						content: 'html/xtsz/yhgl/xtsz_yhgl_insert.html'
 					});
-				}else if(rows.length==0){
+				} else if(rows.length == 0) {
 					alert("请选择您要编辑的项！");
-				}else{
+				} else {
 					alert("编辑选项按钮仅能选择一项！");
 				}
+			});
+			//新增
+			$("#btn_add").click(function() {
+				$("#RowId").val("");
+					layer.open({
+						type: 2,
+						title: '新增',
+						maxmin: true,
+						shadeClose: true, //点击遮罩关闭层
+						area: ['800px', '400px'],
+						content: 'html/xtsz/yhgl/xtsz_yhgl_insert.html'
+					});
+			
 			});
 			//得到当前显示字段，以逗号隔开拼接字符串
 			function getSearchFields() {
@@ -393,7 +379,7 @@
 				return json;
 			}
 		</script>
-			
+
 	</body>
 
 </html>
