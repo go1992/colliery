@@ -3,24 +3,30 @@ package com.yw.colliery.api.business.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.yw.colliery.api.base.BaseController;
+import com.yw.colliery.api.base.ESessionKey;
 import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.AqfxCsxg;
 import com.yw.colliery.entity.AqfxNdfx;
+import com.yw.colliery.entity.XtgnYhlb;
 import com.yw.colliery.sdk.aop.auth.AuthModule;
 import com.yw.colliery.sdk.constans.AuthConstant;
 import com.yw.colliery.sdk.request.YearUnsafeRequest;
 import com.yw.colliery.sdk.response.YearUnsafeResponse;
 import com.yw.colliery.sdk.response.vo.UnsafeLevelVo;
 import com.yw.colliery.sdk.response.vo.UnsafeTypeVo;
+import com.yw.colliery.sdk.utils.ExcelUtils;
 import com.yw.colliery.service.business.IAqfxCsxgService;
 import com.yw.colliery.service.business.IAqfxNdfxService;
 import com.yw.colliery.service.business.impl.AqfxNdfxServiceImpl;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -111,5 +117,16 @@ public class AqfxNdfxController extends BaseController<AqfxNdfxServiceImpl,AqfxN
 		} else {
 			return ResultObject.buildFailResponse("没有查到年度风险统计数据");
 		}
+	}
+
+	@PostMapping("/import/excel")
+	@ResponseBody
+	public ResultObject importExcelData( @RequestParam("file") MultipartFile file) throws Exception{
+		if(file.isEmpty()){
+			return new ResultObject(ResultObject.FAILED,"1003","参数错误",null);
+		}
+		String fileName = file.getOriginalFilename().replaceAll("/", "");
+		List<AqfxNdfx> bankListByExcel = ExcelUtils.getBankListByExcel(file.getInputStream(), fileName, AqfxNdfx.class);
+		return new ResultObject(ResultObject.SUCCESS,"1003","上传成功",null);
 	}
 }
