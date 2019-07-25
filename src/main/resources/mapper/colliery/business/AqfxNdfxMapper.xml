@@ -1,46 +1,105 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yw.colliery.mapper.AqfxNdfxMapper">
-    <resultMap id="BaseResultMap" type="com.yw.colliery.entity.AqfxNdfx">
+    <resultMap id="BaseResultMap" type="com.yw.colliery.entity.SecurityRiskEntity">
         <id column="id" property="id" jdbcType="INTEGER"/>
-        <result column="pcrq" property="pcrq" jdbcType="TIMESTAMP"/>
-        <result column="ssmk" property="ssmk" jdbcType="VARCHAR"/>
-        <result column="ylzda" property="ylzda" jdbcType="VARCHAR"/>
-        <result column="ylzdb" property="ylzdb" jdbcType="VARCHAR"/>
-        <result column="ylzdc" property="ylzdc" jdbcType="VARCHAR"/>
-        <result column="fxd" property="fxd" jdbcType="VARCHAR"/>
-        <result column="dtwzdd" property="dtwzdd" jdbcType="VARCHAR"/>
-        <result column="zrdw" property="zrdw" jdbcType="VARCHAR"/>
-        <result column="fxdj" property="fxdj" jdbcType="VARCHAR"/>
-        <result column="fxfl" property="fxfl" jdbcType="VARCHAR"/>
-        <result column="xzrs" property="xzrs" jdbcType="VARCHAR"/>
-        <result column="fxms" property="fxms" jdbcType="VARCHAR"/>
-        <result column="gkcs" property="gkcs" jdbcType="VARCHAR"/>
-        <result column="zyfzr" property="zyfzr" jdbcType="VARCHAR"/>
-        <result column="fgfzr" property="fgfzr" jdbcType="VARCHAR"/>
-        <result column="fxlx" property="fxlx" jdbcType="VARCHAR"/>
-        <result column="datetype" property="datetype" jdbcType="VARCHAR"/>
+        <result column="identification_date" property="identificationDate" jdbcType="TIMESTAMP"/>
+        <result column="coal_mine_name" property="coalMineName" jdbcType="VARCHAR"/>
+        <result column="reserved_field1" property="reservedField1" jdbcType="VARCHAR"/>
+        <result column="reserved_field2" property="reservedField2" jdbcType="VARCHAR"/>
+        <result column="reserved_field3" property="reservedField3" jdbcType="VARCHAR"/>
+        <result column="risk_point" property="riskPoint" jdbcType="VARCHAR"/>
+        <result column="map_location" property="mapLocation" jdbcType="VARCHAR"/>
+        <result column="duty_department" property="dutyDepartment" jdbcType="VARCHAR"/>
+        <result column="risk_level" property="riskLevel" jdbcType="VARCHAR"/>
+        <result column="risk_sort" property="riskSort" jdbcType="VARCHAR"/>
+        <result column="limit_peoples" property="limitPeoples" jdbcType="VARCHAR"/>
+        <result column="risk_desc" property="riskDesc" jdbcType="VARCHAR"/>
+        <result column="control_measures" property="controlMeasures" jdbcType="VARCHAR"/>
+        <result column="main_dutyPerson" property="mainDutyPerson" jdbcType="VARCHAR"/>
+        <result column="second_dutyPerson" property="secondDutyPerson" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="date_type" property="dateType" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-       id,pcrq,ssmk,ylzda,ylzdb,ylzdc,fxd,dtwzdd,zrdw,fxdj,fxfl,xzrs,fxms,gkcs,zyfzr,fgfzr,fxlx,datetype
+       id,
+       identification_date,
+       coal_mine_name,
+       reserved_field1,
+       reserved_field2,
+       reserved_field3,
+       risk_point,
+       map_location,
+       duty_department,
+       risk_level,
+       risk_sort,
+       limit_peoples,
+       risk_desc,
+       control_measures,
+       main_dutyPerson,
+       second_dutyPerson,
+       type,
+       date_type
     </sql>
 
     <select id="selectByParams" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from aqfx_ndfx
+        from security_risk_entit
         where
         1=1
         <if test="datetype != null">
-            AND datetype=#{datetype}
+            AND date_type=#{datetype}
         </if>
         <if test="unSafeType != null">
-            AND  fxfl=#{unSafeType,jdbcType=VARCHAR}
+            AND  risk_sort=#{unSafeType,jdbcType=VARCHAR}
         </if>
         <if test="unSafeLevel != null">
-            AND fxdj=#{unSafeLevel,jdbcType=VARCHAR}
+            AND risk_level=#{unSafeLevel,jdbcType=VARCHAR}
         </if>
     </select>
 
+    <insert id="insertByBatch" parameterType="java.util.List">
+        INSERT INTO security_risk_entit(
+            identification_date,
+            coal_mine_name,
+            reserved_field1,
+            reserved_field2,
+            reserved_field3,
+            risk_point,
+            map_location,
+            duty_department,
+            risk_level,
+            risk_sort,
+            limit_peoples,
+            risk_desc,
+            control_measures,
+            main_dutyPerson,
+            second_dutyPerson,
+            type,
+            date_type
+        )values
+        <foreach collection="list" item="item" index="index" separator=",">
+        (
+            #{item.identificationDate,jdbcType=VARCHAR},
+            #{item.coalMineName,jdbcType=VARCHAR},
+            #{item.reservedField1,jdbcType=VARCHAR},
+            #{item.reservedField2,jdbcType=VARCHAR},
+            #{item.reservedField3,jdbcType=VARCHAR},
+            #{item.riskPoint,jdbcType=VARCHAR},
+            #{item.mapLocation,jdbcType=VARCHAR},
+            #{item.dutyDepartment,jdbcType=VARCHAR},
+            #{item.riskLevel,jdbcType=VARCHAR},
+            #{item.riskSort,jdbcType=VARCHAR},
+            #{item.limitPeoples,jdbcType=VARCHAR},
+            #{item.riskDesc,jdbcType=VARCHAR},
+            #{item.controlMeasures,jdbcType=VARCHAR},
+            #{item.mainDutyPerson,jdbcType=VARCHAR},
+            #{item.secondDutyPerson,jdbcType=VARCHAR},
+            #{item.type,jdbcType=VARCHAR},
+            #{item.dateType,jdbcType=VARCHAR}
+        )
+        </foreach>
+    </insert>
 </mapper>

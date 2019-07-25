@@ -1,12 +1,11 @@
 package com.yw.colliery.service.business;
 
-import com.yw.colliery.entity.AqfxNdfx;
+import com.yw.colliery.entity.SecurityRiskEntity;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yw.colliery.sdk.request.YearUnsafeRequest;
 import com.yw.colliery.sdk.response.vo.UnsafeLevelVo;
 import com.yw.colliery.sdk.response.vo.UnsafeTypeVo;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -17,7 +16,7 @@ import java.util.List;
  * @author jobob
  * @since 2019-03-06
  */
-public interface IAqfxNdfxService extends IService<AqfxNdfx> {
+public interface IAqfxNdfxService extends IService<SecurityRiskEntity> {
 
 
     List<UnsafeTypeVo> statisUnsafeTypes(YearUnsafeRequest request);

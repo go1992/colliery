@@ -3,11 +3,9 @@ package com.yw.colliery.api.business.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.yw.colliery.api.base.BaseController;
-import com.yw.colliery.api.base.ESessionKey;
 import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.AqfxCsxg;
-import com.yw.colliery.entity.AqfxNdfx;
-import com.yw.colliery.entity.XtgnYhlb;
+import com.yw.colliery.entity.SecurityRiskEntity;
 import com.yw.colliery.sdk.aop.auth.AuthModule;
 import com.yw.colliery.sdk.constans.AuthConstant;
 import com.yw.colliery.sdk.request.YearUnsafeRequest;
@@ -19,14 +17,13 @@ import com.yw.colliery.service.business.IAqfxCsxgService;
 import com.yw.colliery.service.business.IAqfxNdfxService;
 import com.yw.colliery.service.business.impl.AqfxNdfxServiceImpl;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -43,26 +40,32 @@ import java.util.Map;
 @RequestMapping("/apiv1/aqfx-ndfx")
 @Api(value = "AqfxNdfxController", description = "安全风险管控-年度风险辨识")
 @Slf4j
-public class AqfxNdfxController extends BaseController<AqfxNdfxServiceImpl,AqfxNdfx> {
+public class AqfxNdfxController extends BaseController<AqfxNdfxServiceImpl, SecurityRiskEntity> {
 
 	@Autowired
 	private IAqfxCsxgService iAqfxCsxgService;
 	@Autowired
 	private IAqfxNdfxService iAqfxNdfxService;
 	
-	/*
+	/**
 	 * 年度风险修改时同时插入措施修改记录
+	 *
+	 * @param params
+	 * @return
 	 */
+	@Override
 	@AuthModule(authId = AuthConstant.Module.SAFE_MODULE, level = AuthConstant.Level.HIGH)
-	public Object updateById(AqfxNdfx params) {
-		if(log.isDebugEnabled())log.debug("updateById参数:\n{}",JSON.toJSONString(params));
-		AqfxNdfx old = service.getById(params.getId());
+	public Object updateById(SecurityRiskEntity params) {
+		if(log.isDebugEnabled()){
+			log.debug("updateById参数:\n{}",JSON.toJSONString(params));
+		}
+		SecurityRiskEntity old = service.getById(params.getId());
 		Object result = service.updateById(params);
-		if(!old.getGkcs().equals(params.getGkcs())){
+		if(!old.getControlMeasures().equals(params.getControlMeasures())){
 			AqfxCsxg oldSave = JSON.parseObject(JSON.toJSONString(old), AqfxCsxg.class);
 			oldSave.setXgrq(new Date());
 			oldSave.setYsid(old.getId());
-			oldSave.setCsbh(params.getGkcs());
+			oldSave.setCsbh(params.getControlMeasures());
 			iAqfxCsxgService.save(oldSave);
 		}
 		return new ResultObject(ResultObject.SUCCESS,"1004","接口调用成功",result);
@@ -76,7 +79,7 @@ public class AqfxNdfxController extends BaseController<AqfxNdfxServiceImpl,AqfxN
 
 	@Override
 	@AuthModule(authId = AuthConstant.Module.SAFE_MODULE, level = AuthConstant.Level.HIGH)
-	public Object save(AqfxNdfx params, HttpServletRequest request) throws Exception {
+	public Object save(SecurityRiskEntity params, HttpServletRequest request) throws Exception {
 		return super.save(params, request);
 	}
 
@@ -121,12 +124,18 @@ public class AqfxNdfxController extends BaseController<AqfxNdfxServiceImpl,AqfxN
 
 	@PostMapping("/import/excel")
 	@ResponseBody
-	public ResultObject importExcelData( @RequestParam("file") MultipartFile file) throws Exception{
-		if(file.isEmpty()){
+	public ResultObject importExcelData(HttpServletRequest request) throws Exception{
+		MultipartFile file = ((MultipartHttpServletRequest)request).getFile("fileName");
+		if(file == null || file.isEmpty()){
 			return new ResultObject(ResultObject.FAILED,"1003","参数错误",null);
 		}
 		String fileName = file.getOriginalFilename().replaceAll("/", "");
-		List<AqfxNdfx> bankListByExcel = ExcelUtils.getBankListByExcel(file.getInputStream(), fileName, AqfxNdfx.class);
-		return new ResultObject(ResultObject.SUCCESS,"1003","上传成功",null);
+		List<SecurityRiskEntity> bankListByExcel = ExcelUtils.getBankListByExcel(file.getInputStream(), fileName, SecurityRiskEntity.class);
+		boolean saveBatch = service.saveBatch(bankListByExcel);
+		if(saveBatch){
+			return new ResultObject(ResultObject.SUCCESS,"1003","上传成功",null);
+		}else {
+			return new ResultObject(ResultObject.FAILED,"1003","保存数据失败",null);
+		}
 	}
 }

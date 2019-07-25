@@ -3,7 +3,6 @@ package com.yw.colliery.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 import com.yw.colliery.sdk.file.InitFormList;
@@ -35,8 +34,8 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@ApiModel(value = "AqfxNdfx对象", description = "安全风险管控-年度风险辨识")
-public class AqfxNdfx implements Serializable, InitFormList {
+@ApiModel(value = "安全风险实体类", description = "安全风险管控-年度风险辨识")
+public class SecurityRiskEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -49,108 +48,67 @@ public class AqfxNdfx implements Serializable, InitFormList {
     @ApiModelProperty(value = "辨识时间 ", example = "2012-12-26")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
-    private Date pcrq;
-
-
+    private Date identificationDate;
+    
     @ApiModelProperty(value = "数据所属煤矿 ", example = "数据所属煤矿 ")
-    private String ssmk;
+    private String coalMineName;
 
 
     @ApiModelProperty(value = "预留字段a ", example = "预留字段a ")
-    private String ylzda;
+    private String reservedField1;
 
 
     @ApiModelProperty(value = "预留字段b ", example = "预留字段b ")
-    private String ylzdb;
+    private String reservedField2;
 
 
     @ApiModelProperty(value = "预留字段c ", example = "预留字段c ")
-    private String ylzdc;
+    private String reservedField3;
 
 
     @ApiModelProperty(value = "风险点 ", example = "风险点 ")
-    private String fxd;
+    private String riskPoint;
 
 
     @ApiModelProperty(value = "地图位置定点 ", example = "地图位置定点 ")
-    private String dtwzdd;
+    private String mapLocation;
 
 
     @ApiModelProperty(value = "责任单位 ", example = "责任单位 ")
-    private String zrdw;
+    private String dutyDepartment;
 
 
     @ApiModelProperty(value = "风险等级 ", example = "风险等级 ")
-    private String fxdj;
+    private String riskLevel;
 
 
     @ApiModelProperty(value = "风险分类 ", example = "风险分类 ")
-    private String fxfl;
+    private String riskSort;
 
 
     @ApiModelProperty(value = "限制人数 ", example = "限制人数 ")
-    private String xzrs;
+    private String limitPeoples;
 
 
     @ApiModelProperty(value = "风险描述 ", example = "风险描述 ")
-    private String fxms;
+    private String riskDesc;
 
 
     @ApiModelProperty(value = "管控措施 ", example = "管控措施 ")
-    private String gkcs;
+    private String controlMeasures;
 
 
     @ApiModelProperty(value = "主要负责人 ", example = "主要负责人 ")
-    private String zyfzr;
+    private String mainDutyPerson;
 
 
     @ApiModelProperty(value = "分管负责人 ", example = "分管负责人 ")
-    private String fgfzr;
+    private String secondDutyPerson;
 
 
     @ApiModelProperty(value = "类型(年度风险,专项风险)", example = "类型(年度风险,专项风险)")
-    private String fxlx;
+    private String type;
 
     @ApiModelProperty(value = "辨识时间类型", example = "2019(年度风险) 2019-05(月度风险)")
-    private String datetype;
-
-    @Override
-    public void initObjectByList(List list) {
-        for (int i = 0; i < list.size(); i++) {
-            switch (i) {
-                case 0:
-                    this.fxd = ((Cell) list.get(i)).getStringCellValue();
-                    break;
-                case 1:
-//                    this.fxd = ((Cell) list.get(i)).getStringCellValue();
-                    break;
-                case 2:
-                    this.zrdw = ((Cell) list.get(i)).getStringCellValue();
-                    break;
-                case 3:
-                    this.fxdj = ((Cell) list.get(i)).getStringCellValue();
-                    break;
-                case 4:
-                    this.fxfl = ((Cell) list.get(i)).getStringCellValue();
-                    break;
-                case 5:
-                    this.xzrs = ((Cell) list.get(i)).getStringCellValue();
-                    break;
-                case 6:
-                    this.fxms = ((Cell) list.get(i)).getStringCellValue();
-                    break;
-                case 7:
-                    this.gkcs = ((Cell) list.get(i)).getStringCellValue();
-                    break;
-                case 8:
-                    this.zyfzr=((Cell) list.get(i)).getStringCellValue();
-                    break;
-                case 9:
-                    this.fgfzr =((Cell) list.get(i)).getStringCellValue();
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
+    private String dateType;
 }
