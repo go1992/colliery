@@ -1,25 +1,18 @@
-package com.yw.colliery.entity;
+package com.yw.colliery.entity.securityrisk;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-
-import java.util.Date;
-
-import com.yw.colliery.sdk.file.InitFormList;
-import org.apache.poi.ss.usermodel.Cell;
-import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
-
-import java.io.Serializable;
-import java.util.List;
-
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
+import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -31,11 +24,9 @@ import lombok.experimental.Accessors;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@ApiModel(value = "安全风险实体类", description = "安全风险管控-年度风险辨识")
-public class SecurityRiskEntity implements Serializable {
+public class YearsSecurityRiskEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -49,7 +40,7 @@ public class SecurityRiskEntity implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date identificationDate;
-    
+
     @ApiModelProperty(value = "数据所属煤矿 ", example = "数据所属煤矿 ")
     private String coalMineName;
 

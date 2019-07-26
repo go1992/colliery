@@ -56,13 +56,13 @@ public class DcSwxqYjclController extends BaseController<DcSwxqYjclServiceImpl,D
 		
 		qw = new QueryWrapper<DcSwxqYjcl>();
 		qw.select("count(*) AS shuliang","zrdw");
-		qw.in(true,"coalMineName", deptsIds);
+		qw.in(true,"ssmk", deptsIds);
 		qw.groupBy(true, "zrdw");
 		result.put("zrdwGroup", service.list(qw));
 		
 		qw = new QueryWrapper<DcSwxqYjcl>();
 		qw.select("count(*) AS shuliang","wxdj");
-		qw.in(true,"coalMineName", deptsIds);
+		qw.in(true,"ssmk", deptsIds);
 		qw.groupBy(true, "wxdj");
 		result.put("wxdjGroup", service.list(qw));
 

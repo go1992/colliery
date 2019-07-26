@@ -71,7 +71,7 @@ public abstract class BaseController<S extends ServiceImpl<?, T>,T>{
 		String startTime = MapUtils.getString(params, "startTime",null);
 		String endTime = MapUtils.getString(params, "endTime",null);
 		if(checkNotNull(startTime,endTime)) {
-			qw.between("identificationDate", startTime, endTime);
+			qw.between("pcrq", startTime, endTime);
 		}
 
 		String dateType = MapUtils.getString(params, "datetype",null);
@@ -107,7 +107,7 @@ public abstract class BaseController<S extends ServiceImpl<?, T>,T>{
 		
 		//区域||部门过滤
 		List<String> deptsIds = (List<String>)session.getAttribute(ESessionKey.DeptsIds.key); 
-		qw.in(true,"coalMineName", deptsIds);
+		qw.in(true,"ssmk", deptsIds);
 		
 		//导出
 //		String isExportExcel = MapUtils.getString(params, "isExportExcel",null);
@@ -129,7 +129,7 @@ public abstract class BaseController<S extends ServiceImpl<?, T>,T>{
 		params.remove("searchParam");
 		params.remove("isExportExcel");
 		//部门参数由后端根据当前用户参数填充
-		params.remove("coalMineName");
+		params.remove("ssmk");
 		params.remove("isPage");
 		qw.allEq(true,params,false);
 		
@@ -184,7 +184,7 @@ public abstract class BaseController<S extends ServiceImpl<?, T>,T>{
 		XtgnYhlb user = (XtgnYhlb) session.getAttribute(ESessionKey.User.key);
 		if(!XtgnYhlb.class.equals(entityClass)&&!XtgnQyfj.class.equals(entityClass))for(Field each : fields) {
 			each.setAccessible(true);
-			if("coalMineName".equals(each.getName())) {
+			if("ssmk".equals(each.getName())) {
 				if(!checkNotNull(user.getSsmk()))throw new RuntimeException("用户所属部门为空,数据无法录入");
 				each.set(params, user.getSsmk());
 			}
@@ -205,7 +205,7 @@ public abstract class BaseController<S extends ServiceImpl<?, T>,T>{
 	@ApiImplicitParams
 	({
 		@ApiImplicitParam(value="新增数据数组json序列化字符串",dataType="String",
-				name="params",paramType="query",required=true,defaultValue="[{\"coalMineName\":\"一号煤矿\"},{\"coalMineName\":\"二号煤矿\"}]")
+				name="params",paramType="query",required=true,defaultValue="[{\"ssmk\":\"一号煤矿\"},{\"ssmk\":\"二号煤矿\"}]")
 	})
 	@PostMapping("/saveBatch")
 	public Object saveBatch(String params) {
@@ -235,7 +235,7 @@ public abstract class BaseController<S extends ServiceImpl<?, T>,T>{
 	@ApiImplicitParams
 	({
 		@ApiImplicitParam(value="批量修改数据数组json序列化字符串",dataType="String",
-				name="params",paramType="query",required=true,defaultValue="[{\"id\":10,\"identificationDate\":\"2012-12-26\",\"coalMineName\":\"3\",\"reservedField1\":\"预留字段a\",\"ylzdb\":\"预留字段b\",\"ylzdc\":\"预留字段c\",\"fxd\":\"风险点\",\"dtwzdd\":\"地图位置定点\",\"zrdw\":\"责任单位\",\"fxdj\":\"风险等级\",\"fxfl\":\"风险分类\",\"xzrs\":\"限制人数123\",\"fxms\":\"风险描述\",\"gkcs\":\"3方法\",\"zyfzr\":\"主要负责人\",\"fgfzr\":\"分管负责人\",\"fxlx\":\"类型(年度风险,专项风险)\",\"xgrq\":null,\"csbh\":\"3f'f\",\"ysid\":1},{\"id\":11,\"identificationDate\":\"2012-12-26\",\"coalMineName\":\"3\",\"reservedField1\":\"预留字段a\",\"ylzdb\":\"预留字段b\",\"ylzdc\":\"预留字段c\",\"fxd\":\"风险点\",\"dtwzdd\":\"地图位置定点\",\"zrdw\":\"责任单位\",\"fxdj\":\"风险等级\",\"fxfl\":\"风险分类\",\"xzrs\":\"限制人数123\",\"fxms\":\"风险描述\",\"gkcs\":\"修改12\",\"zyfzr\":\"主要负责人\",\"fgfzr\":\"分管负责人\",\"fxlx\":\"类型(年度风险,专项风险)\",\"xgrq\":\"1970-01-19\",\"csbh\":\"3方法\",\"ysid\":1}]")
+				name="params",paramType="query",required=true,defaultValue="[{\"id\":10,\"pcrq\":\"2012-12-26\",\"ssmk\":\"3\",\"ylzda\":\"预留字段a\",\"ylzdb\":\"预留字段b\",\"ylzdc\":\"预留字段c\",\"fxd\":\"风险点\",\"dtwzdd\":\"地图位置定点\",\"zrdw\":\"责任单位\",\"fxdj\":\"风险等级\",\"fxfl\":\"风险分类\",\"xzrs\":\"限制人数123\",\"fxms\":\"风险描述\",\"gkcs\":\"3方法\",\"zyfzr\":\"主要负责人\",\"fgfzr\":\"分管负责人\",\"fxlx\":\"类型(年度风险,专项风险)\",\"xgrq\":null,\"csbh\":\"3f'f\",\"ysid\":1},{\"id\":11,\"pcrq\":\"2012-12-26\",\"ssmk\":\"3\",\"ylzda\":\"预留字段a\",\"ylzdb\":\"预留字段b\",\"ylzdc\":\"预留字段c\",\"fxd\":\"风险点\",\"dtwzdd\":\"地图位置定点\",\"zrdw\":\"责任单位\",\"fxdj\":\"风险等级\",\"fxfl\":\"风险分类\",\"xzrs\":\"限制人数123\",\"fxms\":\"风险描述\",\"gkcs\":\"修改12\",\"zyfzr\":\"主要负责人\",\"fgfzr\":\"分管负责人\",\"fxlx\":\"类型(年度风险,专项风险)\",\"xgrq\":\"1970-01-19\",\"csbh\":\"3方法\",\"ysid\":1}]")
 	})
 	@PostMapping("/updateBatchById")
 	public Object updateBatchById(String params) {

@@ -1,9 +1,11 @@
 package com.yw.colliery.mapper;
 
-import com.yw.colliery.entity.SecurityRiskEntity;
+import com.yw.colliery.entity.AqfxNdfx;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.yw.colliery.entity.securityrisk.YearsSecurityRiskEntity;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -14,8 +16,22 @@ import java.util.List;
  * @author jobob
  * @since 2019-03-06
  */
-public interface AqfxNdfxMapper extends BaseMapper<SecurityRiskEntity> {
+public interface AqfxNdfxMapper extends BaseMapper<AqfxNdfx> {
 
-    List<SecurityRiskEntity> selectByParams(@Param("datetype")String datetype, @Param("unSafeType") String unSafeType,
-                                            @Param("unSafeLevel")  String unSafeLevel);
+    /**
+     * 条件查询
+     * @param datetype
+     * @param unSafeType
+     * @param unSafeLevel
+     * @return
+     */
+    List<AqfxNdfx> selectByParams(@Param("datetype")String datetype, @Param("unSafeType") String unSafeType,
+                                 @Param("unSafeLevel")  String unSafeLevel);
+
+    /**
+     * 批量插入
+     * @param riskEntities
+     * @return
+     */
+    Integer insertByBatch(@Param("list")List<YearsSecurityRiskEntity> riskEntities);
 }

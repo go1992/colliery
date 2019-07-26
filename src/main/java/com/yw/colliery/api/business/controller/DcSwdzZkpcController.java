@@ -129,7 +129,7 @@ public class DcSwdzZkpcController extends BaseController<DcSwdzZkpcServiceImpl,D
 		String startTime = MapUtils.getString(params, "startTime",null);
 		String endTime = MapUtils.getString(params, "endTime",null);
 		if(checkNotNull(startTime,endTime)) {
-			qw.between("identificationDate", startTime, endTime);
+			qw.between("pcrq", startTime, endTime);
 		}
 
 		//排序
@@ -155,7 +155,7 @@ public class DcSwdzZkpcController extends BaseController<DcSwdzZkpcServiceImpl,D
 
 		//区域||部门过滤
 		List<String> deptsIds = (List<String>)session.getAttribute(ESessionKey.DeptsIds.key);
-		qw.in(true,"coalMineName", deptsIds);
+		qw.in(true,"ssmk", deptsIds);
 
 		//导出
 //		String isExportExcel = MapUtils.getString(params, "isExportExcel",null);
@@ -177,7 +177,7 @@ public class DcSwdzZkpcController extends BaseController<DcSwdzZkpcServiceImpl,D
 		params.remove("searchParam");
 		params.remove("isExportExcel");
 		//部门参数由后端根据当前用户参数填充
-		params.remove("coalMineName");
+		params.remove("ssmk");
 		params.remove("isPage");
 		qw.allEq(true,params,false);
 

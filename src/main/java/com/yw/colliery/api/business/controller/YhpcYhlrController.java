@@ -57,19 +57,19 @@ public class YhpcYhlrController extends BaseController<YhpcYhlrServiceImpl,YhpcY
 		
 		qw = new QueryWrapper<YhpcYhlr>();
 		qw.select("count(*) AS shuliang","yhlx");
-		qw.in(true,"coalMineName", deptsIds);
+		qw.in(true,"ssmk", deptsIds);
 		qw.groupBy(true, "yhlx");
 		result.put("yhlxGroup", service.list(qw));
 		
 		qw = new QueryWrapper<YhpcYhlr>();
 		qw.select("count(*) AS shuliang","yhjb");
-		qw.in(true,"coalMineName", deptsIds);
+		qw.in(true,"ssmk", deptsIds);
 		qw.groupBy(true, "yhjb");
 		result.put("yhjbGroup", service.list(qw));
 
 		qw = new QueryWrapper<YhpcYhlr>();
 		qw.select("count(*) AS shuliang","yhzt");
-		qw.in(true,"coalMineName", deptsIds);
+		qw.in(true,"ssmk", deptsIds);
 		qw.groupBy(true, "yhzt");
 		result.put("yhztGroup", service.list(qw));
 

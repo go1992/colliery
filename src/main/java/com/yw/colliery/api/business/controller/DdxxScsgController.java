@@ -51,7 +51,7 @@ public class DdxxScsgController extends BaseController<DdxxScsgServiceImpl,DdxxS
 	({
 		//数据所属煤矿
 		@ApiImplicitParam(
-				value="所属煤矿",name="coalMineName",dataType="String"
+				value="所属煤矿",name="ssmk",dataType="String"
 				,paramType="query",required=false,defaultValue="数据所属煤矿"
 				//,allowMultiple=true //是否为数组
 				)
@@ -111,7 +111,7 @@ public class DdxxScsgController extends BaseController<DdxxScsgServiceImpl,DdxxS
 		String startTime = MapUtils.getString(params, "startTime",null);
 		String endTime = MapUtils.getString(params, "endTime",null);
 		if(checkNotNull(startTime,endTime)) {
-			qw.between("identificationDate", startTime, endTime);
+			qw.between("pcrq", startTime, endTime);
 		}
 		
 		//排序
@@ -122,7 +122,7 @@ public class DdxxScsgController extends BaseController<DdxxScsgServiceImpl,DdxxS
 		}
 		
 		//区域||部门过滤
-		qw.in(true,"coalMineName", (List<String>)session.getAttribute(ESessionKey.DeptsIds.key));
+		qw.in(true,"ssmk", (List<String>)session.getAttribute(ESessionKey.DeptsIds.key));
 		
 		//删除多余参数入库查询
 		params.remove(EPage.PageNum.key);
@@ -135,7 +135,7 @@ public class DdxxScsgController extends BaseController<DdxxScsgServiceImpl,DdxxS
 		params.remove("searchParam");
 		params.remove("isExportExcel");
 		//部门参数由后端根据当前用户参数填充
-		params.remove("coalMineName");
+		params.remove("ssmk");
 		
 		//查询条件
 		qw.allEq(true,params,false);

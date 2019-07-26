@@ -1,11 +1,7 @@
 package com.yw.colliery.sdk.utils;
 
 import com.alibaba.fastjson.JSONObject;
-import com.google.common.collect.HashBasedTable;
-import com.google.common.collect.Table;
-import com.sun.org.apache.bcel.internal.generic.NEW;
-import com.yw.colliery.entity.SecurityRiskEntity;
-import com.yw.colliery.sdk.file.InitFormList;
+import com.yw.colliery.entity.AqfxNdfx;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -13,15 +9,12 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.beans.BeanUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @Auther: xuzhou-013
@@ -59,7 +52,7 @@ public class ExcelUtils {
      * @return
      * @throws Exception
      */
-    public static <T> List<T> getBankListByExcel(InputStream in, String fileName, Class<T> tClass) throws Exception {
+    public static <T> List<T> getDataByExcel(InputStream in, String fileName, Class<T> tClass) throws Exception {
         List<T> list = new ArrayList<>();
         ArrayList<String> keyList = new ArrayList<>();
 
@@ -103,7 +96,7 @@ public class ExcelUtils {
     public static void main(String[] args) {
         try {
             FileInputStream in = new FileInputStream(new File("D:/test.xlsx"));
-            List<SecurityRiskEntity> bankListByExcel = getBankListByExcel(in, "test.xlsx", SecurityRiskEntity.class);
+            List<AqfxNdfx> bankListByExcel = getDataByExcel(in, "test.xlsx", AqfxNdfx.class);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -53,19 +53,19 @@ public class WxyglSjlbController extends BaseController<WxyglSjlbServiceImpl,Wxy
 		
 		qw = new QueryWrapper<WxyglSjlb>();
 		qw.select("count(*) AS shuliang","qymc");
-		qw.in(true,"coalMineName", deptsIds);
+		qw.in(true,"ssmk", deptsIds);
 		qw.groupBy(true, "qymc");
 		result.put("qymcGroup", service.list(qw));
 		
 		qw = new QueryWrapper<WxyglSjlb>();
 		qw.select("count(*) AS shuliang","zdwxydj");
-		qw.in(true,"coalMineName", deptsIds);
+		qw.in(true,"ssmk", deptsIds);
 		qw.groupBy(true, "zdwxydj");
 		result.put("zdwxydjGroup", service.list(qw));
 
 		qw = new QueryWrapper<WxyglSjlb>();
 		qw.select("count(*) AS shuliang","zdwxylx");
-		qw.in(true,"coalMineName", deptsIds);
+		qw.in(true,"ssmk", deptsIds);
 		qw.groupBy(true, "zdwxylx");
 		result.put("zdwxylxGroup", service.list(qw));
 
