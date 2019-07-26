@@ -39,10 +39,9 @@ public class AqfxGkxgController extends BaseController<AqfxGkxgServiceImpl,AqfxG
 		return service.query();
 	}*/
 
-    @Override
     @AuthModule(authId = AuthConstant.Module.SAFE_MODULE, level = AuthConstant.Level.LOW)
     public Object queryData(@RequestParam Map<String, Object> params) {
-        return super.queryData(params);
+        return super.commonQueryData(params);
     }
 
     @Override

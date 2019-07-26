@@ -66,10 +66,10 @@ public class AqfxNdfxController extends BaseController<AqfxNdfxServiceImpl,AqfxN
 		return new ResultObject(ResultObject.SUCCESS,"1004","接口调用成功",result);
 	}
 
-	@Override
+
 	@AuthModule(authId = AuthConstant.Module.SAFE_MODULE, level = AuthConstant.Level.LOW)
 	public Object queryData(@RequestParam Map<String, Object> params) {
-        return super.queryData(params);
+        return super.commonQueryData(params);
     }
 
 	@Override

@@ -28,38 +28,38 @@ import java.util.Map;
 @Api(value = "DdxxScddController", description = "调度信息管理-安全生产调度报表")
 @Slf4j
 public class DdxxScddController extends BaseController<DdxxScddServiceImpl,DdxxScdd> {
-    @Override
+
     @AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE, level = AuthConstant.Level.LOW)
     public Object queryData(@RequestParam Map<String, Object> params) {
-        return super.queryData(params);
+        return super.commonQueryData(params);
     }
 
     @Override
-    @AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE, level = AuthConstant.Level.HIGH)
+    @AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE)
     public Object save(DdxxScdd params, HttpServletRequest request) throws Exception {
         return super.save(params, request);
     }
 
     @Override
-    @AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE, level = AuthConstant.Level.HIGH)
+    @AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE)
     public Object saveBatch(String params) {
         return super.saveBatch(params);
     }
 
     @Override
-    @AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE, level = AuthConstant.Level.HIGH)
+    @AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE)
     public Object updateById(DdxxScdd params) {
         return super.updateById(params);
     }
 
     @Override
-    @AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE, level = AuthConstant.Level.HIGH)
+    @AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE)
     public Object updateBatchById(String params) {
         return super.updateBatchById(params);
     }
 
     @Override
-    @AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE, level = AuthConstant.Level.HIGH)
+    @AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE)
     public Object removeByIds(String params) {
         return super.removeByIds(params);
     }

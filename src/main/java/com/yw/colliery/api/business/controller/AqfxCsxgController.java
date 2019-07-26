@@ -30,10 +30,9 @@ import java.util.Map;
 @Slf4j
 public class AqfxCsxgController extends BaseController<AqfxCsxgServiceImpl,AqfxCsxg> {
 
-    @Override
     @AuthModule(authId = AuthConstant.Module.SAFE_MODULE, level = AuthConstant.Level.LOW)
     public Object queryData(@RequestParam Map<String, Object> params) {
-        return super.queryData(params);
+        return super.commonQueryData(params);
     }
 
 

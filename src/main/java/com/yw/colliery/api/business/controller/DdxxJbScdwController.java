@@ -28,10 +28,10 @@ import java.util.Map;
 @Api(value = "DdxxJbScdwController", description = "调度信息管理-基本信息设置-生产单位设置")
 @Slf4j
 public class DdxxJbScdwController extends BaseController<DdxxJbScdwServiceImpl,DdxxJbScdw> {
-    @Override
+
     @AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE, level = AuthConstant.Level.LOW)
     public Object queryData(@RequestParam Map<String, Object> params) {
-        return super.queryData(params);
+        return super.commonQueryData(params);
     }
 
     @Override

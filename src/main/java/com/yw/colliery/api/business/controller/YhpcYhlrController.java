@@ -84,10 +84,10 @@ public class YhpcYhlrController extends BaseController<YhpcYhlrServiceImpl,YhpcY
 	}*/
 
 
-	@Override
+
 	@AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE, level = AuthConstant.Level.LOW)
 	public Object queryData(@RequestParam Map<String, Object> params) {
-        return super.queryData(params);
+        return super.commonQueryData(params);
     }
 
 	@Override

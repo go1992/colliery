@@ -28,10 +28,10 @@ import java.util.Map;
 @Api(value = "DcJbcsKqwzController", description = "地测信息管理-基本参数-矿区位置")
 @Slf4j
 public class DcJbcsKqwzController extends BaseController<DcJbcsKqwzServiceImpl,DcJbcsKqwz> {
-    @Override
+
     @AuthModule(authId = AuthConstant.Module.GEODETIC_MODULE, level = AuthConstant.Level.HIGH)
     public Object queryData(@RequestParam Map<String, Object> params) {
-        return super.queryData(params);
+        return super.commonQueryData(params);
     }
 
     @Override

@@ -7,28 +7,30 @@ import java.util.Set;
 
 public class MyUtil {
 	public static final String FILE_PATH = "D:";
-//	public static final String FILE_PATH = "C:"+File.separator+"Users"+File.separator+"49796"+File.separator+"Desktop";
-	/*
+	/**
 	 * 判空
+	 *
 	 */
 	@SuppressWarnings("rawtypes")
 	public static boolean checkNotNull(Object...objects ) {
-		if(null == objects) return false;
+		if(null == objects) {
+			return false;
+		}
 		for(Object obj : objects) {
 			if(null == obj  ) {
 				return false;
 			} else if(obj instanceof String) {
 				String str = obj.toString();
-				if(str.trim().isEmpty()) return false;
+				if(str.trim().isEmpty()) { return false;}
 			} else if(obj instanceof Set ) {
 				Set set = (Set)obj;
-				if(set.isEmpty()) return false;
+				if(set.isEmpty()) {return false;}
 			} else if(obj instanceof List) {
 				List list = (List)obj;
-				if(list.isEmpty()) return false;
+				if(list.isEmpty()) {return false;}
 			} else if(obj instanceof Map) {
 				Map map = (Map)obj;
-				if(map.isEmpty()) return false;
+				if(map.isEmpty()) {return false;}
 			}
 		}
 		

@@ -28,10 +28,10 @@ import java.util.Map;
 @Api(value = "XtgnQxlbController", description = "系统功能-权限列表")
 @Slf4j
 public class XtgnQxlbController extends BaseController<XtgnQxlbServiceImpl,XtgnQxlb> {
-    @Override
+
     @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE, level = AuthConstant.Level.LOW)
     public Object queryData(@RequestParam Map<String, Object> params) {
-        return super.queryData(params);
+        return super.commonQueryData(params);
     }
 
     @Override
