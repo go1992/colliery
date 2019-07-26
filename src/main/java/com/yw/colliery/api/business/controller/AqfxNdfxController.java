@@ -3,11 +3,10 @@ package com.yw.colliery.api.business.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.yw.colliery.api.base.BaseController;
-import com.yw.colliery.api.base.ESessionKey;
 import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.AqfxCsxg;
 import com.yw.colliery.entity.AqfxNdfx;
-import com.yw.colliery.entity.XtgnYhlb;
+import com.yw.colliery.entity.securityrisk.YearsSecurityRiskEntity;
 import com.yw.colliery.sdk.aop.auth.AuthModule;
 import com.yw.colliery.sdk.constans.AuthConstant;
 import com.yw.colliery.sdk.request.YearUnsafeRequest;
@@ -19,14 +18,13 @@ import com.yw.colliery.service.business.IAqfxCsxgService;
 import com.yw.colliery.service.business.IAqfxNdfxService;
 import com.yw.colliery.service.business.impl.AqfxNdfxServiceImpl;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -121,12 +119,19 @@ public class AqfxNdfxController extends BaseController<AqfxNdfxServiceImpl,AqfxN
 
 	@PostMapping("/import/excel")
 	@ResponseBody
-	public ResultObject importExcelData( @RequestParam("file") MultipartFile file) throws Exception{
-		if(file.isEmpty()){
+	public ResultObject importExcelData(HttpServletRequest request) throws Exception{
+		//获取文件
+		MultipartFile file = ((MultipartHttpServletRequest)request).getFile("fileName");
+		if(file == null || file.isEmpty()){
 			return new ResultObject(ResultObject.FAILED,"1003","参数错误",null);
 		}
+
 		String fileName = file.getOriginalFilename().replaceAll("/", "");
-		List<AqfxNdfx> bankListByExcel = ExcelUtils.getBankListByExcel(file.getInputStream(), fileName, AqfxNdfx.class);
-		return new ResultObject(ResultObject.SUCCESS,"1003","上传成功",null);
+		List<YearsSecurityRiskEntity> dataByExcel = ExcelUtils.getDataByExcel(file.getInputStream(), fileName, YearsSecurityRiskEntity.class);
+		Integer integer = iAqfxNdfxService.saveAll(dataByExcel);
+		if(integer>0){
+			return new ResultObject(ResultObject.SUCCESS,"1003","数据导入成功",null);
+		}
+		return new ResultObject(ResultObject.SUCCESS,"1003","数据导入失败",null);
 	}
 }

@@ -1,6 +1,7 @@
 package com.yw.colliery.service.business.impl;
 
 import com.yw.colliery.entity.AqfxNdfx;
+import com.yw.colliery.entity.securityrisk.YearsSecurityRiskEntity;
 import com.yw.colliery.mapper.AqfxNdfxMapper;
 import com.yw.colliery.sdk.request.YearUnsafeRequest;
 import com.yw.colliery.sdk.response.vo.UnsafeLevelVo;
@@ -85,6 +86,10 @@ public class AqfxNdfxServiceImpl extends ServiceImpl<AqfxNdfxMapper, AqfxNdfx> i
         return levelVos;
     }
 
+    @Override
+    public Integer saveAll(List<YearsSecurityRiskEntity> riskEntities) {
+        return aqfxNdfxMapper.insertByBatch(riskEntities);
+    }
 
     private Date calStartTime(String queryTime) {
         Date startTime = null;

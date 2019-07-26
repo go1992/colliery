@@ -1,9 +1,8 @@
 package com.yw.colliery.sdk.utils;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.yw.colliery.entity.AqfxNdfx;
-import com.yw.colliery.sdk.file.InitFormList;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -13,7 +12,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,8 +52,10 @@ public class ExcelUtils {
      * @return
      * @throws Exception
      */
-   public static <T extends InitFormList> List<T> getBankListByExcel(InputStream in, String fileName, Class<T> tClass ) throws Exception {
+    public static <T> List<T> getDataByExcel(InputStream in, String fileName, Class<T> tClass) throws Exception {
         List<T> list = new ArrayList<>();
+        ArrayList<String> keyList = new ArrayList<>();
+
         //创建Excel工作薄
         Workbook work = getWorkbook(in, fileName);
         if (null == work) {
@@ -63,7 +63,6 @@ public class ExcelUtils {
         }
         Sheet sheet = null;
         Row row = null;
-        Cell cell = null;
 
         for (int i = 0; i < work.getNumberOfSheets(); i++) {
             sheet = work.getSheetAt(i);
@@ -73,18 +72,21 @@ public class ExcelUtils {
 
             for (int j = sheet.getFirstRowNum(); j <= sheet.getLastRowNum(); j++) {
                 row = sheet.getRow(j);
-                if (row == null || row.getFirstCellNum() == j) {
+                if(j == row.getFirstCellNum()){
+                    row.forEach(r->keyList.add(r.getStringCellValue()));
                     continue;
                 }
-
-                List<Cell> li = new ArrayList<>();
+                JSONObject rowMap = new JSONObject();
                 for (int y = row.getFirstCellNum(); y < row.getLastCellNum(); y++) {
-                    cell = row.getCell(y);
-                    li.add(cell);
+                    Cell dataCell = row.getCell(y);
+                    if(StringUtils.isNotBlank(dataCell.getStringCellValue())){
+                        rowMap.put(keyList.get(y),dataCell.getStringCellValue());
+                    }
                 }
-                T t = tClass.newInstance();
-                t.initObjectByList(li);
-                list.add(t);
+                if(!rowMap.isEmpty()){
+                    T t = JSONObject.toJavaObject(rowMap,tClass);
+                    list.add(t);
+                }
             }
         }
         work.close();
@@ -94,7 +96,7 @@ public class ExcelUtils {
     public static void main(String[] args) {
         try {
             FileInputStream in = new FileInputStream(new File("D:/test.xlsx"));
-            List<AqfxNdfx> bankListByExcel = getBankListByExcel(in, "test.xlsx", AqfxNdfx.class);
+            List<AqfxNdfx> bankListByExcel = getDataByExcel(in, "test.xlsx", AqfxNdfx.class);
         } catch (Exception e) {
             e.printStackTrace();
         }

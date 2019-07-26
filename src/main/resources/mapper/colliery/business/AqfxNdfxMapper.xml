@@ -43,4 +43,46 @@
         </if>
     </select>
 
+    <insert id="insertByBatch" parameterType="java.util.List">
+        INSERT INTO aqfx_ndfx(
+        pcrq,
+        ssmk,
+        ylzda,
+        ylzdb,
+        ylzdc,
+        fxd,
+        dtwzdd,
+        zrdw,
+        fxdj,
+        fxfl,
+        xzrs,
+        fxms,
+        gkcs,
+        zyfzr,
+        fgfzr,
+        fxlx,
+        datetype
+        )values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.identificationDate,jdbcType=VARCHAR},
+            #{item.coalMineName,jdbcType=VARCHAR},
+            #{item.reservedField1,jdbcType=VARCHAR},
+            #{item.reservedField2,jdbcType=VARCHAR},
+            #{item.reservedField3,jdbcType=VARCHAR},
+            #{item.riskPoint,jdbcType=VARCHAR},
+            #{item.mapLocation,jdbcType=VARCHAR},
+            #{item.dutyDepartment,jdbcType=VARCHAR},
+            #{item.riskLevel,jdbcType=VARCHAR},
+            #{item.riskSort,jdbcType=VARCHAR},
+            #{item.limitPeoples,jdbcType=VARCHAR},
+            #{item.riskDesc,jdbcType=VARCHAR},
+            #{item.controlMeasures,jdbcType=VARCHAR},
+            #{item.mainDutyPerson,jdbcType=VARCHAR},
+            #{item.secondDutyPerson,jdbcType=VARCHAR},
+            #{item.type,jdbcType=VARCHAR},
+            #{item.dateType,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
 </mapper>
