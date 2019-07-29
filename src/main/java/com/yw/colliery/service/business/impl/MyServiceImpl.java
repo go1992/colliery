@@ -6,7 +6,7 @@ import org.apache.commons.collections4.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.yw.colliery.api.base.MyUtil;
+import com.yw.colliery.sdk.utils.StringUtil;
 import com.yw.colliery.mapper.MyMapper;
 import com.yw.colliery.service.business.MyService;
 
@@ -27,7 +27,7 @@ public class MyServiceImpl implements MyService{
 		String groupWay = MapUtils.getString(params,"groupWay",null);
 		boolean isYear = "年".equals(groupWay);
 		boolean isYearAndMonth = "年月".equals(groupWay);
-		dateFormatStr = MyUtil.checkNotNull(groupWay) ? 
+		dateFormatStr = StringUtil.checkNotNull(groupWay) ?
 				isYear ? "%Y"//按年分组
 				: isYearAndMonth ? "%Y-%m"//按年月分组
 				: dateFormatStr//不是年 也不是年月
@@ -35,7 +35,7 @@ public class MyServiceImpl implements MyService{
 		
 		//过滤参数 时间年月
 		String havingValue = MapUtils.getString(params,"havingValue",null);
-		boolean valueCheck =  MyUtil.checkNotNull(havingValue) && havingValue.matches("[0-9-]+");
+		boolean valueCheck =  StringUtil.checkNotNull(havingValue) && havingValue.matches("[0-9-]+");
 		
 		String countSql = ""+/**~!{*/""
 			+ "SELECT "
@@ -59,7 +59,7 @@ public class MyServiceImpl implements MyService{
 		
 		//过滤参数 时间年月
 		String havingValue = MapUtils.getString(params,"havingValue",null);
-		boolean valueCheck =  MyUtil.checkNotNull(havingValue) && havingValue.matches("[0-9-]+");
+		boolean valueCheck =  StringUtil.checkNotNull(havingValue) && havingValue.matches("[0-9-]+");
 		
 		String countSql = ""+/**~!{*/""
 			+ "SELECT"

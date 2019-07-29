@@ -1,11 +1,11 @@
-package com.yw.colliery.api.base;
+package com.yw.colliery.sdk.utils;
 
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class MyUtil {
+public class StringUtil {
 	public static final String FILE_PATH = "D:";
 	/**
 	 * 判空
@@ -44,13 +44,15 @@ public class MyUtil {
      * @return
      */
     public static String camelToUnderline(String param) {
-        if (param == null || param.isEmpty()) throw new RuntimeException("表名为空");
+        if (param == null || param.isEmpty()) {throw new RuntimeException("表名为空");}
         int len = param.length();
         StringBuffer sb = new StringBuffer(len);
         for (int i = 0; i < len; i++) {
             char c = param.charAt(i);
             if (Character.isUpperCase(c)) {
-                if(i!=0)sb.append("_");
+                if(i!=0){
+					sb.append("_");
+				}
                 sb.append(Character.toLowerCase(c));
             } else {
                 sb.append(c);

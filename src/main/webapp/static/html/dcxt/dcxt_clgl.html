@@ -162,11 +162,11 @@
 			//上传文件到服务器
 			$("#btn_sc").click(function() {
 				$("#Form1").ajaxSubmit(function(data) {
-					if(data == "true") {
+					if(data.result == "true") {
 						alert("上传成功！");
 						//重新显示各个文件夹的文件名
 						filename_sel();
-					} else if(data == "false") {
+					} else if(data.result == "false") {
 						alert("上传失败！");
 					}
 				})
@@ -183,30 +183,29 @@
 					url: HOST.replace('apiv1','')+"getfilename?MKname=" + MKname + "&XTname=" + XTname + "&XTCDname=" + XTCDname + "",
 					async: true,
 					success: function(data) {
-						var filedata = data.result;
-						if(filedata != null && filedata != "") {
-							for(var i = 0; i < filedata.length; i++) {
-								if(filedata[i].hasOwnProperty("储量台账")) {
-									for(var j in filedata[i].储量台账) {
-										str1 += "<option>" + filedata[i].储量台账[j] + "</option>";
+						if(data != null && data != "") {
+							for(var i = 0; i < data.result.length; i++) {
+								if(data.result[i].hasOwnProperty("储量台账")) {
+									for(var j in data.result[i].储量台账) {
+										str1 += "<option>" + data.result[i].储量台账[j] + "</option>";
 									}
 									$("#listbox1").html(str1);
 								}
-								if(filedata[i].hasOwnProperty("四量管理")) {
-									for(var j in filedata[i].四量管理) {
-										str2 += "<option>" + filedata[i].四量管理[j] + "</option>";
+								if(data.result[i].hasOwnProperty("四量管理")) {
+									for(var j in data.result[i].四量管理) {
+										str2 += "<option>" + data.result[i].四量管理[j] + "</option>";	
 									}
 									$("#listbox2").html(str2);
 								}
-								if(filedata[i].hasOwnProperty("回采率管理")) {
-									for(var j in filedata[i].回采率管理) {
-										str3 += "<option>" + filedata[i].回采率管理[j] + "</option>";
+								if(data.result[i].hasOwnProperty("回采率管理")) {
+									for(var j in data.result[i].回采率管理) {
+										str3 += "<option>" + data.result[i].回采率管理[j] + "</option>";	
 									}
 									$("#listbox3").html(str3);
 								}
-								if(filedata[i].hasOwnProperty("其他")) {
-									for(var j in filedata[i].其他 ) {
-										str4 += "<option>" + filedata[i].其他[j] + "</option>";
+								if(data.result[i].hasOwnProperty("其他")) {
+									for(var j in data.result[i].其他 ) {
+										str4 += "<option>" + data.result[i].其他[j] + "</option>";		
 									}
 									$("#listbox4").html(str4);
 								}
@@ -215,7 +214,7 @@
 
 					},
 					error: function() {
-						alert(data.message);
+						alert("连接服务器失败！");
 					}
 				});
 			};
@@ -251,6 +250,9 @@
 			});
 			//删除选择的文件
 			function file_del(ZLtype,fileName) {
+				var str = "是否删除" + ZLtype +"-" + fileName + "文件?"
+				var message = confirm(str);
+				if(message == true) {
 				$.ajax({
 					dataType: "text",
 					type: "post",
@@ -264,6 +266,7 @@
 						alert("连接服务器失败！");
 					}
 				});
+				}
 			};
 			//删除储量台账
 			$("#btn_jczl_del").click(function() {

@@ -1,4 +1,4 @@
-package com.yw.colliery.api.base;
+package com.yw.colliery.sdk.config;
 
 import java.util.Properties;
 

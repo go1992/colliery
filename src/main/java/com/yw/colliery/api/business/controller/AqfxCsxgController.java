@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.yw.colliery.api.base.BaseController;
 import com.yw.colliery.service.business.impl.AqfxCsxgServiceImpl;
-import com.yw.colliery.entity.AqfxCsxg;
+import com.yw.colliery.entity.securityrisk.AqfxCsxg;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;

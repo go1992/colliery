@@ -28,7 +28,7 @@ import com.yw.colliery.service.business.impl.DcSwdzZkpcServiceImpl;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import static com.yw.colliery.api.base.MyUtil.checkNotNull;
+import static com.yw.colliery.sdk.utils.StringUtil.checkNotNull;
 
 /**
  * <p>

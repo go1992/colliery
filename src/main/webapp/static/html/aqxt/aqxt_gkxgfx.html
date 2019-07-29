@@ -51,6 +51,8 @@
 		<script type="text/javascript" src="js/echarts.min.js"></script>
 		<script type="text/javascript" src="glng/PZ_IP.js"></script>
 		<script>
+			var host = HOST;
+			var host1=ip;
 			//设置年份的选择 
 			var myDate = new Date();
 			var startYear = myDate.getFullYear() - 50; //起始年份 
@@ -84,7 +86,7 @@
 					contentType: "application/json;charset=utf-8",
 					dataType: "json",
 					type: "post",
-					url: "http://47.103.35.95:8887/apiv1/aqfx-ndfx/statis",
+					url:host+ "/aqfx-ndfx/statis",
 					data: JSON.stringify({
 						"datetype": $("#datetype option:selected").text(),
 					}),
@@ -118,6 +120,7 @@
 									}
 
 								}
+								console.log(data);
 
 							} else {
 								alert("暂无数据！")
@@ -294,7 +297,7 @@
 					contentType: "application/json;charset=utf-8",
 					dataType: "json",
 					type: "post",
-					url: "http://47.103.35.95:8887/apiv1/aqfx-ndfx/statis",
+					url:host+ "/aqfx-ndfx/statis",
 					data: JSON.stringify({
 						"datetype": $("#datetype2").val(),
 					}),
@@ -328,6 +331,8 @@
 									}
 
 								}
+								console.log(data);
+								
 
 							} else {
 								alert("暂无数据！")

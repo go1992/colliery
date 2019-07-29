@@ -1,6 +1,6 @@
 package com.yw.colliery.mapper;
 
-import com.yw.colliery.entity.AqfxLdgz;
+import com.yw.colliery.entity.securityrisk.AqfxLdgz;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

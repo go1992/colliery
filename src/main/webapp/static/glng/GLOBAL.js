@@ -1,7 +1,6 @@
+//var HOST = 'http://47.103.35.95:8887/apiv1';
 var host = location.href.match(/(http[s]?\:\/\/)(.*?)\//);
-// var HOST = 'http://30.30.30.177:8090/apiv1';
 var HOST = "http://"+host[2]+"/apiv1";
-// var HOST = 'http://127.0.0.1:8090/apiv1';
 var SUCCESS = 'success';
 var FAILED = 'failed';
 //var UN_LODIN_OUT_FUNC = function(json){

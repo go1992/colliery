@@ -1,6 +1,6 @@
 package com.yw.colliery;
 
-import static com.yw.colliery.api.base.MyUtil.checkNotNull;
+import static com.yw.colliery.sdk.utils.StringUtil.checkNotNull;
 
 import java.lang.reflect.ParameterizedType;
 import java.text.ParseException;
@@ -19,8 +19,8 @@ import org.springframework.util.DigestUtils;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.yw.colliery.api.base.ESessionKey;
-import com.yw.colliery.api.base.MyUtil;
-import com.yw.colliery.entity.AqfxCsxg;
+import com.yw.colliery.sdk.utils.StringUtil;
+import com.yw.colliery.entity.securityrisk.AqfxCsxg;
 import com.yw.colliery.entity.DcSwdzZkpc;
 import com.yw.colliery.entity.DdxxScsg;
 import com.yw.colliery.entity.WxyglSjlb;
@@ -129,7 +129,7 @@ public class TestBasic {
 	}
 	
 	public void t11() {
-		System.out.println(MyUtil.camelToUnderline("MyName"));
+		System.out.println(StringUtil.camelToUnderline("MyName"));
 	}
 	
 	public void t10() throws JsonProcessingException {

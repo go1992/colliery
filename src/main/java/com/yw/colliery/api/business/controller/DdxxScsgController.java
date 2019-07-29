@@ -27,7 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.yw.colliery.api.base.MyUtil.checkNotNull;
+import static com.yw.colliery.sdk.utils.StringUtil.checkNotNull;
 /**
  * <p>
  * 调度信息管理-生产安全事故处理追踪 前端控制器

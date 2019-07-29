@@ -162,11 +162,11 @@
 			//上传文件到服务器
 			$("#btn_sc").click(function() {
 				$("#Form1").ajaxSubmit(function(data) {
-					if(data == "true") {
+					if(data.result == "true") {
 						alert("上传成功！");
 						//重新显示各个文件夹的文件名
 						filename_sel();
-					} else if(data == "false") {
+					} else if(data.result == "false") {
 						alert("上传失败！");
 					}
 				})
@@ -184,28 +184,28 @@
 					async: true,
 					success: function(data) {
 						if(data != null && data != "") {
-							for(var i = 0; i < data.length; i++) {
-								if(data[i].hasOwnProperty("基础资料")) {
-									for(var j in data[i].基础资料) {
-										str1 += "<option>" + data[i].基础资料[j] + "</option>";
+							for(var i = 0; i < data.result.length; i++) {
+								if(data.result[i].hasOwnProperty("基础资料")) {
+									for(var j in data.result[i].基础资料) {
+										str1 += "<option>" + data.result[i].基础资料[j] + "</option>";
 									}
 									$("#listbox1").html(str1);
 								}
-								if(data[i].hasOwnProperty("地质预报")) {
-									for(var j in data[i].地质预报) {
-										str2 += "<option>" + data[i].地质预报[j] + "</option>";
+								if(data.result[i].hasOwnProperty("地质预报")) {
+									for(var j in data.result[i].地质预报) {
+										str2 += "<option>" + data.result[i].地质预报[j] + "</option>";
 									}
 									$("#listbox2").html(str2);
 								}
-								if(data[i].hasOwnProperty("瓦斯地质")) {
-									for(var j in data[i].瓦斯地质) {
-										str3 += "<option>" + data[i].瓦斯地质[j] + "</option>";
+								if(data.result[i].hasOwnProperty("瓦斯地质")) {
+									for(var j in data.result[i].瓦斯地质) {
+										str3 += "<option>" + data.result[i].瓦斯地质[j] + "</option>";
 									}
 									$("#listbox3").html(str3);
 								}
-								if(data[i].hasOwnProperty("隐蔽致灾普查")) {
-									for(var j in data[i].隐蔽致灾普查) {
-										str4 += "<option>" + data[i].隐蔽致灾普查[j] + "</option>";
+								if(data.result[i].hasOwnProperty("隐蔽致灾普查")) {
+									for(var j in data.result[i].隐蔽致灾普查) {
+										str4 += "<option>" + data.result[i].隐蔽致灾普查[j] + "</option>";
 									}
 									$("#listbox4").html(str4);
 								}

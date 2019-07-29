@@ -162,11 +162,11 @@
 			//上传文件到服务器
 			$("#btn_sc").click(function() {
 				$("#Form1").ajaxSubmit(function(data) {
-					if(data == "true") {
+					if(data.result == "true") {
 						alert("上传成功！");
 						//重新显示各个文件夹的文件名
 						filename_sel();
-					} else if(data == "false") {
+					} else if(data.result == "false") {
 						alert("上传失败！");
 					}
 				})
@@ -184,28 +184,28 @@
 					async: true,
 					success: function(data) {
 						if(data != null && data != "") {
-							for(var i = 0; i < data.length; i++) {
-								if(data[i].hasOwnProperty("基础资料")) {
-									for(var j in data[i].基础资料) {
-										str1 += "<option>" + data[i].基础资料[j] + "</option>";
+							for(var i = 0; i < data.result.length; i++) {
+								if(data.result[i].hasOwnProperty("基础资料")) {
+									for(var j in data.result[i].基础资料) {
+										str1 += "<option>" + data.result[i].基础资料[j] + "</option>";
 									}
 									$("#listbox1").html(str1);
 								}
-								if(data[i].hasOwnProperty("矿井涌水量")) {
-									for(var j in data[i].矿井涌水量) {
-										str2 += "<option>" + data[i].矿井涌水量[j] + "</option>";	
+								if(data.result[i].hasOwnProperty("矿井涌水量")) {
+									for(var j in data.result[i].矿井涌水量) {
+										str2 += "<option>" + data.result[i].矿井涌水量[j] + "</option>";	
 									}
 									$("#listbox2").html(str2);
 								}
-								if(data[i].hasOwnProperty("水文地质观察")) {
-									for(var j in data[i].水文地质观察) {
-										str3 += "<option>" + data[i].水文地质观察[j] + "</option>";	
+								if(data.result[i].hasOwnProperty("水文地质观察")) {
+									for(var j in data.result[i].水文地质观察) {
+										str3 += "<option>" + data.result[i].水文地质观察[j] + "</option>";	
 									}
 									$("#listbox3").html(str3);
 								}
-								if(data[i].hasOwnProperty("其他")) {
-									for(var j in data[i].其他 ) {
-										str4 += "<option>" + data[i].其他[j] + "</option>";		
+								if(data.result[i].hasOwnProperty("其他")) {
+									for(var j in data.result[i].其他 ) {
+										str4 += "<option>" + data.result[i].其他[j] + "</option>";		
 									}
 									$("#listbox4").html(str4);
 								}
@@ -250,6 +250,9 @@
 			});
 			//删除选择的文件
 			function file_del(ZLtype,fileName) {
+				var str = "是否删除" + ZLtype +"-" + fileName + "文件?"
+				var message = confirm(str);
+				if(message == true) {
 				$.ajax({
 					dataType: "text",
 					type: "post",
@@ -263,6 +266,7 @@
 						alert("连接服务器失败！");
 					}
 				});
+				}
 			};
 			//删除基础资料
 			$("#btn_jczl_del").click(function() {

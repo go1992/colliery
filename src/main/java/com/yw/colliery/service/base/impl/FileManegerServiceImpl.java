@@ -2,7 +2,7 @@ package com.yw.colliery.service.base.impl;
 
 import com.google.common.collect.Lists;
 import com.yw.colliery.api.base.ESessionKey;
-import com.yw.colliery.api.base.MyUtil;
+import com.yw.colliery.sdk.utils.StringUtil;
 import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.dto.FileParamsDTO;
 import com.yw.colliery.entity.XtgnYhlb;
@@ -46,7 +46,7 @@ public class FileManegerServiceImpl implements FileManegerService {
         }
         String fileName = file.getOriginalFilename();
 
-        String path = MyUtil.FILE_PATH
+        String path = StringUtil.FILE_PATH
                 + File.separator + "gz-mk-system"
                 + File.separator + ((XtgnYhlb) request.getSession().getAttribute(ESessionKey.User.key)).getSsmk()
                 + File.separator + paramsDTO.getSystemName()
@@ -81,7 +81,7 @@ public class FileManegerServiceImpl implements FileManegerService {
 
         List<String> userDeparts = (List<String>)request.getSession().getAttribute(ESessionKey.DeptsIds.key);
         for(String each : userDeparts) {
-            String path = MyUtil.FILE_PATH
+            String path = StringUtil.FILE_PATH
                     +File.separator+"gz-mk-system"
                     +File.separator+each
                     +File.separator+paramsDTO.getSystemName()
@@ -135,7 +135,7 @@ public class FileManegerServiceImpl implements FileManegerService {
             List<String> departsIds = (List<String>) request.getSession().getAttribute(ESessionKey.DeptsIds.key);
             if (departsIds.contains(fileDept)) {
                 //设置文件路径
-                String path = MyUtil.FILE_PATH
+                String path = StringUtil.FILE_PATH
                         + File.separator + "gz-mk-system"
                         + File.separator + ((XtgnYhlb) request.getSession().getAttribute(ESessionKey.User.key)).getSsmk()
                         + File.separator + paramsDTO.getSystemName()
@@ -176,7 +176,7 @@ public class FileManegerServiceImpl implements FileManegerService {
             List<String> detpsIds = (List<String>) request.getSession().getAttribute(ESessionKey.DeptsIds.key);
             if (detpsIds.contains(fileDept)) {
                 //设置文件路径
-                String path = MyUtil.FILE_PATH
+                String path = StringUtil.FILE_PATH
                         + File.separator + "gz-mk-system"
                         + File.separator + ((XtgnYhlb) request.getSession().getAttribute(ESessionKey.User.key)).getSsmk()
                         + File.separator + paramsDTO.getSystemName()

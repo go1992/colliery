@@ -1,11 +1,10 @@
 package com.yw.colliery.mapper;
 
-import com.yw.colliery.entity.AqfxNdfx;
+import com.yw.colliery.entity.securityrisk.AqfxNdfx;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.yw.colliery.entity.securityrisk.YearsSecurityRiskEntity;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.Date;
 import java.util.List;
 
 /**

@@ -1,6 +1,6 @@
 package com.yw.colliery.service.business.impl;
 
-import com.yw.colliery.entity.AqfxNdfx;
+import com.yw.colliery.entity.securityrisk.AqfxNdfx;
 import com.yw.colliery.entity.securityrisk.YearsSecurityRiskEntity;
 import com.yw.colliery.mapper.AqfxNdfxMapper;
 import com.yw.colliery.sdk.request.YearUnsafeRequest;
@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 

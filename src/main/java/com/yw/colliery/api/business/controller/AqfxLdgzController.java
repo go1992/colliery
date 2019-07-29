@@ -2,7 +2,7 @@ package com.yw.colliery.api.business.controller;
 
 
 import com.yw.colliery.api.base.BaseController;
-import com.yw.colliery.entity.AqfxLdgz;
+import com.yw.colliery.entity.securityrisk.AqfxLdgz;
 import com.yw.colliery.sdk.aop.auth.AuthModule;
 import com.yw.colliery.sdk.constans.AuthConstant;
 import com.yw.colliery.service.business.impl.AqfxLdgzServiceImpl;

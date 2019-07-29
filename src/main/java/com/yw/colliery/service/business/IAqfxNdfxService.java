@@ -1,14 +1,12 @@
 package com.yw.colliery.service.business;
 
-import com.yw.colliery.entity.AqfxNdfx;
+import com.yw.colliery.entity.securityrisk.AqfxNdfx;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yw.colliery.entity.securityrisk.YearsSecurityRiskEntity;
 import com.yw.colliery.sdk.request.YearUnsafeRequest;
 import com.yw.colliery.sdk.response.vo.UnsafeLevelVo;
 import com.yw.colliery.sdk.response.vo.UnsafeTypeVo;
-import io.swagger.models.auth.In;
 
-import java.util.Date;
 import java.util.List;
 
 /**

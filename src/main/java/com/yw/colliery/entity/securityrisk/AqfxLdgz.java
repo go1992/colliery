@@ -1,4 +1,4 @@
-package com.yw.colliery.entity;
+package com.yw.colliery.entity.securityrisk;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;

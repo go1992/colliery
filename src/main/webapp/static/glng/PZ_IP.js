@@ -1,4 +1,5 @@
-var host = location.href.match(/(http[s]?\:\/\/)(.*?)\//)
+//var ip = "http://47.103.35.95:8887";
+var host = location.href.match(/(http[s]?\:\/\/)(.*?)\//);
 var ip = "http://"+host[2];
 //为ajax设置跨域带cookie
 $.ajaxPrefilter(function(options, originalOptions, jqXHR) {

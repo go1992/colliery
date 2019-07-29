@@ -138,6 +138,7 @@
 			<div class="btn_tr" id="toolbar">
 				<div>
 					<button type="button" class="btn_bj" id="btn_add"><i class="iconfont icon-bianji"></i>新增</button>
+					<button type="button" class="btn_bj" id="btn_dr"><i class="iconfont icon-bianji"></i>批量导入</button>
 					<button type="button" class="btn_bj" id="btn_bj"><i class="iconfont icon-bianji"></i>编辑选中项</button>
 					<button type="button" class="btn_del" id="btn_del"><i class="iconfont icon-shanchu"></i>删除选中项</button>
 				</div>
@@ -519,6 +520,18 @@
 					shadeClose: true, //点击遮罩关闭层
 					area: ['1200px', '600px'],
 					content: 'html/aqxt/aqxt_ndfxbs_insert.html'
+				});
+
+			});
+			//批量增加数据
+			$("#btn_dr").click(function() {
+				layer.open({
+					type: 2,
+					title: '批量导入',
+					maxmin: true,
+					shadeClose: true, //点击遮罩关闭层
+					area: ['500px', '200px'],
+					content: 'html/aqxt/aqxt_fxdr.html'
 				});
 
 			});

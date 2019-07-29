@@ -1,6 +1,6 @@
 package com.yw.colliery.service.business;
 
-import com.yw.colliery.entity.AqfxCsxg;
+import com.yw.colliery.entity.securityrisk.AqfxCsxg;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

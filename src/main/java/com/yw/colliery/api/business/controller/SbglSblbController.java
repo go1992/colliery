@@ -22,7 +22,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
-import static com.yw.colliery.api.base.MyUtil.checkNotNull;
+import static com.yw.colliery.sdk.utils.StringUtil.checkNotNull;
 /**
  * <p>
  * 设备管理-设备列表 前端控制器

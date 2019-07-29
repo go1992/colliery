@@ -241,11 +241,19 @@
 							},{
 								field: "rjsj",
 								title: "入井时间",
-								sortable: "true"
+								sortable: "true",
+								"formatter":function(value, row, index){
+									var val1=value.replace("T"," ");
+									return val1;
+								}
 							},{
 								field: "sjsj",
 								title: "升井时间",
-								sortable: "true"
+								sortable: "true",
+								"formatter":function(value, row, index){
+									var val1=value.replace("T"," ");
+									return val1;
+								}
 							},{
 								field: "xzlx",
 								title: "行走路线",
@@ -347,7 +355,7 @@
 						title: '编辑',
 						maxmin: true,
 						shadeClose: true, //点击遮罩关闭层
-						area: ['1200px', '700px'],
+						area: ['1200px', '760px'],
 						content: 'html/aqxt/aqxt_ldgzjc_insert.html'
 					});
 				} else if(rows.length == 0) {
@@ -364,7 +372,7 @@
 					title: '新增',
 					maxmin: true,
 					shadeClose: true, //点击遮罩关闭层
-					area: ['1200px', '700px'],
+					area: ['1200px', '760px'],
 					content: 'html/aqxt/aqxt_ldgzjc_insert.html'
 				});
 

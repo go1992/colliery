@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.yw.colliery.api.base.MyUtil.checkNotNull;
+import static com.yw.colliery.sdk.utils.StringUtil.checkNotNull;
 /**
  * <p>
  * 培训管理-数据列表 前端控制器

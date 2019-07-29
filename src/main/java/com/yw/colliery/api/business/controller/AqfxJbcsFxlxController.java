@@ -1,7 +1,7 @@
 package com.yw.colliery.api.business.controller;
 
 
-import com.yw.colliery.entity.AqfxJbcsFxlx;
+import com.yw.colliery.entity.securityrisk.AqfxJbcsFxlx;
 import com.yw.colliery.sdk.aop.auth.AuthModule;
 import com.yw.colliery.sdk.constans.AuthConstant;
 import org.springframework.web.bind.annotation.PostMapping;

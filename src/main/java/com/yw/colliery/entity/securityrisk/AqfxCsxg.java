@@ -1,4 +1,4 @@
-package com.yw.colliery.entity;
+package com.yw.colliery.entity.securityrisk;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -15,7 +15,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 /**
  * <p>
- * 安全风险管控-风险跟踪及报表
+ * 安全风险管控-管控措施修改记录
  * </p>
  *
  * @author jobob
@@ -26,8 +26,8 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@ApiModel(value="AqfxFxgz对象", description="安全风险管控-风险跟踪及报表")
-public class AqfxFxgz implements Serializable {
+@ApiModel(value="AqfxCsxg对象", description="安全风险管控-管控措施修改记录")
+public class AqfxCsxg implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -37,7 +37,7 @@ public class AqfxFxgz implements Serializable {
 	private Long id;
 
 
-    @ApiModelProperty(value = "辨识日期 ",example = "2012-12-26")
+    @ApiModelProperty(value = "辨识时间 ",example = "2012-12-26")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
 	private Date pcrq;
@@ -59,12 +59,12 @@ public class AqfxFxgz implements Serializable {
 	private String ylzdc;
 
 
-	@ApiModelProperty(value = "类型 ",example = "类型 ")
-	private String leixing;
-
-
 	@ApiModelProperty(value = "风险点 ",example = "风险点 ")
 	private String fxd;
+
+
+	@ApiModelProperty(value = "地图位置定点 ",example = "地图位置定点 ")
+	private String dtwzdd;
 
 
 	@ApiModelProperty(value = "责任单位 ",example = "责任单位 ")
@@ -87,40 +87,34 @@ public class AqfxFxgz implements Serializable {
 	private String fxms;
 
 
-	@ApiModelProperty(value = "整改措施 ",example = "整改措施 ")
-	private String zgcs;
+	@ApiModelProperty(value = "管控措施 ",example = "管控措施 ")
+	private String gkcs;
 
 
-	@ApiModelProperty(value = "跟踪记录 ",example = "跟踪记录 ")
-	private String gzjl;
+	@ApiModelProperty(value = "主要负责人 ",example = "主要负责人 ")
+	private String zyfzr;
 
 
-	@ApiModelProperty(value = "跟踪说明 ",example = "跟踪说明 ")
-	private String gzsm;
+	@ApiModelProperty(value = "分管负责人 ",example = "分管负责人 ")
+	private String fgfzr;
 
 
-	@ApiModelProperty(value = "跟踪人员 ",example = "跟踪人员 ")
-	private String gzry;
+	@ApiModelProperty(value = "类型(年度风险,专项风险)",example = "类型(年度风险,专项风险)")
+	private String fxlx;
 
 
-	@ApiModelProperty(value = "跟踪时间 ",example = "跟踪时间 ")
-	private String gzsj;
+    @ApiModelProperty(value = "修改日期",example = "2012-12-26")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
+	private Date xgrq;
 
 
-	@ApiModelProperty(value = "罚款 ",example = "罚款 ")
-	private String fakuan;
+	@ApiModelProperty(value = "措施变化",example = "措施变化")
+	private String csbh;
 
 
-	@ApiModelProperty(value = "效果 ",example = "效果 ")
-	private String xiaoguo;
-
-
-	@ApiModelProperty(value = "是否上报 ",example = "是否上报 ")
-	private String sfsb;
-
-
-	@ApiModelProperty(value = "是否消警 ",example = "是否消警 ")
-	private String sfxj;
+    @ApiModelProperty(value = "原始数据id",example = "1")
+	private Long ysid;
 
 
 }

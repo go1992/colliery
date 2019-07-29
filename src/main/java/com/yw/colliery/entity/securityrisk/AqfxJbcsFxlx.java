@@ -1,4 +1,4 @@
-package com.yw.colliery.entity;
+package com.yw.colliery.entity.securityrisk;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 /**
  * <p>
- * 安全风险管控-基本参数设置-矿领导设置
+ * 安全风险管控-基本参数设置-风险类型设置
  * </p>
  *
  * @author jobob
@@ -23,8 +23,8 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@ApiModel(value="AqfxJbcsKld对象", description="安全风险管控-基本参数设置-矿领导设置")
-public class AqfxJbcsKld implements Serializable {
+@ApiModel(value="AqfxJbcsFxlx对象", description="安全风险管控-基本参数设置-风险类型设置")
+public class AqfxJbcsFxlx implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -50,12 +50,8 @@ public class AqfxJbcsKld implements Serializable {
 	private String ylzdc;
 
 
-	@ApiModelProperty(value = "矿领导 ",example = "矿领导 ")
-	private String kld;
-
-
-	@ApiModelProperty(value = "职务 ",example = "职务 ")
-	private String zhiwu;
+	@ApiModelProperty(value = "风险类型 ",example = "风险类型 ")
+	private String fxlx;
 
 
 }

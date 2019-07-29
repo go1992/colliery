@@ -1,12 +1,10 @@
-package com.yw.colliery.entity;
+package com.yw.colliery.entity.securityrisk;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 
-import java.util.ArrayList;
 import java.util.Date;
 
-import com.yw.colliery.sdk.file.InitFormList;
 import org.apache.poi.ss.usermodel.Cell;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -36,7 +34,7 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @NoArgsConstructor
 @ApiModel(value = "AqfxNdfx对象", description = "安全风险管控-年度风险辨识")
-public class AqfxNdfx implements Serializable, InitFormList {
+public class AqfxNdfx implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -113,44 +111,4 @@ public class AqfxNdfx implements Serializable, InitFormList {
 
     @ApiModelProperty(value = "辨识时间类型", example = "2019(年度风险) 2019-05(月度风险)")
     private String datetype;
-
-    @Override
-    public void initObjectByList(List list) {
-        for (int i = 0; i < list.size(); i++) {
-            switch (i) {
-                case 0:
-                    this.fxd = ((Cell) list.get(i)).getStringCellValue();
-                    break;
-                case 1:
-//                    this.fxd = ((Cell) list.get(i)).getStringCellValue();
-                    break;
-                case 2:
-                    this.zrdw = ((Cell) list.get(i)).getStringCellValue();
-                    break;
-                case 3:
-                    this.fxdj = ((Cell) list.get(i)).getStringCellValue();
-                    break;
-                case 4:
-                    this.fxfl = ((Cell) list.get(i)).getStringCellValue();
-                    break;
-                case 5:
-                    this.xzrs = ((Cell) list.get(i)).getStringCellValue();
-                    break;
-                case 6:
-                    this.fxms = ((Cell) list.get(i)).getStringCellValue();
-                    break;
-                case 7:
-                    this.gkcs = ((Cell) list.get(i)).getStringCellValue();
-                    break;
-                case 8:
-                    this.zyfzr=((Cell) list.get(i)).getStringCellValue();
-                    break;
-                case 9:
-                    this.fgfzr =((Cell) list.get(i)).getStringCellValue();
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
 }

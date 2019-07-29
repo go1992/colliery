@@ -1,6 +1,6 @@
 package com.yw.colliery.service.business.impl;
 
-import com.yw.colliery.entity.AqfxCsxg;
+import com.yw.colliery.entity.securityrisk.AqfxCsxg;
 import com.yw.colliery.mapper.AqfxCsxgMapper;
 import com.yw.colliery.service.business.IAqfxCsxgService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
