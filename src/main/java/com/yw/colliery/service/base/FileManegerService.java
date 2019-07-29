@@ -1,6 +1,6 @@
 package com.yw.colliery.service.base;
 
-import com.yw.colliery.api.base.ResultObject;
+import com.yw.colliery.dto.ResultObject;
 import com.yw.colliery.dto.FileParamsDTO;
 import org.springframework.web.multipart.MultipartFile;
 

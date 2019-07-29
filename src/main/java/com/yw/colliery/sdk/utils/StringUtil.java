@@ -1,6 +1,8 @@
 package com.yw.colliery.sdk.utils;
 
 
+import com.google.common.base.CaseFormat;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -44,21 +46,11 @@ public class StringUtil {
      * @return
      */
     public static String camelToUnderline(String param) {
-        if (param == null || param.isEmpty()) {throw new RuntimeException("表名为空");}
-        int len = param.length();
-        StringBuffer sb = new StringBuffer(len);
-        for (int i = 0; i < len; i++) {
-            char c = param.charAt(i);
-            if (Character.isUpperCase(c)) {
-                if(i!=0){
-					sb.append("_");
-				}
-                sb.append(Character.toLowerCase(c));
-            } else {
-                sb.append(c);
-            }
-        }
-        return sb.toString();
+		return CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE,param);
     }
+
+	public static void main(String[] args) {
+		System.out.println(camelToUnderline("orderName"));
+	}
 	
 }

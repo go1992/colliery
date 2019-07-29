@@ -1,7 +1,6 @@
 package com.yw.colliery.service.unsafe.impl;
 
 import com.github.pagehelper.PageHelper;
-import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.unsafe.UnsafeInfoEntity;
 import com.yw.colliery.mapper.unsafe.UnsafeMapper;
 import com.yw.colliery.sdk.config.PageBean;

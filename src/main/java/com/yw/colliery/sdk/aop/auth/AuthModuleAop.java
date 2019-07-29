@@ -1,6 +1,6 @@
 package com.yw.colliery.sdk.aop.auth;
 
-import com.yw.colliery.api.base.ResultObject;
+import com.yw.colliery.dto.ResultObject;
 import com.yw.colliery.entity.auth.AuthEntity;
 import com.yw.colliery.entity.user.UserRelationEntity;
 import com.yw.colliery.sdk.constans.AuthConstant;

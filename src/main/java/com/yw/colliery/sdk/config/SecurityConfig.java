@@ -1,6 +1,6 @@
 package com.yw.colliery.sdk.config;
 
-import com.yw.colliery.api.system.controller.login.service.ValidationCodeFilter;
+import com.yw.colliery.service.login.ValidationCodeFilter;
 import com.yw.colliery.handler.LoginFailureHandler;
 import com.yw.colliery.handler.LoginSuccessHandler;
 import com.yw.colliery.sdk.constans.CollierySafetyConstant;

@@ -1,9 +1,9 @@
 package com.yw.colliery.service.base.impl;
 
 import com.google.common.collect.Lists;
-import com.yw.colliery.api.base.ESessionKey;
+import com.yw.colliery.sdk.constans.ESessionKey;
 import com.yw.colliery.sdk.utils.StringUtil;
-import com.yw.colliery.api.base.ResultObject;
+import com.yw.colliery.dto.ResultObject;
 import com.yw.colliery.dto.FileParamsDTO;
 import com.yw.colliery.entity.XtgnYhlb;
 import com.yw.colliery.service.base.FileManegerService;

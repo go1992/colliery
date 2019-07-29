@@ -1,7 +1,6 @@
 package com.yw.colliery.service.unsafe;
 
 
-import com.yw.colliery.api.base.ResultObject;
 import com.yw.colliery.entity.unsafe.UnsafeInfoEntity;
 import com.yw.colliery.sdk.config.PageBean;
 
