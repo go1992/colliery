@@ -14,6 +14,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -68,7 +69,8 @@ public abstract class BaseController<S extends ServiceImpl<?, T>, T> {
         QueryWrapper<T> qw = buildQueryWrapper(paramDTO);
         //分页查询
         Page<T> page = new Page<>(paramDTO.getPageNum(), paramDTO.getPageSize());
-        qw.allEq(true, params, false);
+        T parseEntity = parseEntity(params, getTClass());
+        qw.allEq(true,beanToMap(parseEntity),false);
 
 //		if(ScglScjh.class.equals(entityClass)&&"no".equals(isPage)) {
 //			return service.list(qw);
@@ -143,7 +145,7 @@ public abstract class BaseController<S extends ServiceImpl<?, T>, T> {
     @ApiOperation(value = "修改数据", notes = "修改", response = ResultObject.class)
     @PostMapping("/updateById")
     public Object updateById(T params) {
-        if (log.isDebugEnabled()) log.debug("updateById参数:\n{}", JSON.toJSONString(params));
+        log.debug("updateById参数:\n{}", JSON.toJSONString(params));
         Object result = service.updateById(params);
         return new ResultObject(ResultObject.SUCCESS, "1004", "接口调用成功", result);
     }
@@ -155,8 +157,7 @@ public abstract class BaseController<S extends ServiceImpl<?, T>, T> {
     @PostMapping("/updateBatchById")
     public Object updateBatchById(String params) {
         log.debug("updateById参数:\n{}", JSON.toJSONString(params));
-        @SuppressWarnings("unchecked")
-        Class<T> entityClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
+        Class<T> entityClass = getTClass();
         List<T> entities = JSON.parseArray(params, entityClass);
         Object result = service.updateBatchById(entities);
         return new ResultObject(ResultObject.SUCCESS, "1007", "接口调用成功", result);
@@ -206,6 +207,21 @@ public abstract class BaseController<S extends ServiceImpl<?, T>, T> {
         return JSONObject.toJavaObject(paramJson, ParamDTO.class);
     }
 
+    private T parseEntity(Map<String,Object> params,Class<T> clazz){
+        JSONObject paramJson = JSON.parseObject(JSON.toJSONString(params));
+        return JSONObject.toJavaObject(paramJson, clazz);
+    }
+
+    @SuppressWarnings("unchecked")
+    private Map<String,Object> beanToMap(T entity){
+        JSONObject paramJson = JSONObject.parseObject(JSON.toJSONString(entity));
+        return JSONObject.toJavaObject(paramJson, Map.class);
+    }
+
+    @SuppressWarnings("unchecked")
+    private Class<T> getTClass(){
+        return (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
+    }
     private QueryWrapper<T> buildQueryWrapper(ParamDTO paramDTO) {
         HttpSession session = SpringSessionUtils.getRequest().getSession();
         QueryWrapper<T> qw = new QueryWrapper<>();
@@ -235,10 +251,10 @@ public abstract class BaseController<S extends ServiceImpl<?, T>, T> {
             });
 
         }
-        //区域||部门过滤
-        @SuppressWarnings("unchecked")
-        List<String> departsId = (List<String>) session.getAttribute(ESessionKey.DeptsIds.key);
-        qw.in(true, "ssmk", departsId);
+//        //区域||部门过滤
+//        @SuppressWarnings("unchecked")
+//        List<String> departsId = (List<String>) session.getAttribute(ESessionKey.DeptsIds.key);
+//        qw.in(true, "ssmk", departsId);
         return qw;
     }
 }

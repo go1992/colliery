@@ -3,7 +3,9 @@ package com.yw.colliery.api.productmanager;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.google.common.base.CaseFormat;
 import com.yw.colliery.dto.ResultDTO;
+import com.yw.colliery.entity.productmanager.KeyProjectEntity;
 import com.yw.colliery.entity.productmanager.SafetyInfoEntity;
 import com.yw.colliery.sdk.config.PageBean;
 import com.yw.colliery.service.productmanager.impl.SafetyInfoServiceImpl;
@@ -13,6 +15,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Field;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
@@ -143,20 +146,10 @@ public class SafetyInfoController implements ApplicationListener<ContextRefreshe
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-        COLUMN_NAME_MAP.put("dutyManager", "duty_manager");
-        COLUMN_NAME_MAP.put("mineManager", "mine_manager");
-        COLUMN_NAME_MAP.put("schedulingOperater", "scheduling_operater");
-        COLUMN_NAME_MAP.put("monitorOperater", "monitor_operater");
-        COLUMN_NAME_MAP.put("minePeoples", "mine_peoples");
-        COLUMN_NAME_MAP.put("workingCondition", "working_condition");
-        COLUMN_NAME_MAP.put("miningAdvancement_condition", "mining_advancement_condition");
-        COLUMN_NAME_MAP.put("diggingLength", "digging_length");
-        COLUMN_NAME_MAP.put("maintenanceLength", "maintenance_length");
-        COLUMN_NAME_MAP.put("dailyOutput", "daily_output");
-        COLUMN_NAME_MAP.put("dailyDiggingLength", "daily_digging_length");
-        COLUMN_NAME_MAP.put("dailyMaintenanceLength", "daily_maintenance_length");
-        COLUMN_NAME_MAP.put("createUser", "create_user");
-        COLUMN_NAME_MAP.put("createDate", "create_date");
+        Field[] fields = SafetyInfoEntity.class.getDeclaredFields();
+        for (Field field : fields) {
+            String to = CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, field.getName());
+            COLUMN_NAME_MAP.put(field.getName(),to);
+        }
     }
-
 }

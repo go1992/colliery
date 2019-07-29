@@ -4,6 +4,7 @@ package com.yw.colliery.api.business.controller;
 import com.yw.colliery.entity.AqfxJbcsKld;
 import com.yw.colliery.sdk.aop.auth.AuthModule;
 import com.yw.colliery.sdk.constans.AuthConstant;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +31,7 @@ import java.util.Map;
 public class AqfxJbcsKldController extends BaseController<AqfxJbcsKldServiceImpl,AqfxJbcsKld> {
 
     @AuthModule(authId = AuthConstant.Module.SAFE_MODULE, level = AuthConstant.Level.LOW)
+    @PostMapping("/query")
     public Object queryData(@RequestParam Map<String, Object> params) {
         return super.commonQueryData(params);
     }

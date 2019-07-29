@@ -20,6 +20,10 @@ public final class AuthConstant {
         public static final int UNSAFE_MODULE= 4;
         /**调度信息管理.**/
         public static final int DISPATCH_MODULE = 5;
+        /**文件管理*/
+        public static final int FILE_MODULE = 6;
+
+
     }
 
     public static class Level {

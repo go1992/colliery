@@ -43,6 +43,15 @@ public class RawCoalEntity implements Serializable{
     private String remarks;
 
     /**
+     * 销售量
+     */
+    private String salesVolume;
+
+    /**
+     * 库存
+     */
+    private String stock;
+    /**
      * 页数
      */
     @JsonIgnore

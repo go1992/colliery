@@ -6,6 +6,8 @@
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="date" property="date" jdbcType="TIMESTAMP"/>
         <result column="mine_peoples" property="minePeoples" jdbcType="VARCHAR"/>
+        <result column="sales_volume" property="salesVolume" jdbcType="VARCHAR"/>
+        <result column="stock" property="stock" jdbcType="VARCHAR"/>
         <result column="output" property="output" jdbcType="VARCHAR"/>
         <result column="remarks" property="remarks" jdbcType="VARCHAR"/>
     </resultMap>
@@ -14,6 +16,8 @@
         id,
         date,
         mine_peoples,
+        sales_volume,
+        stock,
         output,
         remarks
     </sql>
@@ -25,6 +29,8 @@
             date,
             mine_peoples,
             output,
+            sales_volume,
+            stock,
             remarks
            )
         values
@@ -32,6 +38,8 @@
            #{date,jdbcType=TIMESTAMP},
            #{minePeoples,jdbcType=VARCHAR},
            #{output,jdbcType=VARCHAR},
+           #{salesVolume,jdbcType=VARCHAR},
+           #{stock,jdbcType=VARCHAR},
            #{remarks,jdbcType=VARCHAR}
            )
     </insert>
@@ -47,6 +55,12 @@
             </if>
             <if test="output != null">
                 output= #{output,jdbcType=VARCHAR},
+            </if>
+            <if test="salesVolume != null">
+                sales_volume= #{salesVolume,jdbcType=VARCHAR},
+            </if>
+            <if test="stock != null">
+                stock= #{stock,jdbcType=VARCHAR},
             </if>
             <if test="remarks != null">
                 remarks = #{remarks,jdbcType=VARCHAR},
@@ -70,6 +84,12 @@
         </if>
         <if test="output != null">
             AND output= #{output}
+        </if>
+        <if test="stock != null">
+            AND stock= #{stock}
+        </if>
+        <if test="salesVolume != null">
+            AND sales_volume= #{salesVolume}
         </if>
         <if test="remarks != null">
             AND remarks= #{remarks}

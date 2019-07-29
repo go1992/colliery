@@ -8,6 +8,7 @@ import com.yw.colliery.sdk.constans.AuthConstant;
 import com.yw.colliery.service.business.impl.DcJbcsKqwzServiceImpl;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,6 +31,7 @@ import java.util.Map;
 public class DcJbcsKqwzController extends BaseController<DcJbcsKqwzServiceImpl,DcJbcsKqwz> {
 
     @AuthModule(authId = AuthConstant.Module.GEODETIC_MODULE, level = AuthConstant.Level.HIGH)
+    @PostMapping("/query")
     public Object queryData(@RequestParam Map<String, Object> params) {
         return super.commonQueryData(params);
     }

@@ -183,29 +183,30 @@
 					url: HOST.replace('apiv1','')+"getfilename?MKname=" + MKname + "&XTname=" + XTname + "&XTCDname=" + XTCDname + "",
 					async: true,
 					success: function(data) {
-						if(data != null && data != "") {
-							for(var i = 0; i < data.length; i++) {
-								if(data[i].hasOwnProperty("储量台账")) {
-									for(var j in data[i].储量台账) {
-										str1 += "<option>" + data[i].储量台账[j] + "</option>";
+						var filedata = data.result;
+						if(filedata != null && filedata != "") {
+							for(var i = 0; i < filedata.length; i++) {
+								if(filedata[i].hasOwnProperty("储量台账")) {
+									for(var j in filedata[i].储量台账) {
+										str1 += "<option>" + filedata[i].储量台账[j] + "</option>";
 									}
 									$("#listbox1").html(str1);
 								}
-								if(data[i].hasOwnProperty("四量管理")) {
-									for(var j in data[i].四量管理) {
-										str2 += "<option>" + data[i].四量管理[j] + "</option>";	
+								if(filedata[i].hasOwnProperty("四量管理")) {
+									for(var j in filedata[i].四量管理) {
+										str2 += "<option>" + filedata[i].四量管理[j] + "</option>";
 									}
 									$("#listbox2").html(str2);
 								}
-								if(data[i].hasOwnProperty("回采率管理")) {
-									for(var j in data[i].回采率管理) {
-										str3 += "<option>" + data[i].回采率管理[j] + "</option>";	
+								if(filedata[i].hasOwnProperty("回采率管理")) {
+									for(var j in filedata[i].回采率管理) {
+										str3 += "<option>" + filedata[i].回采率管理[j] + "</option>";
 									}
 									$("#listbox3").html(str3);
 								}
-								if(data[i].hasOwnProperty("其他")) {
-									for(var j in data[i].其他 ) {
-										str4 += "<option>" + data[i].其他[j] + "</option>";		
+								if(filedata[i].hasOwnProperty("其他")) {
+									for(var j in filedata[i].其他 ) {
+										str4 += "<option>" + filedata[i].其他[j] + "</option>";
 									}
 									$("#listbox4").html(str4);
 								}
@@ -214,7 +215,7 @@
 
 					},
 					error: function() {
-						alert("连接服务器失败！");
+						alert(data.message);
 					}
 				});
 			};

@@ -155,6 +155,7 @@ public class DdxxScsgController extends BaseController<DdxxScsgServiceImpl,DdxxS
 
 
 	@AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE, level = AuthConstant.Level.LOW)
+	@PostMapping("/query")
 	public Object queryData(@RequestParam Map<String, Object> params) {
         return super.commonQueryData(params);
     }

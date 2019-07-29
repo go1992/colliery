@@ -47,13 +47,21 @@ public class AqfxNdfxController extends BaseController<AqfxNdfxServiceImpl,AqfxN
 	private IAqfxCsxgService iAqfxCsxgService;
 	@Autowired
 	private IAqfxNdfxService iAqfxNdfxService;
-	
-	/*
+
+	@AuthModule(authId = AuthConstant.Module.SAFE_MODULE, level = AuthConstant.Level.LOW)
+	@PostMapping("/query")
+	public Object queryData(@RequestParam Map<String, Object> params) {
+		return super.commonQueryData(params);
+	}
+
+	/**
 	 * 年度风险修改时同时插入措施修改记录
+	 *
 	 */
-	@AuthModule(authId = AuthConstant.Module.SAFE_MODULE, level = AuthConstant.Level.HIGH)
+	@Override
+	@AuthModule(authId = AuthConstant.Module.SAFE_MODULE)
 	public Object updateById(AqfxNdfx params) {
-		if(log.isDebugEnabled())log.debug("updateById参数:\n{}",JSON.toJSONString(params));
+		log.debug("updateById参数:\n{}",JSON.toJSONString(params));
 		AqfxNdfx old = service.getById(params.getId());
 		Object result = service.updateById(params);
 		if(!old.getGkcs().equals(params.getGkcs())){
@@ -67,19 +75,14 @@ public class AqfxNdfxController extends BaseController<AqfxNdfxServiceImpl,AqfxN
 	}
 
 
-	@AuthModule(authId = AuthConstant.Module.SAFE_MODULE, level = AuthConstant.Level.LOW)
-	public Object queryData(@RequestParam Map<String, Object> params) {
-        return super.commonQueryData(params);
-    }
-
 	@Override
-	@AuthModule(authId = AuthConstant.Module.SAFE_MODULE, level = AuthConstant.Level.HIGH)
+	@AuthModule(authId = AuthConstant.Module.SAFE_MODULE)
 	public Object save(AqfxNdfx params, HttpServletRequest request) throws Exception {
 		return super.save(params, request);
 	}
 
 	@Override
-	@AuthModule(authId = AuthConstant.Module.SAFE_MODULE, level = AuthConstant.Level.HIGH)
+	@AuthModule(authId = AuthConstant.Module.SAFE_MODULE )
 	public Object saveBatch(String params) {
 		return super.saveBatch(params);
 	}

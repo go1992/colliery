@@ -86,6 +86,7 @@ public class YhpcYhlrController extends BaseController<YhpcYhlrServiceImpl,YhpcY
 
 
 	@AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE, level = AuthConstant.Level.LOW)
+	@PostMapping("/query")
 	public Object queryData(@RequestParam Map<String, Object> params) {
         return super.commonQueryData(params);
     }
