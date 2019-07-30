@@ -63,7 +63,7 @@ public class KeyProjectController {
         try {
             KeyProjectEntity keyProjectEntity = JSONObject.toJavaObject(JSON.parseObject(data), KeyProjectEntity.class);
             //列名转换一下
-            if (keyProjectEntity.getOrderName()!= null ) {
+            if (keyProjectEntity.getOrderName() != null) {
                 keyProjectEntity.setOrderName(StringUtil.camelToUnderline(keyProjectEntity.getOrderName()));
             }
             PageBean<KeyProjectEntity> unsafeInfoByUnsafeInfoEntity = keyProjectService.getByCondition(keyProjectEntity

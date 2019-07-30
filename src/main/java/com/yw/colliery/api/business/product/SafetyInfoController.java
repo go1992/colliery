@@ -65,7 +65,7 @@ public class SafetyInfoController {
         try {
             SafetyInfoEntity safetyInfoEntity = JSONObject.toJavaObject(JSON.parseObject(data), SafetyInfoEntity.class);
             //列名转换一下
-            if (safetyInfoEntity.getOrderName()!= null ) {
+            if (safetyInfoEntity.getOrderName() != null) {
                 safetyInfoEntity.setOrderName(StringUtil.camelToUnderline(safetyInfoEntity.getOrderName()));
             }
             PageBean<SafetyInfoEntity> unsafeInfoByUnsafeInfoEntity = safetyInfoService.getByCondition(safetyInfoEntity
@@ -75,7 +75,7 @@ public class SafetyInfoController {
             String sumOutPut = list.stream().collect(Collectors.summingDouble(entity -> Double.valueOf(entity.getOutput()))).toString();
             String sumDiggingLength = list.stream().collect(Collectors.summingDouble(entity -> Double.valueOf(entity.getDiggingLength()))).toString();
             String sumMaintenanceLength = list.stream().collect(Collectors.summingDouble(entity -> Double.valueOf(entity.getMaintenanceLength()))).toString();
-            list.forEach(r->{
+            list.forEach(r -> {
                 r.setDailyOutput(sumOutPut);
                 r.setDailyDiggingLength(sumDiggingLength);
                 r.setDailyMaintenanceLength(sumMaintenanceLength);

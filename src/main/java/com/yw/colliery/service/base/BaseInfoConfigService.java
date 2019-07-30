@@ -6,7 +6,7 @@ import com.yw.colliery.sdk.config.PageBean;
 import java.util.List;
 
 /**
- * @Auther: xuzhou
+ * @Author: xuzhou
  * @Date: 2019/5/15 15:43
  * @Description: 基础信息配置持久化service
  */

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * @Auther: xuzhou
+ * @Author: xuzhou
  * @Date: 2019/5/16 09:31
  * @Description: 基础信息配置持久化实现类
  */

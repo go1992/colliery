@@ -1,4 +1,4 @@
-package com.yw.colliery.service.location;
+package com.yw.colliery.service.risk;
 
 import com.yw.colliery.entity.securityrisk.AqfxCsxg;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author jobob
  * @since 2019-03-06
  */
-public interface IAqfxCsxgService extends IService<AqfxCsxg> {
+public interface ControlRecordService extends IService<AqfxCsxg> {
 
 }

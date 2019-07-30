@@ -126,7 +126,7 @@ public class UnsafeController {
         try {
             UnsafeInfoEntity unsafeInfoEntity = JSONObject.toJavaObject(JSON.parseObject(data), UnsafeInfoEntity.class);
             //列名转换一下
-            if (unsafeInfoEntity.getOrderName()!= null ) {
+            if (unsafeInfoEntity.getOrderName() != null) {
                 unsafeInfoEntity.setOrderName(StringUtil.camelToUnderline(unsafeInfoEntity.getOrderName()));
             }
             PageBean<UnsafeInfoEntity> unsafeInfoByUnsafeInfoEntity = unsafeService.getUnsafeInfoByUnsafeInfoEntity(unsafeInfoEntity

@@ -63,13 +63,13 @@ public class UnsafePlanController {
         try {
             UnsafePlanEntity unsafeInfoEntity = JSONObject.toJavaObject(JSON.parseObject(data), UnsafePlanEntity.class);
             //列名转换一下
-            if (unsafeInfoEntity.getOrderName()!= null ) {
+            if (unsafeInfoEntity.getOrderName() != null) {
                 unsafeInfoEntity.setOrderName(StringUtil.camelToUnderline(unsafeInfoEntity.getOrderName()));
             }
-            PageBean unsafePlanInfo = unsafePlanService.getUnsafePlanInfo(unsafeInfoEntity, Optional.ofNullable(unsafeInfoEntity.getPageNum()).orElse(0),Optional.ofNullable(unsafeInfoEntity.getPageSize()).orElse(0));
+            PageBean unsafePlanInfo = unsafePlanService.getUnsafePlanInfo(unsafeInfoEntity, Optional.ofNullable(unsafeInfoEntity.getPageNum()).orElse(0), Optional.ofNullable(unsafeInfoEntity.getPageSize()).orElse(0));
             HashMap<String, Object> resultMap = new HashMap<>();
-            resultMap.put("total",unsafePlanInfo.getTotal());
-            resultMap.put("rows",unsafePlanInfo.getList());
+            resultMap.put("total", unsafePlanInfo.getTotal());
+            resultMap.put("rows", unsafePlanInfo.getList());
             return resultMap;
         } catch (Exception e) {
             log.error("获取隐患排查计划列表异常", e);
@@ -77,7 +77,6 @@ public class UnsafePlanController {
         }
 
     }
-
 
 
     /**

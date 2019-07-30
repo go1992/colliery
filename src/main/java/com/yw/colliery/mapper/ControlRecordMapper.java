@@ -1,7 +1,8 @@
 package com.yw.colliery.mapper;
 
-import com.yw.colliery.entity.securityrisk.AqfxLdgz;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.yw.colliery.entity.securityrisk.AqfxCsxg;
+import com.yw.colliery.entity.securityrisk.AqfxLdgz;
 
 /**
  * <p>
@@ -11,6 +12,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author jobob
  * @since 2019-03-06
  */
-public interface AqfxLdgzMapper extends BaseMapper<AqfxLdgz> {
+public interface ControlRecordMapper extends BaseMapper<AqfxCsxg> {
 
 }

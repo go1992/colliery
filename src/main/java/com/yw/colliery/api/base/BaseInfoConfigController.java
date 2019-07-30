@@ -55,7 +55,6 @@ public class BaseInfoConfigController {
     }
 
     @RequestMapping("/get")
-    @Cacheable
     public Object get(@RequestBody String data){
         try {
             BaseInfoConfigEntity baseInfoConfigEntity = JSONObject.toJavaObject(JSON.parseObject(data), BaseInfoConfigEntity.class);

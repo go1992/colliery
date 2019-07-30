@@ -5,7 +5,7 @@ import com.yw.colliery.dto.FileParamsDTO;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
- * @Auther: xuzhou-013
+ * @Author: xuzhou-013
  * @Date: 2019/7/28 18:28
  * @Description: 文件管理服务
  */

@@ -69,7 +69,7 @@ public class HandOverController {
         try {
             HandOverEntity handOverEntity = JSONObject.toJavaObject(JSON.parseObject(data), HandOverEntity.class);
             //列名转换一下
-            if (handOverEntity.getOrderName()!= null ) {
+            if (handOverEntity.getOrderName() != null) {
                 handOverEntity.setOrderName(StringUtil.camelToUnderline(handOverEntity.getOrderName()));
             }
             PageBean<HandOverEntity> unsafeInfoByUnsafeInfoEntity = handOverService.getByCondition(handOverEntity

@@ -70,7 +70,7 @@ public class EntryCollieryController {
         try {
             EntryCollieryEntity entryCollieryEntity = JSONObject.toJavaObject(JSON.parseObject(data), EntryCollieryEntity.class);
             //列名转换一下
-            if (entryCollieryEntity.getOrderName()!= null ) {
+            if (entryCollieryEntity.getOrderName() != null) {
                 entryCollieryEntity.setOrderName(StringUtil.camelToUnderline(entryCollieryEntity.getOrderName()));
             }
             PageBean<EntryCollieryEntity> unsafeInfoByUnsafeInfoEntity = entryCollieryService.getByCondition(entryCollieryEntity

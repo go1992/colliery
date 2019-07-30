@@ -1,7 +1,5 @@
 package com.yw.colliery.api.business.geological;
 
-
-
 import java.util.*;
 
 import com.yw.colliery.sdk.constans.ESessionKey;
@@ -29,49 +27,49 @@ import javax.servlet.http.HttpSession;
 @RestController
 @RequestMapping("/apiv1/dc-swdz-zkpc")
 @Slf4j
-public class BoreholeController extends BaseController<BoreholeServiceImpl,DcSwdzZkpc> {
+public class BoreholeController extends BaseController<BoreholeServiceImpl, DcSwdzZkpc> {
 
-	/**
-	 *
-	 * @param params
-	 * @param
-	 * @return
-	 */
-	@PostMapping("/queryzkpc")
-	@AuthModule(authId = AuthConstant.Module.GEODETIC_MODULE)
-	public Object query(@RequestParam Map<String,Object> params) {
-		return super.commonQueryData(params);
-	}
+    /**
+     * @param params
+     * @param
+     * @return
+     */
+    @PostMapping("/queryzkpc")
+    @AuthModule(authId = AuthConstant.Module.GEODETIC_MODULE)
+    public Object query(@RequestParam Map<String, Object> params) {
+        params.put("zkwz", params.get("input_zkwz"));
+        return super.commonQueryData(params);
+    }
 
 
-	@PostMapping("/save")
-	@AuthModule(authId = AuthConstant.Module.GEODETIC_MODULE)
-	public Object save(DcSwdzZkpc params, HttpServletRequest request) {
-		try {
-			HttpSession session = request.getSession();
-			List<String> deptsIds = (List<String>)session.getAttribute(ESessionKey.DeptsIds.key);
-			params.setSsmk(deptsIds.get(0));
-			return super.commonSave(params);
-		} catch (Exception e) {
-			return ResultObject.buildFailResponse("保存数据异常");
-		}
-	}
+    @PostMapping("/save")
+    @AuthModule(authId = AuthConstant.Module.GEODETIC_MODULE)
+    public Object save(DcSwdzZkpc params, HttpServletRequest request) {
+        try {
+            HttpSession session = request.getSession();
+            List<String> deptsIds = (List<String>) session.getAttribute(ESessionKey.DeptsIds.key);
+            params.setSsmk(deptsIds.get(0));
+            return super.commonSave(params);
+        } catch (Exception e) {
+            return ResultObject.buildFailResponse("保存数据异常");
+        }
+    }
 
-	@PostMapping("/updateById")
-	@AuthModule(authId = AuthConstant.Module.GEODETIC_MODULE)
-	public Object updateById(DcSwdzZkpc params) {
-		return super.commonUpdateById(params);
-	}
+    @PostMapping("/updateById")
+    @AuthModule(authId = AuthConstant.Module.GEODETIC_MODULE)
+    public Object updateById(DcSwdzZkpc params) {
+        return super.commonUpdateById(params);
+    }
 
-	@PostMapping("/updateBatchById")
-	@AuthModule(authId = AuthConstant.Module.GEODETIC_MODULE)
-	public Object updateBatchById(String params) {
-		return super.commonUpdateBatchById(params);
-	}
+    @PostMapping("/updateBatchById")
+    @AuthModule(authId = AuthConstant.Module.GEODETIC_MODULE)
+    public Object updateBatchById(String params) {
+        return super.commonUpdateBatchById(params);
+    }
 
-	@PostMapping("/removeByIds")
-	@AuthModule(authId = AuthConstant.Module.GEODETIC_MODULE)
-	public Object removeByIds(String params) {
-		return super.commonRemoveByIds(params);
-	}
+    @PostMapping("/removeByIds")
+    @AuthModule(authId = AuthConstant.Module.GEODETIC_MODULE)
+    public Object removeByIds(String params) {
+        return super.commonRemoveByIds(params);
+    }
 }

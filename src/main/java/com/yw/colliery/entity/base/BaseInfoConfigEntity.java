@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @Auther: xuzhou
+ * @Author: xuzhou
  * @Date: 2019/5/15 15:34
  * @Description: 基础配置信息实体
  */

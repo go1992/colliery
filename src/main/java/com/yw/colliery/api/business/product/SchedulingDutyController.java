@@ -69,7 +69,7 @@ public class SchedulingDutyController {
         try {
             SchedulingDutyEntity schedulingDutyEntity = JSONObject.toJavaObject(JSON.parseObject(data), SchedulingDutyEntity.class);
             //列名转换一下
-            if (schedulingDutyEntity.getOrderName()!= null ) {
+            if (schedulingDutyEntity.getOrderName() != null) {
                 schedulingDutyEntity.setOrderName(StringUtil.camelToUnderline(schedulingDutyEntity.getOrderName()));
             }
             PageBean<SchedulingDutyEntity> unsafeInfoByUnsafeInfoEntity = schedulingDutyService.getByCondition(schedulingDutyEntity

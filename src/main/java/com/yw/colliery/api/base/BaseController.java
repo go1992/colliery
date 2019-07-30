@@ -45,7 +45,6 @@ public abstract class BaseController<S extends ServiceImpl<?, T>, T> {
     @ExceptionHandler(Exception.class)
     public Object authenticationException(Exception e) {
         String uuid = UUID.randomUUID().toString().replaceAll("-", "");
-        e.printStackTrace();
         log.error("本次接口调用异常,异常编号{}", uuid, e);
         return new ResultObject(ResultObject.FAILED, "1001", "本次接口调用异常,异常编号", uuid);
     }
@@ -61,7 +60,7 @@ public abstract class BaseController<S extends ServiceImpl<?, T>, T> {
         //组装查询条件
         QueryWrapper<T> qw = buildQueryWrapper(paramDTO);
         //分页查询
-        Page<T> page = new Page<>(paramDTO.getPageNum(), paramDTO.getPageSize());
+        Page<T> page = new Page<>(Optional.ofNullable(paramDTO.getPageNum()).orElse(0),Optional.ofNullable( paramDTO.getPageSize()).orElse(0));
         //字段条件查询
         T parseEntity = BeanUtils.mapToBean(params, getTClass());
         qw.allEq(true,BeanUtils.beanToMap(parseEntity),false);

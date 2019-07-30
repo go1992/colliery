@@ -7,7 +7,7 @@ import java.lang.reflect.ParameterizedType;
 import java.util.Map;
 
 /**
- * @Auther: xuzhou-013
+ * @Author: xuzhou-013
  * @Date: 2019/7/29 16:05
  * @Description: Bean工具类
  */

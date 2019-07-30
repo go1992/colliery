@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 
 /**
- *
  * 安全风险管控-领导跟踪检查 前端控制器
- *
  *
  * @author xuzhou
  * @since 2019-07-29
@@ -25,7 +23,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/apiv1/aqfx-ldgz")
 @Slf4j
-public class SecurityRiskLeaderCheckController extends BaseController<RiskLeaderCheckServiceImpl,AqfxLdgz> {
+public class RiskLeaderCheckController extends BaseController<RiskLeaderCheckServiceImpl, AqfxLdgz> {
 
     @AuthModule(authId = AuthConstant.Module.SAFE_MODULE, level = AuthConstant.Level.LOW)
     @PostMapping("/query")

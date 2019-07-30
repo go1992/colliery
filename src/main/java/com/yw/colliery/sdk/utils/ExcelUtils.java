@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @Auther: xuzhou-013
+ * @Author: xuzhou-013
  * @Date: 2019/7/15 10:43
  * @Description: excel文件读取
  */
