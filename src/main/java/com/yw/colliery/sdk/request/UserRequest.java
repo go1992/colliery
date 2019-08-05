@@ -26,6 +26,8 @@ public class UserRequest implements Serializable {
 
     private String name;
 
+    private String fileAuth;
+
     private String userPwd;
 
     private String createUser;

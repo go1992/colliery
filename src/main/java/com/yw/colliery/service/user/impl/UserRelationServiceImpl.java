@@ -12,7 +12,6 @@ import com.yw.colliery.service.user.CollierySafetyUserService;
 import com.yw.colliery.service.user.UserRelationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 import java.util.Arrays;
 import java.util.List;

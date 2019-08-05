@@ -23,4 +23,10 @@ public @interface AuthModule {
      * 权限等级
      */
     int level() default AuthConstant.Level.HIGH;
+
+    /**
+     * 是否校验文件权限
+     * @return
+     */
+    boolean fileAuth() default false;
 }

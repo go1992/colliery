@@ -103,6 +103,7 @@ public class UserController {
         entity.setUserPwd(request.getUserPwd() != null&&(request.getUserPwd().length() < 20) ? EncodeUtils.encode(request.getUserPwd()): null);
         entity.setId(request.getUserId());
         entity.setRoleId(request.getRoleId());
+        entity.setFileAuth(request.getFileAuth());
         entity.setDepartId(request.getDepartId());
         entity.setCreateUser(request.getCreateUser());
         entity.setModifyUser(request.getModifyUser());

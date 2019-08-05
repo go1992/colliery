@@ -95,6 +95,7 @@ public class FileManagerController {
      * @return
      */
     @PostMapping("/save/file/whiteList")
+    @AuthModule(authId = AuthConstant.Module.FILE_MODULE,level = AuthConstant.Level.LOW,fileAuth = true)
     public ResultObject saveHideFileList(@RequestBody List<FileWhiteListRequestDTO> dtos){
         try {
 
@@ -112,6 +113,7 @@ public class FileManagerController {
      * @return
      */
     @PostMapping("/get/file/whiteList")
+    @AuthModule(authId = AuthConstant.Module.FILE_MODULE,level = AuthConstant.Level.LOW,fileAuth = true)
     public ResultObject getHideFileList(){
         try {
 
@@ -128,6 +130,7 @@ public class FileManagerController {
      * @return
      */
     @PostMapping("/delete/file/whiteList")
+    @AuthModule(authId = AuthConstant.Module.FILE_MODULE,level = AuthConstant.Level.LOW,fileAuth = true)
     public ResultObject removeHideFileList(@RequestBody List<String> ids){
         try {
 

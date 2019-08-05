@@ -8,6 +8,7 @@
         <result column="user_name" property="name" jdbcType="VARCHAR"/>
         <result column="user_pwd" property="userPwd" jdbcType="VARCHAR"/>
         <result column="depart_name" property="departName" jdbcType="VARCHAR"/>
+        <result column="file_auth" property="fileAuth" jdbcType="VARCHAR"/>
         <result column="role_name" property="roleName" jdbcType="VARCHAR"/>
         <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
         <result column="create_user" property="createUser" jdbcType="VARCHAR"/>
@@ -16,7 +17,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-      id, role_id, depart_id, user_pwd, user_name, create_date, create_user, modify_date, modify_user
+      id, role_id, depart_id, user_pwd, user_name, file_auth,create_date, create_user, modify_date, modify_user
     </sql>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
@@ -39,11 +40,20 @@
     
     <insert id="insert" parameterType="com.yw.colliery.entity.user.CollierySafetyUserEntity">
     insert into colliery_user (id, role_id, depart_id, user_pwd,
-      user_name, create_date, create_user,
+      user_name, file_auth,create_date, create_user,
       modify_date, modify_user)
-    values (#{id,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER}, #{departId,jdbcType=INTEGER}, #{userPwd,jdbcType=VARCHAR},
-      #{name,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{createUser,jdbcType=VARCHAR},
-      #{modifyDate,jdbcType=TIMESTAMP}, #{modifyUser,jdbcType=TIMESTAMP})
+    values
+    (#{id,jdbcType=INTEGER},
+     #{roleId,jdbcType=INTEGER},
+     #{departId,jdbcType=INTEGER},
+     #{userPwd,jdbcType=VARCHAR},
+     #{name,jdbcType=VARCHAR},
+     #{fileAuth,jdbcType=VARCHAR},
+     #{createDate,jdbcType=TIMESTAMP},
+     #{createUser,jdbcType=VARCHAR},
+     #{modifyDate,jdbcType=TIMESTAMP},
+     #{modifyUser,jdbcType=TIMESTAMP
+     })
   </insert>
     <insert id="insertSelective" parameterType="com.yw.colliery.entity.user.CollierySafetyUserEntity">
         insert into colliery_user
@@ -62,6 +72,9 @@
             </if>
             <if test="name != null">
                 user_name,
+            </if>
+            <if test="fileAuth != null">
+                file_auth,
             </if>
             <if test="createDate != null">
                 create_date,
@@ -92,6 +105,9 @@
             <if test="name != null">
                 #{name,jdbcType=VARCHAR},
             </if>
+            <if test="fileAuth != null">
+                #{fileAuth,jdbcType=VARCHAR},
+            </if>
             <if test="createDate != null">
                 #{createDate,jdbcType=TIMESTAMP},
             </if>
@@ -120,6 +136,9 @@
             </if>
             <if test="name != null">
                 user_name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="fileAuth != null">
+                file_auth = #{fileAuth,jdbcType=VARCHAR},
             </if>
             <if test="createDate != null">
                 create_date = #{createDate,jdbcType=TIMESTAMP},
@@ -150,6 +169,9 @@
         </if>
         <if test="name != null">
             user_name = #{name,jdbcType=VARCHAR},
+        </if>
+        <if test="fileAuth != null">
+            file_auth = #{fileAuth,jdbcType=VARCHAR},
         </if>
         <if test="createDate != null">
             create_date = #{createDate,jdbcType=TIMESTAMP},
@@ -188,6 +210,7 @@
             A.depart_id as depart_id,
             user_pwd,
             user_name,
+            A.file_auth,
             A.create_date as create_date,
             A.create_user as create_user,
             A.modify_date as modify_date,
@@ -216,11 +239,18 @@
 
     <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
-          A.id as  id, A.role_id as role_id, A.depart_id as depart_id,
-            user_pwd, user_name, A.create_date as create_date, A.create_user as create_user,
-            A.modify_date as modify_date, A.modify_user as modify_user,
-            B.department_name as depart_name,
-            C.role_name as role_name
+          A.id as  id,
+          A.role_id as role_id,
+          A.depart_id as depart_id,
+          user_pwd,
+          user_name,
+          A.file_auth,
+          A.create_date as create_date,
+          A.create_user as create_user,
+          A.modify_date as modify_date,
+          A.modify_user as modify_user,
+          B.department_name as depart_name,
+          C.role_name as role_name
         from colliery_user A
             left JOIN colliery_department B on A.depart_id=B.id
             left JOIN colliery_role C ON A.role_id=C.id

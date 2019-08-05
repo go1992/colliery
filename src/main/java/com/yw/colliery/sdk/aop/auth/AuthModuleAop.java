@@ -28,6 +28,8 @@ public class AuthModuleAop {
     public Object auth(ProceedingJoinPoint point, AuthModule authModule) throws Throwable{
         //1.从session中获取用户
         UserRelationEntity userRelation = LoginSessionUtils.getUser();
+        //文件权限
+        boolean fileAuth = true;
         //2.查询权限信息
         //3.判断用户模块权限
         if (CollectionUtils.isEmpty(userRelation.getAuthList())) {
@@ -37,11 +39,17 @@ public class AuthModuleAop {
             //5.检查模块权限
             boolean success = (userRelation.getAuthList().stream().anyMatch(auth -> auth.getId().equals(authModule.authId())))
                     && (userRelation.getRole().getAuthLevel() <= authModule.level());
-            if (success) {
+            if(authModule.fileAuth()){
+                fileAuth = "true".equals(userRelation.getSafetyUser().getFileAuth());
+            }
+            if (success && fileAuth) {
                 return point.proceed();
             } else {
                 //6.没有权限的话就去查询权限信息，方便返回给用户具体的信息
                 AuthEntity authEntity = authService.selectById(authModule.authId());
+                if(!fileAuth){
+                    return ResultObject.buildFailResponse("您没有文件管理权限");
+                }
                 return ResultObject.buildFailResponse(String.format("您没有:%s模块权限!", authEntity.getName()));
             }
         }

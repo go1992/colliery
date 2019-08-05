@@ -45,6 +45,11 @@ public class FileManagerServiceImpl implements FileManegerService {
     @Autowired
     private HttpServletResponse response;
 
+    /**
+     * 文件管理权限开启标记
+     */
+    private static final String FILE_MANAGER_AUTH = "true";
+
     @Override
     public ResultObject saveFile(MultipartFile file, FileParamsDTO paramsDTO) {
 
@@ -97,8 +102,8 @@ public class FileManagerServiceImpl implements FileManegerService {
         JSONArray objects = new JSONArray();
 
 
-        //admin 用户获取所有文件
-        if ("admin".equals(user.getSafetyUser().getName())) {
+        // 有文件管理权限的用户获取所有文件
+        if (FILE_MANAGER_AUTH.equals(user.getSafetyUser().getFileAuth())) {
             String path = StringUtil.FILE_PATH + File.separator + paramsDTO.getCoalName();
             //获取所有部门的文件夹
             List<String> subFileList = FileUtils.getSubFileList(new File(path));

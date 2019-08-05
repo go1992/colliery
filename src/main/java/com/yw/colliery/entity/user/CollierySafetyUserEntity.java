@@ -7,8 +7,15 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Date;
 
+/**
+ * 用户信息实体类
+ * @author renzhiqiang
+ * @date 2019-08-05
+ */
 @Data
 public class CollierySafetyUserEntity implements UserDetails {
+
+    private static final long serialVersionUID = -1673592363691716199L;
 
     private Integer id;
 
@@ -21,6 +28,11 @@ public class CollierySafetyUserEntity implements UserDetails {
     private String departName;
 
     private String userPwd;
+
+    /**
+     * 文件管理权限
+     */
+    private String fileAuth;
 
     private String name;
 
