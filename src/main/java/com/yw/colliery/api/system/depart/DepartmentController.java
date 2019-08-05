@@ -38,7 +38,7 @@ public class DepartmentController {
     public ResultObject addDepart(@RequestBody DepartRequest request) {
         try {
             int result = departmentService.addDepart(transfer(request));
-            return ResultObject.buildSucessResponse(result);
+            return ResultObject.buildSuccessResponse(result);
         } catch (Exception e) {
             return ResultObject.buildFailResponse("新增部门失败!");
         }
@@ -49,7 +49,7 @@ public class DepartmentController {
     public ResultObject updateDepart(@RequestBody DepartRequest request) {
         try {
             int result = departmentService.updateDepart(transfer(request));
-            return ResultObject.buildSucessResponse(result);
+            return ResultObject.buildSuccessResponse(result);
         } catch (Exception e) {
             return ResultObject.buildFailResponse("修改部门失败!");
         }
@@ -69,7 +69,7 @@ public class DepartmentController {
                 return ResultObject.buildFailResponse("包含已经使用的部门id，无法删除！");
             }
             int result = departmentService.deleteDepartByIds(departIds);
-            return ResultObject.buildSucessResponse(result);
+            return ResultObject.buildSuccessResponse(result);
         } catch (Exception e) {
             return ResultObject.buildFailResponse("删除部门失败!");
         }
@@ -80,7 +80,7 @@ public class DepartmentController {
     public ResultObject selectDepartById(@PathVariable Integer departId) {
         try {
             DepartmentEntity departmentEntity = departmentService.selectById(departId);
-            return ResultObject.buildSucessResponse(departmentEntity);
+            return ResultObject.buildSuccessResponse(departmentEntity);
         } catch (Exception e) {
             return ResultObject.buildFailResponse("查询部门失败!");
         }

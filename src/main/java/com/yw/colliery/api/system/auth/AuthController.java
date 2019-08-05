@@ -36,7 +36,7 @@ public class AuthController {
     public ResultObject addAuth(@RequestBody AuthEntity authEntity) {
         try {
             int result = authService.addAuth(authEntity);
-            return ResultObject.buildSucessResponse(result);
+            return ResultObject.buildSuccessResponse(result);
         } catch (Exception e) {
             return ResultObject.buildFailResponse("新增权限失败!");
         }
@@ -47,7 +47,7 @@ public class AuthController {
     public ResultObject updateAuth(@RequestBody AuthEntity authEntity) {
         try {
             int result = authService.updateAuth(authEntity);
-            return ResultObject.buildSucessResponse(result);
+            return ResultObject.buildSuccessResponse(result);
         } catch (Exception e) {
             return ResultObject.buildFailResponse("修改权限失败!");
         }
@@ -59,7 +59,7 @@ public class AuthController {
         try {
             List<Integer> authIds = JSON.parseArray(data, Integer.class);
             int result = authService.deleteAuthByIds(authIds);
-            return ResultObject.buildSucessResponse(result);
+            return ResultObject.buildSuccessResponse(result);
         } catch (Exception e) {
             return ResultObject.buildFailResponse("删除权限失败!");
         }
@@ -71,7 +71,7 @@ public class AuthController {
     public ResultObject selectAuthById(@PathVariable Integer authId) {
         try {
             AuthEntity authEntity = authService.selectById(authId);
-            return ResultObject.buildSucessResponse(authEntity);
+            return ResultObject.buildSuccessResponse(authEntity);
         } catch (Exception e) {
             return ResultObject.buildFailResponse("查询权限失败!");
         }
@@ -97,9 +97,9 @@ public class AuthController {
             if (userRelation != null) {
                 List<AuthEntity> authList = userRelation.getAuthList();
                 boolean result = authList.stream().anyMatch(authEntity -> authEntity.getId() == authId);
-                return ResultObject.buildSucessResponse(result);
+                return ResultObject.buildSuccessResponse(result);
             }
-            return ResultObject.buildSucessResponse(false);
+            return ResultObject.buildSuccessResponse(false);
         } catch (Exception e) {
             return ResultObject.buildFailResponse("查询该用户在当前模块的权限失败!");
         }

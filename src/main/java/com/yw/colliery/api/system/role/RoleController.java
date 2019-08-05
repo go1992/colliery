@@ -38,7 +38,7 @@ public class RoleController {
     public ResultObject addRole(@RequestBody RoleEntity RoleEntity) {
         try {
             int result = roleService.addRole(RoleEntity);
-            return ResultObject.buildSucessResponse(result);
+            return ResultObject.buildSuccessResponse(result);
         } catch (Exception e) {
             return ResultObject.buildFailResponse("新增角色失败!");
         }
@@ -49,7 +49,7 @@ public class RoleController {
     public ResultObject updateRole(@RequestBody RoleEntity RoleEntity) {
         try {
             int result = roleService.updateRole(RoleEntity);
-            return ResultObject.buildSucessResponse(result);
+            return ResultObject.buildSuccessResponse(result);
         } catch (Exception e) {
             return ResultObject.buildFailResponse("修改角色失败!");
         }
@@ -67,7 +67,7 @@ public class RoleController {
                 return ResultObject.buildFailResponse("包含已经使用的角色id，不能删除！");
             }
             int result = roleService.deleteRoleByIds(roleIds);
-            return ResultObject.buildSucessResponse(result);
+            return ResultObject.buildSuccessResponse(result);
         } catch (Exception e) {
             log.error("删除角色异常",e);
             return ResultObject.buildFailResponse("删除角色失败!");
@@ -79,7 +79,7 @@ public class RoleController {
     public ResultObject selectRoleById(@PathVariable Integer roleId) {
         try {
             RoleEntity RoleEntity = roleService.selectById(roleId);
-            return ResultObject.buildSucessResponse(RoleEntity);
+            return ResultObject.buildSuccessResponse(RoleEntity);
         } catch (Exception e) {
             return ResultObject.buildFailResponse("查询角色失败!");
         }

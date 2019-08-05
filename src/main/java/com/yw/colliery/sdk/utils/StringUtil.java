@@ -7,8 +7,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * @author xuzhou
+ *
+ */
 public class StringUtil {
+
 	public static final String FILE_PATH = "D:";
+
+	public static final String REG_FILE_SEPARATOR = "\\\\";
+
+	public static final String REG_DOUBLE_FILE_SEPARATOR = "\\\\\\\\";
 	/**
 	 * 判空
 	 *

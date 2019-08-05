@@ -6,7 +6,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.yw.colliery.dto.FileParamsDTO;
+import com.yw.colliery.dto.FileWhiteListRequestDTO;
 import com.yw.colliery.dto.ResultObject;
+import com.yw.colliery.entity.file.FileWhiteListEntity;
 import com.yw.colliery.sdk.aop.auth.AuthModule;
 import com.yw.colliery.sdk.constans.AuthConstant;
 import com.yw.colliery.service.base.FileManegerService;
@@ -37,7 +39,7 @@ public class FileManagerController {
         FileParamsDTO fileDTO = parseFileDTO(request);
         logger.info("上传文件属性：煤矿名称:[{}],系统名称:[{}],资料类型:[{}]" + fileDTO.getCoalName(), fileDTO.getMenuName(), fileDTO.getType());
         MultipartFile file = ((MultipartHttpServletRequest) request).getFile("fileName");
-        return fileManegerService.saveFile(file,fileDTO);
+        return fileManegerService.saveFile(file, fileDTO);
     }
 
     /**
@@ -76,19 +78,66 @@ public class FileManagerController {
 
     /**
      * 获取某文件夹下的全部文件，以json格式返回
+     *
      * @param
      * @return
      */
     @PostMapping("/getfilename")
     @AuthModule(authId = AuthConstant.Module.FILE_MODULE)
-    public ResultObject getfilenames(HttpServletRequest request) {
-
+    public ResultObject getFileNames(HttpServletRequest request) {
         FileParamsDTO fileParamsDTO = parseFileDTO(request);
         return fileManegerService.getFileList(fileParamsDTO);
-
-
-
     }
+
+    /**
+     * 保存文件白名单
+     * @param dtos
+     * @return
+     */
+    @PostMapping("/save/file/whiteList")
+    public ResultObject saveHideFileList(@RequestBody List<FileWhiteListRequestDTO> dtos){
+        try {
+
+            return fileManegerService.saveHideFileList(dtos);
+        } catch (Exception e) {
+            logger.error("保存隐藏文件列表异常",e);
+            return ResultObject.buildFailResponse("保存隐藏文件列表异常！");
+        }
+    }
+
+
+    /**
+     * 保存文件白名单
+     * @param
+     * @return
+     */
+    @PostMapping("/get/file/whiteList")
+    public ResultObject getHideFileList(){
+        try {
+
+            return fileManegerService.getHideFileList();
+        } catch (Exception e) {
+            logger.error("获取隐藏文件列表异常",e);
+            return ResultObject.buildFailResponse("获取隐藏文件列表异常！");
+        }
+    }
+
+    /**
+     * 移除文件白名单
+     * @param
+     * @return
+     */
+    @PostMapping("/delete/file/whiteList")
+    public ResultObject removeHideFileList(@RequestBody List<String> ids){
+        try {
+
+            return fileManegerService.deleteHideFileList(ids);
+        } catch (Exception e) {
+            logger.error("删除隐藏文件列表异常",e);
+            return ResultObject.buildFailResponse("删除隐藏文件列表异常！");
+        }
+    }
+
     private FileParamsDTO parseFileDTO(HttpServletRequest request) {
         FileParamsDTO fileParamsDTO = new FileParamsDTO();
         //煤矿名称

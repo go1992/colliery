@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yw.colliery.mapper.file.FileWhiteListMapper">
+
+    <resultMap id="BaseResultMap" type="com.yw.colliery.entity.file.FileWhiteListEntity">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="coal" property="coal" jdbcType="VARCHAR"/>
+        <result column="system" property="system" jdbcType="VARCHAR"/>
+        <result column="menu" property="menu" jdbcType="VARCHAR"/>
+        <result column="depart" property="depart" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="file_name" property="fileName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,
+        coal,
+        `system`,
+        depart,
+        menu,
+        type,
+        file_name
+    </sql>
+
+
+    <insert id="insertFileWhiteList" parameterType="java.util.List" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into colliery_file_white_list
+        (
+            coal,
+            `system`,
+            depart,
+            menu,
+            type,
+            file_name
+        )
+        values
+        <foreach item="item" index="index" collection="list" separator=",">
+        (
+           #{item.coal,jdbcType=VARCHAR},
+           #{item.system,jdbcType=VARCHAR},
+           #{item.depart,jdbcType=VARCHAR},
+           #{item.menu,jdbcType=VARCHAR},
+           #{item.type,jdbcType=VARCHAR},
+           #{item.fileName,jdbcType=VARCHAR}
+        )
+        </foreach>
+    </insert>
+
+    <update id="updateFileWhiteList" parameterType="com.yw.colliery.entity.file.FileWhiteListEntity">
+        update colliery_file_white_list
+        <set>
+            <if test="coal != null">
+                coal = #{coal,jdbcType=VARCHAR},
+            </if>
+            <if test="system != null">
+                system= #{system,jdbcType=VARCHAR},
+            </if>
+            <if test="depart != null">
+                depart= #{depart,jdbcType=VARCHAR},
+            </if>
+            <if test="menu != null">
+                menu= #{menu,jdbcType=VARCHAR},
+            </if>
+            <if test="fileName != null">
+                file_name= #{fileName,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type= #{type,jdbcType=VARCHAR},
+            </if>
+
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+
+    <select id="selectFileWhiteList" resultMap="BaseResultMap" parameterType="com.yw.colliery.entity.file.FileWhiteListEntity">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from colliery_file_white_list
+        WHERE
+        1=1
+        <if test="id != null">
+            AND id = #{id}
+        </if>
+        <if test="coal != null">
+            AND coal = #{coal}
+        </if>
+        <if test="system != null">
+            AND `system`= #{system}
+        </if>
+        <if test="menu != null">
+            AND menu= #{menu}
+        </if>
+        <if test="depart != null">
+            AND depart= #{depart}
+        </if>
+        <if test="fileName != null">
+            AND file_name = #{fileName}
+        </if>
+        <if test="type != null">
+            AND type = #{type}
+        </if>
+        <if test="orderName !=null">
+            ORDER BY ${orderName} ${order}
+        </if>
+    </select>
+
+    <delete id="deleteById" parameterType="java.util.List">
+        DELETE FROM
+        colliery_file_white_list
+        WHERE
+        id
+        in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+
+    </delete>
+
+
+</mapper>

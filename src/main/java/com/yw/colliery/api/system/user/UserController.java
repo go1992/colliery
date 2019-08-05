@@ -40,7 +40,7 @@ public class UserController {
         CollierySafetyUserEntity entity = transfer(request);
         try {
             int result = collierySafetyUserService.addSafetyUser(entity);
-            return ResultObject.buildSucessResponse(result);
+            return ResultObject.buildSuccessResponse(result);
         } catch (Exception e) {
             return ResultObject.buildFailResponse("新增用户失败!");
         }
@@ -53,7 +53,7 @@ public class UserController {
         CollierySafetyUserEntity entity = transfer(request);
         try {
             int result = collierySafetyUserService.updateSafetyUSer(entity);
-            return ResultObject.buildSucessResponse(result);
+            return ResultObject.buildSuccessResponse(result);
         } catch (Exception e) {
             return ResultObject.buildFailResponse("修改用户失败!");
         }
@@ -66,7 +66,7 @@ public class UserController {
         try {
             List<Integer> userIds = JSON.parseArray(data, Integer.class);
             int result = collierySafetyUserService.deleteUserByIds(userIds);
-            return ResultObject.buildSucessResponse(result);
+            return ResultObject.buildSuccessResponse(result);
         } catch (Exception e) {
             return ResultObject.buildFailResponse("删除用户失败!");
         }
@@ -78,7 +78,7 @@ public class UserController {
     public ResultObject selectUser(@PathVariable Integer userId) {
         try {
             CollierySafetyUserEntity result = collierySafetyUserService.selectyUserId(userId);
-            return ResultObject.buildSucessResponse(result);
+            return ResultObject.buildSuccessResponse(result);
         } catch (Exception e) {
             return ResultObject.buildFailResponse("查询用户信息失败!");
         }

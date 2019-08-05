@@ -93,7 +93,7 @@ public class RiskController extends BaseController<RiskServiceImpl, AqfxNdfx> {
         YearUnsafeResponse response = new YearUnsafeResponse(unsafeTypeVos, unsafeLevelVos);
 
         if (unsafeTypeVos != null && unsafeLevelVos != null) {
-            return ResultObject.buildSucessResponse(response);
+            return ResultObject.buildSuccessResponse(response);
         } else {
             return ResultObject.buildFailResponse("没有查到年度风险统计数据");
         }

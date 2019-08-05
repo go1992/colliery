@@ -38,5 +38,6 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
         String loginName = authentication.getName();
         //登录成功保存用户关联信息到session
         userSessionHelper.saveUserRelationInfo(loginName);
+
     }
 }
