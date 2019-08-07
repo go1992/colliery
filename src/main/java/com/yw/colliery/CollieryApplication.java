@@ -49,8 +49,9 @@ public class CollieryApplication extends SpringBootServletInitializer {
         return factory.createMultipartConfig();
     }
 
-    /*
-		分页插件
+    /**
+     * 分页插件
+     * @return
      */
     @Bean
     public PaginationInterceptor paginationInterceptor() {

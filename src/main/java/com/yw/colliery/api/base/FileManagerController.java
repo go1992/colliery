@@ -10,6 +10,7 @@ import com.yw.colliery.dto.FileWhiteListRequestDTO;
 import com.yw.colliery.dto.ResultObject;
 import com.yw.colliery.entity.file.FileWhiteListEntity;
 import com.yw.colliery.sdk.aop.auth.AuthModule;
+import com.yw.colliery.sdk.aop.log.LogRecord;
 import com.yw.colliery.sdk.constans.AuthConstant;
 import com.yw.colliery.service.base.FileManegerService;
 import org.slf4j.Logger;
@@ -34,7 +35,7 @@ public class FileManagerController {
      * 实现文件上传
      */
     @PostMapping("fileUpload")
-    @AuthModule(authId = AuthConstant.Module.FILE_MODULE)
+    @AuthModule(authId = AuthConstant.Module.GEODETIC_MODULE,level = AuthConstant.Level.LOW)
     public ResultObject fileUpload(HttpServletRequest request) {
         FileParamsDTO fileDTO = parseFileDTO(request);
         logger.info("上传文件属性：煤矿名称:[{}],系统名称:[{}],资料类型:[{}]" + fileDTO.getCoalName(), fileDTO.getMenuName(), fileDTO.getType());
@@ -49,7 +50,7 @@ public class FileManagerController {
      * @return
      */
     @PostMapping("/delfile")
-    @AuthModule(authId = AuthConstant.Module.FILE_MODULE)
+    @AuthModule(authId = AuthConstant.Module.GEODETIC_MODULE)
     public ResultObject delFileName(HttpServletRequest request) {
         FileParamsDTO fileParamsDTO = parseFileDTO(request);
         logger.info("删除文件参数:{},{},{},{},{}", fileParamsDTO.getCoalName()
@@ -66,7 +67,7 @@ public class FileManagerController {
      * @return
      */
     @GetMapping("/downloadflie")
-    @AuthModule(authId = AuthConstant.Module.FILE_MODULE)
+    @AuthModule(authId = AuthConstant.Module.GEODETIC_MODULE)
     public ResultObject downloadFile(HttpServletRequest request, HttpServletResponse response) {
         FileParamsDTO fileParamsDTO = parseFileDTO(request);
         //文件名称
@@ -83,7 +84,7 @@ public class FileManagerController {
      * @return
      */
     @PostMapping("/getfilename")
-    @AuthModule(authId = AuthConstant.Module.FILE_MODULE)
+    @AuthModule(authId = AuthConstant.Module.GEODETIC_MODULE,level = AuthConstant.Level.LOW)
     public ResultObject getFileNames(HttpServletRequest request) {
         FileParamsDTO fileParamsDTO = parseFileDTO(request);
         return fileManegerService.getFileList(fileParamsDTO);
@@ -95,7 +96,7 @@ public class FileManagerController {
      * @return
      */
     @PostMapping("/save/file/whiteList")
-    @AuthModule(authId = AuthConstant.Module.FILE_MODULE,level = AuthConstant.Level.LOW,fileAuth = true)
+    @AuthModule(authId = AuthConstant.Module.GEODETIC_MODULE,level = AuthConstant.Level.LOW,fileAuth = true)
     public ResultObject saveHideFileList(@RequestBody List<FileWhiteListRequestDTO> dtos){
         try {
 
@@ -113,11 +114,10 @@ public class FileManagerController {
      * @return
      */
     @PostMapping("/get/file/whiteList")
-    @AuthModule(authId = AuthConstant.Module.FILE_MODULE,level = AuthConstant.Level.LOW,fileAuth = true)
-    public ResultObject getHideFileList(){
+    @AuthModule(authId = AuthConstant.Module.GEODETIC_MODULE,level = AuthConstant.Level.LOW,fileAuth = true)
+    public ResultObject getHideFileList(@RequestBody FileWhiteListRequestDTO dto){
         try {
-
-            return fileManegerService.getHideFileList();
+            return fileManegerService.getHideFileList(dto);
         } catch (Exception e) {
             logger.error("获取隐藏文件列表异常",e);
             return ResultObject.buildFailResponse("获取隐藏文件列表异常！");
@@ -130,7 +130,7 @@ public class FileManagerController {
      * @return
      */
     @PostMapping("/delete/file/whiteList")
-    @AuthModule(authId = AuthConstant.Module.FILE_MODULE,level = AuthConstant.Level.LOW,fileAuth = true)
+    @AuthModule(authId = AuthConstant.Module.GEODETIC_MODULE,level = AuthConstant.Level.LOW,fileAuth = true)
     public ResultObject removeHideFileList(@RequestBody List<String> ids){
         try {
 

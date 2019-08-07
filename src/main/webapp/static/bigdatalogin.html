@@ -49,7 +49,8 @@
 				padding: 10px;
 			}
 			
-			.tyg-div-form form input[type="text"] ,.tyg-div-form form input[type="password"]{
+			.tyg-div-form form input[type="text"],
+			.tyg-div-form form input[type="password"] {
 				width: 270px;
 				height: 30px;
 				margin: 25px 10px 0px 0px;
@@ -142,13 +143,20 @@
 
 			<script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
 			<script type="text/javascript" src="js/com.js"></script>
-			<script type="text/javascript" src="glng/PZ_IP.js" ></script>
+			<script type="text/javascript" src="glng/PZ_IP.js"></script>
 			<script type="text/javascript">
+				var storage = window.localStorage;
+				if(storage.length > 0) {
+					document.getElementById("username").value = localStorage.MK_userName;
+					document.getElementById("password").value = localStorage.MK_userPwd;
+				}
+
 				var host = ip;
 				var Urllogin = '/colliery/login';
 				getPic();
 				$("#loginButton").click(function() {
-					var username=$("#username").val();
+					var username = $("#username").val();
+					var userpwd = $("#password").val();
 					$.ajax({
 						dataType: "json",
 						type: "post",
@@ -160,7 +168,8 @@
 						},
 						success: function(data) {
 							if(data.code == "SUCCESS") {
-								sessionStorage.setItem("MK_userName", username);
+								localStorage.setItem("MK_userName", username);
+								localStorage.setItem("MK_userPwd", userpwd);
 								window.location.href = "index.html";
 							} else {
 								getPic();
@@ -215,6 +224,7 @@
 						error: function(xmlHttpRequest, statusText, errorThrown) {}
 					});
 				};
+
 				function keyLogin() {
 					if(event.keyCode == 13) //回车键的键值为13
 						document.getElementById("loginButton").click(); //调用登录按钮的登录事件

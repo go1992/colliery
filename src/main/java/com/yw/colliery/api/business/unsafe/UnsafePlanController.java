@@ -5,7 +5,9 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.yw.colliery.dto.ResultDTO;
 import com.yw.colliery.entity.unsafe.UnsafePlanEntity;
+import com.yw.colliery.sdk.aop.auth.AuthModule;
 import com.yw.colliery.sdk.config.PageBean;
+import com.yw.colliery.sdk.constans.AuthConstant;
 import com.yw.colliery.sdk.utils.StringUtil;
 import com.yw.colliery.service.unsafe.UnsafePlanService;
 import lombok.extern.slf4j.Slf4j;
@@ -29,12 +31,13 @@ public class UnsafePlanController {
 
 
     /**
-     * 隐患数据持久化
+     * 隐患计划数据持久化
      *
      * @param data
      * @return
      */
     @PostMapping("/save")
+    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE)
     public ResultDTO input(@RequestBody String data) {
         try {
             UnsafePlanEntity unsafeInfoEntity = JSONObject.toJavaObject(JSON.parseObject(data), UnsafePlanEntity.class);
@@ -47,18 +50,19 @@ public class UnsafePlanController {
             return new ResultDTO(ResultDTO.SUCCESS, "持久化隐患排查计划数据成功");
         } catch (Exception e) {
             log.error("保存隐患排查数据异常", e);
-            return new ResultDTO(ResultDTO.FAILED, "保存隐患排查数据异常");
+            return new ResultDTO(ResultDTO.FAILED, "保存隐患排查计划数据异常");
         }
 
     }
 
     /**
-     * 获取所有未处理的隐患数据
+     * 获取所有隐患计划
      *
      * @param
      * @return
      */
     @PostMapping("/get")
+    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE, level = AuthConstant.Level.LOW)
     public Object getAllUnsafeInfo(@RequestBody String data) {
         try {
             UnsafePlanEntity unsafeInfoEntity = JSONObject.toJavaObject(JSON.parseObject(data), UnsafePlanEntity.class);
@@ -86,6 +90,7 @@ public class UnsafePlanController {
      * @return
      */
     @PostMapping("/update")
+    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE)
     public ResultDTO submit(@RequestBody String data) {
         try {
             UnsafePlanEntity unsafeInfoEntity = JSONObject.toJavaObject(JSON.parseObject(data), UnsafePlanEntity.class);
@@ -110,6 +115,7 @@ public class UnsafePlanController {
      * @return
      */
     @PostMapping("/delete")
+    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE)
     public ResultDTO delete(@RequestBody String data) {
         try {
             List<String> strings = JSON.parseArray(data, String.class);

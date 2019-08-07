@@ -482,9 +482,9 @@
 				}
 			});
 			//显示当前用户名
-			var storage = window.sessionStorage;
+			var storage = window.localStorage;
 			if(storage.length > 0) {
-				var userName = sessionStorage.getItem("MK_userName");
+				var userName = localStorage.getItem("MK_userName");
 				$("#showUserName").text('当前账户:' + userName);
 			}
 		</script>

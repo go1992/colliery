@@ -42,7 +42,7 @@ public class HandOverController {
      * @return
      */
     @PostMapping("/save")
-    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE, level = AuthConstant.Level.HIGH)
+    @AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE)
     public ResultDTO input(@RequestBody String data) {
         try {
             HandOverEntity handOverEntity = JSONObject.toJavaObject(JSON.parseObject(data), HandOverEntity.class);
@@ -65,6 +65,7 @@ public class HandOverController {
      * @return
      */
     @PostMapping("/get")
+    @AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE, level = AuthConstant.Level.LOW)
     public Object getUnsafeInfoByCondition(@RequestBody String data) {
         try {
             HandOverEntity handOverEntity = JSONObject.toJavaObject(JSON.parseObject(data), HandOverEntity.class);
@@ -95,6 +96,7 @@ public class HandOverController {
      * @return
      */
     @PostMapping("/delete")
+    @AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE)
     public ResultDTO delete(@RequestBody String data) {
         try {
             List<String> strings = JSON.parseArray(data, String.class);
@@ -117,6 +119,7 @@ public class HandOverController {
      * @return
      */
     @PostMapping("/update")
+    @AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE)
     public ResultDTO submit(@RequestBody String data) {
         try {
             HandOverEntity handOverEntity = JSONObject.toJavaObject(JSON.parseObject(data), HandOverEntity.class);

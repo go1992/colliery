@@ -4,7 +4,13 @@
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
-		<link rel="stylesheet" href="js/layer/mobile/need/layer.css" />
+		<link rel="stylesheet" href="../../js/layer/mobile/need/layer.css" />
+		<link rel="stylesheet" href="../../fonts/iconfont.css" />
+		<link rel="stylesheet" href="../../css/bootstrap.min.css" />
+		<link rel="stylesheet" href="../../css/bootstrap-table.min.css" />
+		<link rel="stylesheet" href="../../css/all.css" />
+		<link rel="stylesheet" href="../../css/font-awesome.min.css" />
+		<link rel="stylesheet" href="../../css/style.css">
 		<style>
 			#Table1,
 			#Table2 {
@@ -22,17 +28,11 @@
 				text-align: center;
 			}
 			
-			#Table2 td{
-				color: black;
-			}
 			#Table1 tr td:nth-of-type(1) {
 				text-align: right;
 			}
 			
 			#Table1 tr td:nth-of-type(3) {
-				text-align: right;
-			}
-			#Table1 tr td:nth-of-type(5) {
 				text-align: right;
 			}
 			
@@ -85,180 +85,48 @@
 				cursor: pointer;
 				background-color: #c82333;
 			}
+			
+			.fa {
+				color: #007BFF;
+			}
 		</style>
+
 	</head>
 
 	<body>
 		<form method="post" action="#" id="Form1" enctype="multipart/form-data">
-			<input type="hidden" id="RowId" />
+			<!--<input type="hidden" id="RowId" />
 			<table id="Table1" border="1" cellspacing="0" cellpadding="5px">
 				<tr>
-					<td>
-						风险点：
-					</td>
-					<td>
-						<select id="sel_fxd" name="fxd" style="margin: 4px;"></select>
-					</td>
-					<td>
-						辨识时间：
-					</td>
-					<td>
-						
-						<input id="datetype" name="datetype" type="hidden" />
-						<select id="year" style="margin-left: 4px;"></select>年
-						<select id="month" style="margin-left: 4px;"></select>月
-						
-					</td>
-					<td>
-						责任单位：
-					</td>
-					<td>
-						<select id="sel_zrdw" name="zrdw" style="margin: 4px;"></select>
-					</td>
-
-				</tr>
-				<tr>
-					<td>
-						风险等级：
-					</td>
-					<td>
-						<select name="fxdj" style="margin: 4px;">
-							<option></option>
-							<option>低</option>
-							<option>一般</option>
-							<option>较大</option>
-							<option>重大</option>
-						</select>
-					</td>
-					<td>
-						风险分类：
-					</td>
-					<td>
-						<select id="sel_fxfl" name="fxfl" style="margin: 4px;"></select>
-					</td>
-					<td colspan="2"><button type="button" class="btn_tj" id="btn_sel"><i class="iconfont icon-chaxun"></i>查询</button></td>
 					
-				</tr>
+						<td>菜单：</td>
+						<td><input id="id" name="menu" /> </td>
 				
-			</table>
+				
+					
+					<td><button type="button" class="btn_tj" id="btn_sel"><i class="iconfont icon-chaxun"></i>查询</button></td>
+				</tr>
+			</table>-->
 			<div class="btn_tr" id="toolbar">
 				<div>
-					<button type="button" class="btn_bj" id="btn_add"><i class="iconfont icon-bianji"></i>新增</button>
-					<button type="button" class="btn_bj" id="btn_dr"><i class="iconfont icon-bianji"></i>批量导入</button>
-					<button type="button" class="btn_bj" id="btn_bj"><i class="iconfont icon-bianji"></i>编辑选中项</button>
-					<button type="button" class="btn_del" id="btn_del"><i class="iconfont icon-shanchu"></i>删除选中项</button>
+					<button type="button" class="btn_bj" id="btn_del"><i class="iconfont icon-bianji"></i>设置为显示</button>
 				</div>
 			</div>
 			<table id="Table2" border="1" cellspacing="0" cellpadding="5px">
 			</table>
 		</form>
-		<script type="text/javascript" src="js/jquery-1.12.4.js"></script>
-		<!--<script type="text/javascript" src="js/popper.min.js"></script>
-		<script type="text/javascript" src="js/bootstrap.min.js"></script>-->
-		<script type="text/javascript" src="js/core.min.js"></script>
+		<script type="text/javascript" src="../../js/jquery-1.12.4.js"></script>
+		<script type="text/javascript" src="../../js/core.min.js"></script>
 		<!--bootstrap-table插件-->
-		<script type="text/javascript" src="js/bootstrap-table.min.js"></script>
+		<script type="text/javascript" src="../../js/bootstrap-table.min.js"></script>
 		<!--table导出插件-->
-		<script type="text/javascript" src="js/bootstrap-table-export.min.js"></script>
-		<script type="text/javascript" src="js/tableExport.min.js"></script>
+		<script type="text/javascript" src="../../js/bootstrap-table-export.min.js"></script>
+		<script type="text/javascript" src="../../js/tableExport.min.js"></script>
 		<!--bootstrap-table插件汉化-->
-		<script type="text/javascript" src="js/bootstrap-table-zh-CN.min.js"></script>
-		<script type="text/javascript" src="glng/PZ_IP.js"></script>
+		<script type="text/javascript" src="../../js/bootstrap-table-zh-CN.min.js"></script>
+		<script type="text/javascript" src="../../glng/PZ_IP.js"></script>
 		<script>
-			//设置年份的选择 
-			var myDate = new Date();
-			var startYear = myDate.getFullYear() - 50; //起始年份 
-			var endYear = myDate.getFullYear() + 50; //结束年份 
-			var str = "<option></option>";
-			for(var i = startYear; i <= endYear; i++) {
-				str += "<option>" + i + "</option>";
-			}
-			$("#year").html(str);
-			 var month="<option></option>";
-			 for(var i=1;i<=12;i++){
-			 	if(i<10){
-			 		i="0"+i;
-			 	}
-			 	month += "<option>" + i + "</option>";
-			 }
-			$("#month").html(month);
-			var host = HOST;
-			var host1=ip;
-			//风险点下拉框
-			var json2 = {
-				"name": '风险点'
-			};
-			$.ajax({
-				contentType: "application/json;charset=utf-8",
-				dataType: "json",
-				type: "post",
-				url: host1 + '/base/config/get',
-				async: false,
-				data: JSON.stringify(json2),
-				success: function(data) {
-					if(data.total > 0) {
-						var str = "<option></option>";
-						for(var i = 0; i < data.rows.length; i++) {
-							str += "<option>" + data.rows[i].value + "</option>";
-						}
-						$("#sel_fxd").html(str);
-					}
-				},
-				error: function(request) {
-					alert("连接失败!")
-				}
-			});
-			//部门下拉框
-			var json3 = {
-				"pageNum": null,
-				"pageSize": null
-			};
-			$.ajax({
-				contentType: "application/json;charset=utf-8",
-				dataType: "json",
-				type: "post",
-				url: host1 + '/department/select/all',
-				async: false,
-				data: JSON.stringify(json3),
-				success: function(data) {
-					if(data.total > 0) {
-						var str1="<option ></option>";
-						for(var i = 0; i < data.rows.length; i++) {
-							str1 += "<option >" + data.rows[i].departName + "</option>";
-						}
-						$("#sel_zrdw").html(str1);
-					}
-
-				},
-				error: function(request) {
-					alert("连接失败!")
-				}
-			});
-				//风险分类下拉框
-			var json4 = {
-				"name": '风险分类'
-			};
-			$.ajax({
-				contentType: "application/json;charset=utf-8",
-				dataType: "json",
-				type: "post",
-				url: host1 + '/base/config/get',
-				async: false,
-				data: JSON.stringify(json4),
-				success: function(data) {
-					if(data.total > 0) {
-						var str="<option></option>";
-						for(var i = 0; i < data.rows.length; i++) {
-							str += "<option>" + data.rows[i].value + "</option>"
-						}
-						$("#sel_fxfl").html(str);
-					}
-
-				},
-				error: function(request) {
-					alert("连接失败!")
-				}
-			});
+			var host = ip; //ip地址
 			$(function() {
 
 				//1.初始化Table
@@ -270,8 +138,6 @@
 				oButtonInit.Init();
 
 			});
-			var UrlSelect = '/aqfx-ndfx/query';
-			var UrlDelete = '/aqfx-ndfx/removeByIds';
 			var TableInit = function() {
 				$('#Table2').bootstrapTable('destroy');
 				var oTableInit = new Object();
@@ -280,8 +146,8 @@
 					$('#Table2').bootstrapTable({
 						method: 'post',
 						toolbar: '#toolbar', //工具按钮用哪个容器
-						contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-						url: host + UrlSelect,
+						//						contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+						url: host + '/get/file/whiteList',
 						dataType: 'json',
 						undefinedText: '-', //当数据为 undefined 时显示的字符
 						striped: true, //是否显示行间隔色
@@ -333,7 +199,7 @@
 						maintainSelected: true, //设置为 true 在点击分页按钮或搜索按钮时，将记住checkbox的选择项
 						iconSize: 'btnxs', //定义图标大小：undefined=> btnxs=> btn-xssm=> btn-smlg=>btn-lg
 						uniqueId: "id", //每一行的唯一标识，一般为主键列
-						showExport: true, //是否显示导出
+						showExport: false, //是否显示导出
 						exportDataType: "basic", //basic', 'all', 'selected'.
 						exportOptions: {
 							ignoreColumn: [0, 0], //忽略某一列的索引  
@@ -341,90 +207,39 @@
 							worksheetName: 'sheet1', //表格工作区名称  
 							tableName: '导出数据',
 						},
-						rowStyle: function(row, index) {
-							if(row['fxdj'] == "低") {
-								return {
-									css: {
-										"background-color": "#30a5ff"
-									}
-								};
-							} else if(row['fxdj'] == "一般") {
-								return {
-									css: {
-										"background-color": "#FF0"
-									}
-								};
-							} else if(row['fxdj'] == "较大") {
-								return {
-									css: {
-										"background-color": "#F60"
-									}
-								};
-							} else if(row['fxdj'] == "重大") {
-								return {
-									css: {
-										"background-color": "red"
-									}
-								};
+						responseHandler: function(res) {
+							return {
+								"total": res.result.total,
+								"rows": res.result.rows
 							}
-
+//							return res.result;
 						},
 						columns: [{
 								checkbox: true
 							},
 							{
 								field: "id",
-								title: "ID",
+								title: "id",
 								sortable: "true"
 							},
 							{
-								field: "fxd",
-								title: "风险点",
+								field: "system",
+								title: "系统",
 								sortable: "true"
 							},
 							{
-								field: "datetype",
-								title: "辨识时间",
+								field: "menu",
+								title: "菜单",
 								sortable: "true"
 							},
 							{
-								field: "zrdw",
-								title: "责任单位",
+								field: "type",
+								title: "类型",
 								sortable: "true"
 							},
 							{
-								field: "fxdj",
-								title: "风险等级",
-								sortable: "true"
-							},
-							{
-								field: "fxfl",
-								title: "风险分类",
-								sortable: "true"
-							},
-							{
-								field: "zrdw",
-								title: "限制人数",
-								sortable: "true"
-							},
-							{
-								field: "fxms",
-								title: "风险描述",
-								sortable: "true"
-							},
-							{
-								field: "gkcs",
-								title: "管控措施",
-								sortable: "true"
-							},
-							{
-								field: "zyfzr",
-								title: "主要负责人",
-								sortable: "true"
-							},
-							{
-								field: "fgfzr",
-								title: "分管负责人",
+								field: "fileName",
+								title: "文件名",
 								sortable: "true"
 							},
 
@@ -442,8 +257,8 @@
 								title: '编辑',
 								maxmin: true,
 								shadeClose: true, //点击遮罩关闭层
-								area: ['1200px', '600px'],
-								content: 'html/aqxt/aqxt_ydfxbs_insert.html'
+								area: ['800px', '400px'],
+								content: 'html/xtsz/bmgl/xtsz_bmgl_insert.html'
 							});
 						},
 					});
@@ -454,7 +269,10 @@
 					temp["pageSize"] = params.pageSize; //页面大小
 					temp["pageNum"] = params.pageNumber; //页码
 					temp["order"] = params.sortOrder; //排序的方式
-					temp["ordername"] = params.sortName; //排序的字段				
+					temp["ordername"] = params.sortName; //排序的字段
+					//					temp["searchParam"]=params.searchText;//搜索值
+					//					temp["fields"]=getSearchFields();//要搜索的字段
+
 					return temp;
 				};
 				return oTableInit;
@@ -473,82 +291,40 @@
 			};
 			//查询数据
 			$("#btn_sel").click(function() {
-				var str=$("#year").val()+"-"+$("#month").val();
-					$("#datetype").val(str);
 				$('#Table2').bootstrapTable('refreshOptions', {
 					pageNumber: 1
 				});
 				$('#Table2').bootstrapTable('refresh', {
-					url: host + UrlSelect
+					url: host + '/get/file/whiteList'
 				});
 			});
 			//实现删除数据的方法
 			$("#btn_del").click(function() {
-				var ids = ""; //得到用户选择的数据的ID
-				var rows = $('#Table2').bootstrapTable('getSelections');
-				for(var i = 0; i < rows.length; i++) {
-					ids += rows[i].id + ',';
-				}
-				ids = ids.substring(0, ids.length - 1);
-				//				alert(ids);
-				$.ajax({
-					type: "post",
-					url: host + UrlDelete,
-					data: {
-						params: ids
-					},
-					dataType: "json",
-					success: function(json) {
-						alert("删除成功！");
-						$('#Table2').bootstrapTable('refresh', {
-							url: host + UrlSelect
-						});
+				var message = confirm("是否确定删除数据？");
+				if(message == true) {
+					var ids = []; //得到用户选择的数据的ID
+					var rows = $('#Table2').bootstrapTable('getSelections');
+					for(var i = 0; i < rows.length; i++) {
+						ids.push(rows[i].id);
 					}
-				});
-			})
-			//实现编辑数据的方法
-			$("#btn_bj").click(function() {
-				var rows = $('#Table2').bootstrapTable('getSelections');
-				if(rows.length == 1) {
-					id = rows[0].id;
-					$("#RowId").val(id);
-					layer.open({
-						type: 2,
-						title: '编辑',
-						maxmin: true,
-						shadeClose: true, //点击遮罩关闭层
-						area: ['1200px', '600px'],
-						content: 'html/aqxt/aqxt_ydfxbs_insert.html'
+					$.ajax({
+						contentType: "application/json;charset=utf-8",
+						type: "post",
+						url: host + '/delete/file/whiteList',
+						data: JSON.stringify(ids),
+						dataType: "json",
+						success: function(data) {
+							if(data.status == "success") {
+								alert("删除成功！");
+							} else if(data.status == "failed") {
+								alert(data.message);
+							}
+							$('#Table2').bootstrapTable('refresh', {
+								url: host + '/get/file/whiteList'
+							});
+						}
 					});
-				} else if(rows.length == 0) {
-					alert("请选择您要编辑的项！");
-				} else {
-					alert("编辑选项按钮仅能选择一项！");
 				}
-			});
-			//新增
-			$("#btn_add").click(function() {
-				$("#RowId").val("");
-				layer.open({
-					type: 2,
-					title: '新增',
-					maxmin: true,
-					shadeClose: true, //点击遮罩关闭层
-					area: ['1200px', '600px'],
-					content: 'html/aqxt/aqxt_ydfxbs_insert.html'
-				});
-
-			});
-			//批量增加数据
-			$("#btn_dr").click(function() {
-				layer.open({
-					type: 2,
-					title: '批量导入',
-					maxmin: true,
-					shadeClose: true, //点击遮罩关闭层
-					area: ['500px', '200px'],
-					content: 'html/aqxt/aqxt_fxdr.html'
-				});
 
 			});
 			//得到当前显示字段，以逗号隔开拼接字符串

@@ -223,8 +223,10 @@ public class FileManagerServiceImpl implements FileManegerService {
     }
 
     @Override
-    public ResultObject getHideFileList() {
-        PageBean<FileWhiteListEntity> allFileWhiteList = fileWhiteListService.getAllFileWhiteList(new FileWhiteListEntity(), 0, 0);
+    public ResultObject getHideFileList(FileWhiteListRequestDTO dto) {
+        FileWhiteListEntity fileWhiteListEntity = new FileWhiteListEntity();
+        fileWhiteListEntity.setOrder(dto.getOrder());
+        PageBean<FileWhiteListEntity> allFileWhiteList = fileWhiteListService.getAllFileWhiteList(fileWhiteListEntity, dto.getPageNum(), dto.getPageSize());
         return ResultObject.buildSuccessResponse(ResponseUtils.wrapResponse(allFileWhiteList));
     }
 

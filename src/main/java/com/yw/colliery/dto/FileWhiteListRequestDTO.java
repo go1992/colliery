@@ -10,17 +10,11 @@ import java.io.Serializable;
  * @Description: 文件参数DTO
  */
 @Data
-public class FileWhiteListRequestDTO implements Serializable {
+public class FileWhiteListRequestDTO extends FileParamsDTO {
 
-    private static final long serialVersionUID = -5884235156335819788L;
+    private String order;
 
-    private String coalName;
+    private Integer pageNum;
 
-    private String systemName;
-
-    private String menuName;
-
-    private String type;
-
-    private String fileName;
+    private Integer pageSize;
 }

@@ -46,8 +46,8 @@ public class RiskController extends BaseController<RiskServiceImpl, AqfxNdfx> {
     @Autowired
     private RiskService riskService;
 
-    @AuthModule(authId = AuthConstant.Module.SAFE_MODULE, level = AuthConstant.Level.LOW)
     @PostMapping("/query")
+    @AuthModule(authId = AuthConstant.Module.SAFE_MODULE, level = AuthConstant.Level.LOW)
     public Object queryData(@RequestParam Map<String, Object> params) {
         return super.commonQueryData(params);
     }
@@ -101,6 +101,7 @@ public class RiskController extends BaseController<RiskServiceImpl, AqfxNdfx> {
 
     @PostMapping("/import/excel")
     @ResponseBody
+    @AuthModule(authId = AuthConstant.Module.SAFE_MODULE)
     public ResultObject importExcelData(HttpServletRequest request) throws Exception {
         //获取文件
         MultipartFile file = ((MultipartHttpServletRequest) request).getFile("fileName");

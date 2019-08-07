@@ -222,11 +222,23 @@
 								title: "部门",
 								sortable: "true"
 							},
-
 							{
 								field: "name",
 								title: "用户名",
 								sortable: "true"
+							},
+							{
+								field: "fileAuth",
+								title: "是否具有文件白名单操作权限",
+								sortable: "true",
+								"formatter": function(value, row, index) {
+									if(row['fileAuth'] == "true") {
+										return '是';
+									} else if(row['fileAuth'] == "false") {
+										return '否';
+									}
+
+								},
 							},
 							{
 								field: "createUser",

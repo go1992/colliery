@@ -5,7 +5,9 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.yw.colliery.dto.ResultDTO;
 import com.yw.colliery.entity.productmanager.SchedulingDutyEntity;
+import com.yw.colliery.sdk.aop.auth.AuthModule;
 import com.yw.colliery.sdk.config.PageBean;
+import com.yw.colliery.sdk.constans.AuthConstant;
 import com.yw.colliery.sdk.utils.StringUtil;
 import com.yw.colliery.service.product.impl.SchedulingDutyServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -33,8 +35,6 @@ public class SchedulingDutyController {
     @Autowired
     private SchedulingDutyServiceImpl schedulingDutyService;
 
-    private static final ConcurrentHashMap<String, String> COLUMN_NAME_MAP = new ConcurrentHashMap<>();
-
 
     /**
      * 调度值班记录数据持久化
@@ -43,6 +43,7 @@ public class SchedulingDutyController {
      * @return
      */
     @PostMapping("/save")
+    @AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE)
     public ResultDTO input(@RequestBody String data) {
         try {
             SchedulingDutyEntity schedulingDutyEntity = JSONObject.toJavaObject(JSON.parseObject(data), SchedulingDutyEntity.class);
@@ -65,6 +66,7 @@ public class SchedulingDutyController {
      * @return
      */
     @PostMapping("/get")
+    @AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE, level = AuthConstant.Level.LOW)
     public Object getUnsafeInfoByCondition(@RequestBody String data) {
         try {
             SchedulingDutyEntity schedulingDutyEntity = JSONObject.toJavaObject(JSON.parseObject(data), SchedulingDutyEntity.class);
@@ -95,6 +97,7 @@ public class SchedulingDutyController {
      * @return
      */
     @PostMapping("/delete")
+    @AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE)
     public ResultDTO delete(@RequestBody String data) {
         try {
             List<String> strings = JSON.parseArray(data, String.class);
@@ -117,6 +120,7 @@ public class SchedulingDutyController {
      * @return
      */
     @PostMapping("/update")
+    @AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE)
     public ResultDTO submit(@RequestBody String data) {
         try {
             SchedulingDutyEntity schedulingDutyEntity = JSONObject.toJavaObject(JSON.parseObject(data), SchedulingDutyEntity.class);

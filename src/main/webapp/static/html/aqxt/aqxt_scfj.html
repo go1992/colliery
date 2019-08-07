@@ -32,7 +32,8 @@
 			}
 			
 			.btn_xiazai:hover,
-			.btn_sc:hover {
+			.btn_sc:hover,
+			.btn_xs:hover  {
 				cursor: pointer;
 				background-color: #428bca;
 			}
@@ -51,7 +52,20 @@
 				cursor: pointer;
 				background-color: #c82333;
 			}
+			.btn_yc {
+				border: 0px;
+				border-radius: 3px;
+				color: white;
+				width: 120px;
+				height: 30px;
+				font-size: 14px;
+				background-color: gray;
+			}
 			
+			.btn_yc:hover {
+				cursor: pointer;
+				background-color: gainsboro;
+			}
 			#input_file {
 				width: 300px;
 				height: 30px;
@@ -73,7 +87,15 @@
 				font-size: 14px;
 				background-color: #30a5ff;
 			}
-			
+			.btn_xs {
+				border: 0px;
+				border-radius: 3px;
+				color: white;
+				width: 120px;
+				height: 30px;
+				font-size: 14px;
+				background-color: #30a5ff;
+			}
 			.sc_title {
 				font-size: 14px;
 				color: #0086B3;
@@ -104,6 +126,8 @@
 				<br />
 				<span>2.上传选择文件</span>
 				<button type="button" class="btn_sc" id="btn_sc"><i class="iconfont icon-shangchuan"></i>上传文件</button>
+				<button type="button" class="btn_xs" id="btn_xs"><i class="iconfont icon-choose1"></i>打开隐藏列表</button>
+				
 			</div>
 			<table id="Table1">
 				
@@ -117,7 +141,7 @@
 				</tr>
 				<tr>
 
-					<td><button id="btn_dzyb_download" type="button" class="btn_xiazai"><i class="iconfont icon-Group-"></i>下载选择文件</button>&nbsp;&nbsp;<button id="btn_dzyb_del" type="button" class="btn_del"><i class="iconfont icon-shanchu"></i>删除选择文件</button></td>
+					<td><button id="btn_dzyb_download" type="button" class="btn_xiazai"><i class="iconfont icon-Group-"></i>下载选择文件</button>&nbsp;&nbsp;<button id="btn_dzyb_del" type="button" class="btn_del"><i class="iconfont icon-shanchu"></i>删除选择文件</button>&nbsp;&nbsp;<button id="btn_jczl_yc" type="button" class="btn_yc"><i class="iconfont icon-choose1"></i>隐藏选择文件</button></td>
 				</tr>
 				
 			</table>
@@ -126,7 +150,25 @@
 			<input type="hidden" name="XTCDname" value="上传附件" />
 		</form>
 		<script type="text/javascript" src="js/jquery.form.js"></script>
+		<script type="text/javascript" src="glng/PZ_IP.js"></script>
 		<script>
+			var host = ip;
+			$.ajax({
+				dataType: "json",
+				type: "get",
+				url: HOST + "/session/get",
+				async: true,
+				success: function(data) {
+					if(data.safetyUser.fileAuth=="true"){
+						$("#btn_xs").css("display","inline-block");
+						$(".btn_yc").css("display","inline-block")
+					}else if(data.safetyUser.fileAuth=="false"){
+						$("#btn_xs").css("display","none");
+						$(".btn_yc").css("display","none")
+						
+					}
+				}
+			});
 			$(document).ready(function() {
 				$('#Form1').attr('action',HOST.replace('apiv1','')+'fileUpload');
 				$("#input_file").change(function() {
@@ -217,7 +259,42 @@
 				var fileName = $("#listbox1").find("option:selected").text();
 				file_del(ZLtype, fileName);
 			});
-			
+			//打开隐藏文件列表
+			$("#btn_xs").click(function() {
+				layer.open({
+					type: 2,
+					title: '隐藏文件列表',
+					maxmin: true,
+					shadeClose: true, //点击遮罩关闭层
+					area: ['800px', '600px'],
+					content: 'html/dcxt/file_item.html'
+				});
+			});
+
+			//隐藏文件基础资料
+			$("#btn_jczl_yc").click(function() {
+				var data_file = [{
+					"coalName": MKname,
+					"systemName": XTname,
+					"menuName": XTCDname,
+					"type": "基础资料",
+					"fileName": $("#listbox1").find("option:selected").text(),
+				}];
+				$.ajax({
+					contentType: "application/json;charset=utf-8",
+					dataType: "json",
+					type: "post",
+					url: host + '/save/file/whiteList',
+					async: true,
+					data: JSON.stringify(data_file),
+					success: function(data) {
+						alert(data.result);
+					},
+					error: function() {
+						alert("连接服务器失败！");
+					}
+				});
+			});
 		</script>
 	</body>
 

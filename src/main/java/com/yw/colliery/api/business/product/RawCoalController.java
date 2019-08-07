@@ -5,7 +5,9 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.yw.colliery.dto.ResultDTO;
 import com.yw.colliery.entity.productmanager.RawCoalEntity;
+import com.yw.colliery.sdk.aop.auth.AuthModule;
 import com.yw.colliery.sdk.config.PageBean;
+import com.yw.colliery.sdk.constans.AuthConstant;
 import com.yw.colliery.sdk.utils.StringUtil;
 import com.yw.colliery.service.product.impl.RawCoalServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +42,7 @@ public class RawCoalController {
      * @return
      */
     @PostMapping("/save")
+    @AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE, level = AuthConstant.Level.HIGH)
     public ResultDTO input(@RequestBody String data) {
         try {
             RawCoalEntity rawCoalEntity = JSONObject.toJavaObject(JSON.parseObject(data), RawCoalEntity.class);
@@ -62,6 +65,7 @@ public class RawCoalController {
      * @return
      */
     @PostMapping("/get")
+    @AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE, level = AuthConstant.Level.LOW)
     public Object getUnsafeInfoByCondition(@RequestBody String data) {
         try {
             RawCoalEntity rawCoalEntity = JSONObject.toJavaObject(JSON.parseObject(data), RawCoalEntity.class);
@@ -92,6 +96,7 @@ public class RawCoalController {
      * @return
      */
     @PostMapping("/delete")
+    @AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE, level = AuthConstant.Level.HIGH)
     public ResultDTO delete(@RequestBody String data) {
         try {
             List<String> strings = JSON.parseArray(data, String.class);
@@ -114,6 +119,7 @@ public class RawCoalController {
      * @return
      */
     @PostMapping("/update")
+    @AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE, level = AuthConstant.Level.HIGH)
     public ResultDTO submit(@RequestBody String data) {
         try {
             RawCoalEntity rawCoalEntity = JSONObject.toJavaObject(JSON.parseObject(data), RawCoalEntity.class);

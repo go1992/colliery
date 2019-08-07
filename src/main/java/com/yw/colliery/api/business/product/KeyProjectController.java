@@ -5,7 +5,9 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.yw.colliery.dto.ResultDTO;
 import com.yw.colliery.entity.productmanager.KeyProjectEntity;
+import com.yw.colliery.sdk.aop.auth.AuthModule;
 import com.yw.colliery.sdk.config.PageBean;
+import com.yw.colliery.sdk.constans.AuthConstant;
 import com.yw.colliery.sdk.utils.StringUtil;
 import com.yw.colliery.service.product.impl.KeyProjectServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -37,6 +39,7 @@ public class KeyProjectController {
      * @return
      */
     @PostMapping("/save")
+    @AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE)
     public ResultDTO input(@RequestBody String data) {
         try {
             KeyProjectEntity keyProjectEntity = JSONObject.toJavaObject(JSON.parseObject(data), KeyProjectEntity.class);
@@ -59,6 +62,7 @@ public class KeyProjectController {
      * @return
      */
     @PostMapping("/get")
+    @AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE, level = AuthConstant.Level.LOW)
     public Object getUnsafeInfoByCondition(@RequestBody String data) {
         try {
             KeyProjectEntity keyProjectEntity = JSONObject.toJavaObject(JSON.parseObject(data), KeyProjectEntity.class);
@@ -89,6 +93,7 @@ public class KeyProjectController {
      * @return
      */
     @PostMapping("/delete")
+    @AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE)
     public ResultDTO delete(@RequestBody String data) {
         try {
             List<String> strings = JSON.parseArray(data, String.class);
@@ -111,6 +116,7 @@ public class KeyProjectController {
      * @return
      */
     @PostMapping("/update")
+    @AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE)
     public ResultDTO submit(@RequestBody String data) {
         try {
             KeyProjectEntity keyProjectEntity = JSONObject.toJavaObject(JSON.parseObject(data), KeyProjectEntity.class);

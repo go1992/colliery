@@ -5,7 +5,9 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.yw.colliery.dto.ResultDTO;
 import com.yw.colliery.entity.productmanager.SafetyInfoEntity;
+import com.yw.colliery.sdk.aop.auth.AuthModule;
 import com.yw.colliery.sdk.config.PageBean;
+import com.yw.colliery.sdk.constans.AuthConstant;
 import com.yw.colliery.sdk.utils.StringUtil;
 import com.yw.colliery.service.product.impl.SafetyInfoServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -29,8 +31,6 @@ public class SafetyInfoController {
     @Autowired
     private SafetyInfoServiceImpl safetyInfoService;
 
-    private static final ConcurrentHashMap<String, String> COLUMN_NAME_MAP = new ConcurrentHashMap<>();
-
 
     /**
      * 安全信息数据持久化
@@ -39,6 +39,7 @@ public class SafetyInfoController {
      * @return
      */
     @PostMapping("/save")
+    @AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE)
     public ResultDTO input(@RequestBody String data) {
         try {
             SafetyInfoEntity safetyInfoEntity = JSONObject.toJavaObject(JSON.parseObject(data), SafetyInfoEntity.class);
@@ -61,6 +62,7 @@ public class SafetyInfoController {
      * @return
      */
     @PostMapping("/get")
+    @AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE, level = AuthConstant.Level.LOW)
     public Object getUnsafeInfoByCondition(@RequestBody String data) {
         try {
             SafetyInfoEntity safetyInfoEntity = JSONObject.toJavaObject(JSON.parseObject(data), SafetyInfoEntity.class);
@@ -100,6 +102,7 @@ public class SafetyInfoController {
      * @return
      */
     @PostMapping("/delete")
+    @AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE)
     public ResultDTO delete(@RequestBody String data) {
         try {
             List<String> strings = JSON.parseArray(data, String.class);
@@ -122,6 +125,7 @@ public class SafetyInfoController {
      * @return
      */
     @PostMapping("/update")
+    @AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE)
     public ResultDTO submit(@RequestBody String data) {
         try {
             SafetyInfoEntity safetyInfoEntity = JSONObject.toJavaObject(JSON.parseObject(data), SafetyInfoEntity.class);

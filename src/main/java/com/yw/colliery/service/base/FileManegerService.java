@@ -56,7 +56,7 @@ public interface FileManegerService {
      * @param
      * @return
      */
-    ResultObject getHideFileList();
+    ResultObject getHideFileList(FileWhiteListRequestDTO dto);
 
     /**
      * 移除文件白名单

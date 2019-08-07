@@ -39,7 +39,7 @@ public class UnsafeController {
      * @return
      */
     @PostMapping("/save")
-    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE, level = AuthConstant.Level.HIGH)
+    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE)
     public ResultDTO input(@RequestBody String data) {
         try {
             UnsafeInfoEntity unsafeInfoEntity = JSONObject.toJavaObject(JSON.parseObject(data), UnsafeInfoEntity.class);
@@ -151,7 +151,7 @@ public class UnsafeController {
      * @return
      */
     @PostMapping("/submit/unsafeInfo")
-    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE, level = AuthConstant.Level.HIGH)
+    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE)
     public ResultDTO submit(@RequestParam("id") Long id) {
         try {
             UnsafeInfoEntity unsafeInfoEntity = new UnsafeInfoEntity();
@@ -161,12 +161,12 @@ public class UnsafeController {
             unsafeInfoEntity.setModifyDate(new Date());
             Integer integer = unsafeService.upateUnsafeInfo(unsafeInfoEntity);
             if (integer < 0) {
-                return new ResultDTO(ResultDTO.FAILED, "更新隐患信息失败");
+                return new ResultDTO(ResultDTO.FAILED, "处理隐患信息失败");
             }
-            return new ResultDTO(ResultDTO.SUCCESS, "更新隐患信息成功");
+            return new ResultDTO(ResultDTO.SUCCESS, "处理隐患信息成功");
         } catch (Exception e) {
-            log.error("更新隐患信息异常", e);
-            return new ResultDTO(ResultDTO.SUCCESS, "更新隐患信息异常");
+            log.error("处理隐患信息异常", e);
+            return new ResultDTO(ResultDTO.SUCCESS, "处理隐患信息异常");
         }
 
     }
@@ -178,7 +178,7 @@ public class UnsafeController {
      * @return
      */
     @PostMapping("/apply/distributed")
-    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE, level = AuthConstant.Level.HIGH)
+    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE)
     public ResultDTO distributed(@RequestParam("id") Long id, @RequestParam("departId") int departId) {
         try {
             UnsafeInfoEntity unsafeInfoEntity = new UnsafeInfoEntity();
@@ -193,12 +193,12 @@ public class UnsafeController {
             unsafeInfoEntity.setModifyDate(new Date());
             Integer integer = unsafeService.upateUnsafeInfo(unsafeInfoEntity);
             if (integer < 0) {
-                return new ResultDTO(ResultDTO.FAILED, "更新隐患信息失败");
+                return new ResultDTO(ResultDTO.FAILED, "分发隐患信息失败");
             }
-            return new ResultDTO(ResultDTO.SUCCESS, "更新隐患信息成功");
+            return new ResultDTO(ResultDTO.SUCCESS, "分发隐患信息成功");
         } catch (Exception e) {
-            log.error("更新隐患信息异常", e);
-            return new ResultDTO(ResultDTO.SUCCESS, "更新隐患信息异常");
+            log.error("分发隐患信息异常", e);
+            return new ResultDTO(ResultDTO.SUCCESS, "分发隐患信息异常");
         }
 
     }
@@ -210,6 +210,7 @@ public class UnsafeController {
      * @return
      */
     @PostMapping("/sign")
+    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE)
     public ResultDTO sign(@RequestParam("id") Long id) {
         try {
             UserRelationEntity user = LoginSessionUtils.getUser();
@@ -223,23 +224,24 @@ public class UnsafeController {
             unsafeInfoEntity.setModifyDate(new Date());
             Integer integer = unsafeService.upateUnsafeInfo(unsafeInfoEntity);
             if (integer < 0) {
-                return new ResultDTO(ResultDTO.FAILED, "更新隐患信息失败");
+                return new ResultDTO(ResultDTO.FAILED, "隐患签单失败");
             }
-            return new ResultDTO(ResultDTO.SUCCESS, "更新隐患信息成功");
+            return new ResultDTO(ResultDTO.SUCCESS, "隐患签单成功");
         } catch (Exception e) {
-            log.error("更新隐患信息异常", e);
-            return new ResultDTO(ResultDTO.SUCCESS, "更新隐患信息异常");
+            log.error("隐患签单异常", e);
+            return new ResultDTO(ResultDTO.SUCCESS, "隐患签单异常");
         }
 
     }
 
     /**
-     * 删除隐患计划
+     * 删除隐患信息
      *
      * @param
      * @return
      */
     @PostMapping("/delete")
+    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE)
     public ResultDTO delete(@RequestBody String data) {
         try {
             UserRelationEntity user = LoginSessionUtils.getUser();
@@ -260,12 +262,13 @@ public class UnsafeController {
     }
 
     /**
-     * 更新隐患计划
+     * 更新隐患信息
      *
      * @param
      * @return
      */
     @PostMapping("/update")
+    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE)
     public ResultDTO submit(@RequestBody String data) {
         try {
             UserRelationEntity user = LoginSessionUtils.getUser();
@@ -277,12 +280,12 @@ public class UnsafeController {
             unsafeInfoEntity.setModifyDate(new Date());
             Integer integer = unsafeService.upateUnsafeInfo(unsafeInfoEntity);
             if (integer < 0) {
-                return new ResultDTO(ResultDTO.FAILED, "更新隐患排查计划信息失败");
+                return new ResultDTO(ResultDTO.FAILED, "更新隐患信息失败");
             }
-            return new ResultDTO(ResultDTO.SUCCESS, "更新隐患排查计划信息成功");
+            return new ResultDTO(ResultDTO.SUCCESS, "更新隐患信息成功");
         } catch (Exception e) {
             log.error("更新隐患排查计划信息异常", e);
-            return new ResultDTO(ResultDTO.FAILED, "更新隐患排查计划信息异常");
+            return new ResultDTO(ResultDTO.FAILED, "更新隐患信息异常");
         }
 
     }

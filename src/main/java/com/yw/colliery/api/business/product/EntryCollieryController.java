@@ -42,7 +42,7 @@ public class EntryCollieryController {
      * @return
      */
     @PostMapping("/save")
-    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE, level = AuthConstant.Level.HIGH)
+    @AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE)
     public ResultDTO input(@RequestBody String data) {
         try {
             EntryCollieryEntity entryCollieryEntity = JSONObject.toJavaObject(JSON.parseObject(data), EntryCollieryEntity.class);
@@ -65,7 +65,7 @@ public class EntryCollieryController {
      * @return
      */
     @PostMapping("/get")
-    @AuthModule(authId = AuthConstant.Module.UNSAFE_MODULE, level = AuthConstant.Level.LOW)
+    @AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE, level = AuthConstant.Level.LOW)
     public Object getUnsafeInfoByCondition(@RequestBody String data) {
         try {
             EntryCollieryEntity entryCollieryEntity = JSONObject.toJavaObject(JSON.parseObject(data), EntryCollieryEntity.class);
@@ -96,6 +96,7 @@ public class EntryCollieryController {
      * @return
      */
     @PostMapping("/delete")
+    @AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE)
     public ResultDTO delete(@RequestBody String data) {
         try {
             List<String> strings = JSON.parseArray(data, String.class);
@@ -118,6 +119,7 @@ public class EntryCollieryController {
      * @return
      */
     @PostMapping("/update")
+    @AuthModule(authId = AuthConstant.Module.DISPATCH_MODULE)
     public ResultDTO submit(@RequestBody String data) {
         try {
             EntryCollieryEntity EntryCollieryEntity = JSONObject.toJavaObject(JSON.parseObject(data), EntryCollieryEntity.class);
