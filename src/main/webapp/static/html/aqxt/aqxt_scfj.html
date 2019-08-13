@@ -209,6 +209,8 @@
 										str1 += "<option>" + data.result[i].基础资料[j] + "</option>";
 									}
 									$("#listbox1").html(str1);
+								}else if(data.result[i].hasOwnProperty("基础资料")==false){
+									$("#listbox1").html("");
 								}
 							}
 						}

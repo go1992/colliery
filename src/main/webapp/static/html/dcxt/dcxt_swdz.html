@@ -231,24 +231,32 @@
 										str1 += "<option>" + data.result[i].基础资料[j] + "</option>";
 									}
 									$("#listbox1").html(str1);
+								}else if(data.result[i].hasOwnProperty("基础资料")==false){
+									$("#listbox1").html("");
 								}
 								if(data.result[i].hasOwnProperty("矿井涌水量")) {
 									for(var j in data.result[i].矿井涌水量) {
 										str2 += "<option>" + data.result[i].矿井涌水量[j] + "</option>";	
 									}
 									$("#listbox2").html(str2);
+								}else if(data.result[i].hasOwnProperty("矿井涌水量")==false){
+									$("#listbox2").html("");
 								}
 								if(data.result[i].hasOwnProperty("水文地质观察")) {
 									for(var j in data.result[i].水文地质观察) {
 										str3 += "<option>" + data.result[i].水文地质观察[j] + "</option>";	
 									}
 									$("#listbox3").html(str3);
+								}else if(data.result[i].hasOwnProperty("水文地质观察")==false){
+									$("#listbox3").html("");
 								}
 								if(data.result[i].hasOwnProperty("其他")) {
 									for(var j in data.result[i].其他 ) {
 										str4 += "<option>" + data.result[i].其他[j] + "</option>";		
 									}
 									$("#listbox4").html(str4);
+								}else if(data.result[i].hasOwnProperty("其他")==false){
+									$("#listbox4").html("");
 								}
 							}
 						}
