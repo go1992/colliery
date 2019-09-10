@@ -55,7 +55,7 @@ public class SafetyInfoEntity implements Serializable{
     /**
      * 产量
      */
-    private String output="0";
+    private String output;
 
     /**
      * 入井人数

@@ -33,9 +33,9 @@ public class ValidationCodeFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
-        if (checkTypeAndReq(httpServletRequest)) {
-            validate(httpServletRequest, httpServletResponse);
-        }
+//        if (checkTypeAndReq(httpServletRequest)) {
+//            validate(httpServletRequest, httpServletResponse);
+//        }
         filterChain.doFilter(httpServletRequest, httpServletResponse);
 
     }

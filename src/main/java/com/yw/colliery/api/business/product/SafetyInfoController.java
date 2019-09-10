@@ -15,8 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
 
 
 /**
@@ -74,14 +72,16 @@ public class SafetyInfoController {
                     , Optional.ofNullable(safetyInfoEntity.getPageNum()).orElse(0)
                     , Optional.ofNullable(safetyInfoEntity.getPageSize()).orElse(0));
             List<SafetyInfoEntity> list = unsafeInfoByUnsafeInfoEntity.getList();
-            String sumOutPut = list.stream().collect(Collectors.summingDouble(entity -> Double.valueOf(entity.getOutput()))).toString();
-            String sumDiggingLength = list.stream().collect(Collectors.summingDouble(entity -> Double.valueOf(entity.getDiggingLength()))).toString();
-            String sumMaintenanceLength = list.stream().collect(Collectors.summingDouble(entity -> Double.valueOf(entity.getMaintenanceLength()))).toString();
-            list.forEach(r -> {
-                r.setDailyOutput(sumOutPut);
-                r.setDailyDiggingLength(sumDiggingLength);
-                r.setDailyMaintenanceLength(sumMaintenanceLength);
-            });
+            if (!list.isEmpty()){
+                String sumOutPut = String.valueOf(list.stream().mapToDouble(entity->Double.valueOf(entity.getOutput())).sum());
+                String sumDiggingLength = String.valueOf(list.stream().mapToDouble(entity->Double.valueOf(entity.getDiggingLength())).sum());
+                String sumMaintenanceLength = String.valueOf(list.stream().mapToDouble(entity->Double.valueOf(entity.getMaintenanceLength())).sum());
+                list.forEach(r -> {
+                    r.setDailyOutput(sumOutPut);
+                    r.setDailyDiggingLength(sumDiggingLength);
+                    r.setDailyMaintenanceLength(sumMaintenanceLength);
+                });
+            }
             HashMap<String, Object> resultMap = new HashMap<>();
             resultMap.put("total", unsafeInfoByUnsafeInfoEntity.getTotal());
             resultMap.put("rows", unsafeInfoByUnsafeInfoEntity.getList());
