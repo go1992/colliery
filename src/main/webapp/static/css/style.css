@@ -141,7 +141,7 @@
 				display: block;
 				width: 100%;
 				padding: 10px;
-				color: #8a979e;
+				color: #FFFFFF;
 			}
 	
 			.ul_hidden {
@@ -153,7 +153,7 @@
 				display: block;
 				width: 100%;
 				height: 40px;
-				color: #8a979e;
+				color: #FFFFFF;
 			}
 	
 			.ul_ulhidden {
@@ -166,7 +166,7 @@
 	
 			.eq_li>ul>li {
 				background-color: #263238;
-				color: #8a979e;
+				color: #FFFFFF;
 				line-height: 40px;
 			}
 	
@@ -362,5 +362,8 @@
 			.tab-content>div.active {
 				display: block;
 				background-color: white !important;
+			}
+			.on{
+				background-color: #2DC3E8;
 			}
 		</style>

@@ -498,6 +498,11 @@
 					$(this).next("ul").slideToggle();
 					$(this).parent("li").siblings().has("ul").children("ul").slideUp();
 					$(this).parent("li").siblings().find("em").removeClass("icon-jiantou-copy-copy");
+					if($(".menu_ul>li>a,.ul_hidden>li>a,.ul_ulhidden>li>a").hasClass("on")) {
+						$(".menu_ul>li>a,.ul_hidden>li>a,.ul_ulhidden>li>a").removeClass("on");
+					}
+					$(this).addClass('on');
+					
 				})
 			})
 

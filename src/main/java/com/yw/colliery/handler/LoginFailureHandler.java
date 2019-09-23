@@ -24,7 +24,7 @@ public class LoginFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 
         response.setContentType("application/json;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        out.write("{\"code\":\"FAILURE\",\"message\":\"" + exception.getMessage() + "！\"}");
+        out.write("{\"code\":\"888888\",\"message\":\"" + exception.getMessage() + "！\"}");
         log.info("login fail..."+exception.getMessage());
         out.flush();
         out.close();

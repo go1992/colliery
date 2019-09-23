@@ -23,9 +23,11 @@
 			#Table1 tr td:nth-of-type(3) {
 				text-align: right;
 			}
+			
 			#Table1 tr td:nth-of-type(5) {
-    text-align: right;
-}
+				text-align: right;
+			}
+			
 			#Table1 input {
 				/*width: 50%;*/
 				/*height: 20px;*/
@@ -116,19 +118,19 @@
 				</tr>
 				<tr>
 					<td>入井人数（人）：</td>
-					<td><input name="minePeoples"  /> </td>
+					<td><input name="minePeoples" /> </td>
 				</tr>
 				<tr>
 					<td>产量（吨）：</td>
-					<td><input name="output"  /> </td>
+					<td><input id="cl" name="output" /> </td>
 				</tr>
 				<tr>
 					<td>销售量（吨）：</td>
-					<td><input name="salesVolume"  /> </td>
+					<td><input id="xl" name="salesVolume" /> </td>
 				</tr>
 				<tr>
 					<td>库存量（吨）：</td>
-					<td><input name="stock"  /> </td>
+					<td><input id="kc" name="stock" /> </td>
 				</tr>
 				<tr>
 					<td>备注：</td>
@@ -142,10 +144,15 @@
 		</form>
 		<script type="text/javascript" src="../../js/jquery-1.12.4.js"></script>
 		<script type="text/javascript" src="../../js/layer/layer.js"></script>
-		<script type="text/javascript" src="../../glng/PZ_IP.js" ></script>
-
+		<script type="text/javascript" src="../../glng/PZ_IP.js"></script>
 
 		<script>
+			$("#xl").on("input propertychange", function() {
+				$("#kc").val(accSub($("#cl").val(), $("#xl").val()));
+			});
+			$("#cl").on("input propertychange", function() {
+				$("#kc").val(accSub($("#cl").val(), $("#xl").val()));
+			});
 			//清空表单
 			$("#btn_qk").click(function() {
 				$("#Form1")[0].reset();
@@ -153,7 +160,7 @@
 			var host = ip; //ip地址
 
 			//排查单位下拉框
-			
+
 			//得到查询页面传入的id
 			var RowId = parent.$('#RowId').val();
 			$("#RowId").val(RowId);
@@ -289,6 +296,37 @@
 					return serializeObj;
 				};
 			})(window, jQuery);
+
+			function accSub(arg1, arg2) {
+				if(isNaN(arg1)) {
+					arg1 = 0;
+				}
+				if(isNaN(arg2)) {
+					arg2 = 0;
+				}
+				arg1 = Number(arg1);
+				arg2 = Number(arg2);
+
+				var r1, r2, m, n;
+				try {
+					r1 = arg1.toString().split(".")[1].length;
+				} catch(e) {
+					r1 = 0;
+				}
+				try {
+					r2 = arg2.toString().split(".")[1].length;
+				} catch(e) {
+					r2 = 0;
+				}
+				m = Math.pow(10, Math.max(r1, r2)); //last modify by deeka //动态控制精度长度
+				n = (r1 >= r2) ? r1 : r2;
+				return((arg1 * m - arg2 * m) / m).toFixed(n);
+			}
+
+			// 给Number类型增加一个mul方法，调用起来更加方便。
+			Number.prototype.sub = function(arg) {
+				return accSub(this, arg);
+			};
 		</script>
 	</body>
 

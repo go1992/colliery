@@ -5,6 +5,9 @@ import com.google.common.collect.Lists;
 import org.springframework.util.CollectionUtils;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -74,5 +77,9 @@ public class FileUtils {
             }
         }
         return null;
+    }
+
+    public static void writeFile (String path, byte[] bytes) throws IOException {
+        Files.write(Paths.get(path),bytes);
     }
 }
