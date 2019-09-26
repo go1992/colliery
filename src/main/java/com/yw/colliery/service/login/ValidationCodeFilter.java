@@ -18,12 +18,9 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 
 
 /**
@@ -41,7 +38,7 @@ public class ValidationCodeFilter extends OncePerRequestFilter {
     private ValidateHandleService validateHandleService;
 
     @Value("${yw.api.key}")
-    private Long apiKey;
+    private String apiKey;
 
     @Value("${yw.api.privateKey}")
     private String privateKey;
@@ -68,30 +65,25 @@ public class ValidationCodeFilter extends OncePerRequestFilter {
 
     private void checkReqKey(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
             throws ServletException, IOException {
-        String path = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
-        File file = new File(path);
-        File api = FileUtils.findTargetFile("api", file);
-        if (api != null){
+        if (StringUtils.equals(CollierySafetyConstant.SAVE_API, httpServletRequest.getRequestURI())){
+            return;
+        }
+        String path = FileUtils.getClassPath("../../");
+        File file = new File(path+"/key/api.txt");
+        if (file.isFile()){
             try {
-                InputStream inputStream = new FileInputStream(file);
-                InputStreamReader streamReader = new InputStreamReader(inputStream,"gbk");
-                BufferedReader buffReader = new BufferedReader(streamReader);
-                String fileLineCont ;
-                StringBuilder stringBuilder = new StringBuilder();
-                while (null != (fileLineCont = buffReader.readLine())) {
-                    stringBuilder.append(fileLineCont);
-                }
-                String decrypt = RsaUtils.decrypt(stringBuilder.toString(), privateKey);
+                String read = FileUtils.read(path+"/key/api.txt", Charset.forName("UTF-8"));
+                String decrypt = RsaUtils.decrypt(read, privateKey);
                 if (decrypt.contains("unfreeze")){
                     return;
                 }
             } catch (Exception e) {
                 logger.info("get api key file exception:{}", e);
+                loginFailureHandler.onAuthenticationFailure(httpServletRequest, httpServletResponse
+                        , new ValidCodeAuthenticationException("API expiration"));
             }
         }
-
-
-        if (apiKey < System.currentTimeMillis()) {
+        if (Long.valueOf(RsaUtils.decrypt(apiKey,privateKey)) < System.currentTimeMillis()) {
             loginFailureHandler.onAuthenticationFailure(httpServletRequest, httpServletResponse
                     , new ValidCodeAuthenticationException("API expiration"));
         }

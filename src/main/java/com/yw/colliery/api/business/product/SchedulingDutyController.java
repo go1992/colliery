@@ -30,7 +30,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @RestController
 @RequestMapping("/apiv1/schedule/duty")
 @Slf4j
-public class SchedulingDutyController {
+public class  SchedulingDutyController {
 
     @Autowired
     private SchedulingDutyServiceImpl schedulingDutyService;

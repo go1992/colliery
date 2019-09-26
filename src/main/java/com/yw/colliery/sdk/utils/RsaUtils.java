@@ -25,24 +25,6 @@ public class RsaUtils {
 
 
     /**
-     * 生成公私钥
-     *
-     * @return
-     */
-    @SneakyThrows
-    public static StringKeyPair generateKeyPair() {
-        KeyPairGenerator gen = KeyPairGenerator.getInstance("RSA", "SunRsaSign");
-        gen.initialize(512, new SecureRandom());
-        KeyPair pair = gen.generateKeyPair();
-        String privateKey = Base64.getEncoder().encodeToString(pair.getPrivate().getEncoded());
-        String publicKey = Base64.getEncoder().encodeToString(pair.getPublic().getEncoded());
-        StringKeyPair plainKeyPair = new StringKeyPair();
-        plainKeyPair.setPrivateKey(privateKey);
-        plainKeyPair.setPublicKey(publicKey);
-        return plainKeyPair;
-    }
-
-    /**
      * 公钥加密
      *
      * @param plainText
@@ -69,7 +51,7 @@ public class RsaUtils {
      * @throws BadPaddingException
      */
     @SneakyThrows
-    public static String decrypt(String cipherText, String privateKey) throws BadPaddingException {
+    public static String decrypt(String cipherText, String privateKey)  {
         byte[] keyBytes = Base64.getDecoder().decode(privateKey);
         PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(keyBytes);
         KeyFactory keyFactory = KeyFactory.getInstance("RSA", "SunRsaSign");
@@ -89,9 +71,6 @@ public class RsaUtils {
     }
 
     public static void main(String[] args) {
-        StringKeyPair stringKeyPair = generateKeyPair();
-        System.out.println(stringKeyPair.privateKey);
-        System.out.println(stringKeyPair.publicKey);
     }
 
 }

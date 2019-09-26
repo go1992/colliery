@@ -1,6 +1,7 @@
 package com.yw.colliery.api.system.auth;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.yw.colliery.dto.ResultObject;
 import com.yw.colliery.entity.auth.AuthEntity;
 import com.yw.colliery.entity.user.UserRelationEntity;
@@ -16,8 +17,10 @@ import com.yw.colliery.sdk.utils.ResponseUtils;
 import com.yw.colliery.service.auth.AuthService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -31,6 +34,7 @@ import java.util.List;
 public class AuthController {
     @Autowired
     private AuthService authService;
+
 
     @PostMapping("/add")
     @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE, level = AuthConstant.Level.HIGH)
@@ -79,8 +83,7 @@ public class AuthController {
     }
 
     @PostMapping("/select/all")
-    @AuthModule(authId = AuthConstant.Module.SYSTEM_MODULE, level = AuthConstant.Level.LOW)
-    public Object selectAll(@RequestBody BaseParam param) {
+     public Object selectAll(@RequestBody BaseParam param) {
         try {
             PageBean<AuthEntity> pageBean = authService.selectByPage(param);
             return ResponseUtils.wrapResponse(pageBean);
@@ -89,13 +92,19 @@ public class AuthController {
         }
     }
 
-    @PostMapping("/save/auth")
+    @PostMapping("/save/apiKey")
     public Object selectAll(@RequestBody String data) {
+        JSONObject jsonObject = JSON.parseObject(data);
         try {
-            String path = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
-            FileUtils.writeFile(path,data.getBytes());
-            return ResultObject.buildFailResponse("保存成功");
+            String path = FileUtils.getClassPath("../../");
+            File file = new File(path+"/key");
+            if (!file.exists()) {
+                file.mkdirs();
+            }
+            FileUtils.writeFile(path +"/key/api.txt",jsonObject.getString("key").getBytes());
+            return ResultObject.buildSuccessMessageResponse("保存成功");
         } catch (Exception e) {
+            log.error("保存失败",e);
             return ResultObject.buildFailResponse("保存失败");
         }
     }

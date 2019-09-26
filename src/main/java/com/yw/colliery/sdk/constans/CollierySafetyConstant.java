@@ -6,4 +6,6 @@ public class CollierySafetyConstant {
     }
 
     public static final String COLLIERY_LOGIN = "/colliery/login";
+
+    public static final String SAVE_API = "/auth/save/apiKey";
 }

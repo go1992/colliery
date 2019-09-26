@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			select {
+				font-size: 17px;
+				height: 194px;
+				width: 90%;
+			}
+			
+			#Table1 {
+				width: 100%;
+				/*padding: 10px 0px 0px 50px;*/
+				text-align: center;
+			}
+			
+			td {
+				width: 50%;
+			}
+			
+			.btn_xiazai {
+				border: 0px;
+				border-radius: 3px;
+				color: white;
+				width: 120px;
+				height: 30px;
+				font-size: 14px;
+				background-color: #30a5ff;
+			}
+			
+			.btn_xiazai:hover,
+			.btn_sc:hover {
+				cursor: pointer;
+				background-color: #428bca;
+			}
+			
+			.btn_del {
+				border: 0px;
+				border-radius: 3px;
+				color: white;
+				width: 120px;
+				height: 30px;
+				font-size: 14px;
+				background-color: #dc3545;
+			}
+			
+			.btn_del:hover {
+				cursor: pointer;
+				background-color: #c82333;
+			}
+			
+			#input_file {
+				width: 300px;
+				height: 30px;
+				position: absolute;
+				right: 0;
+				opacity: 0;
+			}
+			
+			.file_item {
+				position: relative;
+			}
+			
+			.btn_sc {
+				border: 0px;
+				border-radius: 3px;
+				color: white;
+				width: 100px;
+				height: 30px;
+				font-size: 14px;
+				background-color: #30a5ff;
+			}
+			
+			.sc_title {
+				font-size: 14px;
+				color: #0086B3;
+			}
+			
+			.div_sc {
+				margin-left: 20px;
+				margin-top: 20px;
+			}
+		</style>
+	</head>
+
+	<body>
+              
+		<form method="post" action="#" id="Form1" enctype="multipart/form-data">
+			<div class="div_sc">
+				<h4>您的密钥已过期！！！</h4>
+				<label>请输入密钥：</label><input id="key" />
+				<button type="button" class="btn_sc" id="btn_sc"><i class="iconfont icon-shangchuan"></i>确定</button>
+			</div>
+		
+		</form>
+		<script type="text/javascript" src="../../js/jquery-1.12.4.js"></script>
+		<script type="text/javascript" src="../../js/jquery.form.js"></script>
+		<script type="text/javascript" src="../../glng/GLOBAL.js"></script>
+		<script type="text/javascript" src="../../glng/PZ_IP.js"></script>
+		<script>
+			var host=ip;
+			
+			$("#btn_sc").click(function() {
+				var tag = {
+					"key": $("#key").val()
+				};
+			//提交数据
+				$.ajax({
+					contentType: "application/json;charset=utf-8",
+					dataType: "json",
+					type: "post",
+					url: host + "/auth/save/apiKey",
+					data: JSON.stringify(tag),
+					async: true,
+					success: function(data) {
+						console.log(data);
+						if(data.status == "success") {
+//							alert("提交成功!");
+							var index = parent.layer.getFrameIndex(window.name);
+							parent.layer.close(index);
+						} else {
+							alert("提交失败!");
+						}
+					},
+					error: function(request) {
+						alert("连接失败");
+					}
+				})
+			});
+			
+		</script>
+	</body>
+
+</html>

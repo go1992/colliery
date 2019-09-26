@@ -2,10 +2,18 @@ package com.yw.colliery.sdk.utils;
 
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.CollectionUtils;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.URI;
+import java.net.URL;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -17,6 +25,7 @@ import java.util.stream.Collectors;
  * @Date: 2019/7/31 14:24
  * @Description: 文件工具类
  */
+@Slf4j
 public class FileUtils {
 
     /**
@@ -81,5 +90,48 @@ public class FileUtils {
 
     public static void writeFile (String path, byte[] bytes) throws IOException {
         Files.write(Paths.get(path),bytes);
+    }
+
+    /**
+     * 读文件全部内容
+     * @param fileName
+     * @param charset
+     * @return
+     */
+    public static String read(String fileName, Charset charset) {
+        try {
+            File file = new File(fileName);
+            if (file.isFile()) {
+                return new String(Files.readAllBytes(file.toPath()), charset);
+            } else {
+                String prefix = "/";
+                String fullPath = FileUtils.class.getResource(prefix + fileName).toString();
+                if (fullPath.startsWith("jar:file:")) {
+                    URL url = new URL(fullPath);
+                    try (InputStream is = url.openStream();
+                         Reader reader = new InputStreamReader(is, charset);
+                         BufferedReader br = new BufferedReader(reader)) {
+                        return br.lines().collect(Collectors.joining("\n"));
+                    }
+                } else {
+                    return new String(Files.readAllBytes(Paths.get(URI.create(fullPath))), charset);
+                }
+            }
+        } catch (Exception e) {
+            log.error("Read [{}] error: {}", fileName, e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static String getClassPath(String outPath){
+        String path1 = FileUtils.class.getProtectionDomain().getCodeSource().getLocation().getPath().substring(5);
+        log.info(FileUtils.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+        try {
+            String path = new File(path1, outPath).getCanonicalPath();
+            return path;
+        } catch (IOException e) {
+            log.error("获取classpath异常",e);
+            throw new RuntimeException("获取classpath异常");
+        }
     }
 }

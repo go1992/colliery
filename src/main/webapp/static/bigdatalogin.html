@@ -108,7 +108,7 @@
 			</div>
 			<div id="contPar" class="contPar">
 				<div id="page1" style="z-index:1;">
-					<div class="title0">煤矿安全生产标准化</div>
+					<div class="title0" id="k_name">煤矿安全生产标准化</div>
 					<div class="title1">安全、生产、经营、决策</div>
 					<div class="imgGroug">
 						<ul>
@@ -143,17 +143,38 @@
 
 			<script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
 			<script type="text/javascript" src="js/com.js"></script>
+			<script type="text/javascript" src="js/layer/layer.js"></script>
 			<script type="text/javascript" src="glng/PZ_IP.js"></script>
 			<script type="text/javascript">
+				var host = ip;
+				var k_name = "";
+				var tag = {"pageSize":10,"pageNum":1,"order":"asc","name":"矿名称"};
+				$.ajax({
+					contentType: "application/json;charset=utf-8",
+					dataType: "json",
+					type: "post",
+					url: host + "/base/config/get",
+					async: false,
+					xhrFields: {
+							withCredentials: true
+					},
+					data: JSON.stringify(tag),
+					success: function(data) {
+							if(data.total > 0) {
+								k_name=data.rows[0].value+"煤矿安全生产标准化";
+							} 
+					},
+					error: function(request) {
+						alert("连接失败");
+					}
+				});
+				$("#k_name").text(k_name);
 				var storage = window.localStorage;
 				if(storage.length > 0) {
 					document.getElementById("username").value = localStorage.MK_userName;
 					document.getElementById("password").value = localStorage.MK_userPwd;
 				}
-
-				var host = ip;
 				var Urllogin = '/colliery/login';
-//				getPic();
 				$("#loginButton").click(function() {
 					var username = $("#username").val();
 					var userpwd = $("#password").val();
@@ -172,7 +193,7 @@
 								localStorage.setItem("MK_userPwd", userpwd);
 								window.location.href = "index.html";
 							} else {
-//								getPic();
+								//								getPic();
 								alert("登录失败!");
 							}
 						},
@@ -228,9 +249,8 @@
 					if(event.keyCode == 13) //回车键的键值为13
 						document.getElementById("loginButton").click(); //调用登录按钮的登录事件
 				}
+				
 			</script>
-			<!--<script type="text/javascript" src="./glng/GLOBAL.js"></script>-->
-			<!--<script type="text/javascript" src="./glng/login.js"></script>-->
 
 		</body>
 

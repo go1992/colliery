@@ -62,6 +62,10 @@ logging:
 #存放mapper xml文件的位置
 mybatis-plus:
   mapper-locations: classpath:/mapper/colliery/*/*.xml
+yw:
+  api:
+    key: "FbeSqT3ZM+NxZiX/09bw3VQec56i26i9wTZ9wJV0aHwpPEJfhxMngr86qaT4FFCYvoDxUwAYGiYI5grPyPIgsg=="
+    privateKey: "MIIBVAIBADANBgkqhkiG9w0BAQEFAASCAT4wggE6AgEAAkEAj8+QDjIpker8sXLWT/WmXCDf8ccjn/9275E4OmCzMXEqi+B9Fl4SapdaA95dBj9z/Yfek4+SxH9wS99pR/g/jQIDAQABAkA47GrUA60Ksh4FyzPjgJOyAd1C4ZVLXp5gY3YDPYWQeuaNYvfqXPTfOPtS3LZEg9m3/LYY87/PSI6ah2h7fiONAiEA3BIwiR+KvM3j6vIEH5aQsfOa4rgQsBq+/GCdJ84w9MMCIQCnShiWEk+JoygJBUeVDAdlG7bnQVSpBUThRYGuSYt1bwIhAIJAjdOLBK1s2voi1gfwMKHygfiwYsgofGOZt0ppApbLAiASQjsWvh7iReWLvoDGms5/0ZuP+Ah2fjW7ZKu3yx0mjwIgSJLWTEMtcOyIoHVBagwqquGpjmXBGITBnGyBuXRKnBM="
 #  configuration:
 #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 

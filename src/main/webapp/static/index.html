@@ -118,7 +118,7 @@
 		<header>
 			<div class="company_title">
 
-				<span>煤矿安全生产标准化</span>
+				<span id="k_name">煤矿安全生产标准化</span>
 				<p class="dqzh">
 					<span id="showUserName">当前账户:李梅</span>
 					<a href="bigdatalogin.html">
@@ -139,6 +139,10 @@
 						</span>
 						</a>
 						<ul class="ul_hidden a">
+							<li>
+								<a href="#" onclick="LoadHtml(this,'html/xtsz/kmgl/xtsz_kmgl_select.html')">
+									<span class="iconfont icon-jiantouarrow484"></span>矿名管理</a>
+							</li>
 							<li>
 								<a href="#" onclick="LoadHtml(this,'html/xtsz/yhgl/xtsz_yhgl_select.html')">
 									<span class="iconfont icon-jiantouarrow484"></span>用户管理</a>
@@ -463,7 +467,28 @@
 		<script type="text/javascript" src="glng/PZ_IP.js"></script>
 		<script>
 			var host = ip;
-
+			var k_name = "";
+				var tag = {"pageSize":10,"pageNum":1,"order":"asc","name":"矿名称"};
+				$.ajax({
+					contentType: "application/json;charset=utf-8",
+					dataType: "json",
+					type: "post",
+					url: host + "/base/config/get",
+					async: false,
+					xhrFields: {
+							withCredentials: true
+					},
+					data: JSON.stringify(tag),
+					success: function(data) {
+							if(data.total > 0) {
+								k_name=data.rows[0].value+"煤矿安全生产标准化";
+							} 
+					},
+					error: function(request) {
+						alert("连接失败");
+					}
+				});
+				$("#k_name").text(k_name);
 			function destroySession() {
 				$.ajax({
 					type: "get",
@@ -513,8 +538,9 @@
 				$.ajax({
 					type: "get",
 					url: url,
-					async: true,
+					async: false,
 					success: function(data) {
+						console.log(data);
 						$('.eq_form').html(data);
 						$(".dh>ul>li>a").text(cj_name);
 
