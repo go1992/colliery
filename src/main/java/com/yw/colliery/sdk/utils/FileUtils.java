@@ -125,7 +125,6 @@ public class FileUtils {
 
     public static String getClassPath(String outPath){
         String path1 = FileUtils.class.getProtectionDomain().getCodeSource().getLocation().getPath().substring(5);
-        log.info(FileUtils.class.getProtectionDomain().getCodeSource().getLocation().getPath());
         try {
             String path = new File(path1, outPath).getCanonicalPath();
             return path;

@@ -7,6 +7,7 @@ import com.yw.colliery.sdk.constans.CollierySafetyConstant;
 import com.yw.colliery.sdk.exception.ValidCodeAuthenticationException;
 import com.yw.colliery.sdk.utils.FileUtils;
 import com.yw.colliery.sdk.utils.RsaUtils;
+import com.yw.colliery.sdk.utils.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.regex.Pattern;
 
 
 /**
@@ -37,6 +39,7 @@ public class ValidationCodeFilter extends OncePerRequestFilter {
     @Autowired
     private ValidateHandleService validateHandleService;
 
+
     @Value("${yw.api.key}")
     private String apiKey;
 
@@ -48,9 +51,9 @@ public class ValidationCodeFilter extends OncePerRequestFilter {
 //        if (checkTypeAndReq(httpServletRequest)) {
 //            validate(httpServletRequest, httpServletResponse);
 //        }
-        checkReqKey(httpServletRequest, httpServletResponse);
-        filterChain.doFilter(httpServletRequest, httpServletResponse);
-
+        if (checkReqKey(httpServletRequest, httpServletResponse)){
+            filterChain.doFilter(httpServletRequest, httpServletResponse);
+        }
     }
 
     private boolean checkTypeAndReq(HttpServletRequest httpServletRequest) {
@@ -63,10 +66,13 @@ public class ValidationCodeFilter extends OncePerRequestFilter {
                 && StringUtils.equalsIgnoreCase("POST", httpServletRequest.getMethod());
     }
 
-    private void checkReqKey(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
+    private boolean checkReqKey(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
             throws ServletException, IOException {
-        if (StringUtils.equals(CollierySafetyConstant.SAVE_API, httpServletRequest.getRequestURI())){
-            return;
+        if (StringUtils.equals(CollierySafetyConstant.SAVE_API, httpServletRequest.getRequestURI())
+                || StringUtil.endtWith(httpServletRequest.getRequestURI(),StringUtil.STATIC_MATCH_END)
+                || StringUtil.startWith(httpServletRequest.getRequestURI(),StringUtil.STATIC_MATCH_START)
+                || StringUtils.equals("/", httpServletRequest.getRequestURI())) {
+                return true;
         }
         String path = FileUtils.getClassPath("../../");
         File file = new File(path+"/key/api.txt");
@@ -75,18 +81,21 @@ public class ValidationCodeFilter extends OncePerRequestFilter {
                 String read = FileUtils.read(path+"/key/api.txt", Charset.forName("UTF-8"));
                 String decrypt = RsaUtils.decrypt(read, privateKey);
                 if (decrypt.contains("unfreeze")){
-                    return;
+                    return true;
                 }
             } catch (Exception e) {
                 logger.info("get api key file exception:{}", e);
                 loginFailureHandler.onAuthenticationFailure(httpServletRequest, httpServletResponse
                         , new ValidCodeAuthenticationException("API expiration"));
+                return false;
             }
         }
         if (Long.valueOf(RsaUtils.decrypt(apiKey,privateKey)) < System.currentTimeMillis()) {
             loginFailureHandler.onAuthenticationFailure(httpServletRequest, httpServletResponse
                     , new ValidCodeAuthenticationException("API expiration"));
+            return false;
         }
+        return true;
     }
 
     private void validate(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)

@@ -18,6 +18,10 @@ public class StringUtil {
 	public static final String REG_FILE_SEPARATOR = "\\\\";
 
 	public static final String REG_DOUBLE_FILE_SEPARATOR = "\\\\\\\\";
+
+	public static final String[] STATIC_MATCH_END= {".html",".css",".js",".ioc",".png"};
+
+	public static final String[] STATIC_MATCH_START= {"/font","/css","/html","/img","/js","/glng"};
 	/**
 	 * 判空
 	 *
@@ -57,6 +61,24 @@ public class StringUtil {
     public static String camelToUnderline(String param) {
 		return CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE,param);
     }
+
+	public static boolean startWith(String str, String[] c) {
+		for (int n = 0; n < c.length; n++) {
+			if (str.startsWith(c[n])) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public static boolean endtWith(String str, String[] c) {
+		for (int n = 0; n < c.length; n++) {
+			if (str.endsWith(c[n])) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	public static void main(String[] args) {
 		System.out.println(camelToUnderline("orderName"));
